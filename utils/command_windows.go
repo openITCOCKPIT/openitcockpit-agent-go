@@ -19,7 +19,7 @@ var (
 )
 
 func handleCommandError(arg0 string, err error) int {
-	if strings.HasSuffix(err.Error(), "file does not exist") {
+	if strings.HasSuffix(err.Error(), "file does not exist") || strings.HasSuffix(err.Error(), "executable file not found in %PATH%") {
 		if _, err := os.Stat(arg0); os.IsNotExist(err) {
 			return NotFound
 		}

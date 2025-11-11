@@ -109,8 +109,14 @@ func TestCommandNotFound(t *testing.T) {
 		t.Error("there was no error")
 	}
 
-	if result.Stdout[0:14] != "Unknown error:" || result.RC != 3 {
-		t.Errorf("Unexpected output '%s' or return code: %d", result.Stdout, result.RC)
+	if runtime.GOOS == "windows" {
+		if result.RC != NotFound {
+			t.Errorf("Unexpected output '%s' or return code: %d", result.Stdout, result.RC)
+		}
+	} else {
+		if result.Stdout[0:14] != "Unknown error:" || result.RC != 3 {
+			t.Errorf("Unexpected output '%s' or return code: %d", result.Stdout, result.RC)
+		}
 	}
 
 	js, err := json.Marshal(result)

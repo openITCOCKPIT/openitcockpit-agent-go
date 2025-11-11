@@ -41,7 +41,7 @@ vendor/
 
 # VSCode local history
 .history
-
+.vscode/settings.json
 
 # Testing
 agent-key
