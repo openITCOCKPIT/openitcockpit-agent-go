@@ -42,7 +42,7 @@ func (r *RootCmd) preRun(cmd *cobra.Command, args []string) error {
 			if runtime.GOOS == "windows" {
 				msg = msg + " (probably missing windows registry InstallLocation)"
 			}
-			return fmt.Errorf(msg)
+			return fmt.Errorf("%s", msg)
 		}
 	}
 	if !r.disableLog && r.logPath == "" {
@@ -53,7 +53,7 @@ func (r *RootCmd) preRun(cmd *cobra.Command, args []string) error {
 			if runtime.GOOS == "windows" {
 				msg = msg + " (probably missing windows registry InstallLocation)"
 			}
-			return fmt.Errorf(msg)
+			return fmt.Errorf("%s", msg)
 		}
 	}
 
