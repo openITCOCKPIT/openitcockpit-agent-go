@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"sync"
 
-	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/client"
 	log "github.com/sirupsen/logrus"
 
@@ -49,7 +49,7 @@ func (c *CheckDocker) Run(ctx context.Context) (interface{}, error) {
 	}
 	defer cli.Close()
 
-	containers, err := cli.ContainerList(ctx, types.ContainerListOptions{
+	containers, err := cli.ContainerList(ctx, container.ListOptions{
 		All: false, //Only show running containers
 	})
 	if err != nil {
@@ -61,14 +61,15 @@ func (c *CheckDocker) Run(ctx context.Context) (interface{}, error) {
 	errorChan := make(chan error, len(containers))
 
 	dockerResults := make([]*resultDocker, 0)
-	for _, container := range containers {
+	for _, ctr := range containers {
+		// we use ctr as variable name (instead of container) to avoid shadowing the package name "container" / naming conflict
 
 		wg.Add(1)
-		go func(container types.Container) {
+		go func(ctr container.Summary) {
 			// This is a new "thread" / go func for each docker container
 			defer wg.Done()
 
-			response, err := cli.ContainerStats(ctx, container.ID, false)
+			response, err := cli.ContainerStats(ctx, ctr.ID, false)
 			if err != nil {
 				errorChan <- err
 				return
@@ -77,7 +78,7 @@ func (c *CheckDocker) Run(ctx context.Context) (interface{}, error) {
 			defer response.Body.Close()
 			responseJson := json.NewDecoder(response.Body)
 
-			var stats *types.StatsJSON
+			var stats *container.StatsResponse
 			if err := responseJson.Decode(&stats); err != nil {
 				errorChan <- err
 				return
@@ -108,13 +109,13 @@ func (c *CheckDocker) Run(ctx context.Context) (interface{}, error) {
 			}
 
 			containerResult := &resultDocker{
-				Id:               container.ID[:10],
-				Name:             container.Names[0],
-				Image:            container.Image,
-				SizeRw:           container.SizeRw,
-				SizeRootFs:       container.SizeRootFs,
-				State:            container.State,  // running
-				Status:           container.Status, // Up 6 minutes
+				Id:               ctr.ID[:10],
+				Name:             ctr.Names[0],
+				Image:            ctr.Image,
+				SizeRw:           ctr.SizeRw,
+				SizeRootFs:       ctr.SizeRootFs,
+				State:            ctr.State,  // running
+				Status:           ctr.Status, // Up 6 minutes
 				CpuPercentage:    cpuPercentage,
 				MemoryPercentage: memoryPercentage,
 				NetworkRx:        networkRx,
@@ -126,7 +127,7 @@ func (c *CheckDocker) Run(ctx context.Context) (interface{}, error) {
 
 			// Return error back to check thread
 			resultChan <- containerResult
-		}(container)
+		}(ctr)
 	}
 
 	// Check thread Wait for all results to come back and close the channels
@@ -152,7 +153,7 @@ func (c *CheckDocker) Configure(config *config.Configuration) (bool, error) {
 	return config.Docker, nil
 }
 
-func (c *CheckDocker) calcCpuPercentageUnix(previousCPU, previousSystem float64, stats *types.StatsJSON) float64 {
+func (c *CheckDocker) calcCpuPercentageUnix(previousCPU, previousSystem float64, stats *container.StatsResponse) float64 {
 	// Credit to:
 	// https://github.com/docker/cli/blob/e31e00585363e6a989e37fa92cf06481ea218344/cli/command/container/stats_helpers.go#L166-L183
 	var cpuPercentage float64 = 0.0
@@ -172,7 +173,7 @@ func (c *CheckDocker) calcCpuPercentageUnix(previousCPU, previousSystem float64,
 	return cpuPercentage
 }
 
-func (c *CheckDocker) calcCpuPercentageWindows(stats *types.StatsJSON) float64 {
+func (c *CheckDocker) calcCpuPercentageWindows(stats *container.StatsResponse) float64 {
 	// Credit to:
 	// https://github.com/docker/cli/blob/e31e00585363e6a989e37fa92cf06481ea218344/cli/command/container/stats_helpers.go#L185-L199
 	possibleIntervals := uint64(stats.Read.Sub(stats.PreRead).Nanoseconds())
@@ -191,7 +192,7 @@ func (c *CheckDocker) calcCpuPercentageWindows(stats *types.StatsJSON) float64 {
 	return cpuPercentage
 }
 
-func (c *CheckDocker) calcDiskIoUnix(diskio types.BlkioStats) (uint64, uint64) {
+func (c *CheckDocker) calcDiskIoUnix(diskio container.BlkioStats) (uint64, uint64) {
 	// Credit to:
 	// https://github.com/docker/cli/blob/e31e00585363e6a989e37fa92cf06481ea218344/cli/command/container/stats_helpers.go#L201-L215
 
@@ -211,7 +212,7 @@ func (c *CheckDocker) calcDiskIoUnix(diskio types.BlkioStats) (uint64, uint64) {
 	return bytesRead, bytesWrite
 }
 
-func (c *CheckDocker) calcNetworkIo(network map[string]types.NetworkStats) (float64, float64) {
+func (c *CheckDocker) calcNetworkIo(network map[string]container.NetworkStats) (float64, float64) {
 	// Credit to:
 	// https://github.com/docker/cli/blob/e31e00585363e6a989e37fa92cf06481ea218344/cli/command/container/stats_helpers.go#L217-L225
 	var networkRx, networkTx float64
@@ -223,7 +224,7 @@ func (c *CheckDocker) calcNetworkIo(network map[string]types.NetworkStats) (floa
 	return networkRx, networkTx
 }
 
-func (c *CheckDocker) calcMemoryUsageUnix(memory types.MemoryStats) float64 {
+func (c *CheckDocker) calcMemoryUsageUnix(memory container.MemoryStats) float64 {
 	// Credit to:
 	// https://github.com/docker/cli/blob/e31e00585363e6a989e37fa92cf06481ea218344/cli/command/container/stats_helpers.go#L239-L249
 
