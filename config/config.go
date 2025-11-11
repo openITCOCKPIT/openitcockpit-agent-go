@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/go-viper/encoding/ini"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/basiclog"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/platformpaths"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/utils"
@@ -14,7 +15,7 @@ import (
 )
 
 // AgentVersion as the name says
-const AgentVersion = "3.2.1"
+const AgentVersion = "3.3.0"
 
 // CustomCheck are external plugins and scripts which should be executed by the Agent
 type CustomCheck struct {
@@ -265,11 +266,20 @@ func unmarshalConfiguration(v *viper.Viper) (*Configuration, error) {
 
 // Load configuration from default paths or configPath. The reload func must be short lived or start a go routine.
 func Load(ctx context.Context, configPath string) (*Configuration, error) {
-	v := viper.New()
+	// Register the INI encoding
+	// As ini support got removed from viper with v1.20.0
+	// https://github.com/spf13/viper/releases/tag/v1.20.0
+	// https://github.com/spf13/viper/blob/master/UPGRADE.md#v120x
+	codecRegistry := viper.NewCodecRegistry()
+	codecRegistry.RegisterCodec("ini", ini.Codec{})
+
+	v := viper.NewWithOptions(
+		viper.WithCodecRegistry(codecRegistry),
+	)
+
 	setConfigurationDefaults(v)
 
 	v.SetConfigFile(configPath)
-
 	v.SetConfigType("ini")
 
 	if err := v.ReadInConfig(); err != nil {
@@ -280,7 +290,17 @@ func Load(ctx context.Context, configPath string) (*Configuration, error) {
 }
 
 func unmarshalCustomChecks(configPath string) ([]*CustomCheck, error) {
-	v := viper.New()
+	// Register the INI encoding
+	// As ini support got removed from viper with v1.20.0
+	// https://github.com/spf13/viper/releases/tag/v1.20.0
+	// https://github.com/spf13/viper/blob/master/UPGRADE.md#v120x
+	codecRegistry := viper.NewCodecRegistry()
+	codecRegistry.RegisterCodec("ini", ini.Codec{})
+
+	v := viper.NewWithOptions(
+		viper.WithCodecRegistry(codecRegistry),
+	)
+
 	v.SetConfigFile(configPath)
 	v.SetConfigType("ini")
 
@@ -317,7 +337,17 @@ func unmarshalCustomChecks(configPath string) ([]*CustomCheck, error) {
 }
 
 func unmarshalPrometheusExporters(configPath string) ([]*PrometheusExporter, error) {
-	v := viper.New()
+	// Register the INI encoding
+	// As ini support got removed from viper with v1.20.0
+	// https://github.com/spf13/viper/releases/tag/v1.20.0
+	// https://github.com/spf13/viper/blob/master/UPGRADE.md#v120x
+	codecRegistry := viper.NewCodecRegistry()
+	codecRegistry.RegisterCodec("ini", ini.Codec{})
+
+	v := viper.NewWithOptions(
+		viper.WithCodecRegistry(codecRegistry),
+	)
+
 	v.SetConfigFile(configPath)
 	v.SetConfigType("ini")
 
