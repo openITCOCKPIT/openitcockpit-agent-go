@@ -221,7 +221,7 @@ pipeline {
                         docker {
                             image 'golang:bookworm'
                             args "-u root --privileged -v agentgocache:/go"
-                            label 'freebsd'
+                            label 'linux'
                         }
                     }
                     environment {
