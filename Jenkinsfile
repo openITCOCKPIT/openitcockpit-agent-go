@@ -216,6 +216,46 @@ pipeline {
                         }
                     }
                 }
+                stage('freebsd') {
+                    agent {
+                        docker {
+                            image 'golang:bookworm'
+                            args "-u root --privileged -v agentgocache:/go"
+                            label 'freebsd'
+                        }
+                    }
+                    environment {
+                        GOOS = 'freebsd'
+                        BINNAME = 'openitcockpit-agent'
+                        CGO_ENABLED = '0'
+                    }
+                    stages {
+                        stage('amd64') {
+                            environment {
+                                GOARCH = 'amd64'
+                            }
+                            steps {
+                                build_binary_freebsd()
+                            }
+                        }
+                        stage('386') {
+                            environment {
+                                GOARCH = '386'
+                            }
+                            steps {
+                                build_binary_freebsd()
+                            }
+                        }
+                        stage('arm64') {
+                            environment {
+                                GOARCH = 'arm64'
+                            }
+                            steps {
+                                build_binary_freebsd()
+                            }
+                        }
+                    }
+                }
                 stage('darwin') {
                     environment {
                         GOOS = 'darwin'
@@ -473,6 +513,25 @@ def build_binary_linux() {
         stash name: "release-$GOOS-$GOARCH", includes: "release/$GOOS/$GOARCH/**"
     }
 }
+
+def build_binary_freebsd() {
+    timeout(time: 5, unit: 'MINUTES') {
+        cleanup()
+
+        catchError(buildResult: null, stageResult: 'FAILURE') {
+            sh "mkdir -p release/$GOOS/$GOARCH"
+            sh "go build -o release/$GOOS/$GOARCH/$BINNAME main.go"
+
+            // ITC-3498 Contain information about 3rd party licenses in the package
+            sh "go install github.com/google/go-licenses/v2@latest"
+            sh "/go/bin/go-licenses report . --ignore \"github.com/openITCOCKPIT/openitcockpit-agent-go\" > release/$GOOS/$GOARCH/licenses.csv"
+            sh "/go/bin/go-licenses check . --ignore \"github.com/openITCOCKPIT/openitcockpit-agent-go\" --allowed_licenses=MIT,ISC,MPL-2.0,BSD-2-Clause,BSD-3-Clause,Apache-2.0"
+        }
+        archiveArtifacts artifacts: "release/$GOOS/$GOARCH/**", fingerprint: true
+        stash name: "release-$GOOS-$GOARCH", includes: "release/$GOOS/$GOARCH/**"
+    }
+}
+
 
 def build_binary_macos() {
     timeout(time: 5, unit: 'MINUTES') {
