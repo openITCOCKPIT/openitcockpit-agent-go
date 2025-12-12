@@ -9,6 +9,7 @@ import (
 	"net"
 	"net/http"
 	"os"
+	"runtime"
 	"sync"
 	"time"
 
@@ -200,6 +201,7 @@ func (s *Server) doReload(ctx context.Context, cfg *reloadConfig) {
 	// test that old server stopped
 	if s.server != nil {
 		for i := 0; i < 30; i++ {
+			log.Debugln("Webserver: Testing for closed port ", s.server.Addr)
 			if !testPortOpen(s.server.Addr) {
 				break
 			}
@@ -209,6 +211,7 @@ func (s *Server) doReload(ctx context.Context, cfg *reloadConfig) {
 
 	// test if new port is really ready
 	for i := 0; i < 30; i++ {
+		log.Debugln("Webserver: First testing for open port ", newServer.Addr)
 		if !testPortOpen(newServer.Addr) {
 			break
 		}
@@ -227,7 +230,13 @@ func (s *Server) doReload(ctx context.Context, cfg *reloadConfig) {
 	}()
 
 	s.server = newServer
-	for i := 0; i < 30; i++ {
+	trys := 30
+	if runtime.GOOS == "freebsd" {
+		// For some reason the check is buggy on FreeBSD, so we reduce the number of tries
+		trys = 5
+	}
+	for i := 0; i < trys; i++ {
+		log.Debugln("Webserver: Second testing for open port ", newServer.Addr)
 		if testPortOpen(newServer.Addr) {
 			break
 		}

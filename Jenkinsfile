@@ -216,6 +216,46 @@ pipeline {
                         }
                     }
                 }
+                stage('freebsd') {
+                    agent {
+                        docker {
+                            image 'golang:bookworm'
+                            args "-u root --privileged -v agentgocache:/go"
+                            label 'linux'
+                        }
+                    }
+                    environment {
+                        GOOS = 'freebsd'
+                        BINNAME = 'openitcockpit-agent'
+                        CGO_ENABLED = '0'
+                    }
+                    stages {
+                        stage('amd64') {
+                            environment {
+                                GOARCH = 'amd64'
+                            }
+                            steps {
+                                build_binary_freebsd()
+                            }
+                        }
+                        stage('386') {
+                            environment {
+                                GOARCH = '386'
+                            }
+                            steps {
+                                build_binary_freebsd()
+                            }
+                        }
+                        stage('arm64') {
+                            environment {
+                                GOARCH = 'arm64'
+                            }
+                            steps {
+                                build_binary_freebsd()
+                            }
+                        }
+                    }
+                }
                 stage('darwin') {
                     environment {
                         GOOS = 'darwin'
@@ -386,6 +426,49 @@ pipeline {
                         }
                     }
                 }
+                stage('FreeBSD') {
+                    agent {
+                        dockerfile {
+                            filename 'linux.Dockerfile'
+                            dir 'build/docker'
+                            label 'linux'
+                            args "-u root --privileged"
+                        }
+                    }
+                    environment {
+                        GOOS = 'freebsd'
+                        BINNAME = 'openitcockpit-agent'
+                    }
+                    stages {
+                        stage('amd64') {
+                            environment {
+                                GOARCH = 'amd64'
+                                ARCH = 'amd64'
+                            }
+                            steps {
+                                package_freebsd()
+                            }
+                        }
+                        stage('386') {
+                            environment {
+                                GOARCH = '386'
+                                ARCH = '386'
+                            }
+                            steps {
+                                package_freebsd()
+                            }
+                        }
+                        stage('arm64') {
+                            environment {
+                                GOARCH = 'arm64'
+                                ARCH = 'arm64'
+                            }
+                            steps {
+                                package_freebsd()
+                            }
+                        }
+                    }
+                }
             }
         }
         stage('Publish') {
@@ -473,6 +556,25 @@ def build_binary_linux() {
         stash name: "release-$GOOS-$GOARCH", includes: "release/$GOOS/$GOARCH/**"
     }
 }
+
+def build_binary_freebsd() {
+    timeout(time: 5, unit: 'MINUTES') {
+        cleanup()
+
+        catchError(buildResult: null, stageResult: 'FAILURE') {
+            sh "mkdir -p release/$GOOS/$GOARCH"
+            sh "go build -o release/$GOOS/$GOARCH/$BINNAME main.go"
+
+            // ITC-3498 Contain information about 3rd party licenses in the package
+            sh "go install github.com/google/go-licenses/v2@latest"
+            sh "/go/bin/go-licenses report . --ignore \"github.com/openITCOCKPIT/openitcockpit-agent-go\" > release/$GOOS/$GOARCH/licenses.csv"
+            sh "/go/bin/go-licenses check . --ignore \"github.com/openITCOCKPIT/openitcockpit-agent-go\" --allowed_licenses=MIT,ISC,MPL-2.0,BSD-2-Clause,BSD-3-Clause,Apache-2.0"
+        }
+        archiveArtifacts artifacts: "release/$GOOS/$GOARCH/**", fingerprint: true
+        stash name: "release-$GOOS-$GOARCH", includes: "release/$GOOS/$GOARCH/**"
+    }
+}
+
 
 def build_binary_macos() {
     timeout(time: 5, unit: 'MINUTES') {
@@ -629,6 +731,20 @@ def package_darwin_arm64() {
     }
 }
 
+def package_freebsd() {
+    timeout(time: 5, unit: 'MINUTES') {
+        cleanup()
+
+        unstash name: "release-$GOOS-$GOARCH"
+
+        // For now we will just publish the binary without packaging it
+        sh "mkdir -p release/packages"
+        sh "cp release/$GOOS/$GOARCH/$BINNAME release/packages/$BINNAME-${VERSION}.${GOOS}-${ARCH}.bin"
+
+        archiveArtifacts artifacts: 'release/packages/**', fingerprint: true
+    }
+}
+
 def publish_packages() {
     timeout(time: 5, unit: 'MINUTES') {
 
@@ -640,6 +756,7 @@ def publish_packages() {
             sh """mv -f release/packages/darwin/* packages/"""
             sh """mv -f release/packages/linux/* packages/"""
             sh """mv -f release/packages/windows/* packages/"""
+            sh """mv -f release/packages/freebsd/* packages/"""
 
             sh 'ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa oitc@srvitnweb05.static.itsm.love "mkdir -p /var/www/openitcockpit.io/files/openitcockpit-agent-3.x"'
             sh 'rsync -avz -e "ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa" --delete --progress packages/* oitc@srvitnweb05.static.itsm.love:/var/www/openitcockpit.io/files/openitcockpit-agent-3.x/'
@@ -655,8 +772,8 @@ def publish_packages() {
             sh '/var/lib/jenkins/openITCOCKPIT-build/aptly.sh publish repo -distribution deb -architectures amd64,i386,arm64,armhf,ppc64el -passphrase-file /opt/repository/aptly/pw -batch openitcockpit-agent-stable filesystem:openitcockpit-agent:deb/stable'
             /* apt02 = https://packages.openitcockpit.io/ */
             /* apt03 = https://packages5.openitcockpit.io/ */
-            sh "rsync -rv --delete-after /opt/repository/aptly/openitcockpit-agent/deb/stable/ www-data@srvoitcapt02.ad.it-novum.com:/var/www/html/openitcockpit-agent/deb/stable/"
-            sh "rsync -rv --delete-after /opt/repository/aptly/openitcockpit-agent/deb/stable/ www-data@srvoitcapt03.ad.it-novum.com:/var/www/html/openitcockpit-agent/deb/stable/"
+            sh "rsync -rv --delete-after /opt/repository/aptly/openitcockpit-agent/deb/stable/ www-data@srvoitcapt02.static.itsm.love:/var/www/html/openitcockpit-agent/deb/stable/"
+            sh "rsync -rv --delete-after /opt/repository/aptly/openitcockpit-agent/deb/stable/ www-data@srvoitcapt03.static.itsm.love:/var/www/html/openitcockpit-agent/deb/stable/"
 
             /* sign rpm packages */
             sh """rpmsign --define "_gpg_name it-novum GmbH <support@itsm.it-novum.com>" --define "__gpg_sign_cmd %{__gpg} gpg --no-verbose --no-armor --batch --pinentry-mode loopback --passphrase-file /opt/repository/aptly/pw %{?_gpg_digest_algo:--digest-algo %{_gpg_digest_algo}} --no-secmem-warning -u '%{_gpg_name}' -sbo %{__signature_filename} %{__plaintext_filename}" --addsign packages/*.rpm"""
@@ -677,8 +794,8 @@ def publish_packages() {
             /* Publish yum repository */
             /* apt02 = https://packages.openitcockpit.io/ */
             /* apt03 = https://packages5.openitcockpit.io/ */
-            sh "rsync -rv --delete-after rpm/stable/ www-data@srvoitcapt02.ad.it-novum.com:/var/www/html/openitcockpit-agent/rpm/stable/"
-            sh "rsync -rv --delete-after rpm/stable/ www-data@srvoitcapt03.ad.it-novum.com:/var/www/html/openitcockpit-agent/rpm/stable/"
+            sh "rsync -rv --delete-after rpm/stable/ www-data@srvoitcapt02.static.itsm.love:/var/www/html/openitcockpit-agent/rpm/stable/"
+            sh "rsync -rv --delete-after rpm/stable/ www-data@srvoitcapt03.static.itsm.love:/var/www/html/openitcockpit-agent/rpm/stable/"
         }
 
     }

@@ -12,6 +12,7 @@ Cross-Platform Monitoring Agent for openITCOCKPIT written in Go
   - [Arch Linux](#arch-linux)
   - [Windows](#windows)
   - [macOS](#macos)
+  - [FreeBSD](#freebsd)
 * [Supported Platforms](#supported-platforms)
 * [Full documentation](#full-documentation)
 * [License](#license)
@@ -22,6 +23,7 @@ Cross-Platform Monitoring Agent for openITCOCKPIT written in Go
 * Microsoft Windows 10 or newer
 * Apple macOS 15 Sequoia or newer (Intel / Apple Silicon)
 * Linux (Everything from Debian 10 (Buster) / AlmaLinux 8 and newer should work fine)
+* FreeBSD 15
 
 ### Maybe supported operating systems
 
@@ -157,13 +159,23 @@ Uninstall
 sudo installer -pkg openitcockpit-agent-uninstaller-3.x.x-darwin-amd64.pkg -target / -verbose
 ```
 
+### FreeBSD
+
+Currently we do not provide pre-build packages for FreeBSD systems.
+
+But you can build the binary from source like so:
+```
+GOOS=freebsd GOARCH=amd64 go build -o openitcockpit-agent
+```
+
+
 ## Supported Platforms
 
-| Platform              | Windows                | Linux | macOS |
-|-----------------------|------------------------|-------|-------|
-| 64 bit (amd64)        | ✅                      | ✅     | ✅     |
-| 32 bit (i386)         | ✅                      | ✅     | -     |
-| arm64 / Apple Silicon | Use the 32 bit version | ✅     | ✅     |
+| Platform              | Windows                | Linux | macOS | FreeBSD |
+|-----------------------|------------------------|-------|-------|---------|
+| 64 bit (amd64)        | ✅                      | ✅     | ✅     | ✅       |
+| 32 bit (i386)         | ✅                      | ✅     | -     | ✅       |
+| arm64 / Apple Silicon | Use the 32 bit version | ✅     | ✅     | ✅       |
 
 
 Please see to Wiki how to [cross compile binaries](https://github.com/openITCOCKPIT/openitcockpit-agent-go/wiki/Build-binary#cross-compile) for different operating systems and CPU architectures.
