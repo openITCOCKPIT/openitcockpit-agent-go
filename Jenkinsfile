@@ -426,6 +426,49 @@ pipeline {
                         }
                     }
                 }
+                stage('FreeBSD') {
+                    agent {
+                        dockerfile {
+                            filename 'linux.Dockerfile'
+                            dir 'build/docker'
+                            label 'linux'
+                            args "-u root --privileged"
+                        }
+                    }
+                    environment {
+                        GOOS = 'freebsd'
+                        BINNAME = 'openitcockpit-agent'
+                    }
+                    stages {
+                        stage('amd64') {
+                            environment {
+                                GOARCH = 'amd64'
+                                ARCH = 'amd64'
+                            }
+                            steps {
+                                package_freebsd()
+                            }
+                        }
+                        stage('386') {
+                            environment {
+                                GOARCH = '386'
+                                ARCH = '386'
+                            }
+                            steps {
+                                package_freebsd()
+                            }
+                        }
+                        stage('arm64') {
+                            environment {
+                                GOARCH = 'arm64'
+                                ARCH = 'arm64'
+                            }
+                            steps {
+                                package_freebsd()
+                            }
+                        }
+                    }
+                }
             }
         }
         stage('Publish') {
@@ -688,6 +731,20 @@ def package_darwin_arm64() {
     }
 }
 
+def package_freebsd() {
+    timeout(time: 5, unit: 'MINUTES') {
+        cleanup()
+
+        unstash name: "release-$GOOS-$GOARCH"
+
+        // For now we will just publish the binary without packaging it
+        sh "mkdir -p release/packages"
+        sh "cp release/$GOOS/$GOARCH/$BINNAME release/packages/$BINNAME-${VERSION}.${GOOS}-${ARCH}.bin"
+
+        archiveArtifacts artifacts: 'release/packages/**', fingerprint: true
+    }
+}
+
 def publish_packages() {
     timeout(time: 5, unit: 'MINUTES') {
 
@@ -699,6 +756,7 @@ def publish_packages() {
             sh """mv -f release/packages/darwin/* packages/"""
             sh """mv -f release/packages/linux/* packages/"""
             sh """mv -f release/packages/windows/* packages/"""
+            sh """mv -f release/packages/freebsd/* packages/"""
 
             sh 'ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa oitc@srvitnweb05.static.itsm.love "mkdir -p /var/www/openitcockpit.io/files/openitcockpit-agent-3.x"'
             sh 'rsync -avz -e "ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa" --delete --progress packages/* oitc@srvitnweb05.static.itsm.love:/var/www/openitcockpit.io/files/openitcockpit-agent-3.x/'
