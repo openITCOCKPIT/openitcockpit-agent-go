@@ -738,8 +738,8 @@ def package_freebsd() {
         unstash name: "release-$GOOS-$GOARCH"
 
         // For now we will just publish the binary without packaging it
-        sh "mkdir -p release/packages"
-        sh "cp release/$GOOS/$GOARCH/$BINNAME release/packages/$BINNAME-${VERSION}.${GOOS}-${ARCH}.bin"
+        sh "mkdir -p release/packages/freebsd"
+        sh "cp release/$GOOS/$GOARCH/$BINNAME release/packages/$GOOS/$BINNAME-${VERSION}.${GOOS}-${ARCH}.bin"
 
         archiveArtifacts artifacts: 'release/packages/**', fingerprint: true
     }
