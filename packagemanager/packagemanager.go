@@ -10,9 +10,11 @@ type PackageUpdate struct {
 	Name             string
 	CurrentVersion   string
 	AvailableVersion string
+	IsSecurityUpdate bool
 }
 
 type PackageManager interface {
+	UpdateMetadata() error
 	ListInstalledPackages() ([]Package, error)
 	ListUpgradablePackages() ([]PackageUpdate, error)
 }
