@@ -372,6 +372,10 @@ func TestAptManager_getInstalledPackagesWithCancel(t *testing.T) {
 
 	apt := AptManager{}
 
+	if !apt.IsAvailable() {
+		t.Skip("Skipping test; apt is not available on this system.")
+	}
+
 	ctx := t.Context()
 	output, err := apt.getInstalledPackagesWithCancel(ctx)
 	if err != nil {

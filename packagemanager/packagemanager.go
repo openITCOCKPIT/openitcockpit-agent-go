@@ -1,5 +1,7 @@
 package packagemanager
 
+import "context"
+
 type Package struct {
 	Name        string
 	Version     string
@@ -14,7 +16,8 @@ type PackageUpdate struct {
 }
 
 type PackageManager interface {
-	UpdateMetadata() error
-	ListInstalledPackages() ([]Package, error)
-	ListUpgradablePackages() ([]PackageUpdate, error)
+	IsAvailable() bool
+	UpdateMetadata(ctx context.Context) error
+	ListInstalledPackages(ctx context.Context) ([]Package, error)
+	ListUpgradablePackages(ctx context.Context) ([]PackageUpdate, error)
 }

@@ -12,10 +12,16 @@ import (
 // AptManager implements PackageManager for apt
 type AptManager struct{}
 
+// IsAvailable checks if apt-get is available on the system
+func (a AptManager) IsAvailable() bool {
+	_, err := exec.LookPath("apt-get")
+	return err == nil
+}
+
 // UpdateMetadata updates the package metadata using apt-get update
-func (a AptManager) UpdateMetadata() error {
+func (a AptManager) UpdateMetadata(ctx context.Context) error {
 	timeout := 300 * time.Second
-	_, err := utils.RunCommand(context.Background(), utils.CommandArgs{
+	_, err := utils.RunCommand(ctx, utils.CommandArgs{
 		Command: "apt-get update -q",
 		Timeout: timeout,
 		Env: map[string]string{
@@ -58,6 +64,10 @@ func (a AptManager) parseDpkgOutput(output string) ([]Package, error) {
 	for _, line := range lines {
 		// package version description
 		parts := strings.SplitN(line, " ", 3)
+
+		if len(parts) < 3 {
+			continue
+		}
 
 		pkgs = append(pkgs, Package{
 			Name:        parts[0],
@@ -107,6 +117,11 @@ func (a AptManager) parseAptUpgradeOutput(output string) ([]PackageUpdate, error
 			// Inst package [current_version] (available_version repository)
 
 			parts := strings.SplitN(line, " ", 4)
+
+			if len(parts) < 4 {
+				continue
+			}
+
 			pkgName := parts[1]
 			currentVersion := strings.Trim(parts[2], "[]")
 			availablePart := parts[3]
