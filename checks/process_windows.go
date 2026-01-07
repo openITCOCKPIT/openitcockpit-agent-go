@@ -7,7 +7,7 @@ import (
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/safemaths"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/winpsapi"
 	"github.com/pkg/errors"
-	"github.com/shirou/gopsutil/v3/mem"
+	"github.com/shirou/gopsutil/v4/mem"
 	log "github.com/sirupsen/logrus"
 	"github.com/yusufpapurcu/wmi"
 	"golang.org/x/sys/windows"

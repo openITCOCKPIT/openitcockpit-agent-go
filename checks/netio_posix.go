@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/safemaths"
-	"github.com/shirou/gopsutil/v3/net"
+	"github.com/shirou/gopsutil/v4/net"
 	log "github.com/sirupsen/logrus"
 )
 

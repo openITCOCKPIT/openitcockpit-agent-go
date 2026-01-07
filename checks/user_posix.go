@@ -6,7 +6,7 @@ package checks
 import (
 	"context"
 
-	"github.com/shirou/gopsutil/v3/host"
+	"github.com/shirou/gopsutil/v4/host"
 )
 
 // Run the actual check
