@@ -8,7 +8,7 @@ import (
 	"github.com/distatus/battery"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/config"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/utils"
-	"github.com/shirou/gopsutil/v3/host"
+	"github.com/shirou/gopsutil/v4/sensors"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -26,7 +26,7 @@ type resultSensor struct {
 	Batteries    []*batterySensor
 }
 
-//For Mac systems a list of SMC sensors: https://logi.wiki/index.php/SMC_Sensor_Codes
+// For Mac systems a list of SMC sensors: https://logi.wiki/index.php/SMC_Sensor_Codes
 type temperatureSensor struct {
 	Label    string  `json:"label"`   // e.g.: TB2T
 	Current  float64 `json:"current"` // e.g.: 31 (value in °C)
@@ -46,7 +46,8 @@ type batterySensor struct {
 // ctx can be canceled and runs the timeout
 // CheckResult will be serialized after the return and should not change until the next call to Run
 func (c *CheckSensor) Run(ctx context.Context) (interface{}, error) {
-	sensors, err := host.SensorsTemperaturesWithContext(ctx)
+	// https://github.com/shirou/gopsutil/blob/6c012ccde6deceb7b2ba5ec62c34c30f08dc6e60/sensors/sensors.go#L28-L30
+	sensors, err := sensors.TemperaturesWithContext(ctx)
 	sensorResults := make([]*temperatureSensor, 0, len(sensors))
 
 	if err != nil {

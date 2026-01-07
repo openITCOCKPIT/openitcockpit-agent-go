@@ -185,6 +185,34 @@ Do you want to build own binaries, learn more about cross compiling or how to st
 
 Please see the [full documentation](https://github.com/openITCOCKPIT/openitcockpit-agent-go/wiki).
 
+## Supported Checks
+
+| Check              | Windows | Linux     | macOS                   | FreeBSD                 |
+|--------------------|---------|-----------|-------------------------|-------------------------|
+| CPU Load           | -       | ✅         | ✅                       | ✅                       |
+| CPU Percent        | ✅       | ✅         | ✅                       | ✅                       |
+| Custom Checks      | ✅       | ✅         | ✅                       | ✅                       |
+| Disk IO            | ✅       | ✅         | ✅                       | ✅                       |
+| Disk Usage         | ✅       | ✅         | ✅                       | ✅                       |
+| Docker Container   | ✅       | ✅         | ✅                       | untested                |
+| Memory             | ✅       | ✅         | ✅                       | ✅                       |
+| Network Interfaces | ✅       | ✅         | ✅                       | ✅                       |
+| Network IO         | ✅       | ✅         | ✅                       | ✅                       |
+| NTP                | ✅       | ✅         | Only compare timestamps | Only compare timestamps |
+| Processes          | ✅       | ✅         | ✅                       | ✅                       |
+| Sensors            | -       | ✅         | ✅                       | -                       |
+| Services           | ✅       | ✅ systemd | ✅ launchd               | -                       |
+| Swap               | ✅       | ✅         | ✅                       | ✅                       |
+| Windows Event log  | ✅       | -         | -                       | -                       |
+| Users              | ✅       | ✅         | ✅                       | ✅                       |
+
+### Advanced Checks
+
+| Check       | Windows | Linux                                                                                              | macOS | FreeBSD |
+|-------------|---------|----------------------------------------------------------------------------------------------------|-------|---------|
+| Libvirt VMs | -       | ✅ [readme](https://docs.openitcockpit.io/en/agent/build-binary/#enable-libvirt-support-linux-only) | -     | -       |
+
+
 ## License
 ```
 Copyright (C) 2021-2025  it-novum GmbH

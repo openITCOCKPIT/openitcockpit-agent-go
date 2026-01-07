@@ -91,10 +91,17 @@ func (a *AgentInstance) processCheckResult(result map[string]interface{}) {
 			t := time.NewTimer(time.Second * 10)
 			defer t.Stop()
 
-			// we may have to give the webserver some time to think about it
+			//log.Debugln("[processCheckResult] Attempting to send check result to stateWebserver channel")
 			select {
 			case a.stateWebserver <- data: // Pass checkresult json to webserver
+				//log.Debugln("[processCheckResult] Successfully sent check result to stateWebserver channel")
+			case <-t.C:
+				log.Errorln("Internal error: could not store check result for webserver: timeout")
+			}
+
+			select {
 			case a.prometheusStateWebserver <- prometheus_results_data: // Pass Prometheus Exporter data to webserver
+				//log.Debugln("[processCheckResult] Successfully sent prometheus results to prometheusStateWebserver channel")
 			case <-t.C:
 				log.Errorln("Internal error: could not store check result for webserver: timeout")
 			}
