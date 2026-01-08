@@ -2,6 +2,7 @@ package packagemanager
 
 import (
 	"context"
+	"os"
 	"os/exec"
 	"strings"
 	"time"
@@ -283,4 +284,37 @@ func (d DnfManager) removeVersionFromPkgName(pkgNameWithVersion string) string {
 		return pkgNameWithVersion[:lastHyphen]
 	}
 	return pkgNameWithVersion
+}
+
+// RebootRequired checks if a reboot is required on the system
+func (d DnfManager) RebootRequired(ctx context.Context) (bool, error) {
+	// Check for /run/reboot-required or /var/run/reboot-required
+	paths := []string{"/run/reboot-required", "/var/run/reboot-required"}
+	for _, path := range paths {
+		if _, err := os.Stat(path); err == nil {
+			return true, nil
+		}
+	}
+
+	// yum-utils and dnf-utils provide needs-restarting command
+	timeout := 60 * time.Second
+	result, err := utils.RunCommand(ctx, utils.CommandArgs{
+		Command: "needs-restarting -r",
+		Timeout: timeout,
+		Env: map[string]string{
+			"LANG": "C",
+		},
+	})
+
+	if err != nil {
+		// If the command is not found, we cannot determine if a reboot is required
+		return false, err
+	}
+
+	// If the command exits with code 1, a reboot is required
+	if result.RC == 1 {
+		return true, nil
+	}
+
+	return false, nil
 }

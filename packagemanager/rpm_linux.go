@@ -97,3 +97,8 @@ func (r RpmManager) removeEpochFromVersionIfZero(version string) string {
 
 	return version
 }
+
+func (r RpmManager) RebootRequired(ctx context.Context) (bool, error) {
+	// RpmManager is to generic to check for reboot requirements
+	return false, nil
+}
