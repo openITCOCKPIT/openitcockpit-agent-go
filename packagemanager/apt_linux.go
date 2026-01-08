@@ -63,6 +63,7 @@ func (a AptManager) parseDpkgOutput(output string) ([]Package, error) {
 	var pkgs []Package
 	for _, line := range lines {
 		// package version description
+		// zsh 5.9-6ubuntu2 shell with lots of features <until END>
 		parts := strings.SplitN(line, " ", 3)
 
 		if len(parts) < 3 {
