@@ -16,6 +16,12 @@ type PackageUpdate struct {
 	IsPatch          bool // For distros that differentiate between security updates and patches (openSUSE)
 }
 
+type WindowsApp struct {
+	Name      string
+	Version   string
+	Publisher string
+}
+
 type WindowsUpdate struct {
 	Title            string
 	Description      string
@@ -37,5 +43,6 @@ type PackageManager interface {
 }
 
 type WindowsManager interface {
+	ListInstalledApps(ctx context.Context) ([]WindowsApp, error)
 	ListAvailableUpdates(ctx context.Context) ([]WindowsUpdate, error)
 }

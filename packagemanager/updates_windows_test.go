@@ -201,3 +201,14 @@ func TestParsePowerShellUpdateSessionOutput_InvalidJson(t *testing.T) {
 		t.Errorf("expected error for invalid json, got nil")
 	}
 }
+
+func TestGetInstalledWindowsApps(t *testing.T) {
+	manager := WindowsUpdatesManager{}
+	apps, err := manager.getInstalledApps()
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if len(apps) == 0 {
+		t.Errorf("expected some installed apps, got 0")
+	}
+}

@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/utils"
+	"golang.org/x/sys/windows/registry"
 )
 
 // WindowsUpdatesManager implements WindowsManager for Windows Updates
@@ -25,15 +26,66 @@ type PowerShellUpdateJson struct {
 	RevisionNumber int      `json:"RevisionNumber"`
 }
 
-func (w WindowsUpdatesManager) IsAvailable() bool {
-	return true
-}
-func (w WindowsUpdatesManager) UpdateMetadata(ctx context.Context) error {
-	return nil
+func (w WindowsUpdatesManager) ListInstalledApps(ctx context.Context) ([]WindowsApp, error) {
+	apps, err := w.getInstalledApps()
+	if err != nil {
+		return nil, err
+	}
+	return apps, nil
 }
 
-func (w WindowsUpdatesManager) ListInstalledPackages(ctx context.Context) ([]Package, error) {
-	return nil, nil
+func (w WindowsUpdatesManager) getInstalledApps() ([]WindowsApp, error) {
+	// DO NOT use WMI and the Win32_Product class!
+	// It will may repair all installed MSI packages on the system!
+	// DO NOT EVEN THINK ABOUT IT!
+	// https://support.microsoft.com/kb/974524
+	// https://sdmsoftware.com/wmi/why-win32_product-is-bad-news/
+
+	var apps []WindowsApp
+	keys := []registry.Key{
+		registry.LOCAL_MACHINE,
+		registry.CURRENT_USER,
+	}
+	paths := []string{
+		`SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall`,
+		`SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall`,
+	}
+
+	i := 0
+	for _, key := range keys {
+		for _, path := range paths {
+			k, err := registry.OpenKey(key, path, registry.READ)
+			if err != nil {
+				continue
+			}
+			defer k.Close()
+			names, _ := k.ReadSubKeyNames(-1)
+			for _, name := range names {
+				i++
+				subKey, err := registry.OpenKey(key, path+"\\"+name, registry.READ)
+				if err == nil {
+
+					// Get name, version and install location
+					displayName, _, err := subKey.GetStringValue("DisplayName")
+					version, _, errVer := subKey.GetStringValue("DisplayVersion")
+					publisher, _, errPub := subKey.GetStringValue("Publisher")
+
+					fmt.Println(displayName)
+
+					if err == nil && displayName != "" && errVer == nil && errPub == nil {
+						apps = append(apps, WindowsApp{
+							Name:      displayName,
+							Version:   version,
+							Publisher: publisher,
+						})
+					}
+					subKey.Close()
+				}
+			}
+		}
+	}
+
+	return apps, nil
 }
 
 func (w WindowsUpdatesManager) ListAvailableUpdates(ctx context.Context) ([]WindowsUpdate, error) {
@@ -51,12 +103,6 @@ func (w WindowsUpdatesManager) ListAvailableUpdates(ctx context.Context) ([]Wind
 }
 
 func (w WindowsUpdatesManager) getAvailableUpdates(ctx context.Context) (string, error) {
-	// DO NOT use WMI and the Win32_Product class!
-	// It will may repair all installed MSI packages on the system!
-	// DO NOT EVEN THINK ABOUT IT!
-	// https://support.microsoft.com/kb/974524
-	// https://sdmsoftware.com/wmi/why-win32_product-is-bad-news/
-	//
 	// The file 'updates_windows_ole.txt' contains a implemtation using OLE/COM
 	// how ever, this was way to complicated for what we try to achieve here.
 
