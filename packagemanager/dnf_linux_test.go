@@ -785,8 +785,18 @@ func TestDnfManager_parseDnfCheckUpdateOutput_realWorld(t *testing.T) {
 		t.Errorf("Expected at least one security update, got 0")
 	}
 
-	if securityUpdateCount != 111 {
-		t.Errorf("Expected 111 security updates, got %d", securityUpdateCount)
+	// Some packages may appear multiple times with different advisories.
+	// We use a map to avoid duplicates.
+	// This makes testing and determining the expected count a bit harder. Sorry.
+	// ALSA-2025:19409 Moderate/Sec.  kernel-5.14.0-570.60.1.el9_6.x86_64
+	// ALSA-2025:19930 Moderate/Sec.  kernel-5.14.0-570.62.1.el9_6.x86_64
+	// ALSA-2025:22405 Moderate/Sec.  kernel-5.14.0-611.11.1.el9_7.x86_64
+	// ALSA-2025:19409 Moderate/Sec.  kernel-core-5.14.0-570.60.1.el9_6.x86_64
+	// ALSA-2025:19930 Moderate/Sec.  kernel-core-5.14.0-570.62.1.el9_6.x86_64
+	// ALSA-2025:19409 Moderate/Sec.  kernel-headers-5.14.0-570.60.1.el9_6.x86_64
+	// ALSA-2025:19930 Moderate/Sec.  kernel-headers-5.14.0-570.62.1.el9_6.x86_64
+	if securityUpdateCount != 63 {
+		t.Errorf("Expected 63 security updates, got %d", securityUpdateCount)
 	}
 }
 
@@ -854,7 +864,7 @@ func TestDnfManager_parseDnfSecurityUpdateOutput(t *testing.T) {
 		expected map[string]bool
 	}{
 		{
-			name: "single ALSA advisory",
+			name:  "single ALSA advisory",
 			input: `ALSA-2025:20532 Moderate/Sec.  grub2-tools-efi-1:2.06-114.el9_7.alma.1.x86_64`,
 			expected: map[string]bool{
 				"grub2-tools-efi": true,
@@ -882,13 +892,13 @@ shortline`,
 			},
 		},
 		{
-			name: "empty input",
-			input: ``,
+			name:     "empty input",
+			input:    ``,
 			expected: map[string]bool{},
 		},
 		{
-			name: "line with less than 3 fields",
-			input: `ALSA-2025:20532 Moderate/Sec.`,
+			name:     "line with less than 3 fields",
+			input:    `ALSA-2025:20532 Moderate/Sec.`,
 			expected: map[string]bool{},
 		},
 	}
@@ -910,4 +920,3 @@ shortline`,
 		})
 	}
 }
-

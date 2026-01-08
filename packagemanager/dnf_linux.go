@@ -149,14 +149,14 @@ func (d DnfManager) getUpgradablePackages(ctx context.Context) (string, bool, er
 	return result.Stdout, updatesAvailable, nil
 }
 
-func (d DnfManager) parseDnfCheckUpdateOutput(output string, installedPackages []Package, securityPackages map[string]bool) ([]PackageUpdate, error) {
+func (d DnfManager) parseDnfCheckUpdateOutput(packagesToUpdateOutput string, installedPackages []Package, securityPackages map[string]bool) ([]PackageUpdate, error) {
 	// Create a map of installed packages for quick lookup
 	installedPkgMap := make(map[string]string)
 	for _, pkg := range installedPackages {
 		installedPkgMap[pkg.Name] = pkg.Version
 	}
 
-	lines := strings.Split(output, "\n")
+	lines := strings.Split(packagesToUpdateOutput, "\n")
 	var pkgs []PackageUpdate
 	for _, line := range lines {
 		line = strings.TrimSpace(line)
@@ -236,6 +236,16 @@ func (d DnfManager) parseDnfSecurityUpdateOutput(output string) (map[string]bool
 		// RHSA = Red Hat Security Advisory
 		// RLSA = Rocky Linux Security Advisory
 		pkgWithVersionAndArch := fields[2]
+
+		// Some packages may appear multiple times with different advisories.
+		// We use a map to avoid duplicates.
+		// ALSA-2025:19409 Moderate/Sec.  kernel-5.14.0-570.60.1.el9_6.x86_64
+		// ALSA-2025:19930 Moderate/Sec.  kernel-5.14.0-570.62.1.el9_6.x86_64
+		// ALSA-2025:22405 Moderate/Sec.  kernel-5.14.0-611.11.1.el9_7.x86_64
+		// ALSA-2025:19409 Moderate/Sec.  kernel-core-5.14.0-570.60.1.el9_6.x86_64
+		// ALSA-2025:19930 Moderate/Sec.  kernel-core-5.14.0-570.62.1.el9_6.x86_64
+		// ALSA-2025:19409 Moderate/Sec.  kernel-headers-5.14.0-570.60.1.el9_6.x86_64
+		// ALSA-2025:19930 Moderate/Sec.  kernel-headers-5.14.0-570.62.1.el9_6.x86_64
 
 		// Remove the version from the package name
 		// Find the last hyphen before a digit (start of version)
