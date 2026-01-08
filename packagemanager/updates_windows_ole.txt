@@ -1,0 +1,94 @@
+package packagemanager
+
+import (
+	"context"
+	"fmt"
+
+	"github.com/go-ole/go-ole"
+	"github.com/go-ole/go-ole/oleutil"
+)
+
+// WindowsUpdatesManager implements WindowsManager for Windows Updates
+type WindowsUpdatesManager struct{}
+
+func (w WindowsUpdatesManager) IsAvailable() bool {
+	return true
+}
+func (w WindowsUpdatesManager) UpdateMetadata(ctx context.Context) error {
+	return nil
+}
+
+func (w WindowsUpdatesManager) ListInstalledPackages(ctx context.Context) ([]Package, error) {
+	return nil, nil
+}
+
+func (w WindowsUpdatesManager) ListAvailableUpdates(ctx context.Context) ([]WindowsUpdate, error) {
+	// Use the Windows Update COM API to query available updates
+	// A short powershell script equivalent would be:
+	/*
+		$Session = New-Object -ComObject Microsoft.Update.Session
+		$Searcher = $Session.CreateUpdateSearcher()
+		$Results = $Searcher.Search("IsInstalled=0")
+		$Results.Updates | ForEach-Object {
+			[PSCustomObject]@{
+				Title = $_.Title
+				Description = $_.Description
+				KBArticleIDs = $_.KBArticleIDs
+			}
+		}
+	*/
+	// Just in case this will couse issues or memory leaks
+	// Also what ever you do, do NOT use WMI and the Win32_Product class!
+	// It will may repair all installed MSI packages on the system!
+	// DO NOT EVEN THINK ABOUT IT!
+	// https://support.microsoft.com/kb/974524
+	// https://sdmsoftware.com/wmi/why-win32_product-is-bad-news/
+	//
+
+	// This is a fancy way of doing COM in Go
+	// How ever, it is more or less impossible to mock this for tests
+	// So i will leave it here because it is cool to have it
+	// and maybe will will use it in the future for something
+
+	ole.CoInitialize(0)
+	defer ole.CoUninitialize()
+
+	session, err := oleutil.CreateObject("Microsoft.Update.Session")
+	if err != nil {
+		return nil, err
+	}
+	sessionDisp, err := session.QueryInterface(ole.IID_IDispatch)
+	if err != nil {
+		return nil, err
+	}
+	defer sessionDisp.Release()
+
+	searcher, err := oleutil.CallMethod(sessionDisp, "CreateUpdateSearcher")
+	if err != nil {
+		return nil, err
+	}
+	searcherDisp := searcher.ToIDispatch()
+	defer searcherDisp.Release()
+
+	result, err := oleutil.CallMethod(searcherDisp, "Search", "IsInstalled=0 and IsHidden=0")
+	if err != nil {
+		return nil, err
+	}
+	updates := oleutil.MustGetProperty(result.ToIDispatch(), "Updates").ToIDispatch()
+	count := int(oleutil.MustGetProperty(updates, "Count").Val)
+
+	var windowsUpdates []WindowsUpdate
+	for i := 0; i < count; i++ {
+		update := oleutil.MustGetProperty(updates, "Item", i).ToIDispatch()
+		title := oleutil.MustGetProperty(update, "Title").ToString()
+		fmt.Println("Update:", title)
+		update.Release()
+	}
+	updates.Release()
+
+	fmt.Println(windowsUpdates)
+	return nil, nil
+}
+func (w WindowsUpdatesManager) RebootRequired(ctx context.Context) (bool, error) {
+	return false, nil
+}

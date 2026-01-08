@@ -16,10 +16,26 @@ type PackageUpdate struct {
 	IsPatch          bool // For distros that differentiate between security updates and patches (openSUSE)
 }
 
+type WindowsUpdate struct {
+	Title            string
+	Description      string
+	KBArticleIDs     []string
+	IsInstalled      bool
+	IsSecurityUpdate bool
+	IsOptional       bool
+	UpdateID         string
+	RevisionNumber   int
+	RebootRequired   bool
+}
+
 type PackageManager interface {
 	IsAvailable() bool
 	UpdateMetadata(ctx context.Context) error
 	ListInstalledPackages(ctx context.Context) ([]Package, error)
 	ListUpgradablePackages(ctx context.Context) ([]PackageUpdate, error)
 	RebootRequired(ctx context.Context) (bool, error)
+}
+
+type WindowsManager interface {
+	ListAvailableUpdates(ctx context.Context) ([]WindowsUpdate, error)
 }
