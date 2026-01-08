@@ -34,6 +34,12 @@ type WindowsUpdate struct {
 	RebootRequired   bool
 }
 
+type MacosUpdate struct {
+	Name        string
+	Description string
+	Version     string
+}
+
 type PackageManager interface {
 	IsAvailable() bool
 	UpdateMetadata(ctx context.Context) error
