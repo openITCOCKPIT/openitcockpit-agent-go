@@ -10,13 +10,26 @@ import (
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/utils"
 )
 
-// DnfManager implements PackageManager for dnf
+// DnfManager implements PackageManager for dnf or yum
 type DnfManager struct{}
+
+// getPkgManagerBinary returns the package manager binary to use (dnf or yum)
+func (d DnfManager) getPkgManagerBinary() string {
+	if path, err := exec.LookPath("dnf"); err == nil {
+		return path
+	}
+	if path, err := exec.LookPath("yum"); err == nil {
+		return path
+	}
+	// fallback to dnf
+	return "dnf"
+}
 
 // IsAvailable checks if dnf is available on the system
 func (d DnfManager) IsAvailable() bool {
-	_, err := exec.LookPath("dnf")
-	return err == nil
+	_, dnfErr := exec.LookPath("dnf")
+	_, yumErr := exec.LookPath("yum")
+	return dnfErr == nil || yumErr == nil
 }
 
 // UpdateMetadata updates the package metadata using dnf
@@ -37,8 +50,9 @@ func (d DnfManager) ListInstalledPackages(ctx context.Context) ([]Package, error
 
 func (d DnfManager) getInstalledPackagesWithCancel(ctx context.Context) (string, error) {
 	timeout := 10 * time.Second
+	bin := d.getPkgManagerBinary()
 	result, err := utils.RunCommand(ctx, utils.CommandArgs{
-		Command: "dnf list installed",
+		Command: bin + " list installed",
 		Timeout: timeout,
 		Env: map[string]string{
 			"LANG": "C",
@@ -130,8 +144,9 @@ func (d DnfManager) getUpgradablePackages(ctx context.Context) (string, bool, er
 	// check-update can run long, in case it refreshes metadata, so we set a higher timeout here
 	// Also, a return code of 100 means there are updates available, so we should not treat it as an error
 	timeout := 300 * time.Second
+	bin := d.getPkgManagerBinary()
 	result, err := utils.RunCommand(ctx, utils.CommandArgs{
-		Command: "dnf --quiet check-update",
+		Command: bin + " --quiet check-update",
 		Timeout: timeout,
 		Env: map[string]string{
 			"LANG": "C",
@@ -202,8 +217,9 @@ func (d DnfManager) getSecurityRelevantUpdates(ctx context.Context) (string, err
 	// alternatively, we could use
 	// dnf updateinfo info --available
 	timeout := 300 * time.Second
+	bin := d.getPkgManagerBinary()
 	result, err := utils.RunCommand(ctx, utils.CommandArgs{
-		Command: "dnf updateinfo list --available security",
+		Command: bin + " updateinfo list --available security",
 		Timeout: timeout,
 		Env: map[string]string{
 			"LANG": "C",
@@ -298,6 +314,7 @@ func (d DnfManager) RebootRequired(ctx context.Context) (bool, error) {
 
 	// yum-utils and dnf-utils provide needs-restarting command
 	timeout := 60 * time.Second
+	// needs-restarting is available with both dnf-utils and yum-utils
 	result, err := utils.RunCommand(ctx, utils.CommandArgs{
 		Command: "needs-restarting -r",
 		Timeout: timeout,
