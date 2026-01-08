@@ -45,4 +45,5 @@ type PackageManager interface {
 type WindowsManager interface {
 	ListInstalledApps(ctx context.Context) ([]WindowsApp, error)
 	ListAvailableUpdates(ctx context.Context) ([]WindowsUpdate, error)
+	RebootRequired(ctx context.Context) (bool, error)
 }

@@ -199,6 +199,21 @@ func (w WindowsUpdatesManager) parsePowerShellUpdateSessionOutput(output string)
 }
 
 func (w WindowsUpdatesManager) RebootRequired(ctx context.Context) (bool, error) {
+	checks := []struct {
+		key  registry.Key
+		path string
+	}{
+		{registry.LOCAL_MACHINE, `SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WindowsUpdate\\Auto Update\\RebootRequired`},
+		{registry.LOCAL_MACHINE, `SYSTEM\\CurrentControlSet\\Control\\Session Manager`},
+		{registry.LOCAL_MACHINE, `SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Component Based Servicing\\RebootPending`},
+	}
+	for _, check := range checks {
+		k, err := registry.OpenKey(check.key, check.path, registry.READ)
+		if err == nil {
+			k.Close()
+			return true, nil
+		}
+	}
 	return false, nil
 }
 

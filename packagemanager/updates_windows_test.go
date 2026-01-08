@@ -1,8 +1,12 @@
 package packagemanager
 
 import (
+	"context"
+	"errors"
 	"reflect"
 	"testing"
+
+	"golang.org/x/sys/windows/registry"
 )
 
 // To get this json, copy and paste the value of psScript from
@@ -210,5 +214,123 @@ func TestGetInstalledWindowsApps(t *testing.T) {
 	}
 	if len(apps) == 0 {
 		t.Errorf("expected some installed apps, got 0")
+	}
+}
+
+// mockRegistryOpenKey is a function variable to allow mocking in tests.
+var mockRegistryOpenKey func(key registry.Key, path string, access uint32) (registry.Key, error)
+
+// patchRegistryOpenKey replaces registry.OpenKey with a mock for testing.
+func patchRegistryOpenKey() func() {
+	orig := registryOpenKey
+	registryOpenKey = mockRegistryOpenKey
+	return func() { registryOpenKey = orig }
+}
+
+// registryOpenKey is a wrapper for registry.OpenKey to allow mocking.
+var registryOpenKey = registry.OpenKey
+
+// Patch WindowsUpdatesManager to use registryOpenKey instead of registry.OpenKey.
+func (w WindowsUpdatesManager) RebootRequiredTestable(ctx context.Context) (bool, error) {
+	checks := []struct {
+		key  registry.Key
+		path string
+	}{
+		{registry.LOCAL_MACHINE, `SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WindowsUpdate\\Auto Update\\RebootRequired`},
+		{registry.LOCAL_MACHINE, `SYSTEM\\CurrentControlSet\\Control\\Session Manager`},
+		{registry.LOCAL_MACHINE, `SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Component Based Servicing\\RebootPending`},
+	}
+	for _, check := range checks {
+		k, err := registryOpenKey(check.key, check.path, registry.READ)
+		if err == nil {
+			k.Close()
+			return true, nil
+		}
+	}
+	return false, nil
+}
+
+// fakeKey is no longer needed; use registry.Key(0) as a dummy key in tests.
+
+func TestRebootRequired_TrueOnFirstKey(t *testing.T) {
+	manager := WindowsUpdatesManager{}
+	mockRegistryOpenKey = func(key registry.Key, path string, access uint32) (registry.Key, error) {
+		if path == `SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WindowsUpdate\\Auto Update\\RebootRequired` {
+			return registry.Key(0), nil
+		}
+		return registry.Key(0), errors.New("not found")
+	}
+	defer patchRegistryOpenKey()()
+
+	result, err := manager.RebootRequiredTestable(context.Background())
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if !result {
+		t.Errorf("expected true, got false")
+	}
+}
+
+func TestRebootRequired_TrueOnSecondKey(t *testing.T) {
+	manager := WindowsUpdatesManager{}
+	callCount := 0
+	mockRegistryOpenKey = func(key registry.Key, path string, access uint32) (registry.Key, error) {
+		callCount++
+		if path == `SYSTEM\\CurrentControlSet\\Control\\Session Manager` {
+			return registry.Key(0), nil
+		}
+		return registry.Key(0), errors.New("not found")
+	}
+	defer patchRegistryOpenKey()()
+
+	result, err := manager.RebootRequiredTestable(context.Background())
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if !result {
+		t.Errorf("expected true, got false")
+	}
+	if callCount < 2 {
+		t.Errorf("expected at least 2 calls, got %d", callCount)
+	}
+}
+
+func TestRebootRequired_TrueOnThirdKey(t *testing.T) {
+	manager := WindowsUpdatesManager{}
+	callCount := 0
+	mockRegistryOpenKey = func(key registry.Key, path string, access uint32) (registry.Key, error) {
+		callCount++
+		if path == `SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Component Based Servicing\\RebootPending` {
+			return registry.Key(0), nil
+		}
+		return registry.Key(0), errors.New("not found")
+	}
+	defer patchRegistryOpenKey()()
+
+	result, err := manager.RebootRequiredTestable(context.Background())
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if !result {
+		t.Errorf("expected true, got false")
+	}
+	if callCount < 3 {
+		t.Errorf("expected at least 3 calls, got %d", callCount)
+	}
+}
+
+func TestRebootRequired_FalseWhenNoKeysExist(t *testing.T) {
+	manager := WindowsUpdatesManager{}
+	mockRegistryOpenKey = func(key registry.Key, path string, access uint32) (registry.Key, error) {
+		return registry.Key(0), errors.New("not found")
+	}
+	defer patchRegistryOpenKey()()
+
+	result, err := manager.RebootRequiredTestable(context.Background())
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if result {
+		t.Errorf("expected false, got true")
 	}
 }
