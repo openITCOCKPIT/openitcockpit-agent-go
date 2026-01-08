@@ -7,6 +7,7 @@ import (
 
 // Sample output of the command
 // LANG=c rpm -qa --qf "%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE} %{DESCRIPTION}\nEND\n"
+// Created on RHEL9
 var rpmQueryOutput = `gpg-pubkey 0:b86b3716-61e69f29 -----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: rpm-4.16.1.3 (NSS-3)
 
@@ -885,6 +886,159 @@ tar.x86_64                                                                      
 var dnfAvailableSecurityUpdatesForRpmTestingFaked = `Last metadata expiration check: 0:52:58 ago on Wed Jan  7 18:13:57 2026.
 ALSA-2025:12345 Moderate/Sec.  tar-2:1.34-9.el9_7.x86_64`
 
+// Sample output of the command
+// LANG=c rpm -qa --qf "%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE} %{DESCRIPTION}\nEND\n"
+// Created on openSUSE 16
+var rpmQueryOutputOpenSuse = `gpg-pubkey 0:287a0027-682477e3 -----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: rpm-4.20.1
+
+mQINBGgkd+MBEADj3FRif7LGWekuuPsJQ2JLm3cCA8OksKH74lkS9X2BWdbxlO3c
+eaugb9czM87VzYYcY96s6daBYV6xIR9555S2IGOxZ0Hr72a7toQ5E6pZW4t818k7
+j2tRnCtEYu55RUv0QW34S58D5KX/AXcnpYDqgvdxnZXr6+lZubnifX6dY47hznhe
+fDYapN8K3dcWlmu9ps53lUJPeON27X82Okx4gFTunxVVtU0kwHYNuxqEM2CcKH4s
+ogZ6RVj+0zad7euI+g37itUQZJFx2UucPFPNweROGG4KLQKKCEnqdS8Od5OVRTW/
+BVPz+hUN/rlBoOCwYSPZXymCoiHAB8dQZ6a6ln/jEBvn6kqqAH+0gAnsQBpAySp3
+FMRAW+9Oiij61+w12GusY/L8ZpCGNc1xNC4iZrOUqGmG1TXoo0kpUX1POKXBT1et
+bTLAj4iUKQ2CO2xLCfZh79NoZxlen2WCK9YyzdU3ZnV9LOGW2I7vMuz3cmKWjvrQ
+k6+HRxkrOxklbeq5Mb+cBOQ4E+Z/9SSwRJxwsDUo66pZpR2MtSt+s5KpOYRc3nqX
+5IB3I7JbX8RTDu7gK+TAXxhOv1XvS7ny/eFaR0/RtaiL3BygJFRvzILVydCWoB1G
+kOVjvyY+WAnyn9k5KjymCTgFMmjBBkX1PDzLp9YGgfIXPsaYzp6BBP5nJwARAQAB
+tEtvcGVuU1VTRSBCYWNrcG9ydHMgZm9yIFNVU0UgTGludXggMTYgPHNsZS1iYWNr
+cG9ydHMtMjAyNTAwNTE0QG9wZW5zdXNlLm9yZz6JAlQEEwEIAD4WIQS/P5pn06L/
+mKc/XgdIjFg9KHoAJwUCaCR34wIbAwUJFJlwAAULCQgHAgYVCgkICwIEFgIDAQIe
+AQIXgAAKCRBIjFg9KHoAJ4t8EAC0QsAye5VKZJ6T1T1EMGL9Yos+OJpMQHMk40mi
+1OrQxBMNMs8coHbpzZTGGfy7C/tu1uaX2EWS38J+Ur0eBqRGlnQjlglsTT22BqlI
+hAS0P3BkFTsGiZHpw+YI3uZXL9zXwqwkWBhjxJLZF1x/ZkCZmi6UUTG0Yw+eW1uV
+jYUQ2zAFnv84zoQUTW9N1KjrNXRiWwhhp+ZxtGl9VsLyTX1+jqGwIRGoomBdu/50
+m+b7mmTFOlCHVIsnK8uaxpCLZ+p2W7bbil08WzCq2cj9OD+/MTXC6vK9PSkZr0DR
+/WBRt8PdzVbmZtoUekacm260ZSE15qxpuwTKFLuyxQYW3AozzXo6TIkEls7+wdsf
+D3nzn4L2mVbCh0TAtgRlC1v8Y5oYKsMtVpy5tlXYFYzJmGcNFM9fK8Ak/gjPgHsE
+edcyeIW+1mhtAWKbTO2x/JDQG8MplqLkCZN6NDeBGMVuK/PVaGwXSpXOOx2T+hlJ
+L46RtR9DGXWlSIdDJuNa/MAGGYl5+R+wLu7sNyiGnHAaAXmVkNkk2LcPwOM+3mfu
+DYfiFvlMlR/cqTyltUPrItp5XO3wkylx0Mrqndy4TEnOy+PAkZJahPaCbVx9lw4Z
+LN0z/fcYme6Fqffr9Hi/XbO+dff4EEGBimQi6T5GY9kxeBj1v2zwxw2GZmaUiZae
+yrGAlQ==
+=888g
+-----END PGP PUBLIC KEY BLOCK-----
+
+END
+gpg-pubkey 0:29b700a4-62b07e22 -----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: rpm-4.20.1
+
+mQINBGKwfiIBEADe9bKROWax5CI83KUly/ZRDtiCbiSnvWfBK1deAttV+qLTZ006
+090eQCOlMtcjhNe641Ahi/SwMsBLNMNich7/ddgNDJ99H8Oen6mBze00Z0Nlg2HZ
+VZibSFRYvg+tdivu83a1A1Z5U10Fovwc2awCVWs3i6/XrpXiKZP5/Pi3RV2K7VcG
+rt+TUQ3ygiCh1FhKnBfIGS+UMhHwdLUAQ5cB+7eAgba5kSvlWKRymLzgAPVkB/NJ
+uqjz+yPZ9LtJZXHYrjq9yaEy0J80Mn9uTmVggZqdTPWx5CnIWv7Y3fnWbkL/uhTR
+uDmNfy7a0ULB3qjJXMAnjLE/Oi14UE28XfMtlEmEEeYhtlPlH7hvFDgirRHN6kss
+BvOpT+UikqFhJ+IsarAqnnrEbD2nO7Jnt6wnYf9QWPnl93h2e0/qi4JqT9zw93zs
+fDENY/yhTuqqvgN6dqaD2ABBNeQENII+VpqjzmnEl8TePPCOb+pELQ7uk6j4D0j7
+slQjdns/wUHg8bGE3uMFcZFkokPv6Cw6Aby1ijqBe+qYB9ay7nki44OoOsJvirxv
+p00MRgsm+C8he+B8QDZNBWYiPkhHZBFi5GQSUY04FimR2BpudV9rJqbKP0UezEpc
+m3tmqLuIc9YCxqMt40tbQOUVSrtFcYlltJ/yTVxu3plUpwtJGQavCJM7RQARAQAB
+tDRvcGVuU1VTRSBQcm9qZWN0IFNpZ25pbmcgS2V5IDxvcGVuc3VzZUBvcGVuc3Vz
+ZS5vcmc+iQI+BBMBAgAoBQJisH4iAhsDBQkHhM4ABgsJCAcDAgYVCAIJCgsEFgID
+AQIeAQIXgAAKCRA1ovhuKbcApKRrEACJMhZhsPJBOkYmANvH5mqlk27brA3IZoM4
+8qTzERebzKa0ZH1fgRI/3DhrfBYL0M5XOb3+26Ize0pujyJQs61Nlo1ibtQqCoyu
+dvP/pmY1/Vr374wlMFBuCfAjdad4YXkbe7q7GGjo6cF89qtBfTqEtaRrfDgtPLx/
+s9/WXLGo0XYqCCSPVoU66jQYNcCt3pH+hqytvntXJDhU+DveOnQCOSBBHhCMST3E
+QvriN/GnHf+sO19UmPpyHH0TM5Ru4vDrgzKYKT/CzbllfaJSk9cEuTY8Sv1sP/7B
+Z7YvOE0soIgM1sVg0u3R/2ROx0MKoLcq7EtLw64eE+wnw9bHYZQNmS+J/18p7Bo8
+I7e+8WRi+m/pus5FEWsIH1uhxKLgJGFDTHHGZtW+myjnUzXVIkpJGrKoolzYjHdK
+lRYM2fVuNI1eq6CZ6PFXg2UxovVczSnGMO33HZE09vpgkRDBrw1vF0o/Wnm02kig
+V6xYHk5wJx8vL74wPvCbw73UNT9OSdxYAz7JPqGOD6cpKe7XcAH2sYmlGpggAIUz
+Rq/lROEF5lx4SxB838JU4ezxD++BJXfBTE8JZmlGscXv74y9nCtSOZza8KOKj8ou
+WRl739FMnx9jRd7HHj3TIyymoveODnZ7f3IElyyFsjBW3XuQ9XfpZrIkwHuaZV5M
+6q2h+hgWNQ==
+=nMh8
+-----END PGP PUBLIC KEY BLOCK-----
+
+END
+gpg-pubkey 0:39db7c82-66c5d91a -----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: rpm-4.20.1
+
+mQENBFEKlmsBCADbpZZbbSC5Zi+HxCR/ynYsVxU5JNNiSSZabN5GMgc9Z0hxeXxp
+YWvFoE/4n0+IXIsp83iKvxf06Eu8je/DXp0lMqDZu7WiT3XXAlkOPSNV4akHTDoY
+91SJaZCpgUJ7K1QXOPABNbREsAMN1a7rxBowjNjBUyiTJ2YuvQRLtGdK1kExsVma
+hieh/QxpoDyYd5w/aky3z23erCoEd+OPfAqEHd5tQIa6LOosa63BSCEl3milJ7J9
+vDmoGPAoS6ui7S2R5X4/+PLN8Mm2kOBrFjhmL93LX0mrGCMxsNsKgP6zabYKQEb8
+L028SXvl7EGoA+Vw5Vd3wIGbM73PfbgNrXjfABEBAAG0KFN1U0UgUGFja2FnZSBT
+aWduaW5nIEtleSA8YnVpbGRAc3VzZS5kZT6JAVMEEwEIAD0CGwMGCwkIBwMCBBUC
+CAMEFgIDAQIeAQIXgBYhBP6rUCU52EbbLAlhynCvnoE523yCBQJmxdkaBQkdeMEv
+AAoJEHCvnoE523yCsyEH/1NZhXtgIa4kFCZdWhPhXPvqz7IkIm62yXpS3Iseivbm
+rxzQNXNlQVLnaOOKZX4nEUyh1lr+w18PGlb1yIdMjQqt04hwFgCU+q99cTfrAHG5
+jzirSq9I2iBjn+zARCjLzJsD+dH7JGfEMm0lxtPyMRoNJ6bq8eEkjEtKxDOg0iTE
+vQ4eboRlR0a8hH06tauPfeWx6Ri6hIobN3TNdCY/RQe4WeyYL8vEog3c7uYYag/V
+iMFfj8QzRHgkkcCE9W3TTfr1K/h8AGZTW0uJH4YQhl2HqUsspKmicZIbK/W9M87l
+HUyO8EgreF1MuKsg1GWxV2OikZAJKMcNs6EhzLWUWHs=
+=5hye
+-----END PGP PUBLIC KEY BLOCK-----
+
+END
+gpg-pubkey 0:3fa1d6ce-67c856ee -----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: rpm-4.20.1
+
+mQINBGPJSBwBEAC+sp2UJHVei0aAkvnEeeuRrIbzyWotRYuDgdWzS4V01alxFl97
+ZPA6syyyZpITGP6fLP0AG0KipXABcYdaF7iFGKnhm6v5ExQ+Aft9SNaJmGqxwPng
+2jHGoaovbcOrvpix1INwPlxyxAaKfCtdH6kE9ZBzZXKHhDwTuBAyIJmvz5P4djxs
+RFxryZ2wq2IbhT/eu5b+3QRdeOHhbP/K2ZA+jd4Ct6uSyEAV0n9D5rVrtKhYqzp7
+zXPYntFW9IgEC/HisQ3TcDhKqK0xfxsQAYjsrvrbhc2O1sHWfhDEqV7W8yPrEbH2
+NTWmQxiSf4ZEJsKOZa6TI4fOS89OPRRIC0Ec+mFWHHSfhGaiK0g59TSuBECke7jV
+hgwLKa0WGzxhYaZ/dPxjke9MfHPIlCrwfH4tKsEY5Cy+GQWwt8s7J9lK1gEGz0c2
+nLA4PBDCPqKB/+GEHkF+hyN1GHlhoY78mJ+c/QHyTv/DYOvS3jr5RaJYwKkBHS+0
+5pBUGW6PANT6yoDGOGLaq7hJLdeAwW+qLSfFSxBOnjBrtBV4Pqj1kbzCKFBGgazF
+UPhWOSRms8erkr4ltGtUPDJxna16uoTZaYkjn7fZ/3iTqVgnSC/sOJM9KpA1kFrg
+5R1OdTzymu7OwH7cmPSn0Yyg1BlU3K8EYFRFfhKptcNzuwERIAdcY39QnQARAQAB
+tChTVVNFIFBhY2thZ2UgU2lnbmluZyBLZXkgPGJ1aWxkQHN1c2UuZGU+iQJVBBMB
+CAA/AhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgBYhBH8AkVexJ7mU1c++dvdP
+Cbw/odbOBQJnyFbuBQkLhS5SAAoJEPdPCbw/odbO+pwP/2R7SlCqx6rZLAd8+Ejm
+HmRhkbFgnY9uz9JiEmECdJRHWu2ulw++6Ju7Hc26S4dRLWWvCzlJRBlGQiqUgl6X
+MZQb7kAt2D2QQyaepWRsF1BA17EP/ByHe+RHqmbsOPNRx9x+Wl2Ri8mV+u7B6i+O
+G6FJkvHtBwrEjuSr5UzMPNwJMuHnE3ZqGMtgS2ZFqboAEYAEpZ1xHNsx7w4O/sHO
+12s4w4ZprJdErrlM9W2mpwPuP+EDoVbX14CaZQeWydsMQUHslpKI9OTkRCpexOAf
+xBqv5lo7M8WjIC8HOO/Dc2qpzEHqvHS1YMY1HFQGfDKyDx4bnTafFi4WTJJDxLda
+MAkUULNTxMovGWZ/gvAh9HxipiIgF/tLvY9Kh86rLmooyZcyKeE7ie+KKMa5QuEM
+nyWMC6wzBNiionpNWlTQF1WTSGDIh2UJcFAGMjwlobj1vQJEZKmPi831qi4K7wvq
+sOh2KYMJulk1Rktyn0JpINXEf5LKG+BWDcq1OzHFO2P6k8LUmPkvwbuDhGPN2FQC
+e31740TNr+VnAYp7WZ4K17/vlaD70w3pBELF0BNr01Iv5Y7I8K/OVoyfIUnZfDS2
+SnxZlXkQu2+9K3gv725ujbbxPVok7unVt07ILfUbM+47mkf9XVLWMmUrL/FwyuP8
+oJQ9Zs+3YpBsPb9p44NQZ6Qw
+=a++m
+-----END PGP PUBLIC KEY BLOCK-----
+
+END
+apparmor-docs 0:4.1.1-160000.2.2 This package contains documentation for AppArmor.
+
+This package is part of a suite of tools that used to be named
+SubDomain.
+END
+bash-doc 0:5.2.37-160000.2.2 This package contains the documentation for using the bourne shell
+interpreter Bash.
+END
+boost-license1_86_0 0:1.86.0-160000.2.2 This package contains the license boost is provided under.
+END
+branding-openSUSE 0:16.0.20240405-lp160.10.1 This package contains the file /etc/SUSE-brand, and its name is used as
+a trigger for installation of correct vendor brand packages.
+END
+btrfsprogs-udev-rules 0:6.14-160000.2.2 This package contains the udev rule file for configuring device mapper
+devices that are components of Btrfs filesystems.  It is meant to be
+used with versions of udev that contain the "built-in" btrfs command
+(v190 and newer).  Older versions of udev will call the version of
+"btrfs ready" contained in the btrfsprogs package, which does the right
+thing.
+END
+compat-usrmerge-tools 0:84.87-160000.2.2 Tools related to UsrMerge to check the state of the system and to
+convert an existing system to UsrMerge.
+END
+coreutils-doc 0:9.6-160000.2.2 This package contains the documentation for the GNU Core Utilities.
+END
+cracklib-dict-full 0:2.8.12-160000.2.2 CrackLib tests passwords to determine whether they match certain
+security-oriented characteristics. You can use CrackLib to stop users
+from choosing passwords that are easy to guess.
+END
+cryptsetup-doc 0:2.7.5-160000.2.2 Documentation and man pages for cryptsetup
+END`
+
 func TestRpmManager_getInstalledPackagesWithCancel(t *testing.T) {
 
 	rpm := RpmManager{}
@@ -904,7 +1058,7 @@ func TestRpmManager_getInstalledPackagesWithCancel(t *testing.T) {
 	}
 }
 
-func TestRpmManager_parseRpmOutput(t *testing.T) {
+func TestRpmManager_parseRpmOutputRHEL(t *testing.T) {
 
 	rpm := RpmManager{}
 
@@ -955,6 +1109,58 @@ func TestRpmManager_parseRpmOutput(t *testing.T) {
 			pkgName:     "dbus",
 			wantVersion: "1:1.12.20-8.el9",
 			wantDesc:    "D-BUS is a system for sending messages between applications",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			found := false
+			for _, pkg := range packages {
+				// Assume pkg has Name, Version, Description fields
+				if pkg.Name == tt.pkgName {
+					found = true
+					if pkg.Version != tt.wantVersion {
+						t.Errorf("%s: got version %q, want %q", tt.pkgName, pkg.Version, tt.wantVersion)
+					}
+					if !strings.HasPrefix(pkg.Description, tt.wantDesc) {
+						t.Errorf("%s: got description %q, want %q", tt.pkgName, pkg.Description, tt.wantDesc)
+					}
+				}
+			}
+			if !found {
+				t.Errorf("Package %q not found in parsed output", tt.pkgName)
+			}
+		})
+	}
+}
+
+func TestRpmManager_parseRpmOutputOpenSUSE(t *testing.T) {
+
+	rpm := RpmManager{}
+
+	packages, err := rpm.parseRpmOutput(rpmQueryOutputOpenSuse)
+	if err != nil {
+		t.Fatalf("Error parsing dpkg output: %v", err)
+	}
+
+	// Table-driven test cases
+	tests := []struct {
+		name        string
+		pkgName     string
+		wantVersion string
+		wantDesc    string
+	}{
+		{
+			name:        "apparmor package",
+			pkgName:     "apparmor-docs",
+			wantVersion: "4.1.1-160000.2.2",
+			wantDesc:    "This package contains documentation for AppArmor.",
+		},
+		{
+			name:        "coreutils-doc package",
+			pkgName:     "coreutils-doc",
+			wantVersion: "9.6-160000.2.2",
+			wantDesc:    "This package contains the documentation for the GNU Core Utilities.",
 		},
 	}
 
