@@ -1,6 +1,8 @@
 package packagemanager
 
-import "context"
+import (
+	"context"
+)
 
 type Package struct {
 	Name        string
@@ -52,4 +54,27 @@ type WindowsManager interface {
 	ListInstalledApps(ctx context.Context) ([]WindowsApp, error)
 	ListAvailableUpdates(ctx context.Context) ([]WindowsUpdate, error)
 	RebootRequired(ctx context.Context) (bool, error)
+}
+
+type MacOSManager interface {
+	ListInstalledApps(ctx context.Context) ([]Package, error)
+	ListAvailableUpdates(ctx context.Context) ([]MacosUpdate, error)
+}
+
+// truncateDescription truncates the given description to the specified limit.
+func truncateDescription(desc string, limit int64) string {
+	// -1 = No limit
+	if limit <= -1 {
+		return desc
+	}
+
+	// 0 = disable description
+	if limit == 0 {
+		return ""
+	}
+
+	if limit > 0 && int64(len(desc)) > limit {
+		return desc[:limit]
+	}
+	return desc
 }

@@ -1,10 +1,26 @@
 package packagemanager
 
-import "strings"
+import (
+	"encoding/json"
+	"strings"
+)
 
-// parseSoftwareUpdateOutput parses the output of the softwareupdate --list command
+type MacOSAppsJson struct {
+	SPApplicationsDataType []struct {
+		Name string `json:"_name"`
+		//ArchKind     string    `json:"arch_kind"`
+		//LastModified time.Time `json:"lastModified"`
+		//ObtainedFrom string    `json:"obtained_from"`
+		//Path         string    `json:"path"`
+		//SignedBy     []string  `json:"signed_by,omitempty"`
+		Version string `json:"version,omitempty"`
+		Info    string `json:"info,omitempty"`
+	} `json:"SPApplicationsDataType"`
+}
+
+// parseMacOSSoftwareUpdateOutput parses the output of the softwareupdate --list command
 // This method is in here so we can test it easily on windows and linux systems
-func parseSoftwareUpdateOutput(output string) ([]MacosUpdate, error) {
+func parseMacOSSoftwareUpdateOutput(output string) ([]MacosUpdate, error) {
 	// This is the format we need to parse
 	//* Label: Command Line Tools for Xcode 26.2-26.2
 	//	Title: Command Line Tools for Xcode 26.2, Version: 26.2, Size: 858715KiB, Recommended: YES,
@@ -50,4 +66,24 @@ func parseSoftwareUpdateOutput(output string) ([]MacosUpdate, error) {
 	}
 
 	return updates, nil
+}
+
+func parseMacOSInstalledAppsOutput(output string) ([]Package, error) {
+	var apps []Package
+
+	var data MacOSAppsJson
+	err := json.Unmarshal([]byte(output), &data)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, app := range data.SPApplicationsDataType {
+		apps = append(apps, Package{
+			Name:        app.Name,
+			Version:     app.Version,
+			Description: app.Info,
+		})
+	}
+
+	return apps, nil
 }

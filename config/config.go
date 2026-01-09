@@ -62,6 +62,12 @@ type PrometheusExporter struct {
 	Timeout  int64  `mapstructure:"timeout"`
 }
 
+type PackagemanagerConfiguration struct {
+	Enabled                bool  `mapstructure:"enabled"`
+	CheckInterval          int64 `mapstructure:"check-interval"`
+	LimitDescriptionLength int64 `mapstructure:"limit-description-length"`
+}
+
 // Configuration with all sub configuration structs
 type Configuration struct {
 	ConfigurationPath string `json:"-" mapstructure:"-"`
@@ -146,6 +152,9 @@ type Configuration struct {
 	// Prometheus Exporter / Proxy
 	Prometheus                      *PrometheusConfiguration `json:"prometheus"`
 	PrometheusExporterConfiguration []*PrometheusExporter    `json:"prometheus_exporter_configuration" mapstructure:"-"`
+
+	// Packagemanager
+	Packagemanager *PackagemanagerConfiguration `json:"packagemanager"`
 }
 
 var defaultValue = map[string]interface{}{
@@ -191,6 +200,12 @@ var prometheusDefaultvalue = map[string]interface{}{
 	"exporters": filepath.Join(platformpaths.Get().ConfigPath(), "prometheus_exporters.ini"),
 }
 
+var packagemanagerDefaultvalue = map[string]interface{}{
+	"enabled":                  true,
+	"check-interval":           60,
+	"limit-description-length": 80,
+}
+
 func setConfigurationDefaults(v *viper.Viper) {
 	for key, value := range defaultValue {
 		v.SetDefault("default."+key, value)
@@ -202,6 +217,9 @@ func setConfigurationDefaults(v *viper.Viper) {
 
 	for key, value := range prometheusDefaultvalue {
 		v.SetDefault("prometheus."+key, value)
+	}
+	for key, value := range packagemanagerDefaultvalue {
+		v.SetDefault("packagemanager."+key, value)
 	}
 }
 

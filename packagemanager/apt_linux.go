@@ -163,3 +163,62 @@ func (a AptManager) RebootRequired(ctx context.Context) (bool, error) {
 	}
 	return false, nil
 }
+
+func (a AptManager) CollectPackageInfo(ctx context.Context, limitDescriptionLength int64) (PackageInfo, error) {
+	result := PackageInfo{
+		Enabled:    true,
+		Panding:    false,
+		LastUpdate: time.Now().Unix(),
+		Stats: PackageStats{
+			PackageManager:  "apt",
+			OperatingSystem: "linux",
+		},
+	}
+
+	err := a.UpdateMetadata(ctx)
+	if err != nil {
+		result.Stats.LastError = err
+	}
+
+	installedPackages, err := a.ListInstalledPackages(ctx)
+	if err != nil {
+		result.Stats.LastError = err
+		return result, err
+	}
+	result.Stats.InstalledPackages = int64(len(installedPackages))
+
+	upgradablePackages, err := a.ListUpgradablePackages(ctx)
+	if err != nil {
+		result.Stats.LastError = err
+		return result, err
+	}
+	result.Stats.UpgradablePackages = int64(len(upgradablePackages))
+
+	// Count security updates
+	var securityUpdates int64
+	for _, pkg := range upgradablePackages {
+		if pkg.IsSecurityUpdate {
+			securityUpdates++
+		}
+	}
+	result.Stats.SecurityUpdates = securityUpdates
+
+	rebootRequired, err := a.RebootRequired(ctx)
+	if err != nil {
+		result.Stats.LastError = err
+		return result, err
+	}
+	result.Stats.RebootRequired = rebootRequired
+
+	// Truncate descriptions if needed
+	if limitDescriptionLength != -1 {
+		for i := range installedPackages {
+			installedPackages[i].Description = truncateDescription(installedPackages[i].Description, limitDescriptionLength)
+		}
+	}
+
+	result.LinuxPackages = installedPackages
+	result.LinuxUpdates = upgradablePackages
+
+	return result, nil
+}

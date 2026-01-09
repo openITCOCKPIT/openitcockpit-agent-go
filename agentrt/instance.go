@@ -11,6 +11,7 @@ import (
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/checks"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/config"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/loghandler"
+	"github.com/openITCOCKPIT/openitcockpit-agent-go/packagemanager"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/pushclient"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/webserver"
 	log "github.com/sirupsen/logrus"
@@ -34,16 +35,19 @@ type AgentInstance struct {
 	checkResult                  chan map[string]interface{}
 	customCheckResultChan        chan *checkrunner.CustomCheckResult
 	prometheusExporterResultChan chan *checkrunner.PrometheusExporterResult
+	packageManagerResultChan     chan *packagemanager.PackageInfo
 
 	customCheckResults map[string]interface{}
 
 	prometheusExporterResults map[string]string
+	packageManagerResult      packagemanager.PackageInfo
 
 	logHandler             *loghandler.LogHandler
 	webserver              *webserver.Server
 	checkRunner            *checkrunner.CheckRunner
 	customCheckHandler     *checkrunner.CustomCheckHandler
 	prometheusCheckHandler *checkrunner.PrometheusCheckHandler
+	softwareCollector      *packagemanager.SoftwareCollector
 	pushClient             *pushclient.PushClient
 }
 
@@ -69,6 +73,16 @@ func (a *AgentInstance) processCheckResult(result map[string]interface{}) {
 		}
 
 		result["prometheus_exporters"] = keys
+	}
+
+	if a.packageManagerResult.Enabled {
+		// To not have a huge JSON blob in the check result, we only pass the Stats part
+		result["packagemanager"] = a.packageManagerResult
+	} else {
+		result["packagemanager"] = map[string]interface{}{
+			"enabled": false,
+			"pending": false,
+		}
 	}
 
 	data, err := json.Marshal(result)
@@ -188,6 +202,7 @@ func (a *AgentInstance) doReload(ctx context.Context, cfg *config.Configuration)
 	}
 	a.doCustomCheckReload(ctx, cfg.CustomCheckConfiguration)
 	a.doPrometheusExporterCheckReload(ctx, cfg.PrometheusExporterConfiguration)
+	a.doSoftwareCollectorReload(ctx, cfg)
 }
 
 func (a *AgentInstance) doCustomCheckReload(ctx context.Context, ccc []*config.CustomCheck) {
@@ -215,6 +230,20 @@ func (a *AgentInstance) doPrometheusExporterCheckReload(ctx context.Context, exp
 			ResultOutput:  a.prometheusExporterResultChan,
 		}
 		a.prometheusCheckHandler.Start(ctx)
+	}
+}
+
+func (a *AgentInstance) doSoftwareCollectorReload(ctx context.Context, cfg *config.Configuration) {
+	if a.softwareCollector != nil {
+		a.softwareCollector.Shutdown()
+		a.softwareCollector = nil
+	}
+	if cfg.Packagemanager.Enabled {
+		a.softwareCollector = &packagemanager.SoftwareCollector{
+			Configuration: cfg,
+			Result:        a.packageManagerResultChan,
+		}
+		a.softwareCollector.Start(ctx)
 	}
 }
 
@@ -271,6 +300,10 @@ func (a *AgentInstance) Start(parent context.Context) {
 	a.customCheckResults = map[string]interface{}{}
 	a.prometheusExporterResultChan = make(chan *checkrunner.PrometheusExporterResult)
 	a.prometheusExporterResults = make(map[string]string)
+	a.packageManagerResultChan = make(chan *packagemanager.PackageInfo)
+	a.packageManagerResult = packagemanager.PackageInfo{
+		Enabled: false,
+	}
 	a.shutdown = make(chan struct{})
 	a.reload = make(chan chan struct{})
 	a.logHandler = &loghandler.LogHandler{
@@ -321,6 +354,9 @@ func (a *AgentInstance) Start(parent context.Context) {
 			case res := <-a.prometheusExporterResultChan:
 				// received check result from prometheus exporter
 				a.prometheusExporterResults[res.Name] = res.Result
+			case res := <-a.packageManagerResultChan:
+				// received package manager result
+				a.packageManagerResult = *res
 			}
 
 		}

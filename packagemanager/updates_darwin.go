@@ -8,7 +8,37 @@ import (
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/utils"
 )
 
+// MacOSUpdatesManager implements MacOSManager for macOS Updates
 type MacOSUpdatesManager struct{}
+
+func (m MacOSUpdatesManager) ListInstalledApps(ctx context.Context) ([]Package, error) {
+	output, err := m.getInstalledApps(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return parseMacOSInstalledAppsOutput(output)
+}
+
+func (m MacOSUpdatesManager) getInstalledApps(ctx context.Context) (string, error) {
+	timeout := time.Duration(120 * time.Second)
+	result, err := utils.RunCommand(ctx, utils.CommandArgs{
+		Command: "system_profiler SPApplicationsDataType -json",
+		Timeout: timeout,
+	})
+
+	// There is also a "pkgutil --pkgs" command avaiable but it does not provide versions
+	// so I decided to ignore it for now.
+
+	if err != nil {
+		return "", err
+	}
+
+	if result.RC != 0 {
+		return "", fmt.Errorf("error fetching installed apps, exit code %d: %s", result.RC, result.Stdout)
+	}
+
+	return result.Stdout, nil
+}
 
 func (m MacOSUpdatesManager) getAvailableUpdates(ctx context.Context) (string, error) {
 	timeout := time.Duration(120 * time.Second)
@@ -34,5 +64,5 @@ func (m MacOSUpdatesManager) ListAvailableUpdates(ctx context.Context) ([]MacosU
 		return nil, err
 	}
 
-	return parseSoftwareUpdateOutput(output)
+	return parseMacOSSoftwareUpdateOutput(output)
 }
