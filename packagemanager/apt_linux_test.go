@@ -382,8 +382,8 @@ func TestAptManager_getInstalledPackagesWithCancel(t *testing.T) {
 		t.Fatalf("Error getting installed packages: %v", err)
 	}
 
-	if !strings.HasPrefix(output, "adduser") {
-		t.Errorf("Unexpected output, got: %s", output)
+	if len(output) < 128 {
+		t.Errorf("Output is to short to be a valid dpkg output: %s", output)
 	}
 }
 

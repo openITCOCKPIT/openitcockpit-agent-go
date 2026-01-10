@@ -1,3 +1,4 @@
+//go:build !windows
 // +build !windows
 
 package utils
@@ -5,6 +6,7 @@ package utils
 import (
 	"errors"
 	"os"
+	"os/exec"
 	"syscall"
 )
 
@@ -22,6 +24,11 @@ func handleCommandError(arg0 string, err error) int {
 
 	if os.IsPermission(err) { // does not work with windows
 		return NotExecutable
+	}
+
+	// os.IsNotExist only returns true for errors that wrap os.ErrNotExist, which is not always the case for command-not-found errors.
+	if ee, ok := err.(*exec.Error); ok && ee.Err == exec.ErrNotFound {
+		return NotFound
 	}
 
 	return Unknown
