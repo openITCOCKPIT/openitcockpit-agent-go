@@ -155,7 +155,7 @@ func (a AptManager) parseAptUpgradeOutput(output string) ([]PackageUpdate, error
 // RebootRequired checks if a reboot is required on the system
 func (a AptManager) RebootRequired(ctx context.Context) (bool, error) {
 	// Check for /run/reboot-required or /var/run/reboot-required
-	paths := []string{"/run/reboot-required", "/var/run/reboot-required"}
+	paths := []string{"/run/reboot-required", "/var/run/reboot-required", "/run/reboot-required.pkgs", "/var/run/reboot-required.pkgs"}
 	for _, path := range paths {
 		if _, err := os.Stat(path); err == nil {
 			return true, nil

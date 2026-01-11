@@ -13,6 +13,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/config"
+	"github.com/openITCOCKPIT/openitcockpit-agent-go/packagemanager"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/utils"
 	log "github.com/sirupsen/logrus"
 )
@@ -66,17 +67,20 @@ type updateCrtRequest struct {
 }
 
 type handler struct {
-	StateInput      <-chan []byte
-	PrometheusInput <-chan map[string]string
-	Reloader        Reloader
-	Configuration   *config.Configuration
+	StateInput          <-chan []byte
+	PrometheusInput     <-chan map[string]string
+	PackageManagerInput <-chan packagemanager.PackageInfo
+	Reloader            Reloader
+	Configuration       *config.Configuration
 
-	mtx             sync.RWMutex
-	prometheusMtx   sync.RWMutex
-	shutdown        chan struct{}
-	state           []byte
-	prometheusState map[string]string
-	wg              sync.WaitGroup
+	mtx                 sync.RWMutex
+	prometheusMtx       sync.RWMutex
+	packageManagerMtx   sync.RWMutex
+	shutdown            chan struct{}
+	state               []byte
+	prometheusState     map[string]string
+	packageManagerState packagemanager.PackageInfo
+	wg                  sync.WaitGroup
 
 	router              *mux.Router
 	basicAuthMiddleware *basicAuthMiddleware
@@ -118,6 +122,34 @@ func (w *handler) setPrometheusState(newState map[string]string) {
 	}
 
 	w.prometheusState = state
+}
+
+func (w *handler) getPackageManagerState() packagemanager.PackageInfo {
+	w.packageManagerMtx.RLock()
+	defer w.packageManagerMtx.RUnlock()
+
+	return w.packageManagerState
+}
+
+func (w *handler) setPackageManagerState(newState packagemanager.PackageInfo) {
+	w.packageManagerMtx.Lock()
+	defer w.packageManagerMtx.Unlock()
+	log.Debugln("Webserver Packagemanager: set new package manager state")
+
+	// Copy the data to avoid bugs with references
+	// as slices are reference types
+	w.packageManagerState = packagemanager.PackageInfo{
+		Enabled:        newState.Enabled,
+		Panding:        newState.Panding,
+		LastUpdate:     newState.LastUpdate,
+		Stats:          newState.Stats,
+		LinuxPackages:  append([]packagemanager.Package{}, newState.LinuxPackages...),
+		LinuxUpdates:   append([]packagemanager.PackageUpdate{}, newState.LinuxUpdates...),
+		WindowsApps:    append([]packagemanager.WindowsApp{}, newState.WindowsApps...),
+		WindowsUpdates: append([]packagemanager.WindowsUpdate{}, newState.WindowsUpdates...),
+		MacOSApps:      append([]packagemanager.Package{}, newState.MacOSApps...),
+		MacosUpdates:   append([]packagemanager.MacosUpdate{}, newState.MacosUpdates...),
+	}
 }
 
 func (w *handler) handleStatus(response http.ResponseWriter, _ *http.Request) {
@@ -174,6 +206,24 @@ func (w *handler) handlePrometheusExporterStatus(response http.ResponseWriter, r
 
 	response.WriteHeader(http.StatusOK)
 	response.Write([]byte("Unknown exporter"))
+}
+
+func (w *handler) handlePackageManagerStatus(response http.ResponseWriter, _ *http.Request) {
+	response.Header().Add("Content-Type", "application/json")
+	response.WriteHeader(http.StatusOK)
+
+	pkgInfo := w.getPackageManagerState()
+
+	data, err := json.Marshal(&pkgInfo)
+	if err != nil {
+		log.Errorln("Webserver Packagemanager: Could not create json for package manager status: ", err)
+		http.Error(response, "internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	if _, err := response.Write(data); err != nil {
+		log.Errorln("Webserver Packagemanager: ", err)
+	}
 }
 
 type configurationPush struct {
@@ -395,6 +445,7 @@ func (w *handler) Handler() *mux.Router {
 		}
 		routes.Path("/").Methods("GET").HandlerFunc(w.handleStatus)
 		routes.Path("/prometheus").Methods("GET").HandlerFunc(w.handlePrometheusExporterStatus)
+		routes.Path("/packages").Methods("GET").HandlerFunc(w.handlePackageManagerStatus)
 		routes.Path("/config").Methods("GET").HandlerFunc(w.handleConfigRead)
 		routes.Path("/config").Methods("POST").HandlerFunc(w.handleConfigPush)
 		routes.Path("/autotls").Methods("GET").HandlerFunc(w.handlerCsr)
@@ -448,6 +499,8 @@ func (w *handler) Start(parentCtx context.Context) {
 				w.setState(s)
 			case s := <-w.PrometheusInput:
 				w.setPrometheusState(s)
+			case pkgInfo := <-w.PackageManagerInput:
+				w.setPackageManagerState(pkgInfo)
 			}
 		}
 	}()

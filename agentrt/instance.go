@@ -32,6 +32,7 @@ type AgentInstance struct {
 	stateWebserver               chan []byte
 	statePushClient              chan []byte
 	prometheusStateWebserver     chan map[string]string
+	packageManagerStateWebserver chan packagemanager.PackageInfo
 	checkResult                  chan map[string]interface{}
 	customCheckResultChan        chan *checkrunner.CustomCheckResult
 	prometheusExporterResultChan chan *checkrunner.PrometheusExporterResult
@@ -49,6 +50,13 @@ type AgentInstance struct {
 	prometheusCheckHandler *checkrunner.PrometheusCheckHandler
 	softwareCollector      *packagemanager.SoftwareCollector
 	pushClient             *pushclient.PushClient
+}
+
+type PackageInfoJson struct {
+	Enabled    bool
+	Panding    bool
+	LastUpdate int64
+	Stats      packagemanager.PackageStats
 }
 
 func (a *AgentInstance) processCheckResult(result map[string]interface{}) {
@@ -77,7 +85,12 @@ func (a *AgentInstance) processCheckResult(result map[string]interface{}) {
 
 	if a.packageManagerResult.Enabled {
 		// To not have a huge JSON blob in the check result, we only pass the Stats part
-		result["packagemanager"] = a.packageManagerResult
+		result["packagemanager"] = PackageInfoJson{
+			Enabled:    a.packageManagerResult.Enabled,
+			Panding:    a.packageManagerResult.Panding,
+			LastUpdate: a.packageManagerResult.LastUpdate,
+			Stats:      a.packageManagerResult.Stats,
+		}
 	} else {
 		result["packagemanager"] = map[string]interface{}{
 			"enabled": false,
@@ -119,6 +132,13 @@ func (a *AgentInstance) processCheckResult(result map[string]interface{}) {
 			case <-t.C:
 				log.Errorln("Internal error: could not store check result for webserver: timeout")
 			}
+
+			select {
+			case a.packageManagerStateWebserver <- a.packageManagerResult: // Pass Package Manager data to webserver
+				//log.Debugln("[processCheckResult] Successfully sent package manager results to packageManagerStateWebserver channel")
+			case <-t.C:
+				log.Errorln("Internal error: could not store package manager result for webserver: timeout")
+			}
 		}()
 	}
 
@@ -150,6 +170,9 @@ func (a *AgentInstance) doReload(ctx context.Context, cfg *config.Configuration)
 	if a.prometheusStateWebserver == nil {
 		a.prometheusStateWebserver = make(chan map[string]string)
 	}
+	if a.packageManagerStateWebserver == nil {
+		a.packageManagerStateWebserver = make(chan packagemanager.PackageInfo)
+	}
 
 	// we do not stop the webserver on every reload for better availability during the wizard setup
 
@@ -160,9 +183,10 @@ func (a *AgentInstance) doReload(ctx context.Context, cfg *config.Configuration)
 
 	if a.webserver == nil && (!cfg.OITC.Push || (cfg.OITC.Push && cfg.OITC.EnableWebserver)) {
 		a.webserver = &webserver.Server{
-			StateInput:      a.stateWebserver,
-			PrometheusInput: a.prometheusStateWebserver,
-			Reloader:        a, // Set agent instance to Reloader interface for the webserver handler
+			StateInput:          a.stateWebserver,
+			PrometheusInput:     a.prometheusStateWebserver,
+			PackageManagerInput: a.packageManagerStateWebserver,
+			Reloader:            a, // Set agent instance to Reloader interface for the webserver handler
 		}
 		a.webserver.Start(ctx)
 	}

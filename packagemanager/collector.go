@@ -11,14 +11,17 @@ import (
 )
 
 type PackageInfo struct {
-	Enabled        bool
-	Panding        bool
-	LastUpdate     int64
-	Stats          PackageStats
+	Enabled    bool
+	Panding    bool
+	LastUpdate int64
+	Stats      PackageStats
+
+	// Exclude from json
 	LinuxPackages  []Package
 	LinuxUpdates   []PackageUpdate
 	WindowsApps    []WindowsApp
 	WindowsUpdates []WindowsUpdate
+	MacOSApps      []Package
 	MacosUpdates   []MacosUpdate
 }
 
@@ -103,6 +106,9 @@ func (s *SoftwareCollector) Start(ctx context.Context) error {
 
 	log.Infoln("Packagemanager: Software inventory is enabled")
 
+	// convert check intervall from minutes (config) to seconds
+	checkInterval := s.Configuration.Packagemanager.CheckInterval * 60
+
 	// Start a first run delayed after startup
 	s.wg.Add(1)
 	go func() {
@@ -118,7 +124,7 @@ func (s *SoftwareCollector) Start(ctx context.Context) error {
 		// to not do the heavy collection work too early.
 		firstRunDelay := 30 * time.Second //todo change back to 90 !! <-----
 		firstRunTrigger := time.NewTimer(firstRunDelay)
-		checkTimeout := time.Duration(s.Configuration.Packagemanager.CheckInterval-1) * time.Minute
+		checkTimeout := time.Duration(checkInterval-1) * time.Second
 		defer firstRunTrigger.Stop()
 
 		for {
@@ -136,7 +142,7 @@ func (s *SoftwareCollector) Start(ctx context.Context) error {
 	}()
 
 	// Start a periodic ticker to run the collection
-	checkTimeout := time.Duration(s.Configuration.Packagemanager.CheckInterval-1) * time.Minute
+	checkTimeout := time.Duration(checkInterval-1) * time.Second
 	s.wg.Add(1)
 	go func() {
 		defer s.wg.Done()
@@ -144,7 +150,7 @@ func (s *SoftwareCollector) Start(ctx context.Context) error {
 		ctx, cancel := context.WithCancel(ctx)
 		defer cancel()
 
-		ticker := time.NewTicker(time.Duration(s.Configuration.Packagemanager.CheckInterval) * time.Minute)
+		ticker := time.NewTicker(time.Duration(checkInterval) * time.Second)
 		defer ticker.Stop()
 
 		// Tell the webserver that we have pending data collection

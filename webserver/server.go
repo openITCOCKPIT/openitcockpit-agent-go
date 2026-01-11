@@ -14,6 +14,7 @@ import (
 	"time"
 
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/config"
+	"github.com/openITCOCKPIT/openitcockpit-agent-go/packagemanager"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/utils"
 	log "github.com/sirupsen/logrus"
 )
@@ -43,9 +44,10 @@ type reloadConfig struct {
 
 // Server handling for http, should be created by New
 type Server struct {
-	StateInput      <-chan []byte
-	PrometheusInput <-chan map[string]string
-	Reloader        Reloader
+	StateInput          <-chan []byte
+	PrometheusInput     <-chan map[string]string
+	PackageManagerInput <-chan packagemanager.PackageInfo
+	Reloader            Reloader
 
 	reload   chan *reloadConfig
 	shutdown chan struct{}
@@ -79,10 +81,11 @@ func isAutosslEnabled(cfg *config.Configuration) bool {
 func (s *Server) doReload(ctx context.Context, cfg *reloadConfig) {
 	log.Infoln("Webserver: Reload")
 	newHandler := &handler{
-		StateInput:      s.StateInput,
-		PrometheusInput: s.PrometheusInput,
-		Configuration:   cfg.Configuration,
-		Reloader:        s.Reloader,
+		StateInput:          s.StateInput,
+		PrometheusInput:     s.PrometheusInput,
+		PackageManagerInput: s.PackageManagerInput,
+		Configuration:       cfg.Configuration,
+		Reloader:            s.Reloader,
 	}
 	newHandler.Start(ctx)
 	serverAddr := fmt.Sprintf("%s:%d", cfg.Configuration.Address, cfg.Configuration.Port)
