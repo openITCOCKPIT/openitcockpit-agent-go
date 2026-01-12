@@ -199,6 +199,7 @@ func (w WindowsUpdatesManager) parsePowerShellUpdateSessionOutput(output string)
 }
 
 func (w WindowsUpdatesManager) RebootRequired(ctx context.Context) (bool, error) {
+	// https://stackoverflow.com/a/47869761/11885414
 	checks := []struct {
 		key  registry.Key
 		path string

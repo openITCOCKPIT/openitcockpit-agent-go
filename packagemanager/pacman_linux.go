@@ -193,5 +193,8 @@ func (p PacmanManager) parsePacmanUpgradeOutput(output string) ([]PackageUpdate,
 
 // RebootRequired checks if a reboot is required on the system
 func (p PacmanManager) RebootRequired(ctx context.Context) (bool, error) {
+	// Arch Linux users are generally expected to know when a reboot is required.
+	// I'm not aware of a standard way to check for this on Arch Linux systems.
+	// Maybe we could implement https://github.com/rnestler/reboot-arch-btw here in the future.
 	return false, nil
 }

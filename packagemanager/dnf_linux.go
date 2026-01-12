@@ -305,6 +305,7 @@ func (d DnfManager) removeVersionFromPkgName(pkgNameWithVersion string) string {
 // RebootRequired checks if a reboot is required on the system
 func (d DnfManager) RebootRequired(ctx context.Context) (bool, error) {
 	// Check for /run/reboot-required or /var/run/reboot-required
+	// This will probably not work on dnf/yum based systems, but who knows
 	paths := []string{"/run/reboot-required", "/var/run/reboot-required"}
 	for _, path := range paths {
 		if _, err := os.Stat(path); err == nil {
