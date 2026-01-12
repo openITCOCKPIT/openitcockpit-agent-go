@@ -226,12 +226,29 @@ func (z ZypperManager) CollectPackageInfo(ctx context.Context, limitDescriptionL
 
 	var upgradablePackages []PackageUpdate
 	if enableUpdateCheck {
-		upgradablePackages, err := z.ListUpgradablePackages(ctx)
+		upgradablePackages, err = z.ListUpgradablePackages(ctx)
 		if err != nil {
 			result.Stats.LastError = err
 			return result, err
 		}
 		result.Stats.UpgradablePackages = int64(len(upgradablePackages))
+
+		// Get security patches
+		securityPatchesOutput, err := z.getSecurityPatches(ctx)
+		if err != nil {
+			result.Stats.LastError = err
+			return result, err
+		}
+		securityPatches, err := z.parseZypperSecurityPatchesOutput(securityPatchesOutput)
+		if err != nil {
+			result.Stats.LastError = err
+			return result, err
+		}
+
+		// Merge security patches into upgradable packages
+		for _, secPatch := range securityPatches {
+			upgradablePackages = append(upgradablePackages, secPatch)
+		}
 
 		// Count security updates
 		var securityUpdates int64

@@ -226,7 +226,7 @@ func (p PacmanManager) CollectPackageInfo(ctx context.Context, limitDescriptionL
 
 	var upgradablePackages []PackageUpdate
 	if enableUpdateCheck {
-		upgradablePackages, err := p.ListUpgradablePackages(ctx)
+		upgradablePackages, err = p.ListUpgradablePackages(ctx)
 		if err != nil {
 			result.Stats.LastError = err
 			return result, err

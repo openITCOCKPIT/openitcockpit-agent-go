@@ -193,7 +193,7 @@ func (a AptManager) CollectPackageInfo(ctx context.Context, limitDescriptionLeng
 
 	var upgradablePackages []PackageUpdate
 	if enableUpdateCheck {
-		upgradablePackages, err := a.ListUpgradablePackages(ctx)
+		upgradablePackages, err = a.ListUpgradablePackages(ctx)
 		if err != nil {
 			result.Stats.LastError = err
 			return result, err

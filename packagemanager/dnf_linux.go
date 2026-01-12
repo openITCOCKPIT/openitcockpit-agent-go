@@ -364,7 +364,7 @@ func (d DnfManager) CollectPackageInfo(ctx context.Context, limitDescriptionLeng
 
 	var upgradablePackages []PackageUpdate
 	if enableUpdateCheck {
-		upgradablePackages, err := d.ListUpgradablePackages(ctx)
+		upgradablePackages, err = d.ListUpgradablePackages(ctx)
 		if err != nil {
 			result.Stats.LastError = err
 			return result, err
