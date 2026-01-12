@@ -71,7 +71,7 @@ func (s *SoftwareCollector) Start(ctx context.Context) error {
 		// after the agent is running for 90 seconds.
 		// this ensures that the agent is running long enough (certificate exchange etc)
 		// to not do the heavy collection work too early.
-		firstRunDelay := 30 * time.Second //todo change back to 90 !! <-----
+		firstRunDelay := 90 * time.Second
 		firstRunTrigger := time.NewTimer(firstRunDelay)
 		checkTimeout := time.Duration(checkInterval-1) * time.Second
 		defer firstRunTrigger.Stop()
