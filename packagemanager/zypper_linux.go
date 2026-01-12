@@ -198,3 +198,65 @@ func (z ZypperManager) RebootRequired(ctx context.Context) (bool, error) {
 
 	return result.RC == ZYPPER_EXIT_INF_REBOOT_NEEDED, nil
 }
+
+func (z ZypperManager) CollectPackageInfo(ctx context.Context, limitDescriptionLength int64, enableUpdateCheck bool) (PackageInfo, error) {
+	result := PackageInfo{
+		Enabled:    true,
+		Panding:    false,
+		LastUpdate: time.Now().Unix(),
+		Stats: PackageStats{
+			PackageManager:  "zypper",
+			OperatingSystem: "linux",
+		},
+	}
+
+	if enableUpdateCheck {
+		err := z.UpdateMetadata(ctx)
+		if err != nil {
+			result.Stats.LastError = err
+		}
+	}
+
+	installedPackages, err := z.ListInstalledPackages(ctx)
+	if err != nil {
+		result.Stats.LastError = err
+		return result, err
+	}
+	result.Stats.InstalledPackages = int64(len(installedPackages))
+
+	var upgradablePackages []PackageUpdate
+	if enableUpdateCheck {
+		upgradablePackages, err := z.ListUpgradablePackages(ctx)
+		if err != nil {
+			result.Stats.LastError = err
+			return result, err
+		}
+		result.Stats.UpgradablePackages = int64(len(upgradablePackages))
+
+		// Count security updates
+		var securityUpdates int64
+		for _, pkg := range upgradablePackages {
+			if pkg.IsSecurityUpdate {
+				securityUpdates++
+			}
+		}
+		result.Stats.SecurityUpdates = securityUpdates
+	}
+
+	rebootRequired, err := z.RebootRequired(ctx)
+	if err != nil {
+		result.Stats.LastError = err
+		return result, err
+	}
+	result.Stats.RebootRequired = rebootRequired
+
+	// Truncate descriptions if needed
+	for i := range installedPackages {
+		installedPackages[i].Description = truncateDescription(installedPackages[i].Description, limitDescriptionLength)
+	}
+
+	result.LinuxPackages = installedPackages
+	result.LinuxUpdates = upgradablePackages
+
+	return result, nil
+}

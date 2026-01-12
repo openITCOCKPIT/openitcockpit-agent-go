@@ -66,3 +66,42 @@ func (m MacOSUpdatesManager) ListAvailableUpdates(ctx context.Context) ([]MacosU
 
 	return parseMacOSSoftwareUpdateOutput(output)
 }
+
+func (m MacOSUpdatesManager) CollectPackageInfo(ctx context.Context, limitDescriptionLength int64, enableUpdateCheck bool) (PackageInfo, error) {
+	result := PackageInfo{
+		Enabled:    true,
+		Panding:    false,
+		LastUpdate: time.Now().Unix(),
+		Stats: PackageStats{
+			PackageManager:  "macos-updates",
+			OperatingSystem: "macos",
+		},
+	}
+
+	installedApps, err := m.ListInstalledApps(ctx)
+	if err != nil {
+		result.Stats.LastError = err
+		return result, err
+	}
+	result.Stats.InstalledPackages = int64(len(installedApps))
+
+	var availableUpdates []MacosUpdate
+	if enableUpdateCheck {
+		availableUpdates, err = m.ListAvailableUpdates(ctx)
+		if err != nil {
+			result.Stats.LastError = err
+			return result, err
+		}
+		result.Stats.UpgradablePackages = int64(len(availableUpdates))
+	}
+
+	// Truncate descriptions if needed
+	for i := range availableUpdates {
+		availableUpdates[i].Description = truncateDescription(availableUpdates[i].Description, limitDescriptionLength)
+	}
+
+	result.MacOSApps = installedApps
+	result.MacosUpdates = availableUpdates
+
+	return result, nil
+}

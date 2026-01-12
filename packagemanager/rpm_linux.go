@@ -102,3 +102,30 @@ func (r RpmManager) RebootRequired(ctx context.Context) (bool, error) {
 	// RpmManager is to generic to check for reboot requirements
 	return false, nil
 }
+
+func (r RpmManager) CollectPackageInfo(ctx context.Context, limitDescriptionLength int64, enableUpdateCheck bool) (PackageInfo, error) {
+	result := PackageInfo{
+		Enabled:    true,
+		Panding:    false,
+		LastUpdate: time.Now().Unix(),
+		Stats: PackageStats{
+			PackageManager:  "rpm",
+			OperatingSystem: "linux",
+		},
+	}
+
+	installedPackages, err := r.ListInstalledPackages(ctx)
+	if err != nil {
+		result.Stats.LastError = err
+		return result, err
+	}
+	result.Stats.InstalledPackages = int64(len(installedPackages))
+
+	// Truncate descriptions if needed
+	for i := range installedPackages {
+		installedPackages[i].Description = truncateDescription(installedPackages[i].Description, limitDescriptionLength)
+	}
+
+	result.LinuxPackages = installedPackages
+	return result, nil
+}

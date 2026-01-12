@@ -198,3 +198,65 @@ func (p PacmanManager) RebootRequired(ctx context.Context) (bool, error) {
 	// Maybe we could implement https://github.com/rnestler/reboot-arch-btw here in the future.
 	return false, nil
 }
+
+func (p PacmanManager) CollectPackageInfo(ctx context.Context, limitDescriptionLength int64, enableUpdateCheck bool) (PackageInfo, error) {
+	result := PackageInfo{
+		Enabled:    true,
+		Panding:    false,
+		LastUpdate: time.Now().Unix(),
+		Stats: PackageStats{
+			PackageManager:  "pacman",
+			OperatingSystem: "linux",
+		},
+	}
+
+	if enableUpdateCheck {
+		err := p.UpdateMetadata(ctx)
+		if err != nil {
+			result.Stats.LastError = err
+		}
+	}
+
+	installedPackages, err := p.ListInstalledPackages(ctx)
+	if err != nil {
+		result.Stats.LastError = err
+		return result, err
+	}
+	result.Stats.InstalledPackages = int64(len(installedPackages))
+
+	var upgradablePackages []PackageUpdate
+	if enableUpdateCheck {
+		upgradablePackages, err := p.ListUpgradablePackages(ctx)
+		if err != nil {
+			result.Stats.LastError = err
+			return result, err
+		}
+		result.Stats.UpgradablePackages = int64(len(upgradablePackages))
+
+		// Count security updates
+		var securityUpdates int64
+		for _, pkg := range upgradablePackages {
+			if pkg.IsSecurityUpdate {
+				securityUpdates++
+			}
+		}
+		result.Stats.SecurityUpdates = securityUpdates
+	}
+
+	rebootRequired, err := p.RebootRequired(ctx)
+	if err != nil {
+		result.Stats.LastError = err
+		return result, err
+	}
+	result.Stats.RebootRequired = rebootRequired
+
+	// Truncate descriptions if needed
+	for i := range installedPackages {
+		installedPackages[i].Description = truncateDescription(installedPackages[i].Description, limitDescriptionLength)
+	}
+
+	result.LinuxPackages = installedPackages
+	result.LinuxUpdates = upgradablePackages
+
+	return result, nil
+}

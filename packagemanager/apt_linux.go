@@ -166,7 +166,7 @@ func (a AptManager) RebootRequired(ctx context.Context) (bool, error) {
 	return false, nil
 }
 
-func (a AptManager) CollectPackageInfo(ctx context.Context, limitDescriptionLength int64) (PackageInfo, error) {
+func (a AptManager) CollectPackageInfo(ctx context.Context, limitDescriptionLength int64, enableUpdateCheck bool) (PackageInfo, error) {
 	result := PackageInfo{
 		Enabled:    true,
 		Panding:    false,
@@ -177,9 +177,11 @@ func (a AptManager) CollectPackageInfo(ctx context.Context, limitDescriptionLeng
 		},
 	}
 
-	err := a.UpdateMetadata(ctx)
-	if err != nil {
-		result.Stats.LastError = err
+	if enableUpdateCheck {
+		err := a.UpdateMetadata(ctx)
+		if err != nil {
+			result.Stats.LastError = err
+		}
 	}
 
 	installedPackages, err := a.ListInstalledPackages(ctx)
@@ -189,21 +191,24 @@ func (a AptManager) CollectPackageInfo(ctx context.Context, limitDescriptionLeng
 	}
 	result.Stats.InstalledPackages = int64(len(installedPackages))
 
-	upgradablePackages, err := a.ListUpgradablePackages(ctx)
-	if err != nil {
-		result.Stats.LastError = err
-		return result, err
-	}
-	result.Stats.UpgradablePackages = int64(len(upgradablePackages))
-
-	// Count security updates
-	var securityUpdates int64
-	for _, pkg := range upgradablePackages {
-		if pkg.IsSecurityUpdate {
-			securityUpdates++
+	var upgradablePackages []PackageUpdate
+	if enableUpdateCheck {
+		upgradablePackages, err := a.ListUpgradablePackages(ctx)
+		if err != nil {
+			result.Stats.LastError = err
+			return result, err
 		}
+		result.Stats.UpgradablePackages = int64(len(upgradablePackages))
+
+		// Count security updates
+		var securityUpdates int64
+		for _, pkg := range upgradablePackages {
+			if pkg.IsSecurityUpdate {
+				securityUpdates++
+			}
+		}
+		result.Stats.SecurityUpdates = securityUpdates
 	}
-	result.Stats.SecurityUpdates = securityUpdates
 
 	rebootRequired, err := a.RebootRequired(ctx)
 	if err != nil {
@@ -213,10 +218,8 @@ func (a AptManager) CollectPackageInfo(ctx context.Context, limitDescriptionLeng
 	result.Stats.RebootRequired = rebootRequired
 
 	// Truncate descriptions if needed
-	if limitDescriptionLength != -1 {
-		for i := range installedPackages {
-			installedPackages[i].Description = truncateDescription(installedPackages[i].Description, limitDescriptionLength)
-		}
+	for i := range installedPackages {
+		installedPackages[i].Description = truncateDescription(installedPackages[i].Description, limitDescriptionLength)
 	}
 
 	result.LinuxPackages = installedPackages

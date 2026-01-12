@@ -336,3 +336,65 @@ func (d DnfManager) RebootRequired(ctx context.Context) (bool, error) {
 
 	return false, nil
 }
+
+func (d DnfManager) CollectPackageInfo(ctx context.Context, limitDescriptionLength int64, enableUpdateCheck bool) (PackageInfo, error) {
+	result := PackageInfo{
+		Enabled:    true,
+		Panding:    false,
+		LastUpdate: time.Now().Unix(),
+		Stats: PackageStats{
+			PackageManager:  "dnf",
+			OperatingSystem: "linux",
+		},
+	}
+
+	if enableUpdateCheck {
+		err := d.UpdateMetadata(ctx)
+		if err != nil {
+			result.Stats.LastError = err
+		}
+	}
+
+	installedPackages, err := d.ListInstalledPackages(ctx)
+	if err != nil {
+		result.Stats.LastError = err
+		return result, err
+	}
+	result.Stats.InstalledPackages = int64(len(installedPackages))
+
+	var upgradablePackages []PackageUpdate
+	if enableUpdateCheck {
+		upgradablePackages, err := d.ListUpgradablePackages(ctx)
+		if err != nil {
+			result.Stats.LastError = err
+			return result, err
+		}
+		result.Stats.UpgradablePackages = int64(len(upgradablePackages))
+
+		// Count security updates
+		var securityUpdates int64
+		for _, pkg := range upgradablePackages {
+			if pkg.IsSecurityUpdate {
+				securityUpdates++
+			}
+		}
+		result.Stats.SecurityUpdates = securityUpdates
+	}
+
+	rebootRequired, err := d.RebootRequired(ctx)
+	if err != nil {
+		result.Stats.LastError = err
+		return result, err
+	}
+	result.Stats.RebootRequired = rebootRequired
+
+	// Truncate descriptions if needed
+	for i := range installedPackages {
+		installedPackages[i].Description = truncateDescription(installedPackages[i].Description, limitDescriptionLength)
+	}
+
+	result.LinuxPackages = installedPackages
+	result.LinuxUpdates = upgradablePackages
+
+	return result, nil
+}

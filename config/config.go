@@ -64,6 +64,7 @@ type PrometheusExporter struct {
 
 type PackagemanagerConfiguration struct {
 	Enabled                bool  `mapstructure:"enabled"`
+	EnableUpdateCheck      bool  `mapstructure:"enable-update-check"`
 	CheckInterval          int64 `mapstructure:"check-interval"`
 	LimitDescriptionLength int64 `mapstructure:"limit-description-length"`
 }

@@ -2,7 +2,6 @@ package packagemanager
 
 import (
 	"context"
-	"runtime"
 	"sync"
 	"time"
 
@@ -48,56 +47,6 @@ type SoftwareCollector struct {
 func (s *SoftwareCollector) Shutdown() {
 	close(s.shutdown)
 	s.wg.Wait()
-}
-
-func (s *SoftwareCollector) runCollection(parent context.Context, timeout time.Duration) {
-	ctx, cancel := context.WithTimeout(parent, timeout)
-	defer cancel()
-
-	log.Debugln("Packagemanager: Starting software inventory collection for OS:", runtime.GOOS)
-
-	switch runtime.GOOS {
-	case "windows":
-
-	case "darwin":
-
-	case "linux":
-		apt := AptManager{}
-		if apt.IsAvailable() {
-			pkgInfo, err := apt.CollectPackageInfo(ctx, s.Configuration.Packagemanager.LimitDescriptionLength)
-			if err != nil {
-				log.Errorln("Error collecting package info with apt:", err)
-			}
-
-			log.Debugln("Packagemanager: Software inventory collection with apt completed")
-			s.Result <- &pkgInfo
-			return
-		}
-
-		dnf := DnfManager{}
-		if dnf.IsAvailable() {
-
-			return
-		}
-
-		zypper := ZypperManager{}
-		if zypper.IsAvailable() {
-
-			return
-		}
-
-		rpm := RpmManager{}
-		if rpm.IsAvailable() {
-
-			return
-		}
-
-		log.Errorln("No known package manager found on Linux")
-		return
-
-	default:
-		log.Errorf("Package manager collection not implemented for OS: %s\n", runtime.GOOS)
-	}
 }
 
 // Start the check runner and returns immediatly (SHOULD NOT RUN IN GOROUTINE)

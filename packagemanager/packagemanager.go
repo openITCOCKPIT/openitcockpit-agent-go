@@ -48,17 +48,20 @@ type PackageManager interface {
 	ListInstalledPackages(ctx context.Context) ([]Package, error)
 	ListUpgradablePackages(ctx context.Context) ([]PackageUpdate, error)
 	RebootRequired(ctx context.Context) (bool, error)
+	CollectPackageInfo(ctx context.Context, limitDescriptionLength int64, enableUpdateCheck bool) (PackageInfo, error)
 }
 
 type WindowsManager interface {
 	ListInstalledApps(ctx context.Context) ([]WindowsApp, error)
 	ListAvailableUpdates(ctx context.Context) ([]WindowsUpdate, error)
 	RebootRequired(ctx context.Context) (bool, error)
+	CollectPackageInfo(ctx context.Context, limitDescriptionLength int64, enableUpdateCheck bool) (PackageInfo, error)
 }
 
 type MacOSManager interface {
 	ListInstalledApps(ctx context.Context) ([]Package, error)
 	ListAvailableUpdates(ctx context.Context) ([]MacosUpdate, error)
+	CollectPackageInfo(ctx context.Context, limitDescriptionLength int64, enableUpdateCheck bool) (PackageInfo, error)
 }
 
 // truncateDescription truncates the given description to the specified limit.

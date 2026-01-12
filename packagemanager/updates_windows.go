@@ -228,3 +228,58 @@ func containsIgnoreCase(slice []string, item string) bool {
 	}
 	return false
 }
+
+func (w WindowsUpdatesManager) CollectPackageInfo(ctx context.Context, limitDescriptionLength int64, enableUpdateCheck bool) (PackageInfo, error) {
+	result := PackageInfo{
+		Enabled:    true,
+		Panding:    false,
+		LastUpdate: time.Now().Unix(),
+		Stats: PackageStats{
+			PackageManager:  "windows-updates",
+			OperatingSystem: "windows",
+		},
+	}
+
+	installedApps, err := w.ListInstalledApps(ctx)
+	if err != nil {
+		result.Stats.LastError = err
+		return result, err
+	}
+	result.Stats.InstalledPackages = int64(len(installedApps))
+
+	var availableUpdates []WindowsUpdate
+	if enableUpdateCheck {
+		availableUpdates, err = w.ListAvailableUpdates(ctx)
+		if err != nil {
+			result.Stats.LastError = err
+			return result, err
+		}
+		result.Stats.UpgradablePackages = int64(len(availableUpdates))
+
+		// Count security updates
+		var securityUpdates int64
+		for _, update := range availableUpdates {
+			if update.IsSecurityUpdate {
+				securityUpdates++
+			}
+		}
+		result.Stats.SecurityUpdates = securityUpdates
+	}
+
+	rebootRequired, err := w.RebootRequired(ctx)
+	if err != nil {
+		result.Stats.LastError = err
+		return result, err
+	}
+	result.Stats.RebootRequired = rebootRequired
+
+	// Truncate descriptions if needed
+	for i := range availableUpdates {
+		availableUpdates[i].Description = truncateDescription(availableUpdates[i].Description, limitDescriptionLength)
+	}
+
+	result.WindowsApps = installedApps
+	result.WindowsUpdates = availableUpdates
+
+	return result, nil
+}
