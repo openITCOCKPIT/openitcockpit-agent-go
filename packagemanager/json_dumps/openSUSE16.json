@@ -1,0 +1,3574 @@
+{
+    "Enabled": true,
+    "Panding": false,
+    "LastUpdate": 1768289932,
+    "Stats": {
+        "InstalledPackages": 667,
+        "UpgradablePackages": 17,
+        "SecurityUpdates": 14,
+        "RebootRequired": false,
+        "LastError": null,
+        "OperatingSystem": "linux",
+        "PackageManager": "zypper"
+    },
+    "LinuxPackages": [
+        {
+            "Name": "gpg-pubkey",
+            "Version": "287a0027-682477e3",
+            "Description": "-----BEGIN PGP PUBLIC KEY BLOCK-----\nVersion: rpm-4.20.1\n\nmQINBGgkd+MBEADj3FRif7"
+        },
+        {
+            "Name": "gpg-pubkey",
+            "Version": "29b700a4-62b07e22",
+            "Description": "-----BEGIN PGP PUBLIC KEY BLOCK-----\nVersion: rpm-4.20.1\n\nmQINBGKwfiIBEADe9bKROW"
+        },
+        {
+            "Name": "gpg-pubkey",
+            "Version": "39db7c82-66c5d91a",
+            "Description": "-----BEGIN PGP PUBLIC KEY BLOCK-----\nVersion: rpm-4.20.1\n\nmQENBFEKlmsBCADbpZZbbS"
+        },
+        {
+            "Name": "gpg-pubkey",
+            "Version": "3fa1d6ce-67c856ee",
+            "Description": "-----BEGIN PGP PUBLIC KEY BLOCK-----\nVersion: rpm-4.20.1\n\nmQINBGPJSBwBEAC+sp2UJH"
+        },
+        {
+            "Name": "apparmor-docs",
+            "Version": "4.1.1-160000.2.2",
+            "Description": "This package contains documentation for AppArmor.\n\nThis package is part of a sui"
+        },
+        {
+            "Name": "bash-doc",
+            "Version": "5.2.37-160000.2.2",
+            "Description": "This package contains the documentation for using the bourne shell\ninterpreter B"
+        },
+        {
+            "Name": "boost-license1_86_0",
+            "Version": "1.86.0-160000.2.2",
+            "Description": "This package contains the license boost is provided under."
+        },
+        {
+            "Name": "branding-openSUSE",
+            "Version": "16.0.20240405-lp160.10.1",
+            "Description": "This package contains the file /etc/SUSE-brand, and its name is used as\na trigge"
+        },
+        {
+            "Name": "btrfsprogs-udev-rules",
+            "Version": "6.14-160000.2.2",
+            "Description": "This package contains the udev rule file for configuring device mapper\ndevices t"
+        },
+        {
+            "Name": "compat-usrmerge-tools",
+            "Version": "84.87-160000.2.2",
+            "Description": "Tools related to UsrMerge to check the state of the system and to\nconvert an exi"
+        },
+        {
+            "Name": "coreutils-doc",
+            "Version": "9.6-160000.2.2",
+            "Description": "This package contains the documentation for the GNU Core Utilities."
+        },
+        {
+            "Name": "cracklib-dict-full",
+            "Version": "2.8.12-160000.2.2",
+            "Description": "CrackLib tests passwords to determine whether they match certain\nsecurity-orient"
+        },
+        {
+            "Name": "cryptsetup-doc",
+            "Version": "2.7.5-160000.2.2",
+            "Description": "Documentation and man pages for cryptsetup"
+        },
+        {
+            "Name": "dbus-broker-block-restart",
+            "Version": "36-160000.2.2",
+            "Description": "This package configures how the service behave to the systemctl restart command."
+        },
+        {
+            "Name": "debuginfod-profile",
+            "Version": "0.192-160000.2.3",
+            "Description": "The debuginfod-profile package contains a profile files that set default\nURL for"
+        },
+        {
+            "Name": "distribution-logos-openSUSE-Leap",
+            "Version": "20240424-lp160.3.1",
+            "Description": "Logos for openSUSE Leap"
+        },
+        {
+            "Name": "file-magic",
+            "Version": "5.46-160000.2.2",
+            "Description": "This package contains the basic magic files that libmagic reads and uses\nto esti"
+        },
+        {
+            "Name": "info-std",
+            "Version": "7.1-160000.2.2",
+            "Description": "Info is a terminal-based program for reading documentation of computer\nprograms "
+        },
+        {
+            "Name": "libX11-data",
+            "Version": "1.8.10-160000.3.1",
+            "Description": "Data files for X11:\n\n* Error strings for X error codes\n* Device-independent colo"
+        },
+        {
+            "Name": "libldap-data",
+            "Version": "2.6.10+10-160000.3.1",
+            "Description": "The subpackage contains a configuration file used to set system-wide defaults\nto"
+        },
+        {
+            "Name": "libnl-config",
+            "Version": "3.11.0-160000.2.2",
+            "Description": "This package contains configuration files for libnl and programs using\nthe same;"
+        },
+        {
+            "Name": "libpaper",
+            "Version": "2.1.0-160000.2.2",
+            "Description": "This package enables users to indicate their preferred paper\nsize, provides the "
+        },
+        {
+            "Name": "libsemanage-conf",
+            "Version": "3.8.1-160000.2.2",
+            "Description": "Configuration file for libsemanage. Moved to a separate package to allow\nparalle"
+        },
+        {
+            "Name": "libthai-data",
+            "Version": "0.1.29-160000.3.2",
+            "Description": "LibThai is a set of Thai language support routines to aid\nincorporation of Thai "
+        },
+        {
+            "Name": "libtirpc-netconfig",
+            "Version": "1.3.6-160000.2.2",
+            "Description": "This RPM contains the netconfig configuration file and manual page for\nthe TI-RP"
+        },
+        {
+            "Name": "lifecycle-data-sle",
+            "Version": "16.0+git20250825.a31b781-160000.2.2",
+            "Description": "This package provides life cycle data for SLES and SLES for SAP;\nfor use with zy"
+        },
+        {
+            "Name": "man-pages",
+            "Version": "6.13-160000.2.2",
+            "Description": "A large collection of man pages (documentation) from the Linux\nDocumentation Pro"
+        },
+        {
+            "Name": "man-pages-posix",
+            "Version": "2017a-160000.4.1",
+            "Description": "A large collection of man pages (reference material) from\n\nThis release contains"
+        },
+        {
+            "Name": "pam-manpages",
+            "Version": "1.7.1-160000.2.2",
+            "Description": "PAM (Pluggable Authentication Modules) is a system security tool that\nallows sys"
+        },
+        {
+            "Name": "pkgconf-m4",
+            "Version": "2.2.0-160000.2.2",
+            "Description": "This package includes m4 macros used to support PKG_CHECK_MODULES\nwhen using pkg"
+        },
+        {
+            "Name": "publicsuffix",
+            "Version": "20250424-160000.2.2",
+            "Description": "The Public Suffix List is a cross-vendor initiative to provide\nan accurate list "
+        },
+        {
+            "Name": "readline-doc",
+            "Version": "8.2.13-160000.2.2",
+            "Description": "This package contains the documentation for using the readline library\nas well a"
+        },
+        {
+            "Name": "snmp-mibs",
+            "Version": "5.9.4-160000.2.2",
+            "Description": "Net-SNMP is a suite of applications used to implement SNMP v1, SNMP v2c\nand SNMP"
+        },
+        {
+            "Name": "system-user-root",
+            "Version": "20190513-160000.2.2",
+            "Description": "This package provides the root account including the groups root,\nshadow and use"
+        },
+        {
+            "Name": "vim-data-common",
+            "Version": "9.1.1406-160000.3.2",
+            "Description": "This package contains basic runtime \u0026 syntax files for vim"
+        },
+        {
+            "Name": "xbitmaps",
+            "Version": "1.1.3-160000.2.2",
+            "Description": "This package contains the base X bitmaps, which are used in many\nlegacy X client"
+        },
+        {
+            "Name": "filesystem",
+            "Version": "84.87-160000.2.2",
+            "Description": "This package installs the basic directory structure. It also includes\nthe home d"
+        },
+        {
+            "Name": "glibc",
+            "Version": "2.40-160000.2.2",
+            "Description": "The GNU C Library provides the most important standard libraries used\nby nearly "
+        },
+        {
+            "Name": "glibc-gconv-modules-extra",
+            "Version": "2.40-160000.2.2",
+            "Description": "Modules for use by the iconv facility, to support encodings other than\nLatin-1 a"
+        },
+        {
+            "Name": "libpcre2-8-0",
+            "Version": "10.45-160000.2.2",
+            "Description": "The PCRE2 library is a set of functions that implement regular\nexpression patter"
+        },
+        {
+            "Name": "libselinux1",
+            "Version": "3.8.1-160000.2.2",
+            "Description": "libselinux provides an interface to get and set process and file\nsecurity contex"
+        },
+        {
+            "Name": "glibc-extra",
+            "Version": "2.40-160000.2.2",
+            "Description": "The glibc-extra package contains some extra binaries for glibc that\nare not esse"
+        },
+        {
+            "Name": "xxd",
+            "Version": "9.1.1406-160000.3.2",
+            "Description": "xxd creates a hex dump of a given file or standard input.  It can also convert\na"
+        },
+        {
+            "Name": "which",
+            "Version": "2.23-160000.2.2",
+            "Description": "The which command shows the full pathname of a specified program, if the\nspecifi"
+        },
+        {
+            "Name": "update-alternatives",
+            "Version": "1.22.21-160000.2.2",
+            "Description": "update-alternatives creates, removes, maintains and displays\ninformation about t"
+        },
+        {
+            "Name": "terminfo-base",
+            "Version": "6.5.20250531-160000.2.2",
+            "Description": "This is the terminfo basic database, maintained in the ncurses package.\nThis dat"
+        },
+        {
+            "Name": "libncurses6",
+            "Version": "6.5.20250531-160000.2.2",
+            "Description": "The ncurses library is used by many terminal applications for\ncontrolling output"
+        },
+        {
+            "Name": "ncurses-utils",
+            "Version": "6.5.20250531-160000.2.2",
+            "Description": "The ncurses based utilities are as follows:\n\nclear -- emits clear-screen for cur"
+        },
+        {
+            "Name": "sqlite3-tcl",
+            "Version": "3.50.4-160000.1.2",
+            "Description": "This package contains laguage bindings from the Tcl programming\nlanguage SQLite."
+        },
+        {
+            "Name": "mozilla-nspr",
+            "Version": "4.36-160000.2.2",
+            "Description": "NSPR provides platform independence for non-GUI operating system\nfacilities. The"
+        },
+        {
+            "Name": "lsscsi",
+            "Version": "0.32-160000.3.2",
+            "Description": "The lsscsi command lists information about SCSI devices in Linux."
+        },
+        {
+            "Name": "libzstd1",
+            "Version": "1.5.7-160000.2.2",
+            "Description": "Zstd, short for Zstandard, is a lossless compression algorithm,\ntargeting faster"
+        },
+        {
+            "Name": "libz1",
+            "Version": "1.2.13-160000.2.2",
+            "Description": "zlib is a general-purpose lossless data-compression library,\nimplementing an API"
+        },
+        {
+            "Name": "libyaml-0-2",
+            "Version": "0.2.5-160000.3.2",
+            "Description": "This package holds the shared library of libyaml."
+        },
+        {
+            "Name": "libxxhash0",
+            "Version": "0.8.3-160000.2.2",
+            "Description": "xxHash is a hash algorithm. It completes the SMHasher test suite which\nevaluates"
+        },
+        {
+            "Name": "libxtables12",
+            "Version": "1.8.11-160000.2.2",
+            "Description": "This library contains all the iptables code shared between iptables,\nip6tables, "
+        },
+        {
+            "Name": "libwrap0",
+            "Version": "7.6-160000.2.2",
+            "Description": "This package contains a library which implements classifying incoming\nrequests ("
+        },
+        {
+            "Name": "libverto1",
+            "Version": "0.3.2-160000.2.2",
+            "Description": "libverto provides a way for libraries to expose asynchronous\ninterfaces without "
+        },
+        {
+            "Name": "libuv1",
+            "Version": "1.50.0-160000.2.2",
+            "Description": "libuv is a support library with a focus on asynchronous I/O. It was\nprimarily de"
+        },
+        {
+            "Name": "libuuid1",
+            "Version": "2.41.1-160000.2.2",
+            "Description": "A library to generate universally unique IDs (UUIDs)."
+        },
+        {
+            "Name": "liburing2",
+            "Version": "2.8-160000.3.1",
+            "Description": "Provides native async IO for the Linux kernel, in a fast and efficient\nmanner, f"
+        },
+        {
+            "Name": "liburcu8",
+            "Version": "0.14.0-160000.2.2",
+            "Description": "liburcu is a LGPLv2.1 userspace RCU (read-copy-update) library. This data\nsynchr"
+        },
+        {
+            "Name": "libunistring5",
+            "Version": "1.3-160000.3.2",
+            "Description": "This portable C library implements Unicode string types in three flavours:\n(UTF-"
+        },
+        {
+            "Name": "libtss2-rc0",
+            "Version": "4.1.0-160000.2.2",
+            "Description": "This library can translate TPM error codes into human readable strings."
+        },
+        {
+            "Name": "libtss2-mu0",
+            "Version": "4.1.0-160000.2.2",
+            "Description": "Marshaling/Unmarshaling (MU) as described in the TCG TSS 2.0\nMarshaling/Unmarsha"
+        },
+        {
+            "Name": "libtextstyle0",
+            "Version": "0.22.5-160000.2.2",
+            "Description": "GNU libtextstyle provides an easy way to add styling to programs that produce ou"
+        },
+        {
+            "Name": "libtdb1",
+            "Version": "1.4.13-160000.2.2",
+            "Description": "TDB is a Trivial Database. In concept, it is very much like GDBM, and BSD's DB,\n"
+        },
+        {
+            "Name": "libtasn1-6",
+            "Version": "4.20.0-160000.3.2",
+            "Description": "This is the ASN.1 library used by GNUTLS. Abstract Syntax Notation One (ASN.1)\ni"
+        },
+        {
+            "Name": "libtalloc2",
+            "Version": "2.4.3-160000.2.2",
+            "Description": "Talloc is a hierarchical, reference counted memory pool system with\ndestructors."
+        },
+        {
+            "Name": "libsqlite3-0",
+            "Version": "3.50.4-160000.1.2",
+            "Description": "This package contains the shared libraries for the Embeddable SQL\nDatabase Engin"
+        },
+        {
+            "Name": "libsmartcols1",
+            "Version": "2.41.1-160000.2.2",
+            "Description": "Library to sort human readable column-based text output."
+        },
+        {
+            "Name": "libslang2",
+            "Version": "2.3.3+git16.89d32bb-160000.2.2",
+            "Description": "S-Lang is a programming library for creating multi-platform software.\nIt provide"
+        },
+        {
+            "Name": "libsgutils2-1_48-2",
+            "Version": "1.48~20221101+1.142dace-160000.2.2",
+            "Description": "The sg3_utils package contains utilities that send SCSI commands to\ndevices. As "
+        },
+        {
+            "Name": "libsepol2",
+            "Version": "3.8.1-160000.2.2",
+            "Description": "libsepol provides an API for the manipulation of SELinux binary\npolicies. It is "
+        },
+        {
+            "Name": "libsensors4",
+            "Version": "3.6.2-160000.2.2",
+            "Description": "libsensors offers a way for applications to access the hardware\nmonitoring chips"
+        },
+        {
+            "Name": "libseccomp2",
+            "Version": "2.6.0-160000.2.2",
+            "Description": "The libseccomp library provides an interface to the Linux Kernel's\nsyscall filte"
+        },
+        {
+            "Name": "libschily2_0",
+            "Version": "2022.10.16-160000.2.2",
+            "Description": "libschily contains many OS abstraction functions used by the Schily\ntools."
+        },
+        {
+            "Name": "libsasl2-3",
+            "Version": "2.1.28-160000.3.1",
+            "Description": "Simple Authentication and Security Layer (SASL) is a framework for\nauthenticatio"
+        },
+        {
+            "Name": "libprotobuf-c1",
+            "Version": "1.5.1-160000.2.2",
+            "Description": "This package provides a code generator and runtime libraries to use Protocol\nBuf"
+        },
+        {
+            "Name": "libpopt0",
+            "Version": "1.19-160000.2.2",
+            "Description": "Popt is a C library for parsing command line parameters.  Popt was\nheavily influ"
+        },
+        {
+            "Name": "libply5",
+            "Version": "22.02.122+94.4bd41a3-160000.3.1",
+            "Description": "This package contains the libply library used by Plymouth."
+        },
+        {
+            "Name": "libpkgconf5",
+            "Version": "2.2.0-160000.2.2",
+            "Description": "This package provides libraries for applications to use the functionality\nof pkg"
+        },
+        {
+            "Name": "libpixman-1-0",
+            "Version": "0.43.4-160000.2.2",
+            "Description": "Pixman is a pixel manipulation library for X and cairo."
+        },
+        {
+            "Name": "libpipeline1",
+            "Version": "1.5.8-160000.3.2",
+            "Description": "libpipeline is a C library for setting up and running pipelines of\nprocesses, wi"
+        },
+        {
+            "Name": "libparted-fs-resize0",
+            "Version": "3.6-160000.2.2",
+            "Description": "Libparted is a library for creating, destroying, resizing, checking\nand copying "
+        },
+        {
+            "Name": "libpaper2",
+            "Version": "2.1.0-160000.2.2",
+            "Description": "This package provides the paper library"
+        },
+        {
+            "Name": "libopenjp2-7",
+            "Version": "2.5.3-160000.2.2",
+            "Description": "The OpenJPEG library is an open-source JPEG 2000 codec written in C language.\nIt"
+        },
+        {
+            "Name": "libnuma1",
+            "Version": "2.0.19.14.g690a72c-160000.2.2",
+            "Description": "Control NUMA policy for individual processes. Offer libnuma for\nindividual NUMA "
+        },
+        {
+            "Name": "libnss_usrfiles2",
+            "Version": "2.27.1-160000.3.2",
+            "Description": "The NSS usrfiles plugin additionally looks in /usr/etc for passwd,\ngroup, rpc, s"
+        },
+        {
+            "Name": "libnpth0",
+            "Version": "1.8-160000.2.3",
+            "Description": "nPth is a non-preemptive threads implementation using an API\nsimilar to the one "
+        },
+        {
+            "Name": "libnl3-200",
+            "Version": "3.11.0-160000.2.2",
+            "Description": "The libnl suite is a collection of libraries providing APIs to\nnetlink protocol "
+        },
+        {
+            "Name": "libnghttp2-14",
+            "Version": "1.64.0-160000.2.2",
+            "Description": "Shared C libraries for implementation of Hypertext Transfer Protocol\nversion 2."
+        },
+        {
+            "Name": "libnfsidmap1",
+            "Version": "1.0-160000.2.2",
+            "Description": "In NFSv4, identities of users are conveyed by names rather than user ID\nand grou"
+        },
+        {
+            "Name": "libnfnetlink0",
+            "Version": "1.0.2-160000.3.2",
+            "Description": "libnfnetlink is the low-level library for netfilter related\nkernel/userspace com"
+        },
+        {
+            "Name": "libnettle8",
+            "Version": "3.10.1-160000.2.2",
+            "Description": "Nettle is a cryptographic library that is designed to fit easily in more or\nless"
+        },
+        {
+            "Name": "libnetpbm11",
+            "Version": "11.9.3-160000.2.2",
+            "Description": "These are the libs for the netpbm graphic formats. The tools can be\nfound in the"
+        },
+        {
+            "Name": "libndp0",
+            "Version": "1.8-160000.2.2",
+            "Description": "This package contains a library which provides a wrapper for IPv6 Neighbor\nDisco"
+        },
+        {
+            "Name": "libmpdec4",
+            "Version": "4.0.1-160000.2.2",
+            "Description": "libmpdec is a C implementation of the General Decimal Arithmetic\nSpecification. "
+        },
+        {
+            "Name": "libmnl0",
+            "Version": "1.0.5-160000.2.2",
+            "Description": "libmnl is a minimalistic user-space library oriented to Netlink\ndevelopers. Ther"
+        },
+        {
+            "Name": "libmd0",
+            "Version": "1.1.0-160000.3.2",
+            "Description": "The libmd library provides a few message digest (\"hash\") functions, as\nfound on "
+        },
+        {
+            "Name": "libmaxminddb0",
+            "Version": "1.12.2-160000.2.2",
+            "Description": "The libmaxminddb library provides a C library for reading MaxMind DB\nfiles, incl"
+        },
+        {
+            "Name": "liblzo2-2",
+            "Version": "2.10-160000.3.2",
+            "Description": "LZO is a portable lossless data compression library written in ANSI C.\nDecompres"
+        },
+        {
+            "Name": "liblzma5",
+            "Version": "5.8.1-160000.2.2",
+            "Description": "Library for encoding/decoding LZMA files."
+        },
+        {
+            "Name": "liblz4-1",
+            "Version": "1.10.0-160000.2.2",
+            "Description": "LZ4 is a lossless data compression algorithm that is focused on\ncompression and "
+        },
+        {
+            "Name": "liblz1",
+            "Version": "1.15-160000.2.2",
+            "Description": "The lzlib compression library provides in-memory LZMA compression and\ndecompress"
+        },
+        {
+            "Name": "liblua5_4-5",
+            "Version": "5.4.7-160000.2.2",
+            "Description": "Lua is a programming language originally designed for extending\napplications, bu"
+        },
+        {
+            "Name": "liblmdb-0_9_30",
+            "Version": "0.9.30-160000.3.2",
+            "Description": "LMDB is a Btree-based database management library with an API similar\nto Berkele"
+        },
+        {
+            "Name": "libleancrypto1",
+            "Version": "1.5.1-160000.1.2",
+            "Description": "Leancrypto provides a general-purpose cryptographic library with PQC-safe\nalgori"
+        },
+        {
+            "Name": "libkeyutils1",
+            "Version": "1.6.3-160000.3.2",
+            "Description": "This package provides a wrapper library for the key management facility\nsystem c"
+        },
+        {
+            "Name": "libkbdfile1",
+            "Version": "2.7.1-160000.2.2",
+            "Description": "libkbdfile contains file access routines for kbd."
+        },
+        {
+            "Name": "libjson-c5",
+            "Version": "0.17-160000.2.2",
+            "Description": "JSON-C implements a reference counting object model that allows you to\neasily co"
+        },
+        {
+            "Name": "libjpeg8",
+            "Version": "8.3.2-160000.3.2",
+            "Description": "A library for manipulating JPEG images. It supports\narchitecture-specific SIMD i"
+        },
+        {
+            "Name": "libjitterentropy3",
+            "Version": "3.6.3-160000.2.2",
+            "Description": "The Jitter RNG provides a noise source using the CPU execution\ntiming jitter. It"
+        },
+        {
+            "Name": "libjbig2",
+            "Version": "2.1-160000.3.2",
+            "Description": "JBIG-KIT provides a portable library of compression and decompression\nfunctions "
+        },
+        {
+            "Name": "libjansson4",
+            "Version": "2.14-160000.2.2",
+            "Description": "Jansson is a C library for encoding, decoding and manipulating JSON data.\nIt fea"
+        },
+        {
+            "Name": "libgraphite2-3",
+            "Version": "1.3.14-160000.2.2",
+            "Description": "Graphite2 is a project within SIL's Non-Roman Script Initiative and Language\nSof"
+        },
+        {
+            "Name": "libgpm2",
+            "Version": "1.20.7-160000.2.2",
+            "Description": "This package provides a library that handles mouse requests and\ndelivers them to"
+        },
+        {
+            "Name": "libgpg-error0",
+            "Version": "1.54-160000.2.2",
+            "Description": "This is a library that defines common error values for all GnuPG\ncomponents.  Am"
+        },
+        {
+            "Name": "libgmp10",
+            "Version": "6.3.0-160000.2.2",
+            "Description": "GMP is a library for arbitrary precision arithmetic, operating on\nsigned integer"
+        },
+        {
+            "Name": "libglib-2_0-0",
+            "Version": "2.84.3-160000.2.2",
+            "Description": "GLib is a general-purpose utility library, which provides many useful\ndata types"
+        },
+        {
+            "Name": "libgdbm6",
+            "Version": "1.24-160000.2.2",
+            "Description": "GNU dbm is a library of database functions that use extensible\nhashing and work "
+        },
+        {
+            "Name": "libgcc_s1",
+            "Version": "15.1.1+git9973-160000.2.2",
+            "Description": "Libgcc is needed for dynamically linked C programs."
+        },
+        {
+            "Name": "libfuse3-3",
+            "Version": "3.16.2-160000.2.2",
+            "Description": "FUSE (Filesystem in Userspace) is an interface by the Linux kernel\nfor userspace"
+        },
+        {
+            "Name": "libfuse2",
+            "Version": "2.9.9-160000.2.2",
+            "Description": "FUSE (Filesystem in Userspace) is an interface by the Linux kernel\nfor userspace"
+        },
+        {
+            "Name": "libfstrm0",
+            "Version": "0.6.1-160000.2.2",
+            "Description": "This is fstrm, a C implementation of the Frame Streams data transport protocol.\n"
+        },
+        {
+            "Name": "libfribidi0",
+            "Version": "1.0.15-160000.2.2",
+            "Description": "This library implements the algorithm as described in \"Unicode\nStandard Annex #9"
+        },
+        {
+            "Name": "libfreebl3",
+            "Version": "3.112-160000.2.2",
+            "Description": "Network Security Services (NSS) is a set of libraries designed to\nsupport cross-"
+        },
+        {
+            "Name": "libffi8",
+            "Version": "3.4.6-160000.2.2",
+            "Description": "The libffi library provides a portable, high level programming\ninterface to vari"
+        },
+        {
+            "Name": "libfastjson4",
+            "Version": "1.2304.0-160000.2.2",
+            "Description": "A JSON parsing library, a fork of json-c, developed by the rsyslog team\nand used"
+        },
+        {
+            "Name": "libfa1",
+            "Version": "1.14.1-160000.2.2",
+            "Description": "Component library for the Augeas configuration parser."
+        },
+        {
+            "Name": "libexpat1",
+            "Version": "2.7.1-160000.3.1",
+            "Description": "Expat is an XML parser library written in C. It is a stream-oriented\nparser in w"
+        },
+        {
+            "Name": "libestr0",
+            "Version": "0.1.11-160000.2.2",
+            "Description": "This package provides the string handling essentials shared library\nused by the "
+        },
+        {
+            "Name": "libefivar1",
+            "Version": "38-160000.2.2",
+            "Description": "Library to allow for the simple manipulation of UEFI variables."
+        },
+        {
+            "Name": "libeconf0",
+            "Version": "0.7.9-160000.2.2",
+            "Description": "Enhanced config file parser, which merges config files placed\nin several locatio"
+        },
+        {
+            "Name": "libduktape207",
+            "Version": "2.7.0-160000.2.2",
+            "Description": "Embeddable Javascript engine.\n\nThis package contains the shared library."
+        },
+        {
+            "Name": "libdrm2",
+            "Version": "2.4.124-160000.3.2",
+            "Description": "libdrm is a library for accessing the Direct Rendering Manager on\nLinux, BSD and"
+        },
+        {
+            "Name": "libdeflt1_0",
+            "Version": "2022.10.16-160000.2.2",
+            "Description": "This library can be used to parse setting files that follow a trivial\n\"KEY=VALUE"
+        },
+        {
+            "Name": "libdatrie1",
+            "Version": "0.2.13-160000.3.2",
+            "Description": "This is an implementation of double-array structure for representing\ntrie, as pr"
+        },
+        {
+            "Name": "libcrypt1",
+            "Version": "4.4.38-160000.3.2",
+            "Description": "libxcrypt is a modern library for one-way hashing of passwords.  It\nsupports DES"
+        },
+        {
+            "Name": "libcpupower1",
+            "Version": "6.12.0-160000.2.2",
+            "Description": "Contains libcpupower which offers easy functions to access\nprocessor frequency, "
+        },
+        {
+            "Name": "libcom_err2",
+            "Version": "1.47.0-160000.3.2",
+            "Description": "com_err is an error message display library."
+        },
+        {
+            "Name": "libcbor0_11",
+            "Version": "0.11.0-160000.2.2",
+            "Description": "libcbor is a C99 library for parsing and generating CBOR (RFC 7049),\na general-p"
+        },
+        {
+            "Name": "libcap2",
+            "Version": "2.73-160000.2.2",
+            "Description": "Capabilities are a measure to limit the omnipotence of the superuser.\nCurrently "
+        },
+        {
+            "Name": "libcap-ng0",
+            "Version": "0.8.5-160000.3.2",
+            "Description": "libcap-ng is a library providing an alternate mechanism to libcap to\ninspect and"
+        },
+        {
+            "Name": "libbz2-1",
+            "Version": "1.0.8-160000.2.2",
+            "Description": "The bzip2 runtime library"
+        },
+        {
+            "Name": "libbtrfsutil1",
+            "Version": "6.14-160000.2.2",
+            "Description": "This package contains the versioned libbtrfsutil.so shared library. This library"
+        },
+        {
+            "Name": "libbtrfs0",
+            "Version": "6.14-160000.2.2",
+            "Description": "This package contains the versioned libbtrfs.so shared library."
+        },
+        {
+            "Name": "libbrotlicommon1",
+            "Version": "1.1.0-160000.2.2",
+            "Description": "Common library for the Brotli general purpose lossless data\ncompression algorith"
+        },
+        {
+            "Name": "libavahi-common3",
+            "Version": "0.8-160000.2.2",
+            "Description": "Avahi is an implementation of the DNS Service Discovery and Multicast\nDNS specif"
+        },
+        {
+            "Name": "libaudit1",
+            "Version": "4.0-160000.2.2",
+            "Description": "The libaudit package contains the shared libraries needed for\napplications to us"
+        },
+        {
+            "Name": "libattr1",
+            "Version": "2.5.2-160000.2.2",
+            "Description": "This package contains the libattr.so dynamic library, which contains\nthe extende"
+        },
+        {
+            "Name": "libapparmor1",
+            "Version": "4.1.1-160000.2.2",
+            "Description": "This package provides the libapparmor library, which contains the\nchange_hat(2) "
+        },
+        {
+            "Name": "libalternatives1",
+            "Version": "1.2+30.a5431e9-160000.2.2",
+            "Description": "This package contains the core logic and the runtime library for\nlibalternatives"
+        },
+        {
+            "Name": "libaio1",
+            "Version": "0.3.113-160000.3.2",
+            "Description": "The Linux-native asynchronous I/O facility (\"async I/O\", or \"aio\") has\na richer "
+        },
+        {
+            "Name": "libacl1",
+            "Version": "2.3.2-160000.2.2",
+            "Description": "This package contains the libacl.so dynamic library which contains the\nPOSIX 100"
+        },
+        {
+            "Name": "libXau6",
+            "Version": "1.0.12-160000.2.2",
+            "Description": "libXau provides mechanisms for individual access to an X Window\nSystem display. "
+        },
+        {
+            "Name": "libICE6",
+            "Version": "1.1.2-160000.3.2",
+            "Description": "The Inter-Client Exchange (ICE) protocol is intended to provide a\nframework for "
+        },
+        {
+            "Name": "gpart",
+            "Version": "0.3-160000.3.2",
+            "Description": "Gpart is a small tool that tries to guess what partitions are on a PC\ntype hard "
+        },
+        {
+            "Name": "glibc-locale-base",
+            "Version": "2.40-160000.2.2",
+            "Description": "Locale data for the internationalisation features of the GNU C library.\nThis pac"
+        },
+        {
+            "Name": "findutils",
+            "Version": "4.10.0-160000.2.2",
+            "Description": "The findutils package contains programs which will help you locate\nfiles on your"
+        },
+        {
+            "Name": "fillup",
+            "Version": "1.42-160000.2.2",
+            "Description": "fillup merges files that hold variables.  A variable is defined by an\nentity com"
+        },
+        {
+            "Name": "envsubst",
+            "Version": "0.22.5-160000.2.2",
+            "Description": "This package contains the envsubst helper binary to replace values from the\nenvi"
+        },
+        {
+            "Name": "dosfstools",
+            "Version": "4.2-160000.2.2",
+            "Description": "The dosfstools package includes the mkdosfs and dosfsck utilities, which\nrespect"
+        },
+        {
+            "Name": "dos2unix",
+            "Version": "7.5.2-160000.2.2",
+            "Description": "Dos2unix is used to convert plain text from DOS (CR/LF) format. Mac2unix\nconvert"
+        },
+        {
+            "Name": "dmidecode",
+            "Version": "3.6-160000.2.2",
+            "Description": "Dmidecode reports information about your system's hardware as described\nin your "
+        },
+        {
+            "Name": "diffutils",
+            "Version": "3.12-160000.2.2",
+            "Description": "The GNU diff utilities find differences between files. diff is used to\nmake sour"
+        },
+        {
+            "Name": "terminfo-screen",
+            "Version": "6.5.20250531-160000.2.2",
+            "Description": "This package includes some useful entries for the screen utility in the\nterminfo"
+        },
+        {
+            "Name": "psmisc",
+            "Version": "23.7-160000.2.2",
+            "Description": "The psmisc package contains utilities for managing processes on your\nsystem: pst"
+        },
+        {
+            "Name": "libreadline8",
+            "Version": "8.2.13-160000.2.2",
+            "Description": "The readline library is used by the Bourne Again Shell (bash, the\nstandard comma"
+        },
+        {
+            "Name": "libedit0",
+            "Version": "20210910.3.1-160000.2.2",
+            "Description": "libedit is a command line editing and history library. It is designed\nto be used"
+        },
+        {
+            "Name": "mozilla-nss-certs",
+            "Version": "3.112-160000.2.2",
+            "Description": "This package contains the integrated CA root certificates from the\nMozilla proje"
+        },
+        {
+            "Name": "pigz",
+            "Version": "2.8-160000.2.2",
+            "Description": "A parallel implementation of gzip for modern multi-processor, multi-core machine"
+        },
+        {
+            "Name": "libpng16-16",
+            "Version": "1.6.44-160000.2.2",
+            "Description": "libpng is the official reference library for the Portable Network\nGraphics forma"
+        },
+        {
+            "Name": "libpci3",
+            "Version": "3.13.0-160000.2.2",
+            "Description": "libpci offers access to the PCI configuration space."
+        },
+        {
+            "Name": "libelf1",
+            "Version": "0.192-160000.2.2",
+            "Description": "This package provides a high-level library to read and write ELF files.\nThis is "
+        },
+        {
+            "Name": "libhd25",
+            "Version": "25.0-160000.2.2",
+            "Description": "This library collects information about the hardware installed on a\nsystem."
+        },
+        {
+            "Name": "libidn2-0",
+            "Version": "2.3.8-160000.2.2",
+            "Description": "An implementation of the IDNA2008 specifications (RFCs 5890, 5891, 5892, 5893)"
+        },
+        {
+            "Name": "libtss2-sys1",
+            "Version": "4.1.0-160000.2.2",
+            "Description": "System API (SAPI) as described in the system level API and TPM command\ntransmiss"
+        },
+        {
+            "Name": "libtevent0",
+            "Version": "0.16.2-160000.2.2",
+            "Description": "Tevent is an event system based on the talloc memory management library. It\nis t"
+        },
+        {
+            "Name": "liblastlog2-2",
+            "Version": "2.41.1-160000.2.2",
+            "Description": "The liblastlog2 library provides various interfaces to read, write or modify the"
+        },
+        {
+            "Name": "libnewt0_52",
+            "Version": "0.52.24-160000.2.2",
+            "Description": "This package contains the shared libraries needed by programs built\nwith newt.\n\n"
+        },
+        {
+            "Name": "libscg1_0",
+            "Version": "2022.10.16-160000.2.2",
+            "Description": "libscg is a SCSI transport library, providing an abstraction\nlayer from operatin"
+        },
+        {
+            "Name": "libfile1_0",
+            "Version": "2022.10.16-160000.2.2",
+            "Description": "The library implements a heuristic file type determinator,\nsimilar to file/libma"
+        },
+        {
+            "Name": "pkgconf",
+            "Version": "2.2.0-160000.2.2",
+            "Description": "pkgconf is a program which helps to configure compiler and linker flags\nfor deve"
+        },
+        {
+            "Name": "libpaper-tools",
+            "Version": "2.1.0-160000.2.2",
+            "Description": "This package provides the 'paper' binary"
+        },
+        {
+            "Name": "numactl",
+            "Version": "2.0.19.14.g690a72c-160000.2.2",
+            "Description": "Control NUMA policy for individual processes. Offer libnuma for\nindividual NUMA "
+        },
+        {
+            "Name": "netcfg",
+            "Version": "11.6-160000.2.2",
+            "Description": "All of the basic configuration files for the network programs including\n/etc/ali"
+        },
+        {
+            "Name": "libnftnl11",
+            "Version": "1.2.9-160000.2.2",
+            "Description": "libnftnl is a userspace library providing a low-level netlink\nprogramming interf"
+        },
+        {
+            "Name": "libnetfilter_conntrack3",
+            "Version": "1.1.0-160000.2.2",
+            "Description": "libnetfilter_conntrack is a userspace library providing a programming\ninterface "
+        },
+        {
+            "Name": "ethtool",
+            "Version": "6.14-160000.2.2",
+            "Description": "Ethtool is a small utility for examining and tuning ethernet-based\nnetwork inter"
+        },
+        {
+            "Name": "libbsd0",
+            "Version": "0.11.7-160000.3.2",
+            "Description": "This library provides functions commonly found on BSD systems, and\nlacking on ot"
+        },
+        {
+            "Name": "libxml2-2",
+            "Version": "2.13.8-160000.2.2",
+            "Description": "The XML C library was initially developed for the GNOME project. It is\nnow used "
+        },
+        {
+            "Name": "libkfont0",
+            "Version": "2.7.1-160000.2.2",
+            "Description": "libkfont contains routines for reading/writing PSF fonts, screen maps\nand Unicod"
+        },
+        {
+            "Name": "libkeymap1",
+            "Version": "2.7.1-160000.2.2",
+            "Description": "libkeymap contains routines for exchanging keyboard mappings\nwith the Linux kern"
+        },
+        {
+            "Name": "libksba8",
+            "Version": "1.6.7-160000.2.2",
+            "Description": "KSBA is a library to simplify the task of working with X.509\ncertificates, CMS d"
+        },
+        {
+            "Name": "libgcrypt20",
+            "Version": "1.11.1-160000.2.2",
+            "Description": "Libgcrypt is a general purpose crypto library based on the code used in\nGnuPG (a"
+        },
+        {
+            "Name": "libassuan9",
+            "Version": "3.0.2-160000.2.2",
+            "Description": "Libassuan is the IPC library used by gpg2 (GnuPG version 2)"
+        },
+        {
+            "Name": "libmpfr6",
+            "Version": "4.2.1-160000.2.2",
+            "Description": "The MPFR library is a C library for multiple-precision floating-point\ncomputatio"
+        },
+        {
+            "Name": "libhogweed6",
+            "Version": "3.10.1-160000.2.2",
+            "Description": "Nettle is a cryptographic library that is designed to fit easily in more or\nless"
+        },
+        {
+            "Name": "libgmodule-2_0-0",
+            "Version": "2.84.3-160000.2.2",
+            "Description": "GLib is a general-purpose utility library, which provides many useful\ndata types"
+        },
+        {
+            "Name": "libgdbm_compat4",
+            "Version": "1.24-160000.2.2",
+            "Description": "GNU dbm is a library of database functions that use extensible\nhashing and work "
+        },
+        {
+            "Name": "libstdc++6",
+            "Version": "15.1.1+git9973-160000.2.2",
+            "Description": "The standard C++ library, needed for dynamically linked C++ programs."
+        },
+        {
+            "Name": "libjemalloc2",
+            "Version": "5.3.0-160000.2.2",
+            "Description": "General-purpose scalable concurrent malloc(3) implementation.\nThis distribution "
+        },
+        {
+            "Name": "libp11-kit0",
+            "Version": "0.25.5-160000.2.2",
+            "Description": "p11-kit provides a way to load and enumerate PKCS#11 modules, as well\nas a stand"
+        },
+        {
+            "Name": "libgobject-2_0-0",
+            "Version": "2.84.3-160000.2.2",
+            "Description": "GLib is a general-purpose utility library, which provides many useful\ndata types"
+        },
+        {
+            "Name": "libmetalink3",
+            "Version": "0.1.3-160000.2.2",
+            "Description": "Libmetalink is a Metalink library written in C language. It is intended to\nprovi"
+        },
+        {
+            "Name": "liblognorm5",
+            "Version": "2.0.6-160000.2.2",
+            "Description": "Liblognorm is a library and a tool to normalize log data.\n\nLiblognorm shall help"
+        },
+        {
+            "Name": "efibootmgr",
+            "Version": "18-160000.2.2",
+            "Description": "The EFI Boot Manager allows the user to edit the Intel Extensible\nFirmware Inter"
+        },
+        {
+            "Name": "libblkid1",
+            "Version": "2.41.1-160000.2.2",
+            "Description": "Library for filesystem detection."
+        },
+        {
+            "Name": "libcdrdeflt1_0",
+            "Version": "3.02~a10-160000.2.2",
+            "Description": "This library implements a mechanism to read the settings from\ncdrecord's config "
+        },
+        {
+            "Name": "libthai0",
+            "Version": "0.1.29-160000.3.2",
+            "Description": "LibThai is a set of Thai language support routines to aid\nincorporation of Thai "
+        },
+        {
+            "Name": "perl-base",
+            "Version": "5.42.0-160000.2.2",
+            "Description": "perl - Practical Extraction and Report Language\n\nPerl is optimized for scanning "
+        },
+        {
+            "Name": "libruby3_4-3_4",
+            "Version": "3.4.3-160000.2.2",
+            "Description": "Dynamic runtime library for Ruby"
+        },
+        {
+            "Name": "cpupower",
+            "Version": "6.12.0-160000.2.2",
+            "Description": "This tool accesses the Linux kernel's processor power subsystems\nlike CPU freque"
+        },
+        {
+            "Name": "libext2fs2",
+            "Version": "1.47.0-160000.3.2",
+            "Description": "The basic Ext2fs shared library."
+        },
+        {
+            "Name": "libudev1",
+            "Version": "257.7-160000.2.2",
+            "Description": "This package contains the dynamic library libudev, which provides\naccess to udev"
+        },
+        {
+            "Name": "libsystemd0",
+            "Version": "257.7-160000.2.2",
+            "Description": "This library provides several of the systemd C APIs:\n\n* sd-bus implements an alt"
+        },
+        {
+            "Name": "libzio1",
+            "Version": "1.09-160000.2.2",
+            "Description": "Libzio provides a wrapper function for reading or writing gzip or bzip2\nfiles wi"
+        },
+        {
+            "Name": "libmagic1",
+            "Version": "5.46-160000.2.2",
+            "Description": "This library reads magic files and detects file types. Used by file command"
+        },
+        {
+            "Name": "libbrotlidec1",
+            "Version": "1.1.0-160000.2.2",
+            "Description": "Decompression library for the Brotli general purpose lossless data\ncompression a"
+        },
+        {
+            "Name": "libsubid5",
+            "Version": "4.17.2-160000.2.2",
+            "Description": "Utility library that provides a way to manage subid ranges."
+        },
+        {
+            "Name": "libsemanage2",
+            "Version": "3.8.1-160000.2.2",
+            "Description": "libsemanage is the policy management library. Using libsepol and\nlibselinux to i"
+        },
+        {
+            "Name": "libauparse0",
+            "Version": "4.0-160000.2.2",
+            "Description": "The libauparse package contains the shared libraries needed to\nparse audit recor"
+        },
+        {
+            "Name": "attr",
+            "Version": "2.5.2-160000.2.2",
+            "Description": "A set of tools for manipulating extended attributes on file system\nobjects, in p"
+        },
+        {
+            "Name": "alts",
+            "Version": "1.2+30.a5431e9-160000.2.2",
+            "Description": "This package contains a default helper and configuration application utility\nfor"
+        },
+        {
+            "Name": "sed",
+            "Version": "4.9-160000.2.2",
+            "Description": "Sed takes text input, performs one or more operations on it, and\noutputs the mod"
+        },
+        {
+            "Name": "permctl",
+            "Version": "1699_20250120-160000.2.2",
+            "Description": "Tool to check and set file permissions."
+        },
+        {
+            "Name": "libfind4_0",
+            "Version": "1.8-160000.2.2",
+            "Description": "libfind allows to be used for adding find(1)-like command-line features\nto progr"
+        },
+        {
+            "Name": "acl",
+            "Version": "2.3.2-160000.2.2",
+            "Description": "getfacl and setfacl commands for retrieving and setting POSIX access\ncontrol lis"
+        },
+        {
+            "Name": "libxcb1",
+            "Version": "1.17.0-160000.2.2",
+            "Description": "The X protocol C-language Binding (XCB) is a replacement for Xlib\nfeaturing a sm"
+        },
+        {
+            "Name": "libSM6",
+            "Version": "1.2.6-160000.3.2",
+            "Description": "The X Session Management Protocol provides a uniform mechanism for\nusers to save"
+        },
+        {
+            "Name": "glibc-locale",
+            "Version": "2.40-160000.2.2",
+            "Description": "Locale data for the internationalisation features of the GNU C library."
+        },
+        {
+            "Name": "libdw1",
+            "Version": "0.192-160000.2.2",
+            "Description": "This package provides a high-level library to access the DWARF debugging\ninforma"
+        },
+        {
+            "Name": "libbpf1",
+            "Version": "1.6.1-160000.1.2",
+            "Description": "libbpf is a C library which provides API for managing eBPF programs and maps."
+        },
+        {
+            "Name": "libntfs-3g89",
+            "Version": "2022.10.3-160000.2.2",
+            "Description": "NTFS-3G allows for read/write access to NTFS partitions which can be\nshared with"
+        },
+        {
+            "Name": "libpsl5",
+            "Version": "0.21.5-160000.3.2",
+            "Description": "libpsl is a C library to handle the Public Suffix List. A \"public suffix\" is a\nd"
+        },
+        {
+            "Name": "libscgcmd1_0",
+            "Version": "2022.10.16-160000.2.2",
+            "Description": "A library to create and parse SCSI commands (at the byte level)."
+        },
+        {
+            "Name": "librscg1_0",
+            "Version": "2022.10.16-160000.2.2",
+            "Description": "A library containing additional routines on top of scg for dealing with\nremote S"
+        },
+        {
+            "Name": "libcares2",
+            "Version": "1.34.5-160000.2.2",
+            "Description": "c-ares is a C library that performs DNS requests and name resolves\nasynchronousl"
+        },
+        {
+            "Name": "libnftables1",
+            "Version": "1.1.3-160000.2.2",
+            "Description": "libnftables is the nftables command line interface placed into a\nlibrary."
+        },
+        {
+            "Name": "netcat-openbsd",
+            "Version": "1.229-160000.2.2",
+            "Description": "A simple Unix utility which reads and writes data across network\nconnections usi"
+        },
+        {
+            "Name": "libxml2-tools",
+            "Version": "2.13.8-160000.2.2",
+            "Description": "This package contains xmllint, a very useful tool proving libxml's power."
+        },
+        {
+            "Name": "libaugeas0",
+            "Version": "1.14.1-160000.2.2",
+            "Description": "A library for programmatically editing configuration files. Augeas\nparses config"
+        },
+        {
+            "Name": "augeas-lenses",
+            "Version": "1.14.1-160000.2.2",
+            "Description": "Augeas parses configuration files described in lenses into a tree\nstructure, whi"
+        },
+        {
+            "Name": "bash",
+            "Version": "5.2.37-160000.2.2",
+            "Description": "Bash is an sh-compatible command interpreter that executes commands\nread from st"
+        },
+        {
+            "Name": "bash-sh",
+            "Version": "5.2.37-160000.2.2",
+            "Description": "Use bash as /bin/sh implementation."
+        },
+        {
+            "Name": "coreutils",
+            "Version": "9.6-160000.2.2",
+            "Description": "These are the GNU core utilities.  This package is the union of\nthe GNU fileutil"
+        },
+        {
+            "Name": "libyaml-cpp0_8",
+            "Version": "0.8.0-160000.2.2",
+            "Description": "A YAML parser and emitter in C++ matching the YAML 1.2 spec."
+        },
+        {
+            "Name": "libtiff6",
+            "Version": "4.7.1-160000.1.1",
+            "Description": "This package includes the tiff libraries. To link a program with\nlibtiff, you wi"
+        },
+        {
+            "Name": "libsnappy1",
+            "Version": "1.1.10-160000.2.2",
+            "Description": "Snappy is a compression/decompression library. It does not aim for maximum\ncompr"
+        },
+        {
+            "Name": "libsigc-2_0-0",
+            "Version": "2.12.1-160000.3.2",
+            "Description": "This library implements a full callback system for use in widget\nlibraries, abst"
+        },
+        {
+            "Name": "libinih0",
+            "Version": "58-160000.2.2",
+            "Description": "INI Not Invented Here is a simple parser for .INI files written in C and mostly\n"
+        },
+        {
+            "Name": "gpg-pubkey",
+            "Version": "09d9ea69-68595a8c",
+            "Description": "-----BEGIN PGP PUBLIC KEY BLOCK-----\nVersion: rpm-4.20.1\n\nmQINBGRbmc4BEAC1syxaG+"
+        },
+        {
+            "Name": "libboost_thread1_86_0",
+            "Version": "1.86.0-160000.2.2",
+            "Description": "This package contains the Boost.Thread runtime library."
+        },
+        {
+            "Name": "gptfdisk",
+            "Version": "1.0.10-160000.2.2",
+            "Description": "Partitioning software for GPT disks and to repair MBR disks. The\ngdisk, cgdisk, "
+        },
+        {
+            "Name": "fdupes",
+            "Version": "2.3.1-160000.2.2",
+            "Description": "FDUPES is a program for identifying or deleting duplicate files\nresiding within "
+        },
+        {
+            "Name": "p11-kit-tools",
+            "Version": "0.25.5-160000.2.2",
+            "Description": "p11-kit provides a way to load and enumerate PKCS#11 modules, as well\nas a stand"
+        },
+        {
+            "Name": "p11-kit",
+            "Version": "0.25.5-160000.2.2",
+            "Description": "p11-kit provides a way to load and enumerate PKCS#11 modules, as well\nas a stand"
+        },
+        {
+            "Name": "typelib-1_0-GLib-2_0",
+            "Version": "2.84.3-160000.2.2",
+            "Description": "GLib is a general-purpose utility library, which provides many useful\ndata types"
+        },
+        {
+            "Name": "libgirepository-2_0-0",
+            "Version": "2.84.3-160000.2.2",
+            "Description": "GLib is a general-purpose utility library, which provides many useful\ndata types"
+        },
+        {
+            "Name": "libmount1",
+            "Version": "2.41.1-160000.2.2",
+            "Description": "Library designed to be used in low-level utils like\nmount(8) and /usr/sbin/mount"
+        },
+        {
+            "Name": "libfdisk1",
+            "Version": "2.41.1-160000.2.2",
+            "Description": "Library for filesystem detection."
+        },
+        {
+            "Name": "perl",
+            "Version": "5.42.0-160000.2.2",
+            "Description": "perl - Practical Extraction and Report Language\n\nPerl is optimized for scanning "
+        },
+        {
+            "Name": "libusb-1_0-0",
+            "Version": "1.0.28-160000.2.2",
+            "Description": "Libusb is a library that allows userspace access to USB devices."
+        },
+        {
+            "Name": "libply-splash-core5",
+            "Version": "22.02.122+94.4bd41a3-160000.3.1",
+            "Description": "This package contains the libply-splash-core library\nused by graphical Plymouth "
+        },
+        {
+            "Name": "libhidapi-hidraw0",
+            "Version": "0.14.0-160000.3.2",
+            "Description": "HIDAPI is a library which allows an application to interface with USB and Blueto"
+        },
+        {
+            "Name": "libwtmpdb0",
+            "Version": "0.74.0+git20250509.272b109-160000.2.2",
+            "Description": "The libwtmpdb provides various interfaces to read, write or modify\nthe wtmpdb da"
+        },
+        {
+            "Name": "libproc2-1",
+            "Version": "4.0.5-160000.2.2",
+            "Description": "The procps library can be used to read informations out from /proc\nthe process i"
+        },
+        {
+            "Name": "liblogging0",
+            "Version": "1.0.6-160000.2.2",
+            "Description": "Liblogging is an easy to use logging library.\n\nIt contains the Libstdlog compone"
+        },
+        {
+            "Name": "file",
+            "Version": "5.46-160000.2.2",
+            "Description": "With the file command, you can obtain information on the file type of a\nspecifie"
+        },
+        {
+            "Name": "libfreetype6",
+            "Version": "2.13.3-160000.3.1",
+            "Description": "This library features TrueType fonts for open source projects. This\nversion also"
+        },
+        {
+            "Name": "libxcb-shm0",
+            "Version": "1.17.0-160000.2.2",
+            "Description": "The X protocol C-language Binding (XCB) is a replacement for Xlib\nfeaturing a sm"
+        },
+        {
+            "Name": "libxcb-render0",
+            "Version": "1.17.0-160000.2.2",
+            "Description": "The X protocol C-language Binding (XCB) is a replacement for Xlib\nfeaturing a sm"
+        },
+        {
+            "Name": "libX11-6",
+            "Version": "1.8.10-160000.3.1",
+            "Description": "The X Window System is a network-transparent window system that was\ndesigned at "
+        },
+        {
+            "Name": "libasm1",
+            "Version": "0.192-160000.2.2",
+            "Description": "libasm contains the \"asm\" and \"disasm\" functions to assemble and\ndisassamble ins"
+        },
+        {
+            "Name": "mkisofs",
+            "Version": "3.02~a10-160000.2.2",
+            "Description": "mkisofs is a pre-mastering program to generate filesystems following\nthe ISO-966"
+        },
+        {
+            "Name": "zisofs-tools",
+            "Version": "1.0.8-160000.2.2",
+            "Description": "Zisofs-tools, in conjunction with a zisofs-enabled system, allows the\ncreation o"
+        },
+        {
+            "Name": "rpm-config-SUSE",
+            "Version": "20250328-160000.2.2",
+            "Description": "This package contains the RPM configuration data for the SUSE and\nopenSUSE distr"
+        },
+        {
+            "Name": "rpm",
+            "Version": "4.20.1-160000.2.2",
+            "Description": "RPM Package Manager is the main tool for managing the software packages\nof the S"
+        },
+        {
+            "Name": "libsolv1",
+            "Version": "0.7.34-160000.2.2",
+            "Description": "libsolv is a library for solving packages and reading repositories.\nIt consists "
+        },
+        {
+            "Name": "cnf",
+            "Version": "0.7.1~0-160000.2.2",
+            "Description": "A libsolv based command-not-found handler for openSUSE."
+        },
+        {
+            "Name": "makedumpfile",
+            "Version": "1.7.7-160000.2.2",
+            "Description": "makedumpfile is a dump program to shorten the size of dump file. It\ncopies only "
+        },
+        {
+            "Name": "typelib-1_0-GObject-2_0",
+            "Version": "2.84.3-160000.2.2",
+            "Description": "GLib is a general-purpose utility library, which provides many useful\ndata types"
+        },
+        {
+            "Name": "typelib-1_0-GModule-2_0",
+            "Version": "2.84.3-160000.2.2",
+            "Description": "GLib is a general-purpose utility library, which provides many useful\ndata types"
+        },
+        {
+            "Name": "perl-IPC-Run3",
+            "Version": "0.49.0-160000.2.2",
+            "Description": "This module allows you to run a subprocess and redirect stdin, stdout,\nand/or st"
+        },
+        {
+            "Name": "libply-splash-graphics5",
+            "Version": "22.02.122+94.4bd41a3-160000.3.1",
+            "Description": "This package contains the libply-splash-graphics library\nused by graphical Plymo"
+        },
+        {
+            "Name": "procps",
+            "Version": "4.0.5-160000.2.2",
+            "Description": "The procps package contains a set of system utilities that provide\nsystem inform"
+        },
+        {
+            "Name": "libharfbuzz0",
+            "Version": "11.0.0-160000.2.2",
+            "Description": "HarfBuzz is an OpenType text shaping engine."
+        },
+        {
+            "Name": "libfontconfig1",
+            "Version": "2.16.0-160000.2.2",
+            "Description": "Fontconfig is a library for configuring and customizing font access. It\ncontains"
+        },
+        {
+            "Name": "fontconfig",
+            "Version": "2.16.0-160000.2.2",
+            "Description": "Fontconfig is a library for configuring and customizing font access. It\ncontains"
+        },
+        {
+            "Name": "libXt6",
+            "Version": "1.3.1-160000.3.2",
+            "Description": "The low level Xlib library provides functions for interacting with an\nX11 server"
+        },
+        {
+            "Name": "libXrender1",
+            "Version": "0.9.11-160000.2.2",
+            "Description": "The Xrender library is designed as a lightweight library interface to\nthe Render"
+        },
+        {
+            "Name": "libXmuu1",
+            "Version": "1.2.1-160000.3.2",
+            "Description": "The Xmu/Xmuu libraries are a collection of miscellaneous (some might\nsay random)"
+        },
+        {
+            "Name": "libXext6",
+            "Version": "1.3.6-160000.3.2",
+            "Description": "The Xext library contains a handful of X11 extensions:\n- Double Buffer extension"
+        },
+        {
+            "Name": "zstd",
+            "Version": "1.5.7-160000.2.2",
+            "Description": "Zstd, short for Zstandard, is a lossless compression algorithm. Speed\nvs. compre"
+        },
+        {
+            "Name": "xz",
+            "Version": "5.8.1-160000.2.2",
+            "Description": "The xz command is a program for compressing files.\n* Average compression ratio o"
+        },
+        {
+            "Name": "time",
+            "Version": "1.9-160000.2.2",
+            "Description": "The \"time\" command runs another program, then displays information\nabout the res"
+        },
+        {
+            "Name": "thin-provisioning-tools",
+            "Version": "1.1.0-160000.2.2",
+            "Description": "A suite of tools for thin provisioning on Linux."
+        },
+        {
+            "Name": "tcl",
+            "Version": "8.6.15-160000.2.2",
+            "Description": "Tcl (Tool Command Language) is a very powerful but easy to learn\ndynamic program"
+        },
+        {
+            "Name": "tar-rmt",
+            "Version": "1.35-160000.2.2",
+            "Description": "Provides remote access to files and devices for tar, cpio\nand similar backup uti"
+        },
+        {
+            "Name": "systemd-rpm-macros",
+            "Version": "26-160000.2.2",
+            "Description": "Starting with openSUSE 12.1, several RPM macros must be used to package systemd\n"
+        },
+        {
+            "Name": "systemd-presets-common-SUSE",
+            "Version": "15-160000.2.2",
+            "Description": "Default presets for systemd on SUSE based distributions."
+        },
+        {
+            "Name": "systemd-default-settings-branding-openSUSE",
+            "Version": "0.10-160000.2.2",
+            "Description": "This package overrides some of the upstream default settings to make\nthem better"
+        },
+        {
+            "Name": "systemd-default-settings",
+            "Version": "0.10-160000.2.2",
+            "Description": "This package overrides some of the upstream default settings which are\nbetter su"
+        },
+        {
+            "Name": "sound-theme-freedesktop",
+            "Version": "0.8-160000.2.2",
+            "Description": "The default freedesktop.org sound theme following the XDG theming\nspecification."
+        },
+        {
+            "Name": "shared-mime-info",
+            "Version": "2.4-160000.2.2",
+            "Description": "This package contains:\n\n- The freedesktop.org shared MIME database spec.\n\n- The "
+        },
+        {
+            "Name": "sg3_utils",
+            "Version": "1.48~20221101+1.142dace-160000.2.2",
+            "Description": "The sg3_utils package contains utilities that send SCSI commands to\ndevices. As "
+        },
+        {
+            "Name": "pkgconf-pkg-config",
+            "Version": "2.2.0-160000.2.2",
+            "Description": "This package provides the shim links for pkgconf to be automatically\nused in pla"
+        },
+        {
+            "Name": "pinentry",
+            "Version": "1.3.1-160000.2.2",
+            "Description": "This is a collection of simple PIN or passphrase entry dialogs which\nutilize the"
+        },
+        {
+            "Name": "permissions-config",
+            "Version": "1699_20250120-160000.2.2",
+            "Description": "The actual permissions configuration files, /usr/share/permissions/permission.*."
+        },
+        {
+            "Name": "perl-Term-ReadKey",
+            "Version": "2.38-160000.2.2",
+            "Description": "This module, ReadKey, provides ioctl control for terminals and Win32 consoles\nso"
+        },
+        {
+            "Name": "openSUSE-build-key",
+            "Version": "1.0-lp160.15.1",
+            "Description": "This package contains the gpg keys that are used to sign the\nopenSUSE rpm packag"
+        },
+        {
+            "Name": "ntfs-3g",
+            "Version": "2022.10.3-160000.2.2",
+            "Description": "NTFS-3G allows for read/write access to NTFS partitions which can be\nshared with"
+        },
+        {
+            "Name": "nftables",
+            "Version": "1.1.3-160000.2.2",
+            "Description": "nf_tables is a firewalling mechanism in the Linux kernel, running\nindependently "
+        },
+        {
+            "Name": "netpbm",
+            "Version": "11.9.3-160000.2.2",
+            "Description": "These are the Portable Bitmap Plus Utilities.\n\nThis package provides tools for g"
+        },
+        {
+            "Name": "mdadm",
+            "Version": "4.4+29.gf8bb524b-160000.1.1",
+            "Description": "mdadm is a program that can be used to control Linux Software RAID (md) devices."
+        },
+        {
+            "Name": "login_defs",
+            "Version": "4.17.2-160000.2.2",
+            "Description": "This package contains the default login.defs configuration file\nas used by util-"
+        },
+        {
+            "Name": "libssh-config",
+            "Version": "0.11.2-160000.2.2",
+            "Description": "Configuration files for the SSH library."
+        },
+        {
+            "Name": "libsolv-tools-base",
+            "Version": "0.7.34-160000.2.2",
+            "Description": "This subpackage contains utilities used by libzypp to manage solv files."
+        },
+        {
+            "Name": "libdevmapper1_03",
+            "Version": "2.03.29_1.02.203-160000.2.2",
+            "Description": "Device mapper main shared library"
+        },
+        {
+            "Name": "less",
+            "Version": "668-160000.2.2",
+            "Description": "less is a text file browser and pager similar to more. It allows\nbackward as wel"
+        },
+        {
+            "Name": "keyutils",
+            "Version": "1.6.3-160000.3.2",
+            "Description": "Utilities to control the kernel key management facility and to provide\na mechani"
+        },
+        {
+            "Name": "issue-generator",
+            "Version": "1.13-160000.3.2",
+            "Description": "issue-generator is a tool to create an issue file dynamically."
+        },
+        {
+            "Name": "iproute2",
+            "Version": "6.12-160000.2.2",
+            "Description": "iproute2 is a collection of user-space utilities to set up networking\nunder Linu"
+        },
+        {
+            "Name": "initviocons",
+            "Version": "0.5-160000.2.2",
+            "Description": "Initviocons can be used on the iSeries platform to recognize terminal\nfeatures o"
+        },
+        {
+            "Name": "hwinfo",
+            "Version": "25.0-160000.2.2",
+            "Description": "A program that lists results from the hardware detection\nlibrary."
+        },
+        {
+            "Name": "hdparm",
+            "Version": "9.65-160000.3.2",
+            "Description": "A shell utility to access and tune the ioctl features of the Linux IDE\ndriver an"
+        },
+        {
+            "Name": "gzip",
+            "Version": "1.13-160000.2.2",
+            "Description": "Gzip reduces the size of the named files using Lempel-Ziv coding LZ77.\nWhenever "
+        },
+        {
+            "Name": "groff",
+            "Version": "1.23.0-160000.2.2",
+            "Description": "The groff package is a stripped-down package containing the necessary\ncomponents"
+        },
+        {
+            "Name": "grep",
+            "Version": "3.11-160000.2.2",
+            "Description": "The grep command searches one or more input files for lines containing a\nmatch t"
+        },
+        {
+            "Name": "gettext-runtime",
+            "Version": "0.22.5-160000.2.2",
+            "Description": "This package contains the intl library as well as tools that ease the\ncreation a"
+        },
+        {
+            "Name": "gawk",
+            "Version": "5.3.2-160000.2.2",
+            "Description": "AWK is a domain-specific language designed for text processing and\ntypically use"
+        },
+        {
+            "Name": "elfutils",
+            "Version": "0.192-160000.2.2",
+            "Description": "elfutils is a collection of utilities and libraries to read, create\nand modify E"
+        },
+        {
+            "Name": "e2fsprogs",
+            "Version": "1.47.0-160000.3.2",
+            "Description": "Utilities needed to create and maintain ext2 and ext3 file systems\nunder Linux. "
+        },
+        {
+            "Name": "deltarpm",
+            "Version": "3.6.5-bp160.1.9",
+            "Description": "This package contains tools to create and apply deltarpms. A deltarpm\ncontains t"
+        },
+        {
+            "Name": "cracklib",
+            "Version": "2.9.11-160000.2.2",
+            "Description": "CrackLib tests passwords to determine whether they match\ncertainsecurity-oriente"
+        },
+        {
+            "Name": "libcrack2",
+            "Version": "2.9.11-160000.2.2",
+            "Description": "CrackLib tests passwords to determine whether they match\ncertain security-orient"
+        },
+        {
+            "Name": "coreutils-systemd",
+            "Version": "9.6-160000.2.2",
+            "Description": "These are the GNU core utilities.  This package is the union of\nthe GNU fileutil"
+        },
+        {
+            "Name": "cnf-bash",
+            "Version": "0.7.1~0-160000.2.2",
+            "Description": "Bash setup code for command-not-found handler cnf."
+        },
+        {
+            "Name": "ca-certificates",
+            "Version": "2+git20240805.fd24d50-160000.2.2",
+            "Description": "Update-ca-certificates is intended to keep the certificate stores of\nSSL librari"
+        },
+        {
+            "Name": "ca-certificates-mozilla",
+            "Version": "2.74-160000.2.2",
+            "Description": "This package contains some CA root certificates for OpenSSL extracted\nfrom Mozil"
+        },
+        {
+            "Name": "bzip2",
+            "Version": "1.0.8-160000.2.2",
+            "Description": "The bzip2 program is a program for compressing files."
+        },
+        {
+            "Name": "bash-completion",
+            "Version": "2.12.0-160000.2.2",
+            "Description": "\n\n\n\nbash-completion is a collection of shell functions that take advantage\nof th"
+        },
+        {
+            "Name": "agama-scripts",
+            "Version": "17+427.52990b794-160000.6.1",
+            "Description": "The Agama installer supports running user-defined scripts during and after the i"
+        },
+        {
+            "Name": "psutils",
+            "Version": "2.08-160000.2.2",
+            "Description": "This archive contains utilities for manipulating PostScript documents.\nPage sele"
+        },
+        {
+            "Name": "libXft2",
+            "Version": "2.3.8-160000.2.2",
+            "Description": "Xft is a library that connects X applications with the FreeType font\nrasterizati"
+        },
+        {
+            "Name": "xhost",
+            "Version": "1.0.9-160000.2.2",
+            "Description": "xhost is used to manage the list of host names or user names\nallowed to make con"
+        },
+        {
+            "Name": "libcairo2",
+            "Version": "1.18.4-160000.2.2",
+            "Description": "Cairo is a vector graphics library with cross-device output support.\nCurrently s"
+        },
+        {
+            "Name": "libXss1",
+            "Version": "1.2.4-160000.3.2",
+            "Description": "The X Window System provides support for changing the image on a\ndisplay screen "
+        },
+        {
+            "Name": "libXmu6",
+            "Version": "1.2.1-160000.3.2",
+            "Description": "The Xmu library is a collection of miscellaneous (some might say random)\nutility"
+        },
+        {
+            "Name": "cpio",
+            "Version": "2.15-160000.2.2",
+            "Description": "GNU cpio is a program to manage archives of files. Cpio copies files\ninto or out"
+        },
+        {
+            "Name": "cpio-mt",
+            "Version": "2.15-160000.2.2",
+            "Description": "This package includes the 'mt', a local tape drive control program."
+        },
+        {
+            "Name": "systemd-presets-branding-openSUSE",
+            "Version": "12.2-lp160.7.1",
+            "Description": "Default presets for systemd on openSUSE distribution.\n\nThese are the openSUSE sp"
+        },
+        {
+            "Name": "hwdata",
+            "Version": "0.394-160000.2.2",
+            "Description": "hwdata contains various hardware identification and configuration data,\nsuch as "
+        },
+        {
+            "Name": "permissions",
+            "Version": "1699_20250120-160000.2.2",
+            "Description": "File and directory permission settings depending on the local security\nsettings."
+        },
+        {
+            "Name": "libparted2",
+            "Version": "3.6-160000.2.2",
+            "Description": "Libparted is a library for creating, destroying, resizing, checking\nand copying "
+        },
+        {
+            "Name": "libdevmapper-event1_03",
+            "Version": "2.03.29_1.02.203-160000.2.2",
+            "Description": "Device mapper event daemon shared library"
+        },
+        {
+            "Name": "libXpm4",
+            "Version": "3.5.17-160000.2.2",
+            "Description": "libXpm facilitates working with XPM (X PixMap), a format for\nstoring/retrieving "
+        },
+        {
+            "Name": "info",
+            "Version": "7.1-160000.2.2",
+            "Description": "Info is a terminal-based program for reading documentation of computer\nprograms "
+        },
+        {
+            "Name": "info-lang",
+            "Version": "7.1-160000.2.2",
+            "Description": "Provides translations for the \"info\" package."
+        },
+        {
+            "Name": "sysconfig",
+            "Version": "0.90.0-160000.2.2",
+            "Description": "This package provides the SUSE system configuration scheme for the\ntraditional \""
+        },
+        {
+            "Name": "zypper-log",
+            "Version": "1.14.93-160000.1.2",
+            "Description": "CLI for accessing the zypper logfile"
+        },
+        {
+            "Name": "vim-data",
+            "Version": "9.1.1406-160000.3.2",
+            "Description": "This package contains optional runtime \u0026 syntax files for vim."
+        },
+        {
+            "Name": "timezone",
+            "Version": "2025b-160000.2.2",
+            "Description": "These are configuration files that describe available time zones. You\ncan select"
+        },
+        {
+            "Name": "tzselect",
+            "Version": "2025b-160000.2.2",
+            "Description": "This package contains a helper script to select the timezone."
+        },
+        {
+            "Name": "libpwquality1",
+            "Version": "1.4.5-160000.3.2",
+            "Description": "libpwquality is a library for password quality checks and generation\nof random p"
+        },
+        {
+            "Name": "iproute2-bash-completion",
+            "Version": "6.12-160000.2.2",
+            "Description": "bash command line completion support for iproute."
+        },
+        {
+            "Name": "ethtool-bash-completion",
+            "Version": "6.14-160000.2.2",
+            "Description": "bash command line completion support for ethtool."
+        },
+        {
+            "Name": "cpupower-bash-completion",
+            "Version": "6.12.0-160000.2.2",
+            "Description": "bash command line completion support for cpupower."
+        },
+        {
+            "Name": "libcairo-gobject2",
+            "Version": "1.18.4-160000.2.2",
+            "Description": "Cairo is a vector graphics library with cross-device output support.\nCurrently s"
+        },
+        {
+            "Name": "tk",
+            "Version": "8.6.13-160000.2.2",
+            "Description": "Tk is a graphical user interface toolkit that takes developing desktop\napplicati"
+        },
+        {
+            "Name": "tar",
+            "Version": "1.35-160000.2.2",
+            "Description": "GNU Tar is an archiver program. It is used to create and manipulate files\nthat a"
+        },
+        {
+            "Name": "pam",
+            "Version": "1.7.1-160000.2.2",
+            "Description": "PAM (Pluggable Authentication Modules) is a system security tool that\nallows sys"
+        },
+        {
+            "Name": "iputils",
+            "Version": "20240905-160000.2.2",
+            "Description": "This package contains some small network tools for IPv4 and IPv6 like\nping, arpi"
+        },
+        {
+            "Name": "parted",
+            "Version": "3.6-160000.2.2",
+            "Description": "GNU Parted is a program for creating, destroying, resizing, checking,\nand copyin"
+        },
+        {
+            "Name": "liblvm2cmd2_03",
+            "Version": "2.03.29-160000.2.2",
+            "Description": "The lvm2 command line library allows building programs that manage\nlvm devices w"
+        },
+        {
+            "Name": "device-mapper",
+            "Version": "2.03.29_1.02.203-160000.2.2",
+            "Description": "Programs and man pages for configuring and using the device mapper."
+        },
+        {
+            "Name": "libXaw7",
+            "Version": "1.0.16-160000.3.2",
+            "Description": "The X Window System Athena widget set implements simple user\ninterfaces based up"
+        },
+        {
+            "Name": "vim",
+            "Version": "9.1.1406-160000.3.2",
+            "Description": "Vim (Vi IMproved) is an almost compatible version of the UNIX editor\nvi. Almost "
+        },
+        {
+            "Name": "supportutils",
+            "Version": "3.2.11-160000.2.2",
+            "Description": "A package containing troubleshooting tools. This package contains\nthe following:"
+        },
+        {
+            "Name": "util-linux",
+            "Version": "2.41.1-160000.2.2",
+            "Description": "This package contains a large variety of low-level system utilities\nthat are nec"
+        },
+        {
+            "Name": "shadow",
+            "Version": "4.17.2-160000.2.2",
+            "Description": "This package includes the necessary programs for converting plain\npassword files"
+        },
+        {
+            "Name": "pam-extra",
+            "Version": "1.7.1-160000.2.2",
+            "Description": "PAM (Pluggable Authentication Modules) is a system security tool that\nallows sys"
+        },
+        {
+            "Name": "kbd",
+            "Version": "2.7.1-160000.2.2",
+            "Description": "Load and save keyboard mappings. This is needed if you are not using\nthe US keyb"
+        },
+        {
+            "Name": "kpartx",
+            "Version": "0.11.3+184+suse.e1501732-160000.1.1",
+            "Description": "The kpartx program maps linear devmaps to device partitions, which\nmakes multipa"
+        },
+        {
+            "Name": "update-bootloader",
+            "Version": "1.25-160000.2.2",
+            "Description": "Shell script wrapper for configuring various boot loaders."
+        },
+        {
+            "Name": "libsnapper7",
+            "Version": "0.12.1-160000.2.2",
+            "Description": "This package contains libsnapper, a library for filesystem snapshot management."
+        },
+        {
+            "Name": "fuse",
+            "Version": "2.9.9-160000.2.2",
+            "Description": "FUSE (Filesystem in Userspace) is an interface by the Linux kernel\nfor userspace"
+        },
+        {
+            "Name": "sysuser-shadow",
+            "Version": "3.3-160000.2.2",
+            "Description": "This package contians a tool, which expects as input a sysusers.d\nconfiguration "
+        },
+        {
+            "Name": "pam-config",
+            "Version": "2.13+git.20250715-160000.2.2",
+            "Description": "pam-config is a command line utility to maintain the common PAM\nconfiguration fi"
+        },
+        {
+            "Name": "pam_pwquality",
+            "Version": "1.4.5-160000.3.2",
+            "Description": "The pam_pwquality PAM module can be used instead of pam_cracklib to\ndisallow wea"
+        },
+        {
+            "Name": "crypto-policies",
+            "Version": "20250124.4d262e7-160000.2.2",
+            "Description": "This package provides pre-built configuration files with\ncryptographic policies "
+        },
+        {
+            "Name": "system-user-tftp",
+            "Version": "20170617-160000.2.2",
+            "Description": "This package provides the system account and group 'tftp'."
+        },
+        {
+            "Name": "system-user-nobody",
+            "Version": "20170617-160000.2.2",
+            "Description": "This package provides the system account and group 'nobody'."
+        },
+        {
+            "Name": "system-user-man",
+            "Version": "20170617-160000.2.2",
+            "Description": "This package provides the system account and group 'man'\nand their corresponding"
+        },
+        {
+            "Name": "system-user-lp",
+            "Version": "20170617-160000.2.2",
+            "Description": "This package provides the system account and group 'lp'."
+        },
+        {
+            "Name": "system-group-wheel",
+            "Version": "20170617-160000.2.2",
+            "Description": "This package provides the system group 'wheel'."
+        },
+        {
+            "Name": "system-group-kvm",
+            "Version": "20170617-160000.2.2",
+            "Description": "This package provides the system group 'kvm'."
+        },
+        {
+            "Name": "system-group-hardware",
+            "Version": "20170617-160000.2.2",
+            "Description": "This package provides some hardware related system groups\nrequired by udev."
+        },
+        {
+            "Name": "system-group-audit",
+            "Version": "4.0-160000.2.2",
+            "Description": "This package contains the system group 'audit' for read access to logs."
+        },
+        {
+            "Name": "dbus-1-common",
+            "Version": "1.14.10-160000.2.2",
+            "Description": "D-Bus is a message bus system, The dbus-common package provides the configuratio"
+        },
+        {
+            "Name": "wtmpdb",
+            "Version": "0.74.0+git20250509.272b109-160000.2.2",
+            "Description": "pam_wtmpdb and wtmpdb are Y2038-safe versions of wtmp and the last\nutility. pam_"
+        },
+        {
+            "Name": "libopenssl3",
+            "Version": "3.5.0-160000.4.1",
+            "Description": "OpenSSL is a software library to be used in applications that need to\nsecure com"
+        },
+        {
+            "Name": "man",
+            "Version": "2.13.0-160000.2.2",
+            "Description": "A program for displaying man pages on the screen or sending them to a\nprinter (u"
+        },
+        {
+            "Name": "cups-config",
+            "Version": "2.4.11-160000.2.2",
+            "Description": "CUPS is a modular printing system which allows a computer to act as a\nprint serv"
+        },
+        {
+            "Name": "libdbus-1-3",
+            "Version": "1.14.10-160000.2.2",
+            "Description": "D-Bus is a message bus system, a simple way for applications to talk to\none anot"
+        },
+        {
+            "Name": "ruby3.4",
+            "Version": "3.4.3-160000.2.2",
+            "Description": "Ruby is an interpreted scripting language for object-oriented programming. It\nha"
+        },
+        {
+            "Name": "ruby3.4-rubygem-gem2rpm",
+            "Version": "0.10.1-160000.2.2",
+            "Description": "Generate source rpms and rpm spec files from a Ruby Gem.\nThe spec file tries to "
+        },
+        {
+            "Name": "ruby-common",
+            "Version": "3.2.1-160000.2.2",
+            "Description": "This package is needed for (generated) ruby gems. It provides hooks for\nautomati"
+        },
+        {
+            "Name": "python313-base",
+            "Version": "3.13.5-160000.2.2",
+            "Description": "Python is an interpreted, object-oriented programming language, and is\noften com"
+        },
+        {
+            "Name": "libpython3_13-1_0",
+            "Version": "3.13.5-160000.2.2",
+            "Description": "Python is an interpreted, object-oriented programming language, and is\noften com"
+        },
+        {
+            "Name": "openssh-common",
+            "Version": "10.0p2-160000.3.1",
+            "Description": "SSH (Secure Shell) is a program for logging into and executing commands\non a rem"
+        },
+        {
+            "Name": "libzck1",
+            "Version": "1.5.1-160000.2.2",
+            "Description": "zchunk is a compressed file format that splits the file into independent\nchunks."
+        },
+        {
+            "Name": "libtss2-esys0",
+            "Version": "4.1.0-160000.2.2",
+            "Description": "This API is a 1-to-1 mapping of the TPM2 commands documented in Part 3 of the\nTP"
+        },
+        {
+            "Name": "libsnmp40",
+            "Version": "5.9.4-160000.2.2",
+            "Description": "Net-SNMP is a suite of applications used to implement SNMP v1, SNMP v2c\nand SNMP"
+        },
+        {
+            "Name": "libldap-2",
+            "Version": "2.6.10+10-160000.3.1",
+            "Description": "This package contains the OpenLDAP client libraries."
+        },
+        {
+            "Name": "libkmod2",
+            "Version": "34.2-160000.3.2",
+            "Description": "libkmod was created to allow programs to easily insert, remove and\nlist modules,"
+        },
+        {
+            "Name": "libfido2-1",
+            "Version": "1.15.0-160000.3.2",
+            "Description": "This library supports the FIDO U2F and FIDO 2.0 protocols for\ncommunicating with"
+        },
+        {
+            "Name": "libevent-2_1-7",
+            "Version": "2.1.12-160000.2.2",
+            "Description": "The libevent API provides a mechanism to execute a callback function\nwhen a spec"
+        },
+        {
+            "Name": "libcryptsetup12",
+            "Version": "2.7.5-160000.2.2",
+            "Description": "cryptsetup is used to conveniently set up dm-crypt based device-mapper\ntargets. "
+        },
+        {
+            "Name": "libarchive13",
+            "Version": "3.8.1-160000.2.2",
+            "Description": "Libarchive is a programming library that can create and read several\ndifferent s"
+        },
+        {
+            "Name": "lftp",
+            "Version": "4.9.2-160000.2.2",
+            "Description": "LFTP is a reliable shell-like command line FTP client. It can retry\noperations a"
+        },
+        {
+            "Name": "libavahi-client3",
+            "Version": "0.8-160000.2.2",
+            "Description": "Avahi is an implementation of the DNS Service Discovery and Multicast\nDNS specif"
+        },
+        {
+            "Name": "dnsmasq",
+            "Version": "2.90-160000.2.2",
+            "Description": "Dnsmasq provides network infrastructure for small networks: DNS,\nDHCP, router ad"
+        },
+        {
+            "Name": "dbus-1-x11",
+            "Version": "1.14.10-160000.2.2",
+            "Description": "D-Bus contains some tools that require Xlib to be installed, those are\nin this s"
+        },
+        {
+            "Name": "dbus-1-tools",
+            "Version": "1.14.10-160000.2.2",
+            "Description": "D-Bus is a message bus system, these are some of the tools that go along\nwith it"
+        },
+        {
+            "Name": "python313",
+            "Version": "3.13.5-160000.2.2",
+            "Description": "Python 3 is modern interpreted, object-oriented programming language,\noften comp"
+        },
+        {
+            "Name": "python313-pip",
+            "Version": "25.0.1-160000.2.2",
+            "Description": "Pip is a replacement for easy_install. It uses mostly the same techniques for\nfi"
+        },
+        {
+            "Name": "sudo",
+            "Version": "1.9.17p1-160000.2.2",
+            "Description": "Sudo is a command that allows users to execute some commands as root.\n\nSudo read"
+        },
+        {
+            "Name": "sudo-plugin-python",
+            "Version": "1.9.17p1-160000.2.2",
+            "Description": "This package contains the sudo plugin which allows to write sudo plugins\nin pyth"
+        },
+        {
+            "Name": "pciutils",
+            "Version": "3.13.0-160000.2.2",
+            "Description": "lspci: This program displays detailed information about all PCI busses\nand devic"
+        },
+        {
+            "Name": "cryptsetup",
+            "Version": "2.7.5-160000.2.2",
+            "Description": "cryptsetup is used to conveniently set up dm-crypt based device-mapper\ntargets. "
+        },
+        {
+            "Name": "logrotate",
+            "Version": "3.22.0-160000.2.2",
+            "Description": "The logrotate utility does automatic rotation, compression, mailing and removal\n"
+        },
+        {
+            "Name": "python313-curses",
+            "Version": "3.13.5-160000.2.2",
+            "Description": "An easy to use interface to the (n)curses CUI library. CUI stands for\nConsole Us"
+        },
+        {
+            "Name": "sudo-policy-wheel-auth-self",
+            "Version": "1.9.17p1-160000.2.2",
+            "Description": "Sudo authentication policy that allows users in the wheel group to\nauthenticate "
+        },
+        {
+            "Name": "python313-dbm",
+            "Version": "3.13.5-160000.2.2",
+            "Description": "An easy to use interface for Unix DBM databases, and more specifically,\nthe GNU "
+        },
+        {
+            "Name": "xfsprogs",
+            "Version": "6.15.0-160000.1.2",
+            "Description": "A set of commands to use the XFS file system, including mkfs.xfs.\n\nXFS is a high"
+        },
+        {
+            "Name": "usbutils",
+            "Version": "015-160000.2.2",
+            "Description": "This package contains a utility for inspecting devices connected to USB\nports."
+        },
+        {
+            "Name": "suse-lifecycle",
+            "Version": "0.9+git20250625.1a90c55-160000.3.2",
+            "Description": "This tool displays life cycle information for packages and components\nshipped wi"
+        },
+        {
+            "Name": "python313-tk",
+            "Version": "3.13.5-160000.2.2",
+            "Description": "Python interface to Tk. Tk is the GUI toolkit that comes with Tcl."
+        },
+        {
+            "Name": "python313-pycairo",
+            "Version": "1.26.1-160000.2.2",
+            "Description": "Pycairo is a Python module providing bindings for the cairo graphics library."
+        },
+        {
+            "Name": "python313-psutil",
+            "Version": "7.0.0-160000.2.2",
+            "Description": "A graphical interface that lets you easily analyze and introspect unaltered runn"
+        },
+        {
+            "Name": "python313-nftables",
+            "Version": "1.1.3-160000.2.2",
+            "Description": "Python bindings for nftables"
+        },
+        {
+            "Name": "python313-decorator",
+            "Version": "5.2.1-160000.2.2",
+            "Description": "Typical implementations of Python decorators involve nested\nfunctions, and do no"
+        },
+        {
+            "Name": "crypto-policies-scripts",
+            "Version": "20250124.4d262e7-160000.2.2",
+            "Description": "This package provides a tool update-crypto-policies, which applies\nthe policies "
+        },
+        {
+            "Name": "cockpit-bridge",
+            "Version": "340-160000.3.2",
+            "Description": "The Cockpit bridge component installed server side and runs commands on the\nsyst"
+        },
+        {
+            "Name": "python3-apparmor",
+            "Version": "4.1.1-160000.2.2",
+            "Description": "This package provides the python interface to AppArmor. It is used for python\nap"
+        },
+        {
+            "Name": "openssl",
+            "Version": "3.5.0-160000.2.2",
+            "Description": "The OpenSSL Project is a collaborative effort to develop a robust,\ncommercial-gr"
+        },
+        {
+            "Name": "openssl-3",
+            "Version": "3.5.0-160000.4.1",
+            "Description": "OpenSSL is a software library to be used in applications that need to\nsecure com"
+        },
+        {
+            "Name": "mozilla-nss",
+            "Version": "3.112-160000.2.2",
+            "Description": "Network Security Services (NSS) is a set of libraries designed to\nsupport cross-"
+        },
+        {
+            "Name": "libsoftokn3",
+            "Version": "3.112-160000.2.2",
+            "Description": "Network Security Services (NSS) is a set of libraries designed to\nsupport cross-"
+        },
+        {
+            "Name": "libgnutls30",
+            "Version": "3.8.10-160000.1.2",
+            "Description": "The GnuTLS library provides a secure layer over a reliable transport\nlayer. Curr"
+        },
+        {
+            "Name": "krb5",
+            "Version": "1.21.3-160000.2.2",
+            "Description": "Kerberos V5 is a trusted-third-party network authentication system,\nwhich can im"
+        },
+        {
+            "Name": "mokutil",
+            "Version": "0.7.2-160000.2.2",
+            "Description": "This program provides the means to enroll and erase the machine owner\nkeys (MOK)"
+        },
+        {
+            "Name": "ntfsprogs",
+            "Version": "2022.10.3-160000.2.2",
+            "Description": "The ntfsprogs includes utilities for doing all required tasks to NTFS\npartitions"
+        },
+        {
+            "Name": "dirmngr",
+            "Version": "2.5.5-160000.2.2",
+            "Description": "Since version  2.1 of GnuPG, dirmngr takes care of accessing the OpenPGP\nkeyserv"
+        },
+        {
+            "Name": "chrony-pool-openSUSE",
+            "Version": "4.6.1-160000.2.2",
+            "Description": "This package configures chrony to use the openSUSE NTP server pool by\ndefault."
+        },
+        {
+            "Name": "chrony",
+            "Version": "4.6.1-160000.2.2",
+            "Description": "Chrony is an implementation of the Network Time Protocol (NTP). It can\nsynchroni"
+        },
+        {
+            "Name": "samba-client-libs",
+            "Version": "4.22.6+git.435.014e5eceb5d-160000.1.1",
+            "Description": "The samba-libs package contains the libraries needed by samba client\nprograms."
+        },
+        {
+            "Name": "libldb2",
+            "Version": "4.22.6+git.435.014e5eceb5d-160000.1.1",
+            "Description": "LDB is an LDAP-like embedded database."
+        },
+        {
+            "Name": "openssh-clients",
+            "Version": "10.0p2-160000.3.1",
+            "Description": "SSH (Secure Shell) is a program for logging into and executing commands\non a rem"
+        },
+        {
+            "Name": "libtirpc3",
+            "Version": "1.3.6-160000.2.2",
+            "Description": "The Transport Independent RPC library (TI-RPC) is a replacement for the\nstandard"
+        },
+        {
+            "Name": "libssh4",
+            "Version": "0.11.2-160000.2.2",
+            "Description": "An SSH implementation in the form of a library. With libssh, you can remotely\nex"
+        },
+        {
+            "Name": "libcups2",
+            "Version": "2.4.11-160000.2.2",
+            "Description": "The CUPS library contains all of the core HTTP and IPP communications\ncode as we"
+        },
+        {
+            "Name": "bind-utils",
+            "Version": "9.20.11-160000.2.2",
+            "Description": "This package includes the utilities \"host\", \"dig\", and \"nslookup\" used to\ntest a"
+        },
+        {
+            "Name": "gpg2",
+            "Version": "2.5.5-160000.2.2",
+            "Description": "GnuPG is a hybrid-encryption software program; it uses a combination\nof symmetri"
+        },
+        {
+            "Name": "wb-cifs-idmap-plugin",
+            "Version": "7.4-160000.2.2",
+            "Description": "The cifs.idmap(8) userspace helper relies on a plugin to handle the ID mapping.\n"
+        },
+        {
+            "Name": "lsof",
+            "Version": "4.99.4-160000.2.2",
+            "Description": "Lsof lists information about files opened by processes. An open file\nmay be a re"
+        },
+        {
+            "Name": "libcurl4",
+            "Version": "8.14.1-160000.3.1",
+            "Description": "The cURL shared library for accessing data using different\nnetwork protocols."
+        },
+        {
+            "Name": "ghostscript",
+            "Version": "10.05.0-160000.2.2",
+            "Description": "Ghostscript is a package of software that provides:\n\nAn interpreter for the Post"
+        },
+        {
+            "Name": "ghostscript-x11",
+            "Version": "10.05.0-160000.2.2",
+            "Description": "This package contains the X11 library which is needed to view PostScript and\nPDF"
+        },
+        {
+            "Name": "libgpgme11",
+            "Version": "1.24.3-160000.3.1",
+            "Description": "GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG\neasier for"
+        },
+        {
+            "Name": "cifs-utils",
+            "Version": "7.4-160000.2.2",
+            "Description": "The cifs-utils package consist of utilities for doing and managing mounts of\nthe"
+        },
+        {
+            "Name": "libdebuginfod1",
+            "Version": "0.192-160000.2.3",
+            "Description": "The libdebuginfod1 package contains shared libraries\ndynamically loaded from -ld"
+        },
+        {
+            "Name": "curl",
+            "Version": "8.14.1-160000.3.1",
+            "Description": "Curl is a client to get documents and files from or send documents to a\nserver u"
+        },
+        {
+            "Name": "groff-full",
+            "Version": "1.23.0-160000.2.2",
+            "Description": "The groff package is a stripped-down package containing the necessary\ncomponents"
+        },
+        {
+            "Name": "libzypp",
+            "Version": "17.37.17-160000.1.2",
+            "Description": "libzypp is the package management library that powers applications\nlike YaST, zy"
+        },
+        {
+            "Name": "debuginfod-client",
+            "Version": "0.192-160000.2.3",
+            "Description": "The elfutils-debuginfod-client package contains a command-line frontend."
+        },
+        {
+            "Name": "gxditview",
+            "Version": "1.23.0-160000.2.2",
+            "Description": "This version of xditview is called gxditview and has some extensions\nused by the"
+        },
+        {
+            "Name": "zypper",
+            "Version": "1.14.93-160000.1.2",
+            "Description": "Zypper is a command line tool for managing software. It can be used to add\npacka"
+        },
+        {
+            "Name": "zypper-needs-restarting",
+            "Version": "1.14.93-160000.1.2",
+            "Description": "provides compatibility to YUM needs-restarting command using zypper"
+        },
+        {
+            "Name": "openSUSE-repos-Leap",
+            "Version": "20250714.a450212-lp160.3.1",
+            "Description": "Definitions for openSUSE repository management via zypp-services"
+        },
+        {
+            "Name": "Leap-release",
+            "Version": "16.0-lp160.280.1",
+            "Description": "openSUSE Leap 16.0."
+        },
+        {
+            "Name": "patterns-base-minimal_base",
+            "Version": "20241218-160000.2.2",
+            "Description": "This is the minimal runtime system. It is really a minimal system. It is intende"
+        },
+        {
+            "Name": "aaa_base",
+            "Version": "84.87+git20250429.1cad3bc-160000.2.2",
+            "Description": "This package installs several important configuration files and central scripts."
+        },
+        {
+            "Name": "systemd",
+            "Version": "257.7-160000.2.2",
+            "Description": "Systemd is a system and service manager, compatible with SysV and LSB\ninit scrip"
+        },
+        {
+            "Name": "dbus-broker",
+            "Version": "36-160000.2.2",
+            "Description": "dbus-broker is an implementation of a message bus as defined by the\nD-Bus specif"
+        },
+        {
+            "Name": "dbus-1",
+            "Version": "1.14.10-160000.2.2",
+            "Description": "D-Bus is a message bus system, a simple way for applications to talk to\none anot"
+        },
+        {
+            "Name": "patterns-base-documentation",
+            "Version": "20241218-160000.2.2",
+            "Description": "Man tool and Man pages for various tools and POSIX API."
+        },
+        {
+            "Name": "util-linux-systemd",
+            "Version": "2.41.1-160000.2.2",
+            "Description": "This package contains a large variety of low-level system utilities\nthat are nec"
+        },
+        {
+            "Name": "suse-module-tools",
+            "Version": "16.0.60-160000.2.2",
+            "Description": "This package contains helper scripts for KMP installation and\nuninstallation, as"
+        },
+        {
+            "Name": "kmod",
+            "Version": "34.2-160000.3.2",
+            "Description": "kmod is a set of tools to handle common tasks with Linux kernel\nmodules like ins"
+        },
+        {
+            "Name": "udev",
+            "Version": "257.7-160000.2.2",
+            "Description": "This package provides systemd-udevd. The udev daemon receives device uevents\ndir"
+        },
+        {
+            "Name": "gio-branding-openSUSE",
+            "Version": "42.1-lp160.3.1",
+            "Description": "This package provides openSUSE defaults for settings stored with\nGSettings and a"
+        },
+        {
+            "Name": "libgio-2_0-0",
+            "Version": "2.84.3-160000.2.2",
+            "Description": "GLib is a general-purpose utility library, which provides many useful\ndata types"
+        },
+        {
+            "Name": "glib2-tools",
+            "Version": "2.84.3-160000.2.2",
+            "Description": "GLib is a general-purpose utility library, which provides many useful\ndata types"
+        },
+        {
+            "Name": "zypper-lifecycle-plugin",
+            "Version": "0.6.1601367426.843fe7a-160000.2.2",
+            "Description": "Zypper subcommand for products and packages lifecycle information."
+        },
+        {
+            "Name": "wpa_supplicant",
+            "Version": "2.11-160000.3.1",
+            "Description": "wpa_supplicant is an implementation of the WPA Supplicant component,\ni.e., the p"
+        },
+        {
+            "Name": "suseconnect-ng",
+            "Version": "1.13.0-160000.2.2",
+            "Description": "This package provides a command line tool for connecting a\nclient system to the "
+        },
+        {
+            "Name": "snapper",
+            "Version": "0.12.1-160000.2.2",
+            "Description": "This package contains snapper, a tool for filesystem snapshot management."
+        },
+        {
+            "Name": "snapper-zypp-plugin",
+            "Version": "0.12.1-160000.2.2",
+            "Description": "This package contains a plugin for zypp that makes filesystem snapshots with\nsna"
+        },
+        {
+            "Name": "smartmontools",
+            "Version": "7.5-160000.3.1",
+            "Description": "SMARTmontools controls and monitors storage devices using the\nSelf-Monitoring, A"
+        },
+        {
+            "Name": "screen",
+            "Version": "4.9.1-160000.2.2",
+            "Description": "With this program you can take advantage of the multitasking abilities\nof your L"
+        },
+        {
+            "Name": "rsync",
+            "Version": "3.4.1-160000.2.3",
+            "Description": "Rsync is a fast and extraordinarily versatile file  copying  tool. It can copy\nl"
+        },
+        {
+            "Name": "rpcbind",
+            "Version": "1.2.7-160000.2.2",
+            "Description": "Rpcbind is a replacement for portmap. Whereas portmap supports only UDP\nand TCP "
+        },
+        {
+            "Name": "perl-SNMP",
+            "Version": "5.9.4-160000.2.2",
+            "Description": "The Perl5 'SNMP' Extension Module v3.1.0 for the UCD SNMPv3 library."
+        },
+        {
+            "Name": "net-snmp",
+            "Version": "5.9.4-160000.2.2",
+            "Description": "Net-SNMP is a suite of applications used to implement SNMP v1, SNMP v2c\nand SNMP"
+        },
+        {
+            "Name": "irqbalance",
+            "Version": "1.9.4.0.git+f8b8cdd-160000.2.2",
+            "Description": "irqbalance dynamically switches the CPUs for IRQs to prevent cpu0 from\nbeing use"
+        },
+        {
+            "Name": "irqbalance-ui",
+            "Version": "1.9.4.0.git+f8b8cdd-160000.2.2",
+            "Description": "Text UI for the IRQ balance daemon."
+        },
+        {
+            "Name": "gpg-pubkey",
+            "Version": "25db7ae0-645bae34",
+            "Description": "-----BEGIN PGP PUBLIC KEY BLOCK-----\nVersion: rpm-4.20.1\n\nmQINBGRbrjQBEACwmRL/Yr"
+        },
+        {
+            "Name": "gpm",
+            "Version": "1.20.7-160000.2.2",
+            "Description": "The gpm (general purpose mouse) daemon is a mouse server for\napplications runnin"
+        },
+        {
+            "Name": "btrfsprogs",
+            "Version": "6.14-160000.2.2",
+            "Description": "Utilities needed to create and maintain Btrfs file systems under Linux (btrfs,\nm"
+        },
+        {
+            "Name": "btrfsmaintenance",
+            "Version": "0.5-160000.2.2",
+            "Description": "Scripts for btrfs maintenance tasks like periodic scrub, balance, trim or defrag"
+        },
+        {
+            "Name": "audit-rules",
+            "Version": "4.0-160000.2.2",
+            "Description": "The audit rules package contains the rules and utilities to load audit rules."
+        },
+        {
+            "Name": "audit",
+            "Version": "4.0-160000.2.2",
+            "Description": "The audit package contains the user space utilities for storing and\nprocessing t"
+        },
+        {
+            "Name": "apparmor-parser",
+            "Version": "4.1.1-160000.2.2",
+            "Description": "The AppArmor Parser is a userlevel program that is used to load in\nprogram profi"
+        },
+        {
+            "Name": "aaa_base-extras",
+            "Version": "84.87+git20250429.1cad3bc-160000.2.2",
+            "Description": "The parts of aaa_base that should be installed by default but are not\nstrictly r"
+        },
+        {
+            "Name": "typelib-1_0-Gio-2_0",
+            "Version": "2.84.3-160000.2.2",
+            "Description": "GLib is a general-purpose utility library, which provides many useful\ndata types"
+        },
+        {
+            "Name": "libpxbackend-1_0",
+            "Version": "0.5.9-160000.2.2",
+            "Description": "libproxy is a library that provides automatic proxy configuration\nmanagement.\n\nP"
+        },
+        {
+            "Name": "libpolkit-gobject-1-0",
+            "Version": "123-160000.2.2",
+            "Description": "PolicyKit is a toolkit for defining and handling authorizations.\nIt is used for "
+        },
+        {
+            "Name": "libpolkit-agent-1-0",
+            "Version": "123-160000.2.2",
+            "Description": "PolicyKit is a toolkit for defining and handling authorizations.\nIt is used for "
+        },
+        {
+            "Name": "polkit",
+            "Version": "123-160000.2.2",
+            "Description": "PolicyKit is a toolkit for defining and handling authorizations.\nIt is used for "
+        },
+        {
+            "Name": "libpango-1_0-0",
+            "Version": "1.56.4-160000.2.2",
+            "Description": "Pango is a library for layout and rendering of text, with an emphasis\non interna"
+        },
+        {
+            "Name": "libnm0",
+            "Version": "1.52.0-160000.2.2",
+            "Description": "This package contains the libraries that make it easier to use some\nNetwork Mana"
+        },
+        {
+            "Name": "dconf",
+            "Version": "0.40.0-160000.2.2",
+            "Description": "dconf is a low-level configuration system. Its main purpose is to\nprovide a back"
+        },
+        {
+            "Name": "libdconf1",
+            "Version": "0.40.0-160000.2.2",
+            "Description": "dconf is a low-level configuration system. Its main purpose is to\nprovide a back"
+        },
+        {
+            "Name": "rollback-helper",
+            "Version": "1.0+git20240301.73ac53e-160000.2.2",
+            "Description": "The rollback-helper package is a collection of scripts, which,\nafter a successfu"
+        },
+        {
+            "Name": "nfs-client",
+            "Version": "2.8.2-160000.2.2",
+            "Description": "This package contains common NFS utilities which are needed for client\nand kerne"
+        },
+        {
+            "Name": "btrfsprogs-bash-completion",
+            "Version": "6.14-160000.2.2",
+            "Description": "Command line completion support for bas for utilities from btrfsprogs."
+        },
+        {
+            "Name": "openssh-server",
+            "Version": "10.0p2-160000.3.1",
+            "Description": "SSH (Secure Shell) is a program for logging into and executing commands\non a rem"
+        },
+        {
+            "Name": "apparmor-abstractions",
+            "Version": "4.1.1-160000.2.2",
+            "Description": "AppArmor abstractions (common parts used in various profiles) and\nthe /etc/appar"
+        },
+        {
+            "Name": "dracut",
+            "Version": "059+suse.700.g40f7c5c4-160000.1.1",
+            "Description": "Dracut contains tools to create a bootable initramfs for Linux kernels \u003e= 2.6.\nD"
+        },
+        {
+            "Name": "dmraid",
+            "Version": "1.0.0.rc16.3-160000.2.2",
+            "Description": "This software discovers, activates, deactivates, and displays\nproperties of soft"
+        },
+        {
+            "Name": "adwaita-fonts",
+            "Version": "48.2-160000.2.2",
+            "Description": "Adwaita Sans, a variation of Inter, and Adwaita Mono, Iosevka\ncustomized to matc"
+        },
+        {
+            "Name": "adobe-sourcecodepro-fonts",
+            "Version": "2.038-160000.2.2",
+            "Description": "Source Code is a set of monospaced OpenType fonts that have been designed to\nwor"
+        },
+        {
+            "Name": "python313-gobject",
+            "Version": "3.52.3-160000.2.2",
+            "Description": "Pygobjects is an extension module for python that gives you access to\nGLib's GOb"
+        },
+        {
+            "Name": "libproxy1",
+            "Version": "0.5.9-160000.2.2",
+            "Description": "libproxy is a library that provides automatic proxy configuration\nmanagement.\n\nP"
+        },
+        {
+            "Name": "polkit-default-privs",
+            "Version": "1550+20250604.71bfb94-160000.2.2",
+            "Description": "Predefined polkit profiles for different usage scenarios like desktop and\nserver"
+        },
+        {
+            "Name": "libpackagekit-glib2-18",
+            "Version": "1.2.8-160000.2.2",
+            "Description": "PackageKit is a system designed to make installing and updating\nsoftware on your"
+        },
+        {
+            "Name": "plymouth-plugin-label",
+            "Version": "22.02.122+94.4bd41a3-160000.3.1",
+            "Description": "This package contains the label control plugin for\nPlymouth. It provides the abi"
+        },
+        {
+            "Name": "typelib-1_0-NM-1_0",
+            "Version": "1.52.0-160000.2.2",
+            "Description": "This package contains the gi-bindings that make it easier to use some\nNetwork Ma"
+        },
+        {
+            "Name": "NetworkManager-branding-openSUSE",
+            "Version": "42.1-lp160.5.1",
+            "Description": "NetworkManager attempts to keep an active network connection available\nat all ti"
+        },
+        {
+            "Name": "NetworkManager",
+            "Version": "1.52.0-160000.2.2",
+            "Description": "NetworkManager attempts to keep an active network connection available\nat all ti"
+        },
+        {
+            "Name": "gsettings-backend-dconf",
+            "Version": "0.40.0-160000.2.2",
+            "Description": "dconf is a low-level configuration system. Its main purpose is to\nprovide a back"
+        },
+        {
+            "Name": "openssh",
+            "Version": "10.0p2-160000.3.1",
+            "Description": "SSH (Secure Shell) is a program for logging into and executing commands\non a rem"
+        },
+        {
+            "Name": "apparmor-profiles",
+            "Version": "4.1.1-160000.2.2",
+            "Description": "Base profiles. AppArmor is a file and network mandatory access control\nmechanism"
+        },
+        {
+            "Name": "suse-module-tools-scriptlets",
+            "Version": "16.0.60-160000.2.2",
+            "Description": "Scripts called by the SUSE kernel packages on installation"
+        },
+        {
+            "Name": "qemu-guest-agent",
+            "Version": "10.0.4-160000.1.1",
+            "Description": "This package contains the QEMU guest agent. It is installed in the linux guest\nt"
+        },
+        {
+            "Name": "libmpath0",
+            "Version": "0.11.3+184+suse.e1501732-160000.1.1",
+            "Description": "libmpathpersist provides a C API for handling of SCSI persistent\nreservations fo"
+        },
+        {
+            "Name": "multipath-tools",
+            "Version": "0.11.3+184+suse.e1501732-160000.1.1",
+            "Description": "This package provides the multipath tool and the multipathd daemon\nto manage dm-"
+        },
+        {
+            "Name": "kexec-tools",
+            "Version": "2.0.30-160000.3.2",
+            "Description": "Kexec is a user space utility for loading another kernel and asking the\ncurrentl"
+        },
+        {
+            "Name": "strace",
+            "Version": "6.14-160000.2.2",
+            "Description": "With strace, you can trace the activity of a program.  Information\nabout any sys"
+        },
+        {
+            "Name": "libhwloc15",
+            "Version": "2.11.2-160000.2.2",
+            "Description": "This package contains the run time libraries for hwloc."
+        },
+        {
+            "Name": "libisoburn1",
+            "Version": "1.5.6-160000.3.2",
+            "Description": "Libisoburn is a frontend for libraries libburn and libisofs which enables\ncreati"
+        },
+        {
+            "Name": "htop",
+            "Version": "3.4.1-bp160.1.2",
+            "Description": "htop is an interactive text-mode process viewer for Linux. It aims to be a\nbette"
+        },
+        {
+            "Name": "xorriso",
+            "Version": "1.5.6-160000.3.2",
+            "Description": "xorriso is a program which maps file objects from POSIX compliant filesystems\nin"
+        },
+        {
+            "Name": "mc",
+            "Version": "4.8.32-bp160.1.14",
+            "Description": "GNU Midnight Commander (also referred to as MC) is a user shell much\nlike the (i"
+        },
+        {
+            "Name": "mc-lang",
+            "Version": "4.8.32-bp160.1.14",
+            "Description": "Provides translations for the \"mc\" package."
+        },
+        {
+            "Name": "perl-Net-SSLeay",
+            "Version": "1.940.0-160000.2.2",
+            "Description": "This module provides Perl bindings for libssl (an SSL/TLS API) and\nlibcrypto (a "
+        },
+        {
+            "Name": "perl-TimeDate",
+            "Version": "2.33-160000.2.2",
+            "Description": "Date::Parse provides two routines for parsing date strings into time values.\n\nst"
+        },
+        {
+            "Name": "git-core",
+            "Version": "2.51.0-160000.1.2",
+            "Description": "Git is a fast, scalable, distributed revision control system with an\nunusually r"
+        },
+        {
+            "Name": "perl-Authen-SASL",
+            "Version": "2.170.0-160000.2.2",
+            "Description": "SASL is a generic mechanism for authentication used by several network\nprotocols"
+        },
+        {
+            "Name": "perl-Git",
+            "Version": "2.51.0-160000.1.2",
+            "Description": "Git is a fast, scalable, distributed revision control system with an\nunusually r"
+        },
+        {
+            "Name": "perl-IO-Socket-SSL",
+            "Version": "2.89.0-160000.2.2",
+            "Description": "IO::Socket::SSL makes using SSL/TLS much easier by wrapping the necessary\nfuncti"
+        },
+        {
+            "Name": "perl-MailTools",
+            "Version": "2.220.0-160000.2.2",
+            "Description": "MailTools is a bundle: an ancient form of combining packages into one\ndistributi"
+        },
+        {
+            "Name": "gitk",
+            "Version": "2.51.0-160000.1.2",
+            "Description": "Grapical tool for visualization of revision trees of projects\nmaintained in the "
+        },
+        {
+            "Name": "git-gui",
+            "Version": "2.51.0-160000.1.2",
+            "Description": "A Tcl/Tk based graphical user interface to Git. git-gui focuses on\nallowing user"
+        },
+        {
+            "Name": "git-email",
+            "Version": "2.51.0-160000.1.2",
+            "Description": "Email interface for the GIT version control system."
+        },
+        {
+            "Name": "git",
+            "Version": "2.51.0-160000.1.2",
+            "Description": "Git is a fast, scalable, distributed revision control system with an\nunusually r"
+        },
+        {
+            "Name": "tmux",
+            "Version": "3.5a-160000.2.2",
+            "Description": "tmux is a terminal multiplexer: it enables a number of terminals (or windows),\ne"
+        },
+        {
+            "Name": "gsettings-desktop-schemas",
+            "Version": "48.0-160000.2.2",
+            "Description": "A collection of GSettings schemas for settings shared by various\ncomponents of a"
+        },
+        {
+            "Name": "python313-gobject-cairo",
+            "Version": "3.52.3-160000.2.2",
+            "Description": "Pygobjects is an extension module for python that gives you access to\nGLib's GOb"
+        },
+        {
+            "Name": "python313-dbus-python",
+            "Version": "1.3.2-160000.2.2",
+            "Description": "D-Bus python bindings for use with python programs."
+        },
+        {
+            "Name": "wget",
+            "Version": "1.25.0-160000.2.2",
+            "Description": "Wget enables you to retrieve WWW documents or FTP files from a server.\nThis can "
+        },
+        {
+            "Name": "PackageKit-branding-openSUSE",
+            "Version": "42.1-lp160.3.1",
+            "Description": "PackageKit is a system designed to make installing and updating\nsoftware on your"
+        },
+        {
+            "Name": "plymouth-scripts",
+            "Version": "22.02.122+94.4bd41a3-160000.3.1",
+            "Description": "This package contains scripts that help integrate Plymouth with\nthe system."
+        },
+        {
+            "Name": "plymouth-plugin-two-step",
+            "Version": "22.02.122+94.4bd41a3-160000.3.1",
+            "Description": "This package contains the \"two-step\" boot splash plugin for\nPlymouth. It feature"
+        },
+        {
+            "Name": "syslog-service",
+            "Version": "2.0-160000.2.2",
+            "Description": "The package syslog-service provides the service boot\nscripts for SysV and the se"
+        },
+        {
+            "Name": "rsyslog",
+            "Version": "8.2502.0-160000.2.2",
+            "Description": "Rsyslog is an enhanced multi-threaded syslogd supporting, among others,\nMySQL, s"
+        },
+        {
+            "Name": "NetworkManager-tui",
+            "Version": "1.52.0-160000.2.2",
+            "Description": "This adds a curses-based \"TUI\" (Text User Interface) to\nNetworkManager, to allow"
+        },
+        {
+            "Name": "NetworkManager-dns-dnsmasq",
+            "Version": "1.0-bp160.1.7",
+            "Description": "NetworkManager attempts to keep an active network connection\navailable at all ti"
+        },
+        {
+            "Name": "lvm2",
+            "Version": "2.03.29-160000.2.2",
+            "Description": "Programs and man pages for configuring and using the LVM2 Logical\nVolume Manager"
+        },
+        {
+            "Name": "kdump",
+            "Version": "2.1.6-160000.1.2",
+            "Description": "kdump is a package that includes several scripts for kdump, including\nthe kdump "
+        },
+        {
+            "Name": "hc-utils",
+            "Version": "0.0.8-1.suse.lp160",
+            "Description": "hc-utils contains utilities to automatically configure\nHetzner Cloud private net"
+        },
+        {
+            "Name": "hwloc-data",
+            "Version": "2.11.2-160000.2.2",
+            "Description": "This package contains the run time data for the hwloc."
+        },
+        {
+            "Name": "libburn4",
+            "Version": "1.5.6-160000.2.2",
+            "Description": "Libburn is a library for writing preformatted data onto optical media such as\nCD"
+        },
+        {
+            "Name": "libjte2",
+            "Version": "1.22-160000.2.2",
+            "Description": "libjte is a library providing support for creating jigdo files, to be used by\nIS"
+        },
+        {
+            "Name": "libpciaccess0",
+            "Version": "0.18.1-160000.3.2",
+            "Description": "Provides functionality for X to access the PCI bus and devices in a\nplatform-ind"
+        },
+        {
+            "Name": "libssh2-1",
+            "Version": "1.11.1-160000.3.2",
+            "Description": "libssh2 is a library implementing the SSH2 protocol as defined by\nInternet Draft"
+        },
+        {
+            "Name": "libisofs6",
+            "Version": "1.5.6-160000.2.2",
+            "Description": "Libisofs is a library for creating ISO-9660 filesystems with extensions like\nRoc"
+        },
+        {
+            "Name": "libsha1detectcoll1",
+            "Version": "1.0.3-160000.2.2",
+            "Description": "This library was designed as near drop-in replacements for other sha1sum\nimpleme"
+        },
+        {
+            "Name": "perl-Digest-HMAC",
+            "Version": "1.50.0-160000.2.2",
+            "Description": "HMAC is used for message integrity checks between two parties that share a\nsecre"
+        },
+        {
+            "Name": "perl-Error",
+            "Version": "0.170.300-160000.2.2",
+            "Description": "The 'Error' package provides two interfaces. Firstly 'Error' provides a\nprocedur"
+        },
+        {
+            "Name": "perl-Net-SMTP-SSL",
+            "Version": "1.04-160000.2.2",
+            "Description": "Implements the same API as Net::SMTP, but uses IO::Socket::SSL for its\nnetwork o"
+        },
+        {
+            "Name": "glib-networking",
+            "Version": "2.80.1-160000.2.2",
+            "Description": "This package contains network-related GIO modules for glib.\n\nCurrently, there is"
+        },
+        {
+            "Name": "python313-notify2",
+            "Version": "0.3.1-160000.2.2",
+            "Description": "This is a pure-python replacement for notify-python, using python-dbus\nto commun"
+        },
+        {
+            "Name": "python3-firewall",
+            "Version": "2.1.2-160000.2.2",
+            "Description": "The python3 bindings for firewalld."
+        },
+        {
+            "Name": "PackageKit-backend-zypp",
+            "Version": "1.2.8-160000.2.2",
+            "Description": "PackageKit is a system designed to make installing and updating\nsoftware on your"
+        },
+        {
+            "Name": "PackageKit",
+            "Version": "1.2.8-160000.2.2",
+            "Description": "PackageKit is a system designed to make installing and updating\nsoftware on your"
+        },
+        {
+            "Name": "plymouth-theme-spinner",
+            "Version": "22.02.122+94.4bd41a3-160000.3.1",
+            "Description": "This package contains the \"spinner\" boot splash theme for\nPlymouth."
+        },
+        {
+            "Name": "os-prober",
+            "Version": "1.81-bp160.1.12",
+            "Description": "This package detects other OSes available on a system and outputs the results\nin"
+        },
+        {
+            "Name": "patterns-base-kdump",
+            "Version": "20241218-160000.2.2",
+            "Description": "Tools used to trigger and handle kernel dump (kdump)."
+        },
+        {
+            "Name": "kernel-default",
+            "Version": "6.12.0-160000.7.1",
+            "Description": "The standard kernel for both uniprocessor and multiprocessor systems.\n\n\nSource T"
+        },
+        {
+            "Name": "apparmor-utils",
+            "Version": "4.1.1-160000.2.2",
+            "Description": "This package provides the aa-logprof, aa-genprof, aa-autodep,\naa-enforce, and aa"
+        },
+        {
+            "Name": "firewalld",
+            "Version": "2.1.2-160000.2.2",
+            "Description": "firewalld is a firewall service daemon that provides a dynamic customizable\nfire"
+        },
+        {
+            "Name": "cockpit-packages",
+            "Version": "3-160000.2.2",
+            "Description": "A cockpit module for (un)installing packages"
+        },
+        {
+            "Name": "plymouth-theme-bgrt",
+            "Version": "22.02.122+94.4bd41a3-160000.3.1",
+            "Description": "This package contains the \"bgrt\" boot splash theme for\nPlymouth."
+        },
+        {
+            "Name": "grub2-common",
+            "Version": "2.12-160000.3.1",
+            "Description": "This package includes user space utlities to manage GRUB on your system."
+        },
+        {
+            "Name": "patterns-base-base",
+            "Version": "20241218-160000.2.2",
+            "Description": "This is the base runtime system.  It contains only a basic multiuser booting sys"
+        },
+        {
+            "Name": "kernel-default-extra",
+            "Version": "6.12.0-160000.7.1",
+            "Description": "The standard kernel for both uniprocessor and multiprocessor systems.\n\nThis pack"
+        },
+        {
+            "Name": "patterns-base-apparmor",
+            "Version": "20241218-lp160.5.1",
+            "Description": "AppArmor is an application security framework that provides mandatory access con"
+        },
+        {
+            "Name": "firewalld-bash-completion",
+            "Version": "2.1.2-160000.2.2",
+            "Description": "Bash command line completion support for firewalld."
+        },
+        {
+            "Name": "patterns-base-sw_management",
+            "Version": "20241218-160000.2.2",
+            "Description": "This pattern provides a graphical application and a command line tool for keepin"
+        },
+        {
+            "Name": "plymouth-branding-openSUSE",
+            "Version": "16.0.20240405-lp160.10.1",
+            "Description": "openSUSE Leap 16.0 branding for the plymouth bootsplash"
+        },
+        {
+            "Name": "grub2-arm64-efi",
+            "Version": "2.12-160000.3.1",
+            "Description": "The GRand Unified Bootloader (GRUB) is a highly configurable and customizable\nbo"
+        },
+        {
+            "Name": "kernel-default-optional",
+            "Version": "6.12.0-160000.7.1",
+            "Description": "The standard kernel for both uniprocessor and multiprocessor systems.\n\nThis pack"
+        },
+        {
+            "Name": "plymouth",
+            "Version": "22.02.122+94.4bd41a3-160000.3.1",
+            "Description": "Plymouth provides an attractive graphical boot animation in\nplace of the text me"
+        },
+        {
+            "Name": "plymouth-lang",
+            "Version": "22.02.122+94.4bd41a3-160000.3.1",
+            "Description": "Provides translations for the \"plymouth\" package."
+        },
+        {
+            "Name": "shim",
+            "Version": "15.8-160000.2.2",
+            "Description": "shim is a trivial EFI application that, when run, attempts to open and\nexecute a"
+        },
+        {
+            "Name": "grub2",
+            "Version": "2.12-160000.3.1",
+            "Description": "This is the second version of the GRUB (Grand Unified Bootloader), a\nhighly conf"
+        },
+        {
+            "Name": "plymouth-dracut",
+            "Version": "22.02.122+94.4bd41a3-160000.3.1",
+            "Description": "This package contains utilities that integrate dracut with Plymouth"
+        },
+        {
+            "Name": "patterns-base-enhanced_base",
+            "Version": "20241218-160000.2.2",
+            "Description": "This is the enhanced base runtime system with lots of convenience packages."
+        },
+        {
+            "Name": "grub2-systemd-sleep-plugin",
+            "Version": "2.12-160000.3.1",
+            "Description": "Grub2's systemd-sleep plugin for directly booting hibernated kernel image in\nswa"
+        },
+        {
+            "Name": "grub2-snapper-plugin",
+            "Version": "2.12-160000.3.1",
+            "Description": "Grub2's snapper plugin for advanced btrfs snapshot boot menu management"
+        },
+        {
+            "Name": "grub2-branding-openSUSE",
+            "Version": "16.0.20240405-lp160.10.1",
+            "Description": "openSUSE Leap 16.0 branding for the GRUB2's graphical console"
+        },
+        {
+            "Name": "cloud-init-config-suse",
+            "Version": "25.1.3-160000.1.2",
+            "Description": "This package contains the product specific configuration file\nfor cloud-init."
+        },
+        {
+            "Name": "dhcp",
+            "Version": "4.4.2.P1-160000.2.2",
+            "Description": "This package contains common programs used by both the ISC DHCP\nserver (\"dhcp-se"
+        },
+        {
+            "Name": "growpart",
+            "Version": "0.33-160000.3.2",
+            "Description": "Grow a partition. This is predominantly useful in the cloud when an instance is\n"
+        },
+        {
+            "Name": "hostname",
+            "Version": "3.23-160000.2.2",
+            "Description": "This package provides commands which can be used to display the system's DNS\nnam"
+        },
+        {
+            "Name": "klogd",
+            "Version": "1.5.1-160000.2.2",
+            "Description": "The klogd daemon 'listens' to kernel log messages, prioritizes them,\nand routes "
+        },
+        {
+            "Name": "libgomp1",
+            "Version": "15.1.1+git9973-160000.2.2",
+            "Description": "This is the OpenMP runtime library needed by OpenMP enabled programs\nthat were b"
+        },
+        {
+            "Name": "libslp1",
+            "Version": "2.0.0-160000.2.2",
+            "Description": "Service Location Protocol is an IETF standards track protocol that\nprovides a fr"
+        },
+        {
+            "Name": "nano",
+            "Version": "8.6-bp160.1.1",
+            "Description": "GNU nano is a small and friendly text editor. It aims to emulate\nthe Pico text e"
+        },
+        {
+            "Name": "python313-MarkupSafe",
+            "Version": "3.0.2-160000.2.2",
+            "Description": "Implements a unicode subclass that supports HTML strings. This can be used to\nsa"
+        },
+        {
+            "Name": "python313-PyYAML",
+            "Version": "6.0.2-160000.2.2",
+            "Description": "YAML is a data serialization format designed for human readability\nand interacti"
+        },
+        {
+            "Name": "python313-attrs",
+            "Version": "24.3.0-160000.2.2",
+            "Description": "attrs is an MIT-licensed Python package with class decorators that ease the\nchor"
+        },
+        {
+            "Name": "python313-bcrypt",
+            "Version": "4.3.0-160000.2.2",
+            "Description": "This Python module supports creating (and verifying) password hashes\nusing the B"
+        },
+        {
+            "Name": "python313-blinker",
+            "Version": "1.9.0-160000.2.2",
+            "Description": "Blinker provides a dispatching system that allows any number of\ninterested parti"
+        },
+        {
+            "Name": "python313-certifi",
+            "Version": "2025.1.31-160000.2.2",
+            "Description": "Certifi provides Mozilla's carefully curated collection of Root Certificates\nfor"
+        },
+        {
+            "Name": "python313-charset-normalizer",
+            "Version": "3.4.2-160000.2.2",
+            "Description": "Python Universal Charset detector."
+        },
+        {
+            "Name": "python313-configobj",
+            "Version": "5.0.9-160000.2.2",
+            "Description": "ConfigObj is a simple but powerful config file reader and writer: an ini\nfile ro"
+        },
+        {
+            "Name": "python313-idna",
+            "Version": "3.10-160000.2.2",
+            "Description": "A library to support the Internationalised Domain Names in\nApplications (IDNA) p"
+        },
+        {
+            "Name": "python313-jsonpointer",
+            "Version": "3.0.0-160000.2.2",
+            "Description": "A module to identify specific nodes in a JSON document (according to draft 08)."
+        },
+        {
+            "Name": "python313-maturin",
+            "Version": "1.8.7-160000.2.2",
+            "Description": "Build and publish crates with pyo3, cffi and uniffi bindings\nas well as rust bin"
+        },
+        {
+            "Name": "python313-pycparser",
+            "Version": "2.22-160000.2.2",
+            "Description": "pycparser is a complete parser of the C language, written in pure Python using\nt"
+        },
+        {
+            "Name": "python313-pyserial",
+            "Version": "3.5-160000.2.2",
+            "Description": "Python Serial Port Extension for Win32, Linux, BSD, Jython, IronPython"
+        },
+        {
+            "Name": "python313-setuptools",
+            "Version": "78.1.1-160000.2.2",
+            "Description": "setuptools is a collection of enhancements to the Python distutils that\nallow yo"
+        },
+        {
+            "Name": "python313-typing_extensions",
+            "Version": "4.13.2-160000.2.2",
+            "Description": "The typing_extensions module serves two related purposes:\n\n  * Enable use of new"
+        },
+        {
+            "Name": "python313-urllib3",
+            "Version": "2.5.0-160000.2.2",
+            "Description": "Highlights\n\n- Re-use the same socket connection for multiple requests\n  (HTTPCon"
+        },
+        {
+            "Name": "net-tools",
+            "Version": "2.10-160000.2.2",
+            "Description": "This package contains programs for network administration and maintenance.\nMost "
+        },
+        {
+            "Name": "dhcp-client",
+            "Version": "4.4.2.P1-160000.2.2",
+            "Description": "This is an alternative DHCP client, the ISC DHCP client for Linux. Like\n\"dhcpcd\""
+        },
+        {
+            "Name": "librpmbuild10",
+            "Version": "4.20.1-160000.2.2",
+            "Description": "Thie package contains a library with functions for building RPM packages."
+        },
+        {
+            "Name": "openslp",
+            "Version": "2.0.0-160000.2.2",
+            "Description": "Service Location Protocol is an IETF standards track protocol that\nprovides a fr"
+        },
+        {
+            "Name": "python313-Jinja2",
+            "Version": "3.1.6-160000.2.2",
+            "Description": "Jinja2 is a template engine written in pure Python.  It provides a Django\ninspir"
+        },
+        {
+            "Name": "python313-jsonpatch",
+            "Version": "1.33-160000.2.2",
+            "Description": "Python module to apply JSON-Patches (according to RFC 6902)."
+        },
+        {
+            "Name": "python313-rpds-py",
+            "Version": "0.22.3-160000.2.2",
+            "Description": "Python bindings to Rust's persistent data structures (rpds)"
+        },
+        {
+            "Name": "python313-cffi",
+            "Version": "1.17.1-160000.2.2",
+            "Description": "Foreign Function Interface for Python calling C code. The aim of this project\nis"
+        },
+        {
+            "Name": "python313-rpm",
+            "Version": "4.20.1-160000.2.2",
+            "Description": "This package contains a module that permits applications written in\nthe Python p"
+        },
+        {
+            "Name": "python313-referencing",
+            "Version": "0.36.2-160000.2.2",
+            "Description": "JSON Referencing + Python"
+        },
+        {
+            "Name": "python313-cryptography",
+            "Version": "44.0.3-160000.2.2",
+            "Description": "cryptography includes both high level recipes, and low\nlevel interfaces to commo"
+        },
+        {
+            "Name": "python313-jsonschema-specifications",
+            "Version": "2024.10.1-160000.2.2",
+            "Description": "The JSON Schema meta-schemas and vocabularies, exposed as a Registry"
+        },
+        {
+            "Name": "python313-requests",
+            "Version": "2.32.4-160000.2.2",
+            "Description": "Requests is an HTTP library, written in Python, as an alternative\nto Python's bu"
+        },
+        {
+            "Name": "python313-passlib",
+            "Version": "1.7.4-160000.2.2",
+            "Description": "Passlib is a password hashing library for Python 2 \u0026 3. It provides\nimplementati"
+        },
+        {
+            "Name": "python313-PyJWT",
+            "Version": "2.10.1-160000.2.2",
+            "Description": "A Python implementation of JSON Web Token draft 01."
+        },
+        {
+            "Name": "python313-jsonschema",
+            "Version": "4.24.0-160000.2.2",
+            "Description": "jsonschema is an implementation of the JSON Schema specification for Python\nThe "
+        },
+        {
+            "Name": "python313-oauthlib",
+            "Version": "3.2.2-160000.2.2",
+            "Description": "A generic, spec-compliant, thorough implementation of the OAuth request-signing\n"
+        },
+        {
+            "Name": "cloud-init",
+            "Version": "25.1.3-160000.1.2",
+            "Description": "Cloud-init is an init script that initializes a cloud node (VM)\naccording to the"
+        }
+    ],
+    "LinuxUpdates": [
+        {
+            "Name": "kernel-default",
+            "CurrentVersion": "6.12.0-160000.7.1",
+            "AvailableVersion": "6.12.0-160000.8.1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "kernel-default-extra",
+            "CurrentVersion": "6.12.0-160000.7.1",
+            "AvailableVersion": "6.12.0-160000.8.1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "kernel-default-optional",
+            "CurrentVersion": "6.12.0-160000.7.1",
+            "AvailableVersion": "6.12.0-160000.8.1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "libavahi-client3",
+            "CurrentVersion": "0.8-160000.2.2",
+            "AvailableVersion": "0.8-160000.3.1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "libavahi-common3",
+            "CurrentVersion": "0.8-160000.2.2",
+            "AvailableVersion": "0.8-160000.3.1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "libgirepository-2_0-0",
+            "CurrentVersion": "2.84.3-160000.2.2",
+            "AvailableVersion": "2.84.4-160000.1.1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "libglib-2_0-0",
+            "CurrentVersion": "2.84.3-160000.2.2",
+            "AvailableVersion": "2.84.4-160000.1.1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "libgmodule-2_0-0",
+            "CurrentVersion": "2.84.3-160000.2.2",
+            "AvailableVersion": "2.84.4-160000.1.1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "libgobject-2_0-0",
+            "CurrentVersion": "2.84.3-160000.2.2",
+            "AvailableVersion": "2.84.4-160000.1.1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "liblz4-1",
+            "CurrentVersion": "1.10.0-160000.2.2",
+            "AvailableVersion": "1.10.0-160000.3.1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "libpng16-16",
+            "CurrentVersion": "1.6.44-160000.2.2",
+            "AvailableVersion": "1.6.44-160000.3.1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "libzypp",
+            "CurrentVersion": "17.37.17-160000.1.2",
+            "AvailableVersion": "17.37.18-160000.1.1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "qemu-guest-agent",
+            "CurrentVersion": "10.0.4-160000.1.1",
+            "AvailableVersion": "10.0.7-160000.1.1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "typelib-1_0-GLib-2_0",
+            "CurrentVersion": "2.84.3-160000.2.2",
+            "AvailableVersion": "2.84.4-160000.1.1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "typelib-1_0-GModule-2_0",
+            "CurrentVersion": "2.84.3-160000.2.2",
+            "AvailableVersion": "2.84.4-160000.1.1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "typelib-1_0-GObject-2_0",
+            "CurrentVersion": "2.84.3-160000.2.2",
+            "AvailableVersion": "2.84.4-160000.1.1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "typelib-1_0-Gio-2_0",
+            "CurrentVersion": "2.84.3-160000.2.2",
+            "AvailableVersion": "2.84.4-160000.1.1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "openSUSE-Leap-16.0-112",
+            "CurrentVersion": "",
+            "AvailableVersion": "1",
+            "IsSecurityUpdate": true,
+            "IsPatch": true
+        },
+        {
+            "Name": "openSUSE-Leap-16.0-113",
+            "CurrentVersion": "",
+            "AvailableVersion": "1",
+            "IsSecurityUpdate": true,
+            "IsPatch": true
+        },
+        {
+            "Name": "openSUSE-Leap-16.0-124",
+            "CurrentVersion": "",
+            "AvailableVersion": "1",
+            "IsSecurityUpdate": true,
+            "IsPatch": true
+        },
+        {
+            "Name": "openSUSE-Leap-16.0-126",
+            "CurrentVersion": "",
+            "AvailableVersion": "1",
+            "IsSecurityUpdate": true,
+            "IsPatch": true
+        },
+        {
+            "Name": "openSUSE-Leap-16.0-127",
+            "CurrentVersion": "",
+            "AvailableVersion": "1",
+            "IsSecurityUpdate": true,
+            "IsPatch": true
+        },
+        {
+            "Name": "openSUSE-Leap-16.0-131",
+            "CurrentVersion": "",
+            "AvailableVersion": "1",
+            "IsSecurityUpdate": true,
+            "IsPatch": true
+        },
+        {
+            "Name": "openSUSE-Leap-16.0-132",
+            "CurrentVersion": "",
+            "AvailableVersion": "1",
+            "IsSecurityUpdate": true,
+            "IsPatch": true
+        },
+        {
+            "Name": "openSUSE-Leap-16.0-112",
+            "CurrentVersion": "",
+            "AvailableVersion": "1",
+            "IsSecurityUpdate": true,
+            "IsPatch": true
+        },
+        {
+            "Name": "openSUSE-Leap-16.0-113",
+            "CurrentVersion": "",
+            "AvailableVersion": "1",
+            "IsSecurityUpdate": true,
+            "IsPatch": true
+        },
+        {
+            "Name": "openSUSE-Leap-16.0-124",
+            "CurrentVersion": "",
+            "AvailableVersion": "1",
+            "IsSecurityUpdate": true,
+            "IsPatch": true
+        },
+        {
+            "Name": "openSUSE-Leap-16.0-126",
+            "CurrentVersion": "",
+            "AvailableVersion": "1",
+            "IsSecurityUpdate": true,
+            "IsPatch": true
+        },
+        {
+            "Name": "openSUSE-Leap-16.0-127",
+            "CurrentVersion": "",
+            "AvailableVersion": "1",
+            "IsSecurityUpdate": true,
+            "IsPatch": true
+        },
+        {
+            "Name": "openSUSE-Leap-16.0-131",
+            "CurrentVersion": "",
+            "AvailableVersion": "1",
+            "IsSecurityUpdate": true,
+            "IsPatch": true
+        },
+        {
+            "Name": "openSUSE-Leap-16.0-132",
+            "CurrentVersion": "",
+            "AvailableVersion": "1",
+            "IsSecurityUpdate": true,
+            "IsPatch": true
+        }
+    ],
+    "WindowsApps": [],
+    "WindowsUpdates": [],
+    "MacOSApps": [],
+    "MacosUpdates": []
+}

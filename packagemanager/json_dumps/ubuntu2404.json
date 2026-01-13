@@ -1,0 +1,4011 @@
+{
+    "Enabled": true,
+    "Panding": false,
+    "LastUpdate": 1768296076,
+    "Stats": {
+        "InstalledPackages": 795,
+        "UpgradablePackages": 2,
+        "SecurityUpdates": 0,
+        "RebootRequired": false,
+        "LastError": null,
+        "OperatingSystem": "linux",
+        "PackageManager": "apt"
+    },
+    "LinuxPackages": [
+        {
+            "Name": "adduser",
+            "Version": "3.137ubuntu1",
+            "Description": "add and remove users and groups\n This package includes the 'adduser' and 'deluse"
+        },
+        {
+            "Name": "adwaita-icon-theme",
+            "Version": "46.0-1",
+            "Description": "default icon theme of GNOME\n This package contains the default icon theme used b"
+        },
+        {
+            "Name": "alsa-topology-conf",
+            "Version": "1.2.5.1-2",
+            "Description": "ALSA topology configuration files\n This package contains ALSA topology configura"
+        },
+        {
+            "Name": "alsa-ucm-conf",
+            "Version": "1.2.10-1ubuntu5.7",
+            "Description": "ALSA Use Case Manager configuration files\n This package contains ALSA Use Case M"
+        },
+        {
+            "Name": "apparmor",
+            "Version": "4.0.1really4.0.1-0ubuntu0.24.04.5",
+            "Description": "user-space parser utility for AppArmor\n apparmor provides the system initializat"
+        },
+        {
+            "Name": "apport",
+            "Version": "2.28.1-0ubuntu3.8",
+            "Description": "automatically generate crash reports for debugging\n apport automatically collect"
+        },
+        {
+            "Name": "apport-core-dump-handler",
+            "Version": "2.28.1-0ubuntu3.8",
+            "Description": "Kernel core dump handler for Apport\n apport automatically collects data from cra"
+        },
+        {
+            "Name": "apport-symptoms",
+            "Version": "0.25",
+            "Description": "symptom scripts for apport\n Apport intercepts program crashes, collects debuggin"
+        },
+        {
+            "Name": "appstream",
+            "Version": "1.0.2-1build6",
+            "Description": "Software component metadata management\n AppStream is a metadata specification wh"
+        },
+        {
+            "Name": "apt",
+            "Version": "2.8.3",
+            "Description": "commandline package manager\n This package provides commandline tools for searchi"
+        },
+        {
+            "Name": "apt-transport-https",
+            "Version": "2.8.3",
+            "Description": "transitional package for https support\n This is a dummy transitional package - h"
+        },
+        {
+            "Name": "apt-utils",
+            "Version": "2.8.3",
+            "Description": "package management related utility programs\n This package contains some less use"
+        },
+        {
+            "Name": "at-spi2-common",
+            "Version": "2.52.0-1build1",
+            "Description": "Assistive Technology Service Provider Interface (common files)\n This package con"
+        },
+        {
+            "Name": "at-spi2-core",
+            "Version": "2.52.0-1build1",
+            "Description": "Assistive Technology Service Provider Interface (D-Bus core)\n This package conta"
+        },
+        {
+            "Name": "autoconf",
+            "Version": "2.71-3",
+            "Description": "automatic configure script builder\n The standard for FSF source packages.  This "
+        },
+        {
+            "Name": "automake",
+            "Version": "1:1.16.5-1.3ubuntu1",
+            "Description": "Tool for generating GNU Standards-compliant Makefiles\n Automake is a tool for au"
+        },
+        {
+            "Name": "autotools-dev",
+            "Version": "20220109.1",
+            "Description": "Update infrastructure for config.{guess,sub} files\n This package installs an up-"
+        },
+        {
+            "Name": "base-files",
+            "Version": "13ubuntu10.3",
+            "Description": "Debian base system miscellaneous files\n This package contains the basic filesyst"
+        },
+        {
+            "Name": "base-passwd",
+            "Version": "3.6.3build1",
+            "Description": "Debian base system master password and group files\n These are the canonical mast"
+        },
+        {
+            "Name": "bash",
+            "Version": "5.2.21-2ubuntu4",
+            "Description": "GNU Bourne Again SHell\n Bash is an sh-compatible command language interpreter th"
+        },
+        {
+            "Name": "bash-completion",
+            "Version": "1:2.11-8",
+            "Description": "programmable completion for the bash shell\n bash completion extends bash's stand"
+        },
+        {
+            "Name": "bc",
+            "Version": "1.07.1-3ubuntu4",
+            "Description": "GNU bc arbitrary precision calculator language\n GNU bc is an interactive algebra"
+        },
+        {
+            "Name": "bind9-dnsutils",
+            "Version": "1:9.18.39-0ubuntu0.24.04.2",
+            "Description": "Clients provided with BIND 9\n The Berkeley Internet Name Domain (BIND 9) impleme"
+        },
+        {
+            "Name": "bind9-host",
+            "Version": "1:9.18.39-0ubuntu0.24.04.2",
+            "Description": "DNS Lookup Utility\n This package provides the 'host' DNS lookup utility in the f"
+        },
+        {
+            "Name": "bind9-libs",
+            "Version": "1:9.18.39-0ubuntu0.24.04.2",
+            "Description": "Shared Libraries used by BIND 9\n The Berkeley Internet Name Domain (BIND 9) impl"
+        },
+        {
+            "Name": "binutils",
+            "Version": "2.42-4ubuntu2.8",
+            "Description": "GNU assembler, linker and binary utilities\n The programs in this package are use"
+        },
+        {
+            "Name": "binutils-common",
+            "Version": "2.42-4ubuntu2.8",
+            "Description": "Common files for the GNU assembler, linker and binary utilities\n This package co"
+        },
+        {
+            "Name": "binutils-x86-64-linux-gnu",
+            "Version": "2.42-4ubuntu2.8",
+            "Description": "GNU binary utilities, for x86-64-linux-gnu target\n This package provides GNU ass"
+        },
+        {
+            "Name": "bsdextrautils",
+            "Version": "2.39.3-9ubuntu6.4",
+            "Description": "extra utilities from 4.4BSD-Lite\n This package contains some extra BSD utilities"
+        },
+        {
+            "Name": "bsdutils",
+            "Version": "1:2.39.3-9ubuntu6.4",
+            "Description": "basic utilities from 4.4BSD-Lite\n This package contains the bare minimum of BSD "
+        },
+        {
+            "Name": "build-essential",
+            "Version": "12.10ubuntu1",
+            "Description": "Informational list of build-essential packages\n If you do not plan to build Debi"
+        },
+        {
+            "Name": "byobu",
+            "Version": "6.11-0ubuntu1",
+            "Description": "text window manager, shell multiplexer, integrated DevOps environment\n Byobu is "
+        },
+        {
+            "Name": "bzip2",
+            "Version": "1.0.8-5.1build0.1",
+            "Description": "high-quality block-sorting file compressor - utilities\n bzip2 is a freely availa"
+        },
+        {
+            "Name": "ca-certificates",
+            "Version": "20240203",
+            "Description": "Common CA certificates\n Contains the certificate authorities shipped with Mozill"
+        },
+        {
+            "Name": "cloud-guest-utils",
+            "Version": "0.33-1",
+            "Description": "cloud guest utilities\n This package contains programs useful inside cloud instan"
+        },
+        {
+            "Name": "cloud-init",
+            "Version": "25.2-0ubuntu1~24.04.1",
+            "Description": "initialization and customization tool for cloud instances\n Cloud-init is the ind"
+        },
+        {
+            "Name": "cmake",
+            "Version": "3.28.3-1build7",
+            "Description": "cross-platform, open-source make system\n CMake is used to control the software c"
+        },
+        {
+            "Name": "cmake-data",
+            "Version": "3.28.3-1build7",
+            "Description": "CMake data files (modules, templates and documentation)\n CMake is used to contro"
+        },
+        {
+            "Name": "command-not-found",
+            "Version": "23.04.0",
+            "Description": "Suggest installation of packages in interactive bash sessions\n This package will"
+        },
+        {
+            "Name": "console-setup",
+            "Version": "1.226ubuntu1",
+            "Description": "console font and keymap setup program\n This package provides the console with th"
+        },
+        {
+            "Name": "console-setup-linux",
+            "Version": "1.226ubuntu1",
+            "Description": "Linux specific part of console-setup\n This package includes fonts in psf format "
+        },
+        {
+            "Name": "coreutils",
+            "Version": "9.4-3ubuntu6.1",
+            "Description": "GNU core utilities\n This package contains the basic file, shell and text manipul"
+        },
+        {
+            "Name": "cpp",
+            "Version": "4:13.2.0-7ubuntu1",
+            "Description": "GNU C preprocessor (cpp)\n The GNU C preprocessor is a macro processor that is us"
+        },
+        {
+            "Name": "cpp-13",
+            "Version": "13.3.0-6ubuntu2~24.04",
+            "Description": "GNU C preprocessor\n A macro processor that is used automatically by the GNU C co"
+        },
+        {
+            "Name": "cpp-13-x86-64-linux-gnu",
+            "Version": "13.3.0-6ubuntu2~24.04",
+            "Description": "GNU C preprocessor for x86_64-linux-gnu\n A macro processor that is used automati"
+        },
+        {
+            "Name": "cpp-x86-64-linux-gnu",
+            "Version": "4:13.2.0-7ubuntu1",
+            "Description": "GNU C preprocessor (cpp) for the amd64 architecture\n The GNU C preprocessor is a"
+        },
+        {
+            "Name": "cron",
+            "Version": "3.0pl1-184ubuntu2",
+            "Description": "process scheduling daemon\n The cron daemon is a background process that runs par"
+        },
+        {
+            "Name": "cron-daemon-common",
+            "Version": "3.0pl1-184ubuntu2",
+            "Description": "process scheduling daemon's configuration files\n The cron daemon is a background"
+        },
+        {
+            "Name": "curl",
+            "Version": "8.5.0-2ubuntu10.6",
+            "Description": "command line tool for transferring data with URL syntax\n curl is a command line "
+        },
+        {
+            "Name": "dash",
+            "Version": "0.5.12-6ubuntu5",
+            "Description": "POSIX-compliant shell\n The Debian Almquist Shell (dash) is a POSIX-compliant she"
+        },
+        {
+            "Name": "dbus",
+            "Version": "1.14.10-4ubuntu4.1",
+            "Description": "simple interprocess messaging system (system message bus)\n D-Bus is a message bu"
+        },
+        {
+            "Name": "dbus-bin",
+            "Version": "1.14.10-4ubuntu4.1",
+            "Description": "simple interprocess messaging system (command line utilities)\n D-Bus is a messag"
+        },
+        {
+            "Name": "dbus-daemon",
+            "Version": "1.14.10-4ubuntu4.1",
+            "Description": "simple interprocess messaging system (reference message bus)\n D-Bus is a message"
+        },
+        {
+            "Name": "dbus-session-bus-common",
+            "Version": "1.14.10-4ubuntu4.1",
+            "Description": "simple interprocess messaging system (session bus configuration)\n D-Bus is a mes"
+        },
+        {
+            "Name": "dbus-system-bus-common",
+            "Version": "1.14.10-4ubuntu4.1",
+            "Description": "simple interprocess messaging system (system bus configuration)\n D-Bus is a mess"
+        },
+        {
+            "Name": "dbus-user-session",
+            "Version": "1.14.10-4ubuntu4.1",
+            "Description": "simple interprocess messaging system (systemd --user integration)\n D-Bus is a me"
+        },
+        {
+            "Name": "dbus-x11",
+            "Version": "1.14.10-4ubuntu4.1",
+            "Description": "simple interprocess messaging system (X11 deps)\n D-Bus is a message bus, used fo"
+        },
+        {
+            "Name": "dconf-gsettings-backend",
+            "Version": "0.40.0-4ubuntu0.1",
+            "Description": "simple configuration storage system - GSettings back-end\n DConf is a low-level k"
+        },
+        {
+            "Name": "dconf-service",
+            "Version": "0.40.0-4ubuntu0.1",
+            "Description": "simple configuration storage system - D-Bus service\n DConf is a low-level key/va"
+        },
+        {
+            "Name": "debconf",
+            "Version": "1.5.86ubuntu1",
+            "Description": "Debian configuration management system\n Debconf is a configuration management sy"
+        },
+        {
+            "Name": "debconf-i18n",
+            "Version": "1.5.86ubuntu1",
+            "Description": "full internationalization support for debconf\n This package provides full intern"
+        },
+        {
+            "Name": "debianutils",
+            "Version": "5.17build1",
+            "Description": "Miscellaneous utilities specific to Debian\n This package provides a number of sm"
+        },
+        {
+            "Name": "dhcpcd-base",
+            "Version": "1:10.0.6-1ubuntu3.2",
+            "Description": "DHCPv4 and DHCPv6 dual-stack client (binaries and exit hooks)\n dhcpcd provides s"
+        },
+        {
+            "Name": "diffutils",
+            "Version": "1:3.10-1build1",
+            "Description": "File comparison utilities\n The diffutils package provides the diff, diff3, sdiff"
+        },
+        {
+            "Name": "dirmngr",
+            "Version": "2.4.4-2ubuntu17.4",
+            "Description": "GNU privacy guard - network certificate management service\n dirmngr is a server "
+        },
+        {
+            "Name": "distro-info",
+            "Version": "1.7build1",
+            "Description": "provides information about the distributions' releases\n Information about all re"
+        },
+        {
+            "Name": "distro-info-data",
+            "Version": "0.60ubuntu0.5",
+            "Description": "information about the distributions' releases (data files)\n Information about al"
+        },
+        {
+            "Name": "dmsetup",
+            "Version": "2:1.02.185-3ubuntu3.2",
+            "Description": "Linux Kernel Device Mapper userspace library\n The Linux Kernel Device Mapper is "
+        },
+        {
+            "Name": "dnsutils",
+            "Version": "1:9.18.39-0ubuntu0.24.04.2",
+            "Description": "Transitional package for bind9-dnsutils\n This is a transitional package. It can "
+        },
+        {
+            "Name": "dpkg",
+            "Version": "1.22.6ubuntu6.5",
+            "Description": "Debian package management system\n This package provides the low-level infrastruc"
+        },
+        {
+            "Name": "dpkg-dev",
+            "Version": "1.22.6ubuntu6.5",
+            "Description": "Debian package development tools\n This package provides the development tools (i"
+        },
+        {
+            "Name": "e2fsprogs",
+            "Version": "1.47.0-2.4~exp1ubuntu4.1",
+            "Description": "ext2/ext3/ext4 file system utilities\n The ext2, ext3 and ext4 file systems are s"
+        },
+        {
+            "Name": "e2fsprogs-l10n",
+            "Version": "1.47.0-2.4~exp1ubuntu4.1",
+            "Description": "ext2/ext3/ext4 file system utilities - translations\n The ext2, ext3 and ext4 fil"
+        },
+        {
+            "Name": "eatmydata",
+            "Version": "131-1ubuntu1",
+            "Description": "Library and utilities designed to disable fsync and friends\n This package contai"
+        },
+        {
+            "Name": "ed",
+            "Version": "1.20.1-1",
+            "Description": "classic UNIX line editor\n ed is a line-oriented text editor.  It is used to\n cre"
+        },
+        {
+            "Name": "eject",
+            "Version": "2.39.3-9ubuntu6.4",
+            "Description": "ejects CDs and operates CD-Changers under Linux\n This program will eject CD-ROMs"
+        },
+        {
+            "Name": "ethtool",
+            "Version": "1:6.7-1build1",
+            "Description": "display or change Ethernet device settings\n ethtool can be used to query and cha"
+        },
+        {
+            "Name": "fakeroot",
+            "Version": "1.33-1",
+            "Description": "tool for simulating superuser privileges\n fakeroot provides a fake \"root environ"
+        },
+        {
+            "Name": "fdisk",
+            "Version": "2.39.3-9ubuntu6.4",
+            "Description": "collection of partitioning utilities\n This package contains the classic fdisk, s"
+        },
+        {
+            "Name": "file",
+            "Version": "1:5.45-3build1",
+            "Description": "Recognize the type of data in a file using \"magic\" numbers\n The file command is "
+        },
+        {
+            "Name": "findutils",
+            "Version": "4.9.0-5build1",
+            "Description": "utilities for finding files--find, xargs\n GNU findutils provides utilities to fi"
+        },
+        {
+            "Name": "firefox",
+            "Version": "1:1snap1-0ubuntu5",
+            "Description": "Transitional package - firefox -\u003e firefox snap\n This is a transitional dummy pac"
+        },
+        {
+            "Name": "fontconfig",
+            "Version": "2.15.0-1.1ubuntu2",
+            "Description": "generic font configuration library - support binaries\n Fontconfig is a font conf"
+        },
+        {
+            "Name": "fontconfig-config",
+            "Version": "2.15.0-1.1ubuntu2",
+            "Description": "generic font configuration library - configuration\n Fontconfig is a font configu"
+        },
+        {
+            "Name": "fonts-dejavu-core",
+            "Version": "2.37-8",
+            "Description": "Vera font family derivate with additional characters\n DejaVu provides an expande"
+        },
+        {
+            "Name": "fonts-dejavu-mono",
+            "Version": "2.37-8",
+            "Description": "Vera font family derivate with additional characters\n DejaVu provides an expande"
+        },
+        {
+            "Name": "fonts-ubuntu",
+            "Version": "0.869+git20240321-0ubuntu1",
+            "Description": "sans-serif font set from Ubuntu\n The Ubuntu Font Family is a set of contemporary"
+        },
+        {
+            "Name": "fuse3",
+            "Version": "3.14.0-5build1",
+            "Description": "Filesystem in Userspace (3.x version)\n Filesystem in Userspace (FUSE) is a simpl"
+        },
+        {
+            "Name": "g++",
+            "Version": "4:13.2.0-7ubuntu1",
+            "Description": "GNU C++ compiler\n This is the GNU C++ compiler, a fairly portable optimizing com"
+        },
+        {
+            "Name": "g++-13",
+            "Version": "13.3.0-6ubuntu2~24.04",
+            "Description": "GNU C++ compiler\n This is the GNU C++ compiler, a fairly portable optimizing com"
+        },
+        {
+            "Name": "g++-13-x86-64-linux-gnu",
+            "Version": "13.3.0-6ubuntu2~24.04",
+            "Description": "GNU C++ compiler for x86_64-linux-gnu architecture\n This is the GNU C++ compiler"
+        },
+        {
+            "Name": "g++-x86-64-linux-gnu",
+            "Version": "4:13.2.0-7ubuntu1",
+            "Description": "GNU C++ compiler for the amd64 architecture\n This is the GNU C++ compiler, a fai"
+        },
+        {
+            "Name": "gawk",
+            "Version": "1:5.2.1-2build3",
+            "Description": "GNU awk, a pattern scanning and processing language\n `awk', a program that you c"
+        },
+        {
+            "Name": "gcc",
+            "Version": "4:13.2.0-7ubuntu1",
+            "Description": "GNU C compiler\n This is the GNU C compiler, a fairly portable optimizing compile"
+        },
+        {
+            "Name": "gcc-13",
+            "Version": "13.3.0-6ubuntu2~24.04",
+            "Description": "GNU C compiler\n This is the GNU C compiler, a fairly portable optimizing compile"
+        },
+        {
+            "Name": "gcc-13-base",
+            "Version": "13.3.0-6ubuntu2~24.04",
+            "Description": "GCC, the GNU Compiler Collection (base package)\n This package contains files com"
+        },
+        {
+            "Name": "gcc-13-x86-64-linux-gnu",
+            "Version": "13.3.0-6ubuntu2~24.04",
+            "Description": "GNU C compiler for the x86_64-linux-gnu architecture\n This is the GNU C compiler"
+        },
+        {
+            "Name": "gcc-14-base",
+            "Version": "14.2.0-4ubuntu2~24.04",
+            "Description": "GCC, the GNU Compiler Collection (base package)\n This package contains files com"
+        },
+        {
+            "Name": "gcc-x86-64-linux-gnu",
+            "Version": "4:13.2.0-7ubuntu1",
+            "Description": "GNU C compiler for the amd64 architecture\n This is the GNU C compiler, a fairly "
+        },
+        {
+            "Name": "gdb",
+            "Version": "15.0.50.20240403-0ubuntu1",
+            "Description": "GNU Debugger\n GDB is a source-level debugger, capable of breaking programs at\n a"
+        },
+        {
+            "Name": "gdisk",
+            "Version": "1.0.10-1build1",
+            "Description": "GPT fdisk text-mode partitioning tool\n GPT fdisk (aka gdisk) is a text-mode part"
+        },
+        {
+            "Name": "gettext-base",
+            "Version": "0.21-14ubuntu2",
+            "Description": "GNU Internationalization utilities for the base system\n This package includes th"
+        },
+        {
+            "Name": "gir1.2-girepository-2.0",
+            "Version": "1.80.1-1",
+            "Description": "Introspection data for GIRepository library\n GObject Introspection is a project "
+        },
+        {
+            "Name": "gir1.2-glib-2.0",
+            "Version": "2.80.0-6ubuntu3.6",
+            "Description": "Introspection data for GLib, GObject, Gio and GModule\n GObject Introspection is "
+        },
+        {
+            "Name": "gir1.2-packagekitglib-1.0",
+            "Version": "1.2.8-2ubuntu1.4",
+            "Description": "GObject introspection data for the PackageKit GLib library\n PackageKit allows pe"
+        },
+        {
+            "Name": "git",
+            "Version": "1:2.43.0-1ubuntu7.3",
+            "Description": "fast, scalable, distributed revision control system\n Git is popular version cont"
+        },
+        {
+            "Name": "git-man",
+            "Version": "1:2.43.0-1ubuntu7.3",
+            "Description": "fast, scalable, distributed revision control system (manual pages)\n Git is popul"
+        },
+        {
+            "Name": "gnupg",
+            "Version": "2.4.4-2ubuntu17.4",
+            "Description": "GNU privacy guard - a free PGP replacement\n GnuPG is GNU's tool for secure commu"
+        },
+        {
+            "Name": "gnupg-l10n",
+            "Version": "2.4.4-2ubuntu17.4",
+            "Description": "GNU privacy guard - localization files\n GnuPG is GNU's tool for secure communica"
+        },
+        {
+            "Name": "gnupg-utils",
+            "Version": "2.4.4-2ubuntu17.4",
+            "Description": "GNU privacy guard - utility programs\n GnuPG is GNU's tool for secure communicati"
+        },
+        {
+            "Name": "gperf",
+            "Version": "3.1-1build1",
+            "Description": "Perfect hash function generator\n gperf is a program that generates perfect hash "
+        },
+        {
+            "Name": "gpg",
+            "Version": "2.4.4-2ubuntu17.4",
+            "Description": "GNU Privacy Guard -- minimalist public key operations\n GnuPG is GNU's tool for s"
+        },
+        {
+            "Name": "gpg-agent",
+            "Version": "2.4.4-2ubuntu17.4",
+            "Description": "GNU privacy guard - cryptographic agent\n GnuPG is GNU's tool for secure communic"
+        },
+        {
+            "Name": "gpg-wks-client",
+            "Version": "2.4.4-2ubuntu17.4",
+            "Description": "GNU privacy guard - Web Key Service client\n GnuPG is GNU's tool for secure commu"
+        },
+        {
+            "Name": "gpgconf",
+            "Version": "2.4.4-2ubuntu17.4",
+            "Description": "GNU privacy guard - core configuration utilities\n GnuPG is GNU's tool for secure"
+        },
+        {
+            "Name": "gpgsm",
+            "Version": "2.4.4-2ubuntu17.4",
+            "Description": "GNU privacy guard - S/MIME version\n GnuPG is GNU's tool for secure communication"
+        },
+        {
+            "Name": "gpgv",
+            "Version": "2.4.4-2ubuntu17.4",
+            "Description": "GNU privacy guard - signature verification tool\n GnuPG is GNU's tool for secure "
+        },
+        {
+            "Name": "grep",
+            "Version": "3.11-4build1",
+            "Description": "GNU grep, egrep and fgrep\n 'grep' is a utility to search for text in files; it c"
+        },
+        {
+            "Name": "groff-base",
+            "Version": "1.23.0-3build2",
+            "Description": "GNU troff text-formatting system (base system components)\n This package contains"
+        },
+        {
+            "Name": "gsettings-desktop-schemas",
+            "Version": "46.1-0ubuntu1",
+            "Description": "GSettings desktop-wide schemas\n gsettings-desktop-schemas contains a collection "
+        },
+        {
+            "Name": "gtk-update-icon-cache",
+            "Version": "3.24.41-4ubuntu1.3",
+            "Description": "icon theme caching utility\n gtk-update-icon-cache creates mmap()able cache files"
+        },
+        {
+            "Name": "gzip",
+            "Version": "1.12-1ubuntu3.1",
+            "Description": "GNU compression utilities\n This package provides the standard GNU file compressi"
+        },
+        {
+            "Name": "help2man",
+            "Version": "1.49.3",
+            "Description": "Automatic manpage generator\n Program to create simple man pages from the --help "
+        },
+        {
+            "Name": "hicolor-icon-theme",
+            "Version": "0.17-2",
+            "Description": "default fallback theme for FreeDesktop.org icon themes\n This is the default fall"
+        },
+        {
+            "Name": "hostname",
+            "Version": "3.23+nmu2ubuntu2",
+            "Description": "utility to set/show the host name or domain name\n This package provides commands"
+        },
+        {
+            "Name": "htop",
+            "Version": "3.3.0-4build1",
+            "Description": "interactive processes viewer\n Htop is an ncursed-based process viewer similar to"
+        },
+        {
+            "Name": "hugo",
+            "Version": "0.146.5",
+            "Description": "A fast and flexible Static Site Generator written in Go."
+        },
+        {
+            "Name": "humanity-icon-theme",
+            "Version": "0.6.16",
+            "Description": "Humanity Icon theme\n Humanity and Humanity Dark are nice and well polished icon "
+        },
+        {
+            "Name": "inetutils-telnet",
+            "Version": "2:2.5-3ubuntu4",
+            "Description": "telnet client\n The telnet command is used for interactive communication with ano"
+        },
+        {
+            "Name": "info",
+            "Version": "7.1-3build2",
+            "Description": "Standalone GNU Info documentation browser\n The Info file format is an easily-par"
+        },
+        {
+            "Name": "init",
+            "Version": "1.66ubuntu1",
+            "Description": "metapackage ensuring an init system is installed\n This package is a metapackage "
+        },
+        {
+            "Name": "init-system-helpers",
+            "Version": "1.66ubuntu1",
+            "Description": "helper tools for all init systems\n This package contains helper tools that are n"
+        },
+        {
+            "Name": "install-info",
+            "Version": "7.1-3build2",
+            "Description": "Manage installed documentation in info format\n The install-info utility creates "
+        },
+        {
+            "Name": "iperf3",
+            "Version": "3.16-1build2",
+            "Description": "Internet Protocol bandwidth measuring tool\n Iperf3 is a tool for performing netw"
+        },
+        {
+            "Name": "iproute2",
+            "Version": "6.1.0-1ubuntu6.2",
+            "Description": "networking and traffic control tools\n The iproute2 suite is a collection of util"
+        },
+        {
+            "Name": "iputils-ping",
+            "Version": "3:20240117-1ubuntu0.1",
+            "Description": "Tools to test the reachability of network hosts\n The ping command sends ICMP ECH"
+        },
+        {
+            "Name": "iso-codes",
+            "Version": "4.16.0-1",
+            "Description": "ISO language, territory, currency, script codes and their translations\n This pac"
+        },
+        {
+            "Name": "javascript-common",
+            "Version": "11+nmu1",
+            "Description": "Base support for JavaScript library packages\n Web applications that use JavaScri"
+        },
+        {
+            "Name": "jq",
+            "Version": "1.7.1-3ubuntu0.24.04.1",
+            "Description": "lightweight and flexible command-line JSON processor\n jq is like sed for JSON da"
+        },
+        {
+            "Name": "kbd",
+            "Version": "2.6.4-2ubuntu2",
+            "Description": "Linux console font and keytable utilities\n This package allows you to set up the"
+        },
+        {
+            "Name": "keyboard-configuration",
+            "Version": "1.226ubuntu1",
+            "Description": "system-wide keyboard preferences\n This package maintains the keyboard preference"
+        },
+        {
+            "Name": "keyboxd",
+            "Version": "2.4.4-2ubuntu17.4",
+            "Description": "GNU privacy guard - public key material service\n GnuPG is GNU's tool for secure "
+        },
+        {
+            "Name": "kmod",
+            "Version": "31+20240202-2ubuntu7.1",
+            "Description": "tools for managing Linux kernel modules\n This package contains a set of programs"
+        },
+        {
+            "Name": "krb5-locales",
+            "Version": "1.20.1-6ubuntu2.6",
+            "Description": "internationalization support for MIT Kerberos\n Kerberos is a system for authenti"
+        },
+        {
+            "Name": "landscape-client",
+            "Version": "24.02-0ubuntu5.7",
+            "Description": "Landscape administration system client\n Landscape is a web-based tool for managi"
+        },
+        {
+            "Name": "landscape-common",
+            "Version": "24.02-0ubuntu5.7",
+            "Description": "Landscape administration system client - Common files\n Landscape is a web-based "
+        },
+        {
+            "Name": "less",
+            "Version": "590-2ubuntu2.1",
+            "Description": "pager program similar to more\n This package provides \"less\", a file pager (that "
+        },
+        {
+            "Name": "libacl1",
+            "Version": "2.3.2-1build1.1",
+            "Description": "access control list - shared library\n This package contains the shared library c"
+        },
+        {
+            "Name": "libalgorithm-diff-perl",
+            "Version": "1.201-1",
+            "Description": "module to find differences between files\n Algorithm::Diff is a Perl module that "
+        },
+        {
+            "Name": "libalgorithm-diff-xs-perl",
+            "Version": "0.04-8build3",
+            "Description": "module to find differences between files (XS accelerated)\n Algorithm::Diff::XS i"
+        },
+        {
+            "Name": "libalgorithm-merge-perl",
+            "Version": "0.08-5",
+            "Description": "Perl module for three-way merge of textual data\n Algorithm::Merge provides three"
+        },
+        {
+            "Name": "libaom3",
+            "Version": "3.8.2-2ubuntu0.1",
+            "Description": "AV1 Video Codec Library\n AOMedia Video 1 (AV1) is an open and royalty free video"
+        },
+        {
+            "Name": "libapparmor1",
+            "Version": "4.0.1really4.0.1-0ubuntu0.24.04.5",
+            "Description": "changehat AppArmor library\n libapparmor1 provides a shared library one can compi"
+        },
+        {
+            "Name": "libappindicator3-1",
+            "Version": "12.10.1+20.10.20200706.1-0ubuntu5",
+            "Description": "Application Indicators\n A library and indicator to take menus from applications "
+        },
+        {
+            "Name": "libappstream5",
+            "Version": "1.0.2-1build6",
+            "Description": "Library to access AppStream services\n AppStream is a metadata specification whic"
+        },
+        {
+            "Name": "libapt-pkg6.0t64",
+            "Version": "2.8.3",
+            "Description": "package management runtime library\n This library provides the common functionali"
+        },
+        {
+            "Name": "libarchive13t64",
+            "Version": "3.7.2-2ubuntu0.5",
+            "Description": "Multi-format archive and compression library (shared library)\n The libarchive li"
+        },
+        {
+            "Name": "libargon2-1",
+            "Version": "0~20190702+dfsg-4build1",
+            "Description": "memory-hard hashing function - runtime library\n Argon2 is a password-hashing fun"
+        },
+        {
+            "Name": "libasan8",
+            "Version": "14.2.0-4ubuntu2~24.04",
+            "Description": "AddressSanitizer -- a fast memory error detector\n AddressSanitizer (ASan) is a f"
+        },
+        {
+            "Name": "libasound2-data",
+            "Version": "1.2.11-1ubuntu0.1",
+            "Description": "Configuration files and profiles for ALSA drivers\n This package contains configu"
+        },
+        {
+            "Name": "libasound2t64",
+            "Version": "1.2.11-1ubuntu0.1",
+            "Description": "shared library for ALSA applications\n This package contains the ALSA library and"
+        },
+        {
+            "Name": "libassuan0",
+            "Version": "2.5.6-1build1",
+            "Description": "IPC library for the GnuPG components\n Libassuan is a small library implementing "
+        },
+        {
+            "Name": "libatk-bridge2.0-0t64",
+            "Version": "2.52.0-1build1",
+            "Description": "AT-SPI 2 toolkit bridge - shared library\n This package contains the ATK bridge s"
+        },
+        {
+            "Name": "libatk1.0-0t64",
+            "Version": "2.52.0-1build1",
+            "Description": "ATK accessibility toolkit\n ATK is a toolkit providing accessibility interfaces f"
+        },
+        {
+            "Name": "libatm1t64",
+            "Version": "1:2.5.1-5.1build1",
+            "Description": "shared library for ATM (Asynchronous Transfer Mode)\n Shared libraries needed by "
+        },
+        {
+            "Name": "libatomic1",
+            "Version": "14.2.0-4ubuntu2~24.04",
+            "Description": "support library providing __atomic built-in functions\n library providing __atomi"
+        },
+        {
+            "Name": "libatspi2.0-0t64",
+            "Version": "2.52.0-1build1",
+            "Description": "Assistive Technology Service Provider Interface - shared library\n This package c"
+        },
+        {
+            "Name": "libattr1",
+            "Version": "1:2.5.2-1build1.1",
+            "Description": "extended attribute handling - shared library\n Contains the runtime environment r"
+        },
+        {
+            "Name": "libaudit-common",
+            "Version": "1:3.1.2-2.1build1.1",
+            "Description": "Dynamic library for security auditing - common files\n The audit-libs package con"
+        },
+        {
+            "Name": "libaudit1",
+            "Version": "1:3.1.2-2.1build1.1",
+            "Description": "Dynamic library for security auditing\n The audit-libs package contains the dynam"
+        },
+        {
+            "Name": "libauthen-sasl-perl",
+            "Version": "2.1700-1",
+            "Description": "Authen::SASL - SASL Authentication framework\n SASL is a generic mechanism for au"
+        },
+        {
+            "Name": "libavahi-client3",
+            "Version": "0.8-13ubuntu6",
+            "Description": "Avahi client library\n Avahi is a fully LGPL framework for Multicast DNS Service "
+        },
+        {
+            "Name": "libavahi-common-data",
+            "Version": "0.8-13ubuntu6",
+            "Description": "Avahi common data files\n Avahi is a fully LGPL framework for Multicast DNS Servi"
+        },
+        {
+            "Name": "libavahi-common3",
+            "Version": "0.8-13ubuntu6",
+            "Description": "Avahi common library\n Avahi is a fully LGPL framework for Multicast DNS Service "
+        },
+        {
+            "Name": "libbabeltrace1",
+            "Version": "1.5.11-3build3",
+            "Description": "Babeltrace conversion libraries\n Babeltrace provides trace reading and writing l"
+        },
+        {
+            "Name": "libbinutils",
+            "Version": "2.42-4ubuntu2.8",
+            "Description": "GNU binary utilities (private shared library)\n This package includes the private"
+        },
+        {
+            "Name": "libblkid-dev",
+            "Version": "2.39.3-9ubuntu6.4",
+            "Description": "block device ID library - headers\n The blkid library allows system programs such"
+        },
+        {
+            "Name": "libblkid1",
+            "Version": "2.39.3-9ubuntu6.4",
+            "Description": "block device ID library\n The blkid library allows system programs such as fsck a"
+        },
+        {
+            "Name": "libbpf1",
+            "Version": "1:1.3.0-2build2",
+            "Description": "eBPF helper library (shared library)\n libbpf is a library for loading eBPF progr"
+        },
+        {
+            "Name": "libbrotli1",
+            "Version": "1.1.0-2build2",
+            "Description": "library implementing brotli encoder and decoder (shared libraries)\n Brotli is a "
+        },
+        {
+            "Name": "libbsd0",
+            "Version": "0.12.1-1build1.1",
+            "Description": "utility functions from BSD systems - shared library\n This library provides some "
+        },
+        {
+            "Name": "libbz2-1.0",
+            "Version": "1.0.8-5.1build0.1",
+            "Description": "high-quality block-sorting file compressor library - runtime\n This package conta"
+        },
+        {
+            "Name": "libc-bin",
+            "Version": "2.39-0ubuntu8.6",
+            "Description": "GNU C Library: Binaries\n This package contains utility programs related to the G"
+        },
+        {
+            "Name": "libc-dev-bin",
+            "Version": "2.39-0ubuntu8.6",
+            "Description": "GNU C Library: Development binaries\n This package contains utility programs rela"
+        },
+        {
+            "Name": "libc-devtools",
+            "Version": "2.39-0ubuntu8.6",
+            "Description": "GNU C Library: Development tools\n This package contains development tools shippe"
+        },
+        {
+            "Name": "libc6",
+            "Version": "2.39-0ubuntu8.6",
+            "Description": "GNU C Library: Shared libraries\n Contains the standard libraries that are used b"
+        },
+        {
+            "Name": "libc6-dbg",
+            "Version": "2.39-0ubuntu8.6",
+            "Description": "GNU C Library: detached debugging symbols\n This package contains the detached de"
+        },
+        {
+            "Name": "libc6-dev",
+            "Version": "2.39-0ubuntu8.6",
+            "Description": "GNU C Library: Development Libraries and Header Files\n Contains the symlinks, he"
+        },
+        {
+            "Name": "libcairo-gobject2",
+            "Version": "1.18.0-3build1",
+            "Description": "Cairo 2D vector graphics library (GObject library)\n Cairo is a multi-platform li"
+        },
+        {
+            "Name": "libcairo2",
+            "Version": "1.18.0-3build1",
+            "Description": "Cairo 2D vector graphics library\n Cairo is a multi-platform library providing an"
+        },
+        {
+            "Name": "libcap-ng0",
+            "Version": "0.8.4-2build2",
+            "Description": "alternate POSIX capabilities library\n This library implements the user-space int"
+        },
+        {
+            "Name": "libcap2",
+            "Version": "1:2.66-5ubuntu2.2",
+            "Description": "POSIX 1003.1e capabilities (library)\n Libcap implements the user-space interface"
+        },
+        {
+            "Name": "libcap2-bin",
+            "Version": "1:2.66-5ubuntu2.2",
+            "Description": "POSIX 1003.1e capabilities (utilities)\n Libcap implements the user-space interfa"
+        },
+        {
+            "Name": "libcbor0.10",
+            "Version": "0.10.2-1.2ubuntu2",
+            "Description": "library for parsing and generating CBOR (RFC 7049)\n CBOR is a general-purpose sc"
+        },
+        {
+            "Name": "libcc1-0",
+            "Version": "14.2.0-4ubuntu2~24.04",
+            "Description": "GCC cc1 plugin for GDB\n libcc1 is a plugin for GDB."
+        },
+        {
+            "Name": "libclone-perl",
+            "Version": "0.46-1build3",
+            "Description": "module for recursively copying Perl datatypes\n The Clone module provides a clone"
+        },
+        {
+            "Name": "libcolord2",
+            "Version": "1.4.7-1build2",
+            "Description": "system service to manage device colour profiles -- runtime\n colord is a system s"
+        },
+        {
+            "Name": "libcom-err2",
+            "Version": "1.47.0-2.4~exp1ubuntu4.1",
+            "Description": "common error description library\n libcomerr is an attempt to present a common er"
+        },
+        {
+            "Name": "libcrypt-dev",
+            "Version": "1:4.4.36-4build1",
+            "Description": "libcrypt development files\n This package contains the files needed for developin"
+        },
+        {
+            "Name": "libcrypt1",
+            "Version": "1:4.4.36-4build1",
+            "Description": "libcrypt shared library\n libxcrypt is a modern library for one-way hashing of pa"
+        },
+        {
+            "Name": "libcryptsetup12",
+            "Version": "2:2.7.0-1ubuntu4.2",
+            "Description": "disk encryption support - shared library\n Cryptsetup provides an interface for c"
+        },
+        {
+            "Name": "libctf-nobfd0",
+            "Version": "2.42-4ubuntu2.8",
+            "Description": "Compact C Type Format library (runtime, no BFD dependency)\n This package include"
+        },
+        {
+            "Name": "libctf0",
+            "Version": "2.42-4ubuntu2.8",
+            "Description": "Compact C Type Format library (runtime, BFD dependency)\n This package includes t"
+        },
+        {
+            "Name": "libcups2t64",
+            "Version": "2.4.7-1.2ubuntu7.9",
+            "Description": "Common UNIX Printing System(tm) - Core library\n The Common UNIX Printing System "
+        },
+        {
+            "Name": "libcurl3t64-gnutls",
+            "Version": "8.5.0-2ubuntu10.6",
+            "Description": "easy-to-use client-side URL transfer library (GnuTLS flavour)\n libcurl is an eas"
+        },
+        {
+            "Name": "libcurl4t64",
+            "Version": "8.5.0-2ubuntu10.6",
+            "Description": "easy-to-use client-side URL transfer library (OpenSSL flavour)\n libcurl is an ea"
+        },
+        {
+            "Name": "libdata-dump-perl",
+            "Version": "1.25-1",
+            "Description": "Perl module to help dump data structures\n Data::Dump provides a single function "
+        },
+        {
+            "Name": "libdatrie1",
+            "Version": "0.2.13-3build1",
+            "Description": "Double-array trie library\n This package provides shared libraries needed to run "
+        },
+        {
+            "Name": "libdb5.3t64",
+            "Version": "5.3.28+dfsg2-7",
+            "Description": "Berkeley v5.3 Database Libraries [runtime]\n This is the runtime package for prog"
+        },
+        {
+            "Name": "libdbi1t64",
+            "Version": "0.9.0-6.1build1",
+            "Description": "DB Independent Abstraction Layer for C -- shared library\n libdbi implements a da"
+        },
+        {
+            "Name": "libdbus-1-3",
+            "Version": "1.14.10-4ubuntu4.1",
+            "Description": "simple interprocess messaging system (library)\n D-Bus is a message bus, used for"
+        },
+        {
+            "Name": "libdbusmenu-glib4",
+            "Version": "18.10.20180917~bzr492+repack1-3.1ubuntu5",
+            "Description": "library for passing menus over DBus\n libdbusmenu passes a menu structure across "
+        },
+        {
+            "Name": "libdbusmenu-gtk3-4",
+            "Version": "18.10.20180917~bzr492+repack1-3.1ubuntu5",
+            "Description": "library for passing menus over DBus - GTK-3+ version\n libdbusmenu passes a menu "
+        },
+        {
+            "Name": "libdconf1",
+            "Version": "0.40.0-4ubuntu0.1",
+            "Description": "simple configuration storage system - runtime library\n DConf is a low-level key/"
+        },
+        {
+            "Name": "libde265-0",
+            "Version": "1.0.15-1build3",
+            "Description": "Open H.265 video codec implementation\n libde265 is an open source implementation"
+        },
+        {
+            "Name": "libdebconfclient0",
+            "Version": "0.271ubuntu3",
+            "Description": "Debian Configuration Management System (C-implementation library)\n Debconf is a "
+        },
+        {
+            "Name": "libdebuginfod-common",
+            "Version": "0.190-1.1ubuntu0.1",
+            "Description": "configuration to enable the Debian debug info server\n This package asks if it sh"
+        },
+        {
+            "Name": "libdebuginfod1t64",
+            "Version": "0.190-1.1ubuntu0.1",
+            "Description": "library to interact with debuginfod (development files)\n The libdebuginfo1 packa"
+        },
+        {
+            "Name": "libdecor-0-0",
+            "Version": "0.2.2-1build2",
+            "Description": "client-side window decoration library\n libdecor is a library that can help Wayla"
+        },
+        {
+            "Name": "libdecor-0-plugin-1-gtk",
+            "Version": "0.2.2-1build2",
+            "Description": "libdecor decoration plugin using GTK\n libdecor is a library that can help Waylan"
+        },
+        {
+            "Name": "libdeflate0",
+            "Version": "1.19-1build1.1",
+            "Description": "fast, whole-buffer DEFLATE-based compression and decompression\n The supported fo"
+        },
+        {
+            "Name": "libdevmapper1.02.1",
+            "Version": "2:1.02.185-3ubuntu3.2",
+            "Description": "Linux Kernel Device Mapper userspace library\n The Linux Kernel Device Mapper is "
+        },
+        {
+            "Name": "libdpkg-perl",
+            "Version": "1.22.6ubuntu6.5",
+            "Description": "Dpkg perl modules\n This package provides the perl modules used by the scripts\n i"
+        },
+        {
+            "Name": "libdrm-amdgpu1",
+            "Version": "2.4.122-1~ubuntu0.24.04.2",
+            "Description": "Userspace interface to amdgpu-specific kernel DRM services -- runtime\n This libr"
+        },
+        {
+            "Name": "libdrm-common",
+            "Version": "2.4.122-1~ubuntu0.24.04.2",
+            "Description": "Userspace interface to kernel DRM services -- common files\n This library impleme"
+        },
+        {
+            "Name": "libdrm-intel1",
+            "Version": "2.4.122-1~ubuntu0.24.04.2",
+            "Description": "Userspace interface to intel-specific kernel DRM services -- runtime\n This libra"
+        },
+        {
+            "Name": "libdrm-nouveau2",
+            "Version": "2.4.122-1~ubuntu0.24.04.2",
+            "Description": "Userspace interface to nouveau-specific kernel DRM services -- runtime\n This lib"
+        },
+        {
+            "Name": "libdrm-radeon1",
+            "Version": "2.4.122-1~ubuntu0.24.04.2",
+            "Description": "Userspace interface to radeon-specific kernel DRM services -- runtime\n This libr"
+        },
+        {
+            "Name": "libdrm2",
+            "Version": "2.4.122-1~ubuntu0.24.04.2",
+            "Description": "Userspace interface to kernel DRM services -- runtime\n This library implements t"
+        },
+        {
+            "Name": "libduktape207",
+            "Version": "2.7.0+tests-0ubuntu3",
+            "Description": "embeddable Javascript engine, library\n Duktape is an embeddable Javascript engin"
+        },
+        {
+            "Name": "libdw1t64",
+            "Version": "0.190-1.1ubuntu0.1",
+            "Description": "library that provides access to the DWARF debug information\n libdw1t64 provides "
+        },
+        {
+            "Name": "libeatmydata1",
+            "Version": "131-1ubuntu1",
+            "Description": "Library and utilities designed to disable fsync and friends - shared library\n Th"
+        },
+        {
+            "Name": "libedit2",
+            "Version": "3.1-20230828-1build1",
+            "Description": "BSD editline and history libraries\n Command line editor library provides generic"
+        },
+        {
+            "Name": "libegl-mesa0",
+            "Version": "25.0.7-0ubuntu0.24.04.2",
+            "Description": "free implementation of the EGL API -- Mesa vendor library\n This package contains"
+        },
+        {
+            "Name": "libegl1",
+            "Version": "1.7.0-1build1",
+            "Description": "Vendor neutral GL dispatch library -- EGL support\n This is an implementation of "
+        },
+        {
+            "Name": "libelf1t64",
+            "Version": "0.190-1.1ubuntu0.1",
+            "Description": "library to read and write ELF files\n The libelf1t64 package provides a shared li"
+        },
+        {
+            "Name": "libencode-locale-perl",
+            "Version": "1.05-3",
+            "Description": "utility to determine the locale encoding\n In many applications it's wise to let "
+        },
+        {
+            "Name": "libepoxy0",
+            "Version": "1.5.10-1build1",
+            "Description": "OpenGL function pointer management library\n It hides the complexity of dlopen(),"
+        },
+        {
+            "Name": "liberror-perl",
+            "Version": "0.17029-2",
+            "Description": "Perl module for error/exception handling in an OO-ish way\n The Error module prov"
+        },
+        {
+            "Name": "libestr0",
+            "Version": "0.1.11-1build1",
+            "Description": "Helper functions for handling strings (lib)\n The 'libestr' library contains some"
+        },
+        {
+            "Name": "libevent-core-2.1-7t64",
+            "Version": "2.1.12-stable-9ubuntu2",
+            "Description": "Asynchronous event notification library (core)\n Libevent is an asynchronous even"
+        },
+        {
+            "Name": "libexpat1",
+            "Version": "2.6.1-2ubuntu0.3",
+            "Description": "XML parsing C library - runtime library\n This package contains the runtime, shar"
+        },
+        {
+            "Name": "libexpat1-dev",
+            "Version": "2.6.1-2ubuntu0.3",
+            "Description": "XML parsing C library - development kit\n This package contains the header file a"
+        },
+        {
+            "Name": "libext2fs2t64",
+            "Version": "1.47.0-2.4~exp1ubuntu4.1",
+            "Description": "ext2/ext3/ext4 file system libraries\n The ext2, ext3 and ext4 file systems are s"
+        },
+        {
+            "Name": "libfakeroot",
+            "Version": "1.33-1",
+            "Description": "tool for simulating superuser privileges - shared libraries\n fakeroot provides a"
+        },
+        {
+            "Name": "libfastjson4",
+            "Version": "1.2304.0-1build1",
+            "Description": "fast json library for C\n The libfastjson library is a fork from json-c with a fo"
+        },
+        {
+            "Name": "libfdisk1",
+            "Version": "2.39.3-9ubuntu6.4",
+            "Description": "fdisk partitioning library\n The libfdisk library is used for manipulating partit"
+        },
+        {
+            "Name": "libffi-dev",
+            "Version": "3.4.6-1build1",
+            "Description": "Foreign Function Interface library (development files)\n This package contains th"
+        },
+        {
+            "Name": "libffi8",
+            "Version": "3.4.6-1build1",
+            "Description": "Foreign Function Interface library runtime\n A foreign function interface is the "
+        },
+        {
+            "Name": "libfido2-1",
+            "Version": "1.14.0-1build3",
+            "Description": "library for generating and verifying FIDO 2.0 objects\n A library for communicati"
+        },
+        {
+            "Name": "libfile-basedir-perl",
+            "Version": "0.09-2",
+            "Description": "Perl module to use the freedesktop basedir specification\n The File::BaseDir modu"
+        },
+        {
+            "Name": "libfile-desktopentry-perl",
+            "Version": "0.22-3",
+            "Description": "Perl module to handle freedesktop .desktop files\n File::DesktopEntry is used to "
+        },
+        {
+            "Name": "libfile-fcntllock-perl",
+            "Version": "0.22-4ubuntu5",
+            "Description": "Perl module for file locking with fcntl(2)\n File::FcntlLock is a Perl module to "
+        },
+        {
+            "Name": "libfile-listing-perl",
+            "Version": "6.16-1",
+            "Description": "module to parse directory listings\n File::Listing exports a single function call"
+        },
+        {
+            "Name": "libfile-mimeinfo-perl",
+            "Version": "0.34-1",
+            "Description": "Perl module to determine file types\n File::MimeInfo can be used to determine the"
+        },
+        {
+            "Name": "libfont-afm-perl",
+            "Version": "1.20-4",
+            "Description": "Perl interface to Adobe Font Metrics files\n This module implements the Font::AFM"
+        },
+        {
+            "Name": "libfontconfig1",
+            "Version": "2.15.0-1.1ubuntu2",
+            "Description": "generic font configuration library - runtime\n Fontconfig is a font configuration"
+        },
+        {
+            "Name": "libfreetype6",
+            "Version": "2.13.2+dfsg-1build3",
+            "Description": "FreeType 2 font engine, shared library files\n The FreeType project is a team of "
+        },
+        {
+            "Name": "libfribidi0",
+            "Version": "1.0.13-3build1",
+            "Description": "Free Implementation of the Unicode BiDi algorithm\n FriBiDi is a BiDi algorithm i"
+        },
+        {
+            "Name": "libfuse-dev",
+            "Version": "2.9.9-8.1build1",
+            "Description": "Filesystem in Userspace (development)\n Filesystem in Userspace (FUSE) is a simpl"
+        },
+        {
+            "Name": "libfuse2t64",
+            "Version": "2.9.9-8.1build1",
+            "Description": "Filesystem in Userspace (library)\n Filesystem in Userspace (FUSE) is a simple in"
+        },
+        {
+            "Name": "libfuse3-3",
+            "Version": "3.14.0-5build1",
+            "Description": "Filesystem in Userspace (library) (3.x version)\n Filesystem in Userspace (FUSE) "
+        },
+        {
+            "Name": "libgbm1",
+            "Version": "25.0.7-0ubuntu0.24.04.2",
+            "Description": "generic buffer management API -- runtime\n This package contains the GBM buffer m"
+        },
+        {
+            "Name": "libgcc-13-dev",
+            "Version": "13.3.0-6ubuntu2~24.04",
+            "Description": "GCC support library (development files)\n This package contains the headers and s"
+        },
+        {
+            "Name": "libgcc-s1",
+            "Version": "14.2.0-4ubuntu2~24.04",
+            "Description": "GCC support library\n Shared version of the support library, a library of interna"
+        },
+        {
+            "Name": "libgcrypt20",
+            "Version": "1.10.3-2build1",
+            "Description": "LGPL Crypto library - runtime library\n libgcrypt contains cryptographic function"
+        },
+        {
+            "Name": "libgd3",
+            "Version": "2.3.3-9ubuntu5",
+            "Description": "GD Graphics Library\n GD is a graphics library. It allows your code to quickly dr"
+        },
+        {
+            "Name": "libgdbm-compat4t64",
+            "Version": "1.23-5.1build1",
+            "Description": "GNU dbm database routines (legacy support runtime version) \n GNU dbm ('gdbm') is"
+        },
+        {
+            "Name": "libgdbm6t64",
+            "Version": "1.23-5.1build1",
+            "Description": "GNU dbm database routines (runtime version) \n GNU dbm ('gdbm') is a library of d"
+        },
+        {
+            "Name": "libgdk-pixbuf-2.0-0",
+            "Version": "2.42.10+dfsg-3ubuntu3.2",
+            "Description": "GDK Pixbuf library\n The GDK Pixbuf library provides:\n  - Image loading and savin"
+        },
+        {
+            "Name": "libgdk-pixbuf2.0-bin",
+            "Version": "2.42.10+dfsg-3ubuntu3.2",
+            "Description": "GDK Pixbuf library (thumbnailer)\n The GDK Pixbuf library provides:\n  - Image loa"
+        },
+        {
+            "Name": "libgdk-pixbuf2.0-common",
+            "Version": "2.42.10+dfsg-3ubuntu3.2",
+            "Description": "GDK Pixbuf library - data files\n This package contains the common files and tran"
+        },
+        {
+            "Name": "libgirepository-1.0-1",
+            "Version": "1.80.1-1",
+            "Description": "Library for handling GObject introspection data (runtime library)\n GObject Intro"
+        },
+        {
+            "Name": "libgirepository-2.0-0",
+            "Version": "2.80.0-6ubuntu3.6",
+            "Description": "GLib runtime library for handling GObject introspection data\n GLib is a library "
+        },
+        {
+            "Name": "libgl1",
+            "Version": "1.7.0-1build1",
+            "Description": "Vendor neutral GL dispatch library -- legacy GL support\n This is an implementati"
+        },
+        {
+            "Name": "libgl1-amber-dri",
+            "Version": "21.3.9-0ubuntu3~24.04.1",
+            "Description": "free implementation of the OpenGL API -- Amber DRI modules\n This version of Mesa"
+        },
+        {
+            "Name": "libgl1-mesa-dri",
+            "Version": "25.0.7-0ubuntu0.24.04.2",
+            "Description": "free implementation of the OpenGL API -- DRI modules\n This version of Mesa provi"
+        },
+        {
+            "Name": "libglapi-amber",
+            "Version": "21.3.9-0ubuntu3~24.04.1",
+            "Description": "free implementation of the GL API -- shared library\n The Mesa GL API module is r"
+        },
+        {
+            "Name": "libgles2",
+            "Version": "1.7.0-1build1",
+            "Description": "Vendor neutral GL dispatch library -- GLESv2 support\n This is an implementation "
+        },
+        {
+            "Name": "libglib2.0-0t64",
+            "Version": "2.80.0-6ubuntu3.6",
+            "Description": "GLib library of C routines\n GLib is a library containing many useful C routines "
+        },
+        {
+            "Name": "libglib2.0-bin",
+            "Version": "2.80.0-6ubuntu3.6",
+            "Description": "Programs for the GLib library\n GLib is a library containing many useful C routin"
+        },
+        {
+            "Name": "libglib2.0-data",
+            "Version": "2.80.0-6ubuntu3.6",
+            "Description": "Common files for GLib library\n GLib is a library containing many useful C routin"
+        },
+        {
+            "Name": "libglib2.0-dev",
+            "Version": "2.80.0-6ubuntu3.6",
+            "Description": "Development files for the GLib library\n GLib is a library containing many useful"
+        },
+        {
+            "Name": "libglib2.0-dev-bin",
+            "Version": "2.80.0-6ubuntu3.6",
+            "Description": "Development utilities for the GLib library\n GLib is a library containing many us"
+        },
+        {
+            "Name": "libglvnd0",
+            "Version": "1.7.0-1build1",
+            "Description": "Vendor neutral GL dispatch library\n This is an implementation of the vendor-neut"
+        },
+        {
+            "Name": "libglx-mesa0",
+            "Version": "25.0.7-0ubuntu0.24.04.2",
+            "Description": "free implementation of the OpenGL API -- GLX vendor library\n Mesa is a 3-D graph"
+        },
+        {
+            "Name": "libglx0",
+            "Version": "1.7.0-1build1",
+            "Description": "Vendor neutral GL dispatch library -- GLX support\n This is an implementation of "
+        },
+        {
+            "Name": "libgmp10",
+            "Version": "2:6.3.0+dfsg-2ubuntu6.1",
+            "Description": "Multiprecision arithmetic library\n GNU MP is a programmer's library for arbitrar"
+        },
+        {
+            "Name": "libgnutls30t64",
+            "Version": "3.8.3-1.1ubuntu3.4",
+            "Description": "GNU TLS library - main runtime library\n GnuTLS is a portable library which imple"
+        },
+        {
+            "Name": "libgomp1",
+            "Version": "14.2.0-4ubuntu2~24.04",
+            "Description": "GCC OpenMP (GOMP) support library\n GOMP is an implementation of OpenMP for the C"
+        },
+        {
+            "Name": "libgpg-error-l10n",
+            "Version": "1.47-3build2.1",
+            "Description": "library of error values and messages in GnuPG (localization files)\n Library that"
+        },
+        {
+            "Name": "libgpg-error0",
+            "Version": "1.47-3build2.1",
+            "Description": "GnuPG development runtime library\n Library that defines common error values, mes"
+        },
+        {
+            "Name": "libgpgme11t64",
+            "Version": "1.18.0-4.1ubuntu4",
+            "Description": "GPGME - GnuPG Made Easy (library)\n GPGME is a wrapper library which provides a C"
+        },
+        {
+            "Name": "libgpm2",
+            "Version": "1.20.7-11",
+            "Description": "General Purpose Mouse - shared library\n This package provides a library that han"
+        },
+        {
+            "Name": "libgprofng0",
+            "Version": "2.42-4ubuntu2.8",
+            "Description": "GNU Next Generation profiler (runtime library)\n Gprofng is the GNU Next Generati"
+        },
+        {
+            "Name": "libgraphite2-3",
+            "Version": "1.3.14-2build1",
+            "Description": "Font rendering engine for Complex Scripts -- library\n Graphite is a system that "
+        },
+        {
+            "Name": "libgssapi-krb5-2",
+            "Version": "1.20.1-6ubuntu2.6",
+            "Description": "MIT Kerberos runtime libraries - krb5 GSS-API Mechanism\n Kerberos is a system fo"
+        },
+        {
+            "Name": "libgstreamer1.0-0",
+            "Version": "1.24.2-1ubuntu0.1",
+            "Description": "Core GStreamer libraries and elements\n GStreamer is a streaming media framework,"
+        },
+        {
+            "Name": "libgtk-3-0t64",
+            "Version": "3.24.41-4ubuntu1.3",
+            "Description": "GTK graphical user interface library\n GTK is a multi-platform toolkit for creati"
+        },
+        {
+            "Name": "libgtk-3-bin",
+            "Version": "3.24.41-4ubuntu1.3",
+            "Description": "programs for the GTK graphical user interface library\n GTK is a multi-platform t"
+        },
+        {
+            "Name": "libgtk-3-common",
+            "Version": "3.24.41-4ubuntu1.3",
+            "Description": "common files for the GTK graphical user interface library\n GTK is a multi-platfo"
+        },
+        {
+            "Name": "libharfbuzz0b",
+            "Version": "8.3.0-2build2",
+            "Description": "OpenType text shaping engine (shared library)\n HarfBuzz is an implementation of "
+        },
+        {
+            "Name": "libheif-plugin-aomdec",
+            "Version": "1.17.6-1ubuntu4.2",
+            "Description": "ISO/IEC 23008-12:2017 HEIF file format decoder - aomdec plugin\n libheif is an IS"
+        },
+        {
+            "Name": "libheif-plugin-aomenc",
+            "Version": "1.17.6-1ubuntu4.2",
+            "Description": "ISO/IEC 23008-12:2017 HEIF file format decoder - aomenc plugin\n libheif is an IS"
+        },
+        {
+            "Name": "libheif-plugin-libde265",
+            "Version": "1.17.6-1ubuntu4.2",
+            "Description": "ISO/IEC 23008-12:2017 HEIF file format decoder - libde265 plugin\n libheif is an "
+        },
+        {
+            "Name": "libheif1",
+            "Version": "1.17.6-1ubuntu4.2",
+            "Description": "ISO/IEC 23008-12:2017 HEIF file format decoder - shared library\n libheif is an I"
+        },
+        {
+            "Name": "libhogweed6t64",
+            "Version": "3.9.1-2.2build1.1",
+            "Description": "low level cryptographic library (public-key cryptos)\n Nettle is a cryptographic "
+        },
+        {
+            "Name": "libhtml-form-perl",
+            "Version": "6.11-1",
+            "Description": "module that represents an HTML form element\n Objects of the HTML::Form class rep"
+        },
+        {
+            "Name": "libhtml-format-perl",
+            "Version": "2.16-2",
+            "Description": "module for transforming HTML into various formats\n HTML::Formatter is a base cla"
+        },
+        {
+            "Name": "libhtml-parser-perl",
+            "Version": "3.81-1build3",
+            "Description": "collection of modules that parse HTML text documents\n HTML::Parser is a collecti"
+        },
+        {
+            "Name": "libhtml-tagset-perl",
+            "Version": "3.20-6",
+            "Description": "data tables pertaining to HTML\n HTML::Tagset contains data tables useful in deal"
+        },
+        {
+            "Name": "libhtml-tree-perl",
+            "Version": "5.07-3",
+            "Description": "Perl module to represent and create HTML syntax trees\n HTML::Tree is a collectio"
+        },
+        {
+            "Name": "libhttp-cookies-perl",
+            "Version": "6.11-1",
+            "Description": "HTTP cookie jars\n This class is for objects that represent a \"cookie jar\" -- tha"
+        },
+        {
+            "Name": "libhttp-daemon-perl",
+            "Version": "6.16-1",
+            "Description": "simple http server class\n Instances of the HTTP::Daemon class are HTTP/1.1 serve"
+        },
+        {
+            "Name": "libhttp-date-perl",
+            "Version": "6.06-1",
+            "Description": "module of date conversion routines\n HTTP::Date provides functions that deal the "
+        },
+        {
+            "Name": "libhttp-message-perl",
+            "Version": "6.45-1ubuntu1",
+            "Description": "perl interface to HTTP style messages\n The HTTP::Message distribution contains c"
+        },
+        {
+            "Name": "libhttp-negotiate-perl",
+            "Version": "6.01-2",
+            "Description": "implementation of content negotiation\n HTTP::Negotiate provides a complete imple"
+        },
+        {
+            "Name": "libhwasan0",
+            "Version": "14.2.0-4ubuntu2~24.04",
+            "Description": "AddressSanitizer -- a fast memory error detector\n AddressSanitizer (HWASan) is a"
+        },
+        {
+            "Name": "libice6",
+            "Version": "2:1.0.10-1build3",
+            "Description": "X11 Inter-Client Exchange library\n This package provides the main interface to t"
+        },
+        {
+            "Name": "libicu74",
+            "Version": "74.2-1ubuntu3.1",
+            "Description": "International Components for Unicode\n ICU is a C++ and C library that provides r"
+        },
+        {
+            "Name": "libidn2-0",
+            "Version": "2.3.7-2build1.1",
+            "Description": "Internationalized domain names (IDNA2008/TR46) library\n Libidn2 implements the r"
+        },
+        {
+            "Name": "libio-html-perl",
+            "Version": "1.004-3",
+            "Description": "open an HTML file with automatic charset detection\n IO::HTML provides an easy wa"
+        },
+        {
+            "Name": "libio-socket-ssl-perl",
+            "Version": "2.085-1",
+            "Description": "Perl module implementing object oriented interface to SSL sockets\n This module i"
+        },
+        {
+            "Name": "libio-stringy-perl",
+            "Version": "2.111-3",
+            "Description": "modules for I/O on in-core objects (strings/arrays)\n IO::stringy primarily provi"
+        },
+        {
+            "Name": "libipc-system-simple-perl",
+            "Version": "1.30-2",
+            "Description": "Perl module to run commands simply, with detailed diagnostics\n IPC::System::Simp"
+        },
+        {
+            "Name": "libiperf0",
+            "Version": "3.16-1build2",
+            "Description": "Internet Protocol bandwidth measuring tool (runtime files)\n Iperf3 is a tool for"
+        },
+        {
+            "Name": "libipt2",
+            "Version": "2.0.6-1build1",
+            "Description": "Intel Processor Trace Decoder Library\n Intel's reference implementation for deco"
+        },
+        {
+            "Name": "libisl23",
+            "Version": "0.26-3build1.1",
+            "Description": "manipulating sets and relations of integer points bounded by linear constraints\n"
+        },
+        {
+            "Name": "libitm1",
+            "Version": "14.2.0-4ubuntu2~24.04",
+            "Description": "GNU Transactional Memory Library\n GNU Transactional Memory Library (libitm) prov"
+        },
+        {
+            "Name": "libjansson4",
+            "Version": "2.14-2build2",
+            "Description": "C library for encoding, decoding and manipulating JSON data\n Jansson is a C libr"
+        },
+        {
+            "Name": "libjbig0",
+            "Version": "2.1-6.1ubuntu2",
+            "Description": "JBIGkit libraries\n JBIG-KIT provides a portable library of compression and decom"
+        },
+        {
+            "Name": "libjpeg-turbo8",
+            "Version": "2.1.5-2ubuntu2",
+            "Description": "libjpeg-turbo JPEG runtime library\n The libjpeg-turbo JPEG library is a library "
+        },
+        {
+            "Name": "libjpeg8",
+            "Version": "8c-2ubuntu11",
+            "Description": "Independent JPEG Group's JPEG runtime library (dependency package)\n libjpeg8 dep"
+        },
+        {
+            "Name": "libjq1",
+            "Version": "1.7.1-3ubuntu0.24.04.1",
+            "Description": "lightweight and flexible command-line JSON processor - shared library\n jq is lik"
+        },
+        {
+            "Name": "libjs-jquery",
+            "Version": "3.6.1+dfsg+~3.5.14-1",
+            "Description": "JavaScript library for dynamic web applications\n jQuery is a fast, concise, Java"
+        },
+        {
+            "Name": "libjs-sphinxdoc",
+            "Version": "7.2.6-6",
+            "Description": "JavaScript support for Sphinx documentation\n Sphinx is a tool for producing docu"
+        },
+        {
+            "Name": "libjs-underscore",
+            "Version": "1.13.4~dfsg+~1.11.4-3",
+            "Description": "JavaScript's functional programming helper library\n Underscore is a utility-belt"
+        },
+        {
+            "Name": "libjson-c5",
+            "Version": "0.17-1build1",
+            "Description": "JSON manipulation library - shared library\n This library allows you to easily co"
+        },
+        {
+            "Name": "libjsoncpp25",
+            "Version": "1.9.5-6build1",
+            "Description": "library for reading and writing JSON for C++\n jsoncpp is an implementation of a "
+        },
+        {
+            "Name": "libk5crypto3",
+            "Version": "1.20.1-6ubuntu2.6",
+            "Description": "MIT Kerberos runtime libraries - Crypto Library\n Kerberos is a system for authen"
+        },
+        {
+            "Name": "libkeyutils1",
+            "Version": "1.6.3-3build1",
+            "Description": "Linux Key Management Utilities (library)\n Keyutils is a set of utilities for man"
+        },
+        {
+            "Name": "libkmod2",
+            "Version": "31+20240202-2ubuntu7.1",
+            "Description": "libkmod shared library\n This library provides an API for insertion, removal, con"
+        },
+        {
+            "Name": "libkrb5-3",
+            "Version": "1.20.1-6ubuntu2.6",
+            "Description": "MIT Kerberos runtime libraries\n Kerberos is a system for authenticating users an"
+        },
+        {
+            "Name": "libkrb5support0",
+            "Version": "1.20.1-6ubuntu2.6",
+            "Description": "MIT Kerberos runtime libraries - Support library\n Kerberos is a system for authe"
+        },
+        {
+            "Name": "libksba8",
+            "Version": "1.6.6-1build1",
+            "Description": "X.509 and CMS support library\n KSBA (pronounced Kasbah) is a library to make X.5"
+        },
+        {
+            "Name": "liblcms2-2",
+            "Version": "2.14-2build1",
+            "Description": "Little CMS 2 color management library\n LittleCMS 2 intends to be a small-footpri"
+        },
+        {
+            "Name": "libldap-common",
+            "Version": "2.6.7+dfsg-1~exp1ubuntu8.2",
+            "Description": "OpenLDAP common files for libraries\n These are common files for the run-time lib"
+        },
+        {
+            "Name": "libldap2",
+            "Version": "2.6.7+dfsg-1~exp1ubuntu8.2",
+            "Description": "OpenLDAP libraries\n These are the run-time libraries for the OpenLDAP (Lightweig"
+        },
+        {
+            "Name": "libldb2",
+            "Version": "2:2.8.0+samba4.19.5+dfsg-4ubuntu9.4",
+            "Description": "LDAP-like embedded database - shared library\n ldb is a LDAP-like embedded databa"
+        },
+        {
+            "Name": "liblerc4",
+            "Version": "4.0.0+ds-4ubuntu2",
+            "Description": "Limited Error Raster Compression library\n LERC is an open-source image or raster"
+        },
+        {
+            "Name": "libllvm19",
+            "Version": "1:19.1.1-1ubuntu1~24.04.2",
+            "Description": "Modular compiler and toolchain technologies, runtime library\n LLVM is a collecti"
+        },
+        {
+            "Name": "libllvm20",
+            "Version": "1:20.1.2-0ubuntu1~24.04.2",
+            "Description": "Modular compiler and toolchain technologies, runtime library\n LLVM is a collecti"
+        },
+        {
+            "Name": "liblmdb0",
+            "Version": "0.9.31-1build1",
+            "Description": "Lightning Memory-Mapped Database shared library\n This package contains the LMDB "
+        },
+        {
+            "Name": "liblocale-gettext-perl",
+            "Version": "1.07-6ubuntu5",
+            "Description": "module using libc functions for internationalization in Perl\n The Locale::gettex"
+        },
+        {
+            "Name": "liblsan0",
+            "Version": "14.2.0-4ubuntu2~24.04",
+            "Description": "LeakSanitizer -- a memory leak detector (runtime)\n LeakSanitizer (Lsan) is a mem"
+        },
+        {
+            "Name": "libltdl-dev",
+            "Version": "2.4.7-7build1",
+            "Description": "System independent dlopen wrapper for GNU libtool (headers)\n This package contai"
+        },
+        {
+            "Name": "libltdl7",
+            "Version": "2.4.7-7build1",
+            "Description": "System independent dlopen wrapper for GNU libtool\n This package contains the run"
+        },
+        {
+            "Name": "liblwp-mediatypes-perl",
+            "Version": "6.04-2",
+            "Description": "module to guess media type for a file or a URL\n LWP::MediaTypes provides functio"
+        },
+        {
+            "Name": "liblwp-protocol-https-perl",
+            "Version": "6.13-1",
+            "Description": "HTTPS driver for LWP::UserAgent\n The LWP::Protocol::https module provides suppor"
+        },
+        {
+            "Name": "liblz4-1",
+            "Version": "1.9.4-1build1.1",
+            "Description": "Fast LZ compression algorithm library - runtime\n LZ4 is a very fast lossless com"
+        },
+        {
+            "Name": "liblzma5",
+            "Version": "5.6.1+really5.4.5-1ubuntu0.2",
+            "Description": "XZ-format compression library\n XZ is the successor to the Lempel-Ziv/Markov-chai"
+        },
+        {
+            "Name": "liblzo2-2",
+            "Version": "2.10-2build4",
+            "Description": "data compression library\n LZO is a portable, lossless data compression library.\n"
+        },
+        {
+            "Name": "libmagic-mgc",
+            "Version": "1:5.45-3build1",
+            "Description": "File type determination library using \"magic\" numbers (compiled magic file)\n Thi"
+        },
+        {
+            "Name": "libmagic1t64",
+            "Version": "1:5.45-3build1",
+            "Description": "Recognize the type of data in a file using \"magic\" numbers - library\n This libra"
+        },
+        {
+            "Name": "libmailtools-perl",
+            "Version": "2.21-2",
+            "Description": "modules to manipulate email in perl programs\n MailTools is a set of perl modules"
+        },
+        {
+            "Name": "libmaxminddb0",
+            "Version": "1.9.1-1build1",
+            "Description": "IP geolocation database library\n The libmaxminddb library provides a C library f"
+        },
+        {
+            "Name": "libmd0",
+            "Version": "1.1.0-2build1.1",
+            "Description": "message digest functions from BSD systems - shared library\n The libmd library pr"
+        },
+        {
+            "Name": "libmnl0",
+            "Version": "1.0.5-2build1",
+            "Description": "minimalistic Netlink communication library\n libmnl is a minimalistic user-space "
+        },
+        {
+            "Name": "libmount-dev",
+            "Version": "2.39.3-9ubuntu6.4",
+            "Description": "device mounting library - headers\n This device mounting library is used by mount"
+        },
+        {
+            "Name": "libmount1",
+            "Version": "2.39.3-9ubuntu6.4",
+            "Description": "device mounting library\n This device mounting library is used by mount and umoun"
+        },
+        {
+            "Name": "libmpc3",
+            "Version": "1.3.1-1build1.1",
+            "Description": "multiple precision complex floating-point library\n MPC is a portable library wri"
+        },
+        {
+            "Name": "libmpfr6",
+            "Version": "4.2.1-1build1.1",
+            "Description": "multiple precision floating-point computation\n MPFR provides a library for multi"
+        },
+        {
+            "Name": "libmysqlclient21",
+            "Version": "8.0.44-0ubuntu0.24.04.2",
+            "Description": "MySQL database client library\n MySQL is a fast, stable and true multi-user, mult"
+        },
+        {
+            "Name": "libncurses6",
+            "Version": "6.4+20240113-1ubuntu2",
+            "Description": "shared libraries for terminal handling\n The ncurses library routines are a termi"
+        },
+        {
+            "Name": "libncursesw6",
+            "Version": "6.4+20240113-1ubuntu2",
+            "Description": "shared libraries for terminal handling (wide character support)\n The ncurses lib"
+        },
+        {
+            "Name": "libnet-dbus-perl",
+            "Version": "1.2.0-2build3",
+            "Description": "Perl extension for the DBus bindings\n Net::DBus provides a Perl API for the DBus"
+        },
+        {
+            "Name": "libnet-http-perl",
+            "Version": "6.23-1",
+            "Description": "module providing low-level HTTP connection client\n The Net::HTTP class is a low-"
+        },
+        {
+            "Name": "libnet-smtp-ssl-perl",
+            "Version": "1.04-2",
+            "Description": "Perl module providing SSL support to Net::SMTP\n Net::SMTP::SSL implements the sa"
+        },
+        {
+            "Name": "libnet-snmp-perl",
+            "Version": "6.0.1-7",
+            "Description": "Script SNMP connections\n The module Net::SNMP implements an object oriented inte"
+        },
+        {
+            "Name": "libnet-ssleay-perl",
+            "Version": "1.94-1build4",
+            "Description": "Perl module for Secure Sockets Layer (SSL)\n Net::SSLeay is a perl module that al"
+        },
+        {
+            "Name": "libnetplan1",
+            "Version": "1.1.2-8ubuntu1~24.04.1",
+            "Description": "Declarative network configuration runtime library\n Netplan reads YAML network co"
+        },
+        {
+            "Name": "libnettle8t64",
+            "Version": "3.9.1-2.2build1.1",
+            "Description": "low level cryptographic library (symmetric and one-way cryptos)\n Nettle is a cry"
+        },
+        {
+            "Name": "libnewt0.52",
+            "Version": "0.52.24-2ubuntu2",
+            "Description": "Not Erik's Windowing Toolkit - text mode windowing with slang\n Newt is a windowi"
+        },
+        {
+            "Name": "libnghttp2-14",
+            "Version": "1.59.0-1ubuntu0.2",
+            "Description": "library implementing HTTP/2 protocol (shared library)\n This is an implementation"
+        },
+        {
+            "Name": "libnl-3-200",
+            "Version": "3.7.0-0.3build1.1",
+            "Description": "library for dealing with netlink sockets\n This is a library for applications dea"
+        },
+        {
+            "Name": "libnl-genl-3-200",
+            "Version": "3.7.0-0.3build1.1",
+            "Description": "library for dealing with netlink sockets - generic netlink\n This is a library fo"
+        },
+        {
+            "Name": "libnotify4",
+            "Version": "0.8.3-1build2",
+            "Description": "sends desktop notifications to a notification daemon\n A library that sends deskt"
+        },
+        {
+            "Name": "libnpth0t64",
+            "Version": "1.6-3.1build1",
+            "Description": "replacement for GNU Pth using system threads\n nPth is a non-preemptive threads i"
+        },
+        {
+            "Name": "libnspr4",
+            "Version": "2:4.35-1.1build1",
+            "Description": "NetScape Portable Runtime Library\n This library provides platform independent no"
+        },
+        {
+            "Name": "libnss-systemd",
+            "Version": "255.4-1ubuntu8.12",
+            "Description": "nss module providing dynamic user and group name resolution\n nss-systemd is a pl"
+        },
+        {
+            "Name": "libnss3",
+            "Version": "2:3.98-1build1",
+            "Description": "Network Security Service libraries\n This is a set of libraries designed to suppo"
+        },
+        {
+            "Name": "libonig5",
+            "Version": "6.9.9-1build1",
+            "Description": "regular expressions library\n Oniguruma is a library for working with regular exp"
+        },
+        {
+            "Name": "libp11-kit0",
+            "Version": "0.25.3-4ubuntu2.1",
+            "Description": "library for loading and coordinating access to PKCS#11 modules - runtime\n The p1"
+        },
+        {
+            "Name": "libpackagekit-glib2-18",
+            "Version": "1.2.8-2ubuntu1.4",
+            "Description": "Library for accessing PackageKit using GLib\n PackageKit allows performing simple"
+        },
+        {
+            "Name": "libpam-cap",
+            "Version": "1:2.66-5ubuntu2.2",
+            "Description": "POSIX 1003.1e capabilities (PAM module)\n Libcap implements the user-space interf"
+        },
+        {
+            "Name": "libpam-modules",
+            "Version": "1.5.3-5ubuntu5.5",
+            "Description": "Pluggable Authentication Modules for PAM\n This package completes the set of modu"
+        },
+        {
+            "Name": "libpam-modules-bin",
+            "Version": "1.5.3-5ubuntu5.5",
+            "Description": "Pluggable Authentication Modules for PAM - helper binaries\n This package contain"
+        },
+        {
+            "Name": "libpam-runtime",
+            "Version": "1.5.3-5ubuntu5.5",
+            "Description": "Runtime support for the PAM library\n Contains configuration files and  directori"
+        },
+        {
+            "Name": "libpam-systemd",
+            "Version": "255.4-1ubuntu8.12",
+            "Description": "system and service manager - PAM module\n This package contains the PAM module wh"
+        },
+        {
+            "Name": "libpam0g",
+            "Version": "1.5.3-5ubuntu5.5",
+            "Description": "Pluggable Authentication Modules library\n Contains the shared library for Linux-"
+        },
+        {
+            "Name": "libpango-1.0-0",
+            "Version": "1.52.1+ds-1build1",
+            "Description": "Layout and rendering of internationalized text\n Pango is a library for layout an"
+        },
+        {
+            "Name": "libpangocairo-1.0-0",
+            "Version": "1.52.1+ds-1build1",
+            "Description": "Layout and rendering of internationalized text\n Pango is a library for layout an"
+        },
+        {
+            "Name": "libpangoft2-1.0-0",
+            "Version": "1.52.1+ds-1build1",
+            "Description": "Layout and rendering of internationalized text\n Pango is a library for layout an"
+        },
+        {
+            "Name": "libpci3",
+            "Version": "1:3.10.0-2build1",
+            "Description": "PCI utilities (shared library)\n This package contains the libpci shared library "
+        },
+        {
+            "Name": "libpciaccess0",
+            "Version": "0.17-3ubuntu0.24.04.2",
+            "Description": "Generic PCI access library for X\n Provides functionality for X to access the PCI"
+        },
+        {
+            "Name": "libpcre2-16-0",
+            "Version": "10.42-4ubuntu2.1",
+            "Description": "New Perl Compatible Regular Expression Library - 16 bit runtime files\n This is P"
+        },
+        {
+            "Name": "libpcre2-32-0",
+            "Version": "10.42-4ubuntu2.1",
+            "Description": "New Perl Compatible Regular Expression Library - 32 bit runtime files\n This is P"
+        },
+        {
+            "Name": "libpcre2-8-0",
+            "Version": "10.42-4ubuntu2.1",
+            "Description": "New Perl Compatible Regular Expression Library- 8 bit runtime files\n This is PCR"
+        },
+        {
+            "Name": "libpcre2-dev",
+            "Version": "10.42-4ubuntu2.1",
+            "Description": "New Perl Compatible Regular Expression Library - development files\n This is PCRE"
+        },
+        {
+            "Name": "libpcre2-posix3",
+            "Version": "10.42-4ubuntu2.1",
+            "Description": "New Perl Compatible Regular Expression Library - posix-compatible runtime files\n"
+        },
+        {
+            "Name": "libperl5.38t64",
+            "Version": "5.38.2-3.2ubuntu0.2",
+            "Description": "shared Perl library\n This package contains the shared Perl library, used by appl"
+        },
+        {
+            "Name": "libpipeline1",
+            "Version": "1.5.7-2",
+            "Description": "Unix process pipeline manipulation library\n This is a C library for setting up a"
+        },
+        {
+            "Name": "libpixman-1-0",
+            "Version": "0.42.2-1build1",
+            "Description": "pixel-manipulation library for X and cairo\n A library for manipulating pixel reg"
+        },
+        {
+            "Name": "libpkgconf3",
+            "Version": "1.8.1-2build1",
+            "Description": "shared library for pkgconf\n pkgconf is an implementation of the pkg-config syste"
+        },
+        {
+            "Name": "libpng16-16t64",
+            "Version": "1.6.43-5ubuntu0.1",
+            "Description": "PNG library - runtime (version 1.6)\n libpng is a library implementing an interfa"
+        },
+        {
+            "Name": "libpolkit-agent-1-0",
+            "Version": "124-2ubuntu1.24.04.2",
+            "Description": "polkit Authentication Agent API\n polkit is a toolkit for defining and handling t"
+        },
+        {
+            "Name": "libpolkit-gobject-1-0",
+            "Version": "124-2ubuntu1.24.04.2",
+            "Description": "polkit Authorization API\n polkit is a toolkit for defining and handling the poli"
+        },
+        {
+            "Name": "libpopt0",
+            "Version": "1.19+dfsg-1build1",
+            "Description": "lib for parsing cmdline parameters\n Popt was heavily influenced by the getopt() "
+        },
+        {
+            "Name": "libpq5",
+            "Version": "16.11-0ubuntu0.24.04.1",
+            "Description": "PostgreSQL C client library\n libpq is a C library that enables user programs to "
+        },
+        {
+            "Name": "libproc2-0",
+            "Version": "2:4.0.4-4ubuntu3.2",
+            "Description": "library for accessing process information from /proc\n The libproc2 library is a "
+        },
+        {
+            "Name": "libpsl5t64",
+            "Version": "0.21.2-1.1build1",
+            "Description": "Library for Public Suffix List (shared libraries)\n Libpsl allows checking domain"
+        },
+        {
+            "Name": "libpython3-dev",
+            "Version": "3.12.3-0ubuntu2.1",
+            "Description": "header files and a static library for Python (default)\n Header files, a static l"
+        },
+        {
+            "Name": "libpython3-stdlib",
+            "Version": "3.12.3-0ubuntu2.1",
+            "Description": "interactive high-level object-oriented language (default python3 version)\n This "
+        },
+        {
+            "Name": "libpython3.12-dev",
+            "Version": "3.12.3-1ubuntu0.10",
+            "Description": "Header files and a static library for Python (v3.12)\n Header files, a static lib"
+        },
+        {
+            "Name": "libpython3.12-minimal",
+            "Version": "3.12.3-1ubuntu0.10",
+            "Description": "Minimal subset of the Python language (version 3.12)\n This package contains some"
+        },
+        {
+            "Name": "libpython3.12-stdlib",
+            "Version": "3.12.3-1ubuntu0.10",
+            "Description": "Interactive high-level object-oriented language (standard library, version 3.12)"
+        },
+        {
+            "Name": "libpython3.12t64",
+            "Version": "3.12.3-1ubuntu0.10",
+            "Description": "Shared Python runtime library (version 3.12)\n Python is a high-level, interactiv"
+        },
+        {
+            "Name": "libquadmath0",
+            "Version": "14.2.0-4ubuntu2~24.04",
+            "Description": "GCC Quad-Precision Math Library\n A library, which provides quad-precision mathem"
+        },
+        {
+            "Name": "libradcli4",
+            "Version": "1.2.11-1build3",
+            "Description": "Enhanced RADIUS client library\n radcli is an enhanced version of the freeradius-"
+        },
+        {
+            "Name": "libreadline8t64",
+            "Version": "8.2-4build1",
+            "Description": "GNU readline and history libraries, run-time libraries\n The GNU readline library"
+        },
+        {
+            "Name": "librhash0",
+            "Version": "1.4.3-3build1",
+            "Description": "shared library for hash functions computing\n LibRHash is a professional, portabl"
+        },
+        {
+            "Name": "librsvg2-2",
+            "Version": "2.58.0+dfsg-1build1",
+            "Description": "SAX-based renderer library for SVG files (runtime)\n The rsvg library is an effic"
+        },
+        {
+            "Name": "librsvg2-common",
+            "Version": "2.58.0+dfsg-1build1",
+            "Description": "SAX-based renderer library for SVG files (extra runtime)\n The rsvg library is an"
+        },
+        {
+            "Name": "librtmp1",
+            "Version": "2.4+20151223.gitfa8646d.1-2build7",
+            "Description": "toolkit for RTMP streams (shared library)\n A small dumper for media content stre"
+        },
+        {
+            "Name": "libsasl2-2",
+            "Version": "2.1.28+dfsg1-5ubuntu3.1",
+            "Description": "Cyrus SASL - authentication abstraction library\n This is the Cyrus SASL API impl"
+        },
+        {
+            "Name": "libsasl2-modules",
+            "Version": "2.1.28+dfsg1-5ubuntu3.1",
+            "Description": "Cyrus SASL - pluggable authentication modules\n This is the Cyrus SASL API implem"
+        },
+        {
+            "Name": "libsasl2-modules-db",
+            "Version": "2.1.28+dfsg1-5ubuntu3.1",
+            "Description": "Cyrus SASL - pluggable authentication modules (DB)\n This is the Cyrus SASL API i"
+        },
+        {
+            "Name": "libsctp1",
+            "Version": "1.0.19+dfsg-2build1",
+            "Description": "user-space access to Linux kernel SCTP - shared library\n SCTP (Stream Control Tr"
+        },
+        {
+            "Name": "libseccomp2",
+            "Version": "2.5.5-1ubuntu3.1",
+            "Description": "high level interface to Linux seccomp filter\n This library provides a high level"
+        },
+        {
+            "Name": "libsecret-1-0",
+            "Version": "0.21.4-1build3",
+            "Description": "Secret store\n Library for storing and retrieving passwords and other secrets.\n I"
+        },
+        {
+            "Name": "libsecret-common",
+            "Version": "0.21.4-1build3",
+            "Description": "Secret store (common files)\n Library for storing and retrieving passwords and ot"
+        },
+        {
+            "Name": "libselinux1",
+            "Version": "3.5-2ubuntu2.1",
+            "Description": "SELinux runtime shared libraries\n This package provides the shared libraries for"
+        },
+        {
+            "Name": "libselinux1-dev",
+            "Version": "3.5-2ubuntu2.1",
+            "Description": "SELinux development headers\n This package provides the  static libraries and hea"
+        },
+        {
+            "Name": "libsemanage-common",
+            "Version": "3.5-1build5",
+            "Description": "Common files for SELinux policy management libraries\n This package provides the "
+        },
+        {
+            "Name": "libsemanage2",
+            "Version": "3.5-1build5",
+            "Description": "SELinux policy management library\n This package provides the shared libraries fo"
+        },
+        {
+            "Name": "libsensors-config",
+            "Version": "1:3.6.0-9build1",
+            "Description": "lm-sensors configuration files\n Lm-sensors is a hardware health monitoring packa"
+        },
+        {
+            "Name": "libsensors5",
+            "Version": "1:3.6.0-9build1",
+            "Description": "library to read temperature/voltage/fan sensors\n Lm-sensors is a hardware health"
+        },
+        {
+            "Name": "libsepol-dev",
+            "Version": "3.5-2build1",
+            "Description": "SELinux binary policy manipulation library and development files\n libsepol allow"
+        },
+        {
+            "Name": "libsepol2",
+            "Version": "3.5-2build1",
+            "Description": "SELinux library for manipulating binary security policies\n Security-enhanced Lin"
+        },
+        {
+            "Name": "libsframe1",
+            "Version": "2.42-4ubuntu2.8",
+            "Description": "Library to handle the SFrame format (runtime library)\n SFrame stands for Simple "
+        },
+        {
+            "Name": "libsharpyuv0",
+            "Version": "1.3.2-0.4build3",
+            "Description": "Library for sharp RGB to YUV conversion\n This library provides the function to c"
+        },
+        {
+            "Name": "libsigsegv2",
+            "Version": "2.14-1ubuntu2",
+            "Description": "Library for handling page faults in a portable way\n GNU libsigsegv is a library "
+        },
+        {
+            "Name": "libslang2",
+            "Version": "2.3.3-3build2",
+            "Description": "S-Lang programming library - runtime version\n S-Lang is a C programmer's library"
+        },
+        {
+            "Name": "libsm6",
+            "Version": "2:1.2.3-1build3",
+            "Description": "X11 Session Management library\n This package provides the main interface to the "
+        },
+        {
+            "Name": "libsmartcols1",
+            "Version": "2.39.3-9ubuntu6.4",
+            "Description": "smart column output alignment library\n This smart column output alignment librar"
+        },
+        {
+            "Name": "libsmbclient0",
+            "Version": "2:4.19.5+dfsg-4ubuntu9.4",
+            "Description": "shared library for communication with SMB/CIFS servers\n This package provides a "
+        },
+        {
+            "Name": "libsnmp-base",
+            "Version": "5.9.4+dfsg-1.1ubuntu3.2",
+            "Description": "SNMP configuration script, MIBs and documentation\n The Simple Network Management"
+        },
+        {
+            "Name": "libsnmp40t64",
+            "Version": "5.9.4+dfsg-1.1ubuntu3.2",
+            "Description": "SNMP (Simple Network Management Protocol) library\n The Simple Network Management"
+        },
+        {
+            "Name": "libsodium23",
+            "Version": "1.0.18-1ubuntu0.24.04.1",
+            "Description": "Network communication, cryptography and signaturing library\n NaCl (pronounced \"s"
+        },
+        {
+            "Name": "libsource-highlight-common",
+            "Version": "3.1.9-4.3build1",
+            "Description": "architecture-independent files for source highlighting library\n This package con"
+        },
+        {
+            "Name": "libsource-highlight4t64",
+            "Version": "3.1.9-4.3build1",
+            "Description": "source highlighting library\n This is the library that underlies the source-highl"
+        },
+        {
+            "Name": "libsqlite3-0",
+            "Version": "3.45.1-1ubuntu2.5",
+            "Description": "SQLite 3 shared library\n SQLite is a C library that implements an SQL database e"
+        },
+        {
+            "Name": "libss2",
+            "Version": "1.47.0-2.4~exp1ubuntu4.1",
+            "Description": "command-line interface parsing library\n libss provides a simple command-line int"
+        },
+        {
+            "Name": "libssh-4",
+            "Version": "0.10.6-2ubuntu0.2",
+            "Description": "tiny C SSH library (OpenSSL flavor)\n The ssh library was designed to be used by "
+        },
+        {
+            "Name": "libssh2-1t64",
+            "Version": "1.11.0-4.1build2",
+            "Description": "SSH2 client-side library\n libssh2 is a client-side C library implementing the SS"
+        },
+        {
+            "Name": "libssl3t64",
+            "Version": "3.0.13-0ubuntu3.6",
+            "Description": "Secure Sockets Layer toolkit - shared libraries\n This package is part of the Ope"
+        },
+        {
+            "Name": "libstdc++-13-dev",
+            "Version": "13.3.0-6ubuntu2~24.04",
+            "Description": "GNU Standard C++ Library v3 (development files)\n This package contains the heade"
+        },
+        {
+            "Name": "libstdc++6",
+            "Version": "14.2.0-4ubuntu2~24.04",
+            "Description": "GNU Standard C++ Library v3\n This package contains an additional runtime library"
+        },
+        {
+            "Name": "libstemmer0d",
+            "Version": "2.2.0-4build1",
+            "Description": "Snowball stemming algorithms for use in Information Retrieval\n Snowball provides"
+        },
+        {
+            "Name": "libsystemd-shared",
+            "Version": "255.4-1ubuntu8.12",
+            "Description": "systemd shared private library\n This internal shared library provides common cod"
+        },
+        {
+            "Name": "libsystemd0",
+            "Version": "255.4-1ubuntu8.12",
+            "Description": "systemd utility library\n This library provides APIs to interface with various sy"
+        },
+        {
+            "Name": "libtalloc2",
+            "Version": "2.4.2-1build2",
+            "Description": "hierarchical pool based memory allocator\n A hierarchical pool based memory alloc"
+        },
+        {
+            "Name": "libtasn1-6",
+            "Version": "4.19.0-3ubuntu0.24.04.2",
+            "Description": "Manage ASN.1 structures (runtime)\n Manage ASN1 (Abstract Syntax Notation One) st"
+        },
+        {
+            "Name": "libtdb1",
+            "Version": "1.4.10-1build1",
+            "Description": "Trivial Database - shared library\n This is a simple database API. It is modelled"
+        },
+        {
+            "Name": "libtest-simple-perl",
+            "Version": "1.302198-1",
+            "Description": "set of basic utilities for writing tests in Perl\n Test::Simple is an extremely s"
+        },
+        {
+            "Name": "libtevent0t64",
+            "Version": "0.16.1-2build1",
+            "Description": "talloc-based event loop library - shared library\n tevent is a simple library tha"
+        },
+        {
+            "Name": "libtext-charwidth-perl",
+            "Version": "0.04-11build3",
+            "Description": "get display widths of characters on the terminal\n Text::CharWidth permits one to"
+        },
+        {
+            "Name": "libtext-iconv-perl",
+            "Version": "1.7-8build3",
+            "Description": "module to convert between character sets in Perl\n The iconv() family of function"
+        },
+        {
+            "Name": "libtext-wrapi18n-perl",
+            "Version": "0.06-10",
+            "Description": "internationalized substitute of Text::Wrap\n The Text::WrapI18N module is a subst"
+        },
+        {
+            "Name": "libthai-data",
+            "Version": "0.1.29-2build1",
+            "Description": "Data files for Thai language support library\n LibThai is a set of Thai language "
+        },
+        {
+            "Name": "libthai0",
+            "Version": "0.1.29-2build1",
+            "Description": "Thai language support library\n LibThai is a set of Thai language support routine"
+        },
+        {
+            "Name": "libtie-ixhash-perl",
+            "Version": "1.23-4",
+            "Description": "Perl module to order associative arrays\n Tie::IxHash implements Perl hashes that"
+        },
+        {
+            "Name": "libtiff6",
+            "Version": "4.5.1+git230720-4ubuntu2.4",
+            "Description": "Tag Image File Format (TIFF) library\n libtiff is a library providing support for"
+        },
+        {
+            "Name": "libtimedate-perl",
+            "Version": "2.3300-2",
+            "Description": "collection of modules to manipulate date/time information\n TimeDate is a collect"
+        },
+        {
+            "Name": "libtinfo6",
+            "Version": "6.4+20240113-1ubuntu2",
+            "Description": "shared low-level terminfo library for terminal handling\n The ncurses library rou"
+        },
+        {
+            "Name": "libtirpc-common",
+            "Version": "1.3.4+ds-1.1build1",
+            "Description": "transport-independent RPC library - common files\n This package contains a port o"
+        },
+        {
+            "Name": "libtirpc3t64",
+            "Version": "1.3.4+ds-1.1build1",
+            "Description": "transport-independent RPC library\n This package contains a port of Sun's transpo"
+        },
+        {
+            "Name": "libtool",
+            "Version": "2.4.7-7build1",
+            "Description": "Generic library support script\n This is GNU libtool, a generic library support s"
+        },
+        {
+            "Name": "libtry-tiny-perl",
+            "Version": "0.31-2",
+            "Description": "module providing minimalistic try/catch\n Try::Tiny is a Perl module that provide"
+        },
+        {
+            "Name": "libtsan2",
+            "Version": "14.2.0-4ubuntu2~24.04",
+            "Description": "ThreadSanitizer -- a Valgrind-based detector of data races (runtime)\n ThreadSani"
+        },
+        {
+            "Name": "libubsan1",
+            "Version": "14.2.0-4ubuntu2~24.04",
+            "Description": "UBSan -- undefined behaviour sanitizer (runtime)\n UndefinedBehaviorSanitizer can"
+        },
+        {
+            "Name": "libuchardet0",
+            "Version": "0.0.8-1build1",
+            "Description": "universal charset detection library - shared library\n uchardet is a C language b"
+        },
+        {
+            "Name": "libudev1",
+            "Version": "255.4-1ubuntu8.12",
+            "Description": "libudev shared library\n This library provides APIs to introspect and enumerate d"
+        },
+        {
+            "Name": "libunistring5",
+            "Version": "1.1-2build1.1",
+            "Description": "Unicode string library for C\n The 'libunistring' library implements Unicode stri"
+        },
+        {
+            "Name": "libunwind8",
+            "Version": "1.6.2-3build1.1",
+            "Description": "library to determine the call-chain of a program - runtime\n The primary goal of "
+        },
+        {
+            "Name": "liburi-perl",
+            "Version": "5.27-1",
+            "Description": "module to manipulate and access URI strings\n URI is a collection of Perl modules"
+        },
+        {
+            "Name": "liburiparser1",
+            "Version": "0.9.7+dfsg-2build1",
+            "Description": "URI parsing library compliant with RFC 3986\n uriparser is a library that parses "
+        },
+        {
+            "Name": "libutempter0",
+            "Version": "1.2.1-3build1",
+            "Description": "privileged helper for utmp/wtmp updates (runtime)\n The libutempter library provi"
+        },
+        {
+            "Name": "libuuid1",
+            "Version": "2.39.3-9ubuntu6.4",
+            "Description": "Universally Unique ID library\n The libuuid library generates and parses 128-bit "
+        },
+        {
+            "Name": "libuv1t64",
+            "Version": "1.48.0-1.1build1",
+            "Description": "asynchronous event notification library - runtime library\n Libuv is the asynchro"
+        },
+        {
+            "Name": "libvulkan1",
+            "Version": "1.3.275.0-1build1",
+            "Description": "Vulkan loader library\n The Loader implements the main VK library. It handles lay"
+        },
+        {
+            "Name": "libwayland-client0",
+            "Version": "1.22.0-2.1build1",
+            "Description": "wayland compositor infrastructure - client library\n Wayland is a protocol for a "
+        },
+        {
+            "Name": "libwayland-cursor0",
+            "Version": "1.22.0-2.1build1",
+            "Description": "wayland compositor infrastructure - cursor library\n Wayland is a protocol for a "
+        },
+        {
+            "Name": "libwayland-egl1",
+            "Version": "1.22.0-2.1build1",
+            "Description": "wayland compositor infrastructure - EGL library\n Wayland is a protocol for a com"
+        },
+        {
+            "Name": "libwayland-server0",
+            "Version": "1.22.0-2.1build1",
+            "Description": "wayland compositor infrastructure - server library\n Wayland is a protocol for a "
+        },
+        {
+            "Name": "libwbclient0",
+            "Version": "2:4.19.5+dfsg-4ubuntu9.4",
+            "Description": "Samba winbind client library\n Samba is an implementation of the SMB/CIFS protoco"
+        },
+        {
+            "Name": "libwebp7",
+            "Version": "1.3.2-0.4build3",
+            "Description": "Lossy compression of digital photographic images\n Image Compression format, base"
+        },
+        {
+            "Name": "libwrap0",
+            "Version": "7.6.q-33",
+            "Description": "Wietse Venema's TCP wrappers library\n Wietse Venema's network logger, also known"
+        },
+        {
+            "Name": "libwww-perl",
+            "Version": "6.76-1",
+            "Description": "simple and consistent interface to the world-wide web\n libwww-perl (also known a"
+        },
+        {
+            "Name": "libwww-robotrules-perl",
+            "Version": "6.02-1",
+            "Description": "database of robots.txt-derived permissions\n WWW::RobotRules parses /robots.txt f"
+        },
+        {
+            "Name": "libx11-6",
+            "Version": "2:1.8.7-1build1",
+            "Description": "X11 client-side library\n This package provides a client interface to the X Windo"
+        },
+        {
+            "Name": "libx11-data",
+            "Version": "2:1.8.7-1build1",
+            "Description": "X11 client-side library\n This package provides the locale data files for libx11."
+        },
+        {
+            "Name": "libx11-protocol-perl",
+            "Version": "0.56-9",
+            "Description": "Perl module for the X Window System Protocol, version 11\n X11::Protocol is a cli"
+        },
+        {
+            "Name": "libx11-xcb1",
+            "Version": "2:1.8.7-1build1",
+            "Description": "Xlib/XCB interface library\n libX11-xcb provides functions needed by clients whic"
+        },
+        {
+            "Name": "libxau6",
+            "Version": "1:1.0.9-1build6",
+            "Description": "X11 authorisation library\n This package provides the main interface to the X11 a"
+        },
+        {
+            "Name": "libxaw7",
+            "Version": "2:1.0.14-1build2",
+            "Description": "X11 Athena Widget library\n libXaw7 provides the second version of Xaw, the Athen"
+        },
+        {
+            "Name": "libxcb-dri2-0",
+            "Version": "1.15-1ubuntu2",
+            "Description": "X C Binding, dri2 extension\n This package contains the library files needed to r"
+        },
+        {
+            "Name": "libxcb-dri3-0",
+            "Version": "1.15-1ubuntu2",
+            "Description": "X C Binding, dri3 extension\n This package contains the library files needed to r"
+        },
+        {
+            "Name": "libxcb-glx0",
+            "Version": "1.15-1ubuntu2",
+            "Description": "X C Binding, glx extension\n This package contains the library files needed to ru"
+        },
+        {
+            "Name": "libxcb-present0",
+            "Version": "1.15-1ubuntu2",
+            "Description": "X C Binding, present extension\n This package contains the library files needed t"
+        },
+        {
+            "Name": "libxcb-randr0",
+            "Version": "1.15-1ubuntu2",
+            "Description": "X C Binding, randr extension\n This package contains the library files needed to "
+        },
+        {
+            "Name": "libxcb-render0",
+            "Version": "1.15-1ubuntu2",
+            "Description": "X C Binding, render extension\n This package contains the library files needed to"
+        },
+        {
+            "Name": "libxcb-shape0",
+            "Version": "1.15-1ubuntu2",
+            "Description": "X C Binding, shape extension\n This package contains the library files needed to "
+        },
+        {
+            "Name": "libxcb-shm0",
+            "Version": "1.15-1ubuntu2",
+            "Description": "X C Binding, shm extension\n This package contains the library files needed to ru"
+        },
+        {
+            "Name": "libxcb-sync1",
+            "Version": "1.15-1ubuntu2",
+            "Description": "X C Binding, sync extension\n This package contains the library files needed to r"
+        },
+        {
+            "Name": "libxcb-xfixes0",
+            "Version": "1.15-1ubuntu2",
+            "Description": "X C Binding, xfixes extension\n This package contains the library files needed to"
+        },
+        {
+            "Name": "libxcb-xkb1",
+            "Version": "1.15-1ubuntu2",
+            "Description": "X C Binding, XKEYBOARD extension\n This package contains the library files needed"
+        },
+        {
+            "Name": "libxcb1",
+            "Version": "1.15-1ubuntu2",
+            "Description": "X C Binding\n This package contains the library files needed to run software usin"
+        },
+        {
+            "Name": "libxcomposite1",
+            "Version": "1:0.4.5-1build3",
+            "Description": "X11 Composite extension library\n libXcomposite provides an X Window System clien"
+        },
+        {
+            "Name": "libxcursor1",
+            "Version": "1:1.2.1-1build1",
+            "Description": "X cursor management library\n Xcursor is a simple library designed to help locate"
+        },
+        {
+            "Name": "libxdamage1",
+            "Version": "1:1.1.6-1build1",
+            "Description": "X11 damaged region extension library\n libXdamage provides an X Window System cli"
+        },
+        {
+            "Name": "libxdmcp6",
+            "Version": "1:1.1.3-0ubuntu6",
+            "Description": "X11 Display Manager Control Protocol library\n This package provides the main int"
+        },
+        {
+            "Name": "libxext6",
+            "Version": "2:1.3.4-1build2",
+            "Description": "X11 miscellaneous extension library\n libXext provides an X Window System client "
+        },
+        {
+            "Name": "libxfixes3",
+            "Version": "1:6.0.0-2build1",
+            "Description": "X11 miscellaneous 'fixes' extension library\n libXfixes provides an X Window Syst"
+        },
+        {
+            "Name": "libxft2",
+            "Version": "2.3.6-1build1",
+            "Description": "FreeType-based font drawing library for X\n Xft provides a client-side font API f"
+        },
+        {
+            "Name": "libxi6",
+            "Version": "2:1.8.1-1build1",
+            "Description": "X11 Input extension library\n libXi provides an X Window System client interface "
+        },
+        {
+            "Name": "libxinerama1",
+            "Version": "2:1.1.4-3build1",
+            "Description": "X11 Xinerama extension library\n libXinerama provides an X Window System client i"
+        },
+        {
+            "Name": "libxkbcommon-x11-0",
+            "Version": "1.6.0-1build1",
+            "Description": "library to create keymaps with the XKB X11 protocol\n This package provides an ad"
+        },
+        {
+            "Name": "libxkbcommon0",
+            "Version": "1.6.0-1build1",
+            "Description": "library interface to the XKB compiler - shared library\n This package provides a "
+        },
+        {
+            "Name": "libxkbfile1",
+            "Version": "1:1.1.0-1build4",
+            "Description": "X11 keyboard file manipulation library\n libxkbfile provides an interface to read"
+        },
+        {
+            "Name": "libxml-parser-perl",
+            "Version": "2.47-1build3",
+            "Description": "Perl module for parsing XML files\n The XML::Parser module provides ways to parse"
+        },
+        {
+            "Name": "libxml-twig-perl",
+            "Version": "1:3.52-2",
+            "Description": "Perl module for processing huge XML documents in tree mode\n The XML::Twig module"
+        },
+        {
+            "Name": "libxml-xpathengine-perl",
+            "Version": "0.14-2",
+            "Description": "re-usable XPath engine for DOM-like trees\n XML::XPathEngine provides an XPath en"
+        },
+        {
+            "Name": "libxml2",
+            "Version": "2.9.14+dfsg-1.3ubuntu3.6",
+            "Description": "GNOME XML library\n XML is a metalanguage to let you design your own markup langu"
+        },
+        {
+            "Name": "libxmlb2",
+            "Version": "0.3.18-1",
+            "Description": "Binary XML library\n The libxmlb library takes XML source, and\n converts it to a "
+        },
+        {
+            "Name": "libxmu6",
+            "Version": "2:1.1.3-3build2",
+            "Description": "X11 miscellaneous utility library\n libXmu provides a set of miscellaneous utilit"
+        },
+        {
+            "Name": "libxmuu1",
+            "Version": "2:1.1.3-3build2",
+            "Description": "X11 miscellaneous micro-utility library\n libXmuu provides a set of miscellaneous"
+        },
+        {
+            "Name": "libxpm4",
+            "Version": "1:3.5.17-1build2",
+            "Description": "X11 pixmap library\n The X PixMap image format is an extension of the monochrome "
+        },
+        {
+            "Name": "libxrandr2",
+            "Version": "2:1.5.2-2build1",
+            "Description": "X11 RandR extension library\n libXrandr provides an X Window System client interf"
+        },
+        {
+            "Name": "libxrender1",
+            "Version": "1:0.9.10-1.1build1",
+            "Description": "X Rendering Extension client library\n The X Rendering Extension (Render) introdu"
+        },
+        {
+            "Name": "libxshmfence1",
+            "Version": "1.3-1build5",
+            "Description": "X shared memory fences - shared library\n This library provides an interface to s"
+        },
+        {
+            "Name": "libxss1",
+            "Version": "1:1.2.3-1build3",
+            "Description": "X11 Screen Saver extension library\n libXss provides an X Window System client in"
+        },
+        {
+            "Name": "libxt6t64",
+            "Version": "1:1.2.1-1.2build1",
+            "Description": "X11 toolkit intrinsics library\n libXt provides the X Toolkit Intrinsics, an abst"
+        },
+        {
+            "Name": "libxtables12",
+            "Version": "1.8.10-3ubuntu2",
+            "Description": "netfilter xtables library\n The iptables/xtables framework has been replaced by n"
+        },
+        {
+            "Name": "libxtst6",
+            "Version": "2:1.2.3-1.1build1",
+            "Description": "X11 Testing -- Record extension library\n libXtst provides an X Window System cli"
+        },
+        {
+            "Name": "libxv1",
+            "Version": "2:1.0.11-1.1build1",
+            "Description": "X11 Video extension library\n libXv provides an X Window System client interface "
+        },
+        {
+            "Name": "libxxf86dga1",
+            "Version": "2:1.1.5-1build1",
+            "Description": "X11 Direct Graphics Access extension library\n libXxf86dga provides the XFree86-D"
+        },
+        {
+            "Name": "libxxf86vm1",
+            "Version": "1:1.1.4-1build4",
+            "Description": "X11 XFree86 video mode extension library\n libXxf86vm provides an interface to th"
+        },
+        {
+            "Name": "libxxhash0",
+            "Version": "0.8.2-2build1",
+            "Description": "shared library for xxhash\n xxHash is an Extremely fast Hash algorithm, running a"
+        },
+        {
+            "Name": "libyaml-0-2",
+            "Version": "0.2.5-1build1",
+            "Description": "Fast YAML 1.1 parser and emitter library\n LibYAML is a C library for parsing and"
+        },
+        {
+            "Name": "libzstd1",
+            "Version": "1.5.5+dfsg2-2build1.1",
+            "Description": "fast lossless compression algorithm\n Zstd, short for Zstandard, is a fast lossle"
+        },
+        {
+            "Name": "linux-libc-dev",
+            "Version": "6.8.0-90.91",
+            "Description": "Linux Kernel Headers for development\n This package provides headers from the Lin"
+        },
+        {
+            "Name": "locales",
+            "Version": "2.39-0ubuntu8.6",
+            "Description": "GNU C Library: National Language (locale) data [support]\n Machine-readable data "
+        },
+        {
+            "Name": "login",
+            "Version": "1:4.13+dfsg1-4ubuntu3.2",
+            "Description": "system login tools\n This package provides some required infrastructure for login"
+        },
+        {
+            "Name": "logrotate",
+            "Version": "3.21.0-2build1",
+            "Description": "Log rotation utility\n The logrotate utility is designed to simplify the administ"
+        },
+        {
+            "Name": "logsave",
+            "Version": "1.47.0-2.4~exp1ubuntu4.1",
+            "Description": "save the output of a command in a log file\n The logsave program will execute cmd"
+        },
+        {
+            "Name": "lsb-release",
+            "Version": "12.0-2",
+            "Description": "Linux Standard Base version reporting utility (minimal implementation)\n The Linu"
+        },
+        {
+            "Name": "lshw",
+            "Version": "02.19.git.2021.06.19.996aaad9c7-2build3",
+            "Description": "information about hardware configuration\n A small tool to provide detailed infor"
+        },
+        {
+            "Name": "lsof",
+            "Version": "4.95.0-1build3",
+            "Description": "utility to list open files\n Lsof is a Unix-specific diagnostic tool.  Its name s"
+        },
+        {
+            "Name": "lto-disabled-list",
+            "Version": "47",
+            "Description": "list of packages not to build with LTO\n A list of source packages not to build w"
+        },
+        {
+            "Name": "m4",
+            "Version": "1.4.19-4build1",
+            "Description": "macro processing language\n GNU `m4' is an implementation of the traditional UNIX"
+        },
+        {
+            "Name": "mailcap",
+            "Version": "3.70+nmu1ubuntu1",
+            "Description": "Debian's mailcap system, and support programs\n The mailcap system associates med"
+        },
+        {
+            "Name": "make",
+            "Version": "4.3-4.1build2",
+            "Description": "utility for directing compilation\n GNU Make is a utility which controls the gene"
+        },
+        {
+            "Name": "man-db",
+            "Version": "2.12.0-4build2",
+            "Description": "tools for reading manual pages\n This package provides the man command, the prima"
+        },
+        {
+            "Name": "manpages",
+            "Version": "6.7-2",
+            "Description": "Manual pages about using a GNU/Linux system\n This package contains GNU/Linux man"
+        },
+        {
+            "Name": "manpages-dev",
+            "Version": "6.7-2",
+            "Description": "Manual pages about using GNU/Linux for development\n These man pages describe the"
+        },
+        {
+            "Name": "mawk",
+            "Version": "1.3.4.20240123-1build1",
+            "Description": "Pattern scanning and text processing language\n Mawk is an interpreter for the AW"
+        },
+        {
+            "Name": "mc",
+            "Version": "3:4.8.30-1ubuntu0.1",
+            "Description": "Midnight Commander - a powerful file manager\n GNU Midnight Commander is a text-m"
+        },
+        {
+            "Name": "mc-data",
+            "Version": "3:4.8.30-1ubuntu0.1",
+            "Description": "Midnight Commander - a powerful file manager -- data files\n GNU Midnight Command"
+        },
+        {
+            "Name": "media-types",
+            "Version": "10.1.0",
+            "Description": "List of standard media types and their usual file extension\n This package instal"
+        },
+        {
+            "Name": "mesa-libgallium",
+            "Version": "25.0.7-0ubuntu0.24.04.2",
+            "Description": "shared infrastructure for Mesa drivers\n This package contains libgallium, a priv"
+        },
+        {
+            "Name": "mesa-utils",
+            "Version": "9.0.0-2",
+            "Description": "Miscellaneous Mesa utilities -- symlinks\n This package provides symlinks to seve"
+        },
+        {
+            "Name": "mesa-utils-bin",
+            "Version": "9.0.0-2",
+            "Description": "Miscellaneous Mesa utilities -- native applications\n This package provides nativ"
+        },
+        {
+            "Name": "mesa-vulkan-drivers",
+            "Version": "25.0.7-0ubuntu0.24.04.2",
+            "Description": "Mesa Vulkan graphics drivers\n Vulkan is a low-overhead 3D graphics and compute A"
+        },
+        {
+            "Name": "monitoring-plugins",
+            "Version": "2.3.5-1ubuntu3",
+            "Description": "Plugins for nagios compatible monitoring systems (metapackage)\n Plugins for nagi"
+        },
+        {
+            "Name": "monitoring-plugins-basic",
+            "Version": "2.3.5-1ubuntu3",
+            "Description": "Plugins for nagios compatible monitoring systems (basic)\n Plugins for nagios com"
+        },
+        {
+            "Name": "monitoring-plugins-common",
+            "Version": "2.3.5-1ubuntu3",
+            "Description": "Common files for plugins for nagios compatible monitoring\n Common files for plug"
+        },
+        {
+            "Name": "monitoring-plugins-standard",
+            "Version": "2.3.5-1ubuntu3",
+            "Description": "Plugins for nagios compatible monitoring systems (standard)\n Plugins for nagios "
+        },
+        {
+            "Name": "motd-news-config",
+            "Version": "13ubuntu10.3",
+            "Description": "Configuration for motd-news shipped in base-files\n This package contains the con"
+        },
+        {
+            "Name": "mount",
+            "Version": "2.39.3-9ubuntu6.4",
+            "Description": "tools for mounting and manipulating filesystems\n This package provides the mount"
+        },
+        {
+            "Name": "mtr",
+            "Version": "0.95-1.1ubuntu0.1",
+            "Description": "Full screen ncurses and X11 traceroute tool\n mtr combines the functionality of t"
+        },
+        {
+            "Name": "mysql-client",
+            "Version": "8.0.44-0ubuntu0.24.04.2",
+            "Description": "MySQL database client (metapackage depending on the latest version)\n This is an "
+        },
+        {
+            "Name": "mysql-client-8.0",
+            "Version": "8.0.44-0ubuntu0.24.04.2",
+            "Description": "MySQL database client binaries\n MySQL is a fast, stable and true multi-user, mul"
+        },
+        {
+            "Name": "mysql-client-core-8.0",
+            "Version": "8.0.44-0ubuntu0.24.04.2",
+            "Description": "MySQL database core client binaries\n MySQL is a fast, stable and true multi-user"
+        },
+        {
+            "Name": "mysql-common",
+            "Version": "5.8+1.1.0build1",
+            "Description": "MySQL database common files, e.g. /etc/mysql/my.cnf\n MySQL is a fast, stable and"
+        },
+        {
+            "Name": "nano",
+            "Version": "7.2-2ubuntu0.1",
+            "Description": "small, friendly text editor inspired by Pico\n GNU nano is an easy-to-use text ed"
+        },
+        {
+            "Name": "ncurses-base",
+            "Version": "6.4+20240113-1ubuntu2",
+            "Description": "basic terminal type definitions\n The ncurses library routines are a terminal-ind"
+        },
+        {
+            "Name": "ncurses-bin",
+            "Version": "6.4+20240113-1ubuntu2",
+            "Description": "terminal-related programs and man pages\n The ncurses library routines are a term"
+        },
+        {
+            "Name": "net-tools",
+            "Version": "2.10-0.1ubuntu4.4",
+            "Description": "NET-3 networking toolkit\n This package includes the important tools for controll"
+        },
+        {
+            "Name": "netbase",
+            "Version": "6.4",
+            "Description": "Basic TCP/IP networking system\n This package provides the necessary infrastructu"
+        },
+        {
+            "Name": "netcat-openbsd",
+            "Version": "1.226-1ubuntu2",
+            "Description": "TCP/IP swiss army knife\n A simple Unix utility which reads and writes data acros"
+        },
+        {
+            "Name": "netplan-generator",
+            "Version": "1.1.2-8ubuntu1~24.04.1",
+            "Description": "Declarative network configuration for various backends at boot\n Netplan reads YA"
+        },
+        {
+            "Name": "netplan.io",
+            "Version": "1.1.2-8ubuntu1~24.04.1",
+            "Description": "Declarative network configuration for various backends at runtime\n Netplan reads"
+        },
+        {
+            "Name": "networkd-dispatcher",
+            "Version": "2.2.4-1",
+            "Description": "Dispatcher service for systemd-networkd connection status changes\n Networkd-disp"
+        },
+        {
+            "Name": "nodejs",
+            "Version": "22.21.0-1nodesource1",
+            "Description": "Node.js event-based server-side javascript engine\n Node.js is similar in design "
+        },
+        {
+            "Name": "nsnake",
+            "Version": "3.0.1-2.1",
+            "Description": "classic snake game on the terminal\n nsnake is a clone of the snake game found on"
+        },
+        {
+            "Name": "openitcockpit-desktop",
+            "Version": "5.0.4-42",
+            "Description": "\n  openITCOCKPIT Desktop"
+        },
+        {
+            "Name": "openssh-client",
+            "Version": "1:9.6p1-3ubuntu13.14",
+            "Description": "secure shell (SSH) client, for secure access to remote machines\n This is the por"
+        },
+        {
+            "Name": "openssl",
+            "Version": "3.0.13-0ubuntu3.6",
+            "Description": "Secure Sockets Layer toolkit - cryptographic utility\n This package is part of th"
+        },
+        {
+            "Name": "packagekit",
+            "Version": "1.2.8-2ubuntu1.4",
+            "Description": "Provides a package management service\n PackageKit allows performing simple softw"
+        },
+        {
+            "Name": "packagekit-tools",
+            "Version": "1.2.8-2ubuntu1.4",
+            "Description": "Provides PackageKit command-line tools\n PackageKit allows performing simple soft"
+        },
+        {
+            "Name": "passwd",
+            "Version": "1:4.13+dfsg1-4ubuntu3.2",
+            "Description": "change and administer password and group data\n This package includes passwd, chs"
+        },
+        {
+            "Name": "pastebinit",
+            "Version": "1.6.2-1",
+            "Description": "command-line pastebin client\n pastebinit is a command-line tool to send data to "
+        },
+        {
+            "Name": "patch",
+            "Version": "2.7.6-7build3",
+            "Description": "Apply a diff file to an original\n Patch will take a patch file containing any of"
+        },
+        {
+            "Name": "pci.ids",
+            "Version": "0.0~2024.03.31-1ubuntu0.1",
+            "Description": "PCI ID Repository\n This package contains the pci.ids file, a public repository o"
+        },
+        {
+            "Name": "perl",
+            "Version": "5.38.2-3.2ubuntu0.2",
+            "Description": "Larry Wall's Practical Extraction and Report Language\n Perl is a highly capable,"
+        },
+        {
+            "Name": "perl-base",
+            "Version": "5.38.2-3.2ubuntu0.2",
+            "Description": "minimal Perl system\n Perl is a scripting language used in many system scripts an"
+        },
+        {
+            "Name": "perl-modules-5.38",
+            "Version": "5.38.2-3.2ubuntu0.2",
+            "Description": "Core Perl modules\n Architecture independent Perl modules.  These modules are par"
+        },
+        {
+            "Name": "perl-openssl-defaults",
+            "Version": "7build3",
+            "Description": "version compatibility baseline for Perl OpenSSL packages\n A subset of Perl XS mo"
+        },
+        {
+            "Name": "php-cli",
+            "Version": "2:8.3+93ubuntu2",
+            "Description": "command-line interpreter for the PHP scripting language (default)\n This package "
+        },
+        {
+            "Name": "php-common",
+            "Version": "2:93ubuntu2",
+            "Description": "Common files for PHP packages\n This package contains common utilities shared amo"
+        },
+        {
+            "Name": "php8.3-cli",
+            "Version": "8.3.6-0ubuntu0.24.04.6",
+            "Description": "command-line interpreter for the PHP scripting language\n This package provides t"
+        },
+        {
+            "Name": "php8.3-common",
+            "Version": "8.3.6-0ubuntu0.24.04.6",
+            "Description": "documentation, examples and common module for PHP\n This package provides the doc"
+        },
+        {
+            "Name": "php8.3-opcache",
+            "Version": "8.3.6-0ubuntu0.24.04.6",
+            "Description": "Zend OpCache module for PHP\n This package provides the Zend OpCache module(s) fo"
+        },
+        {
+            "Name": "php8.3-readline",
+            "Version": "8.3.6-0ubuntu0.24.04.6",
+            "Description": "readline module for PHP\n This package provides the readline module(s) for PHP.\n "
+        },
+        {
+            "Name": "pinentry-curses",
+            "Version": "1.2.1-3ubuntu5",
+            "Description": "curses-based PIN or pass-phrase entry dialog for GnuPG\n This package contains a "
+        },
+        {
+            "Name": "pkg-config",
+            "Version": "1.8.1-2build1",
+            "Description": "manage compile and link flags for libraries (transitional package)\n pkgconf is a"
+        },
+        {
+            "Name": "pkgconf",
+            "Version": "1.8.1-2build1",
+            "Description": "manage compile and link flags for libraries\n pkgconf is an implementation of the"
+        },
+        {
+            "Name": "pkgconf-bin",
+            "Version": "1.8.1-2build1",
+            "Description": "manage compile and link flags for libraries (binaries)\n pkgconf is an implementa"
+        },
+        {
+            "Name": "polkitd",
+            "Version": "124-2ubuntu1.24.04.2",
+            "Description": "framework for managing administrative policies and privileges\n polkit is an appl"
+        },
+        {
+            "Name": "procps",
+            "Version": "2:4.0.4-4ubuntu3.2",
+            "Description": "/proc file system utilities\n This package provides command line and full screen "
+        },
+        {
+            "Name": "psmisc",
+            "Version": "23.7-1build1",
+            "Description": "utilities that use the proc file system\n This package contains miscellaneous uti"
+        },
+        {
+            "Name": "publicsuffix",
+            "Version": "20231001.0357-0.1",
+            "Description": "accurate, machine-readable list of domain name suffixes\n A machine-readable list"
+        },
+        {
+            "Name": "pwgen",
+            "Version": "2.08-2build2",
+            "Description": "Automatic Password generation\n pwgen generates random, meaningless but pronounce"
+        },
+        {
+            "Name": "python-apt-common",
+            "Version": "2.7.7ubuntu5.1",
+            "Description": "Python interface to libapt-pkg (locales)\n The apt_pkg Python interface will prov"
+        },
+        {
+            "Name": "python-babel-localedata",
+            "Version": "2.10.3-3build1",
+            "Description": "tools for internationalizing Python applications - locale data files\n Babel is c"
+        },
+        {
+            "Name": "python3",
+            "Version": "3.12.3-0ubuntu2.1",
+            "Description": "interactive high-level object-oriented language (default python3 version)\n Pytho"
+        },
+        {
+            "Name": "python3-apport",
+            "Version": "2.28.1-0ubuntu3.8",
+            "Description": "Python 3 library for Apport crash report handling\n This Python package provides "
+        },
+        {
+            "Name": "python3-apt",
+            "Version": "2.7.7ubuntu5.1",
+            "Description": "Python 3 interface to libapt-pkg\n The apt_pkg Python 3 interface will provide fu"
+        },
+        {
+            "Name": "python3-attr",
+            "Version": "23.2.0-2",
+            "Description": "Attributes without boilerplate (Python 3)\n attrs is an MIT-licensed Python packa"
+        },
+        {
+            "Name": "python3-automat",
+            "Version": "22.10.0-2",
+            "Description": "Self-service finite-state machines for the programmer on the go\n Automat is a li"
+        },
+        {
+            "Name": "python3-babel",
+            "Version": "2.10.3-3build1",
+            "Description": "tools for internationalizing Python applications - Python 3.x\n Babel is composed"
+        },
+        {
+            "Name": "python3-bcrypt",
+            "Version": "3.2.2-1build1",
+            "Description": "password hashing library for Python 3\n bcrypt is a Python module which provides "
+        },
+        {
+            "Name": "python3-blinker",
+            "Version": "1.7.0-1",
+            "Description": "Fast, simple object-to-object and broadcast signaling (Python3)\n Blinker provide"
+        },
+        {
+            "Name": "python3-certifi",
+            "Version": "2023.11.17-1",
+            "Description": "root certificates for validating SSL certs and verifying TLS hosts (python3)\n Ce"
+        },
+        {
+            "Name": "python3-cffi-backend",
+            "Version": "1.16.0-2build1",
+            "Description": "Foreign Function Interface for Python 3 calling C code - runtime\n Convenient and"
+        },
+        {
+            "Name": "python3-chardet",
+            "Version": "5.2.0+dfsg-1",
+            "Description": "Universal Character Encoding Detector (Python3)\n Chardet is a continuation of Ma"
+        },
+        {
+            "Name": "python3-click",
+            "Version": "8.1.6-2",
+            "Description": "Wrapper around optparse for command line utilities - Python 3.x\n Click is a Pyth"
+        },
+        {
+            "Name": "python3-colorama",
+            "Version": "0.4.6-4",
+            "Description": "Cross-platform colored terminal text in Python - Python 3.x\n Python-colorama pro"
+        },
+        {
+            "Name": "python3-commandnotfound",
+            "Version": "23.04.0",
+            "Description": "Python 3 bindings for command-not-found.\n This package will install the Python 3"
+        },
+        {
+            "Name": "python3-configobj",
+            "Version": "5.0.8-3",
+            "Description": "simple but powerful config file reader and writer for Python 3\n ConfigObj is a s"
+        },
+        {
+            "Name": "python3-constantly",
+            "Version": "23.10.4-1",
+            "Description": "Symbolic constants in Python\n A library that provides symbolic constant support."
+        },
+        {
+            "Name": "python3-cryptography",
+            "Version": "41.0.7-4ubuntu0.1",
+            "Description": "Python library exposing cryptographic recipes and primitives (Python 3)\n The cry"
+        },
+        {
+            "Name": "python3-dbus",
+            "Version": "1.3.2-5build3",
+            "Description": "simple interprocess messaging system (Python 3 interface)\n D-Bus is a message bu"
+        },
+        {
+            "Name": "python3-debconf",
+            "Version": "1.5.86ubuntu1",
+            "Description": "interact with debconf from Python 3\n Debconf is a configuration management syste"
+        },
+        {
+            "Name": "python3-dev",
+            "Version": "3.12.3-0ubuntu2.1",
+            "Description": "header files and a static library for Python (default)\n Header files, a static l"
+        },
+        {
+            "Name": "python3-distro",
+            "Version": "1.9.0-1",
+            "Description": "Linux OS platform information API\n distro (for: Linux Distribution) provides inf"
+        },
+        {
+            "Name": "python3-distro-info",
+            "Version": "1.7build1",
+            "Description": "information about distributions' releases (Python 3 module)\n Information about a"
+        },
+        {
+            "Name": "python3-distupgrade",
+            "Version": "1:24.04.27",
+            "Description": "manage release upgrades\n This is the DistUpgrade Python 3 module"
+        },
+        {
+            "Name": "python3-gdbm",
+            "Version": "3.12.3-0ubuntu1",
+            "Description": "GNU dbm database support for Python 3.x\n GNU dbm database module for Python 3.x."
+        },
+        {
+            "Name": "python3-gi",
+            "Version": "3.48.2-1",
+            "Description": "Python 3 bindings for gobject-introspection libraries\n GObject is an abstraction"
+        },
+        {
+            "Name": "python3-gpg",
+            "Version": "1.18.0-4.1ubuntu4",
+            "Description": "Python interface to the GPGME GnuPG encryption library (Python 3)\n The \"gpg\" Pyt"
+        },
+        {
+            "Name": "python3-hamcrest",
+            "Version": "2.1.0-1",
+            "Description": "Hamcrest framework for matcher objects (Python 3)\n PyHamcrest is a framework for"
+        },
+        {
+            "Name": "python3-httplib2",
+            "Version": "0.20.4-3",
+            "Description": "comprehensive HTTP client library written for Python3\n httplib2.py supports many"
+        },
+        {
+            "Name": "python3-hyperlink",
+            "Version": "21.0.0-5",
+            "Description": "Immutable, Pythonic, correct URLs.\n Hyperlink provides a pure-Python implementat"
+        },
+        {
+            "Name": "python3-idna",
+            "Version": "3.6-2ubuntu0.1",
+            "Description": "Python IDNA2008 (RFC 5891) handling (Python 3)\n A library to support the Interna"
+        },
+        {
+            "Name": "python3-incremental",
+            "Version": "22.10.0-1",
+            "Description": "Library for versioning Python projects\n Incremental is a small library that vers"
+        },
+        {
+            "Name": "python3-jinja2",
+            "Version": "3.1.2-1ubuntu1.3",
+            "Description": "small but fast and easy to use stand-alone template engine\n Jinja2 is a template"
+        },
+        {
+            "Name": "python3-json-pointer",
+            "Version": "2.0-0ubuntu1",
+            "Description": "resolve JSON pointers - Python 3.x\n Python-json-pointer is a small library to re"
+        },
+        {
+            "Name": "python3-jsonpatch",
+            "Version": "1.32-3",
+            "Description": "library to apply JSON patches - Python 3.x\n Python-json-patch is a Python module"
+        },
+        {
+            "Name": "python3-jsonschema",
+            "Version": "4.10.3-2ubuntu1",
+            "Description": "An(other) implementation of JSON Schema (Draft 3, 4, 6, 7)\n JSON Schema is a spe"
+        },
+        {
+            "Name": "python3-jwt",
+            "Version": "2.7.0-1",
+            "Description": "Python 3 implementation of JSON Web Token\n PyJWT implements the JSON Web Token d"
+        },
+        {
+            "Name": "python3-launchpadlib",
+            "Version": "1.11.0-6",
+            "Description": "Launchpad web services client library (Python 3)\n A free Python library for scri"
+        },
+        {
+            "Name": "python3-lazr.restfulclient",
+            "Version": "0.14.6-1",
+            "Description": "client for lazr.restful-based web services (Python 3)\n A programmable client lib"
+        },
+        {
+            "Name": "python3-lazr.uri",
+            "Version": "1.0.6-3",
+            "Description": "library for parsing, manipulating, and generating URIs\n A self-contained, easily"
+        },
+        {
+            "Name": "python3-ldb",
+            "Version": "2:2.8.0+samba4.19.5+dfsg-4ubuntu9.4",
+            "Description": "Python 3 bindings for LDB\n ldb is a LDAP-like embedded database built on top of "
+        },
+        {
+            "Name": "python3-markdown",
+            "Version": "3.5.2-1",
+            "Description": "text-to-HTML conversion library/tool (Python 3 version)\n Markdown is a text-to-H"
+        },
+        {
+            "Name": "python3-markdown-it",
+            "Version": "3.0.0-2",
+            "Description": "Python port of markdown-it and some its associated plugins\n High speed Python ma"
+        },
+        {
+            "Name": "python3-markupsafe",
+            "Version": "2.1.5-1build2",
+            "Description": "HTML/XHTML/XML string library\n MarkupSafe is a Python library implementing a uni"
+        },
+        {
+            "Name": "python3-mdurl",
+            "Version": "0.1.2-1",
+            "Description": "Python port of the JavaScript mdurl package\n mdurl is a set of URL utilities for"
+        },
+        {
+            "Name": "python3-minimal",
+            "Version": "3.12.3-0ubuntu2.1",
+            "Description": "minimal subset of the Python language (default python3 version)\n This package co"
+        },
+        {
+            "Name": "python3-netifaces",
+            "Version": "0.11.0-2build3",
+            "Description": "portable network interface information - Python 3.x\n netifaces provides a (hopef"
+        },
+        {
+            "Name": "python3-netplan",
+            "Version": "1.1.2-8ubuntu1~24.04.1",
+            "Description": "Declarative network configuration Python bindings\n Netplan reads YAML network co"
+        },
+        {
+            "Name": "python3-newt",
+            "Version": "0.52.24-2ubuntu2",
+            "Description": "NEWT module for Python3\n This module allows you to build a text UI for your Pyth"
+        },
+        {
+            "Name": "python3-oauthlib",
+            "Version": "3.2.2-1",
+            "Description": "generic, spec-compliant implementation of OAuth for Python3\n OAuthLib is a gener"
+        },
+        {
+            "Name": "python3-openssl",
+            "Version": "23.2.0-1",
+            "Description": "Python 3 wrapper around the OpenSSL library\n High-level wrapper around a subset "
+        },
+        {
+            "Name": "python3-packaging",
+            "Version": "24.0-1",
+            "Description": "core utilities for python3 packages\n These core utilities currently consist of:\n"
+        },
+        {
+            "Name": "python3-pip",
+            "Version": "24.0+dfsg-1ubuntu1.3",
+            "Description": "Python package installer\n pip is the Python package installer.  It integrates wi"
+        },
+        {
+            "Name": "python3-pkg-resources",
+            "Version": "68.1.2-2ubuntu1.2",
+            "Description": "Package Discovery and Resource Access using pkg_resources\n The pkg_resources mod"
+        },
+        {
+            "Name": "python3-problem-report",
+            "Version": "2.28.1-0ubuntu3.8",
+            "Description": "Python 3 library to handle problem reports\n This Python library provides an inte"
+        },
+        {
+            "Name": "python3-pyasn1",
+            "Version": "0.4.8-4",
+            "Description": "ASN.1 library for Python (Python 3 module)\n This  is  an implementation  of  ASN"
+        },
+        {
+            "Name": "python3-pyasn1-modules",
+            "Version": "0.2.8-1",
+            "Description": "Collection of protocols modules written in ASN.1 language (Python 3)\n This is a "
+        },
+        {
+            "Name": "python3-pycurl",
+            "Version": "7.45.3-1build2",
+            "Description": "Python bindings to libcurl (Python 3)\n This module provides the Python bindings "
+        },
+        {
+            "Name": "python3-pygments",
+            "Version": "2.17.2+dfsg-1",
+            "Description": "syntax highlighting package written in Python 3\n Pygments aims to be a generic s"
+        },
+        {
+            "Name": "python3-pyparsing",
+            "Version": "3.1.1-1",
+            "Description": "alternative to creating and executing simple grammars - Python 3.x\n The parsing "
+        },
+        {
+            "Name": "python3-pyrsistent",
+            "Version": "0.20.0-1build2",
+            "Description": "persistent/functional/immutable data structures for Python\n Pyrsistent is a numb"
+        },
+        {
+            "Name": "python3-requests",
+            "Version": "2.31.0+dfsg-1ubuntu1.1",
+            "Description": "elegant and simple HTTP library for Python3, built for human beings\n Requests al"
+        },
+        {
+            "Name": "python3-rich",
+            "Version": "13.7.1-1",
+            "Description": "render rich text, tables, progress bars, syntax highlighting, markdown and more\n"
+        },
+        {
+            "Name": "python3-samba",
+            "Version": "2:4.19.5+dfsg-4ubuntu9.4",
+            "Description": "Python 3 bindings for Samba\n Samba is an implementation of the SMB/CIFS protocol"
+        },
+        {
+            "Name": "python3-serial",
+            "Version": "3.5-2",
+            "Description": "pyserial - module encapsulating access for the serial port\n This module encapsul"
+        },
+        {
+            "Name": "python3-service-identity",
+            "Version": "24.1.0-1",
+            "Description": "Service identity verification for pyOpenSSL (Python 3 module)\n Service_identity "
+        },
+        {
+            "Name": "python3-setuptools",
+            "Version": "68.1.2-2ubuntu1.2",
+            "Description": "Python3 Distutils Enhancements\n Extensions to the python-distutils for large or "
+        },
+        {
+            "Name": "python3-six",
+            "Version": "1.16.0-4",
+            "Description": "Python 2 and 3 compatibility library\n Six is a Python 2 and 3 compatibility libr"
+        },
+        {
+            "Name": "python3-software-properties",
+            "Version": "0.99.49.3",
+            "Description": "manage the repositories that you install software from\n This software provides a"
+        },
+        {
+            "Name": "python3-systemd",
+            "Version": "235-1build4",
+            "Description": "Python 3 bindings for systemd\n This package contains Python 3 bindings for nativ"
+        },
+        {
+            "Name": "python3-talloc",
+            "Version": "2.4.2-1build2",
+            "Description": "hierarchical pool based memory allocator - Python3 bindings\n A hierarchical pool"
+        },
+        {
+            "Name": "python3-tdb",
+            "Version": "1.4.10-1build1",
+            "Description": "Python3 bindings for TDB\n This is a simple database API. It is modelled after th"
+        },
+        {
+            "Name": "python3-twisted",
+            "Version": "24.3.0-1ubuntu0.1",
+            "Description": "Event-based framework for internet applications\n It includes a web server, a tel"
+        },
+        {
+            "Name": "python3-typing-extensions",
+            "Version": "4.10.0-1",
+            "Description": "Backported and Experimental Type Hints for Python\n The \"typing_extensions\" modul"
+        },
+        {
+            "Name": "python3-tz",
+            "Version": "2024.1-2",
+            "Description": "Python3 version of the Olson timezone database\n python-tz brings the Olson tz da"
+        },
+        {
+            "Name": "python3-update-manager",
+            "Version": "1:24.04.12",
+            "Description": "Python 3.x module for update-manager\n Python module for update-manager (UpdateMa"
+        },
+        {
+            "Name": "python3-urllib3",
+            "Version": "2.0.7-1ubuntu0.5",
+            "Description": "HTTP library with thread-safe connection pooling for Python3\n urllib3 supports f"
+        },
+        {
+            "Name": "python3-wadllib",
+            "Version": "1.3.6-5",
+            "Description": "Python 3 library for navigating WADL files\n The Web Application Description Lang"
+        },
+        {
+            "Name": "python3-wheel",
+            "Version": "0.42.0-2",
+            "Description": "built-package format for Python\n A wheel is a ZIP-format archive with a speciall"
+        },
+        {
+            "Name": "python3-yaml",
+            "Version": "6.0.1-2build2",
+            "Description": "YAML parser and emitter for Python3\n Python3-yaml is a complete YAML 1.1 parser "
+        },
+        {
+            "Name": "python3-zope.interface",
+            "Version": "6.1-1build1",
+            "Description": "Interfaces for Python3\n This package provides an implementation of object interf"
+        },
+        {
+            "Name": "python3.12",
+            "Version": "3.12.3-1ubuntu0.10",
+            "Description": "Interactive high-level object-oriented language (version 3.12)\n Python is a high"
+        },
+        {
+            "Name": "python3.12-dev",
+            "Version": "3.12.3-1ubuntu0.10",
+            "Description": "Header files and a static library for Python (v3.12)\n Header files, a static lib"
+        },
+        {
+            "Name": "python3.12-minimal",
+            "Version": "3.12.3-1ubuntu0.10",
+            "Description": "Minimal subset of the Python language (version 3.12)\n This package contains the "
+        },
+        {
+            "Name": "readline-common",
+            "Version": "8.2-4build1",
+            "Description": "GNU readline and history libraries, common files\n The GNU readline library aids "
+        },
+        {
+            "Name": "rpcbind",
+            "Version": "1.2.6-7ubuntu2",
+            "Description": "converts RPC program numbers into universal addresses\n The rpcbind utility is a "
+        },
+        {
+            "Name": "rpcsvc-proto",
+            "Version": "1.4.2-0ubuntu7",
+            "Description": "RPC protocol compiler and definitions\n rpcgen is a tool that generates C code to"
+        },
+        {
+            "Name": "rsync",
+            "Version": "3.2.7-1ubuntu1.2",
+            "Description": "fast, versatile, remote (and local) file-copying tool\n rsync is a fast and versa"
+        },
+        {
+            "Name": "rsyslog",
+            "Version": "8.2312.0-3ubuntu9.1",
+            "Description": "reliable system and kernel logging daemon\n Rsyslog is a multi-threaded implement"
+        },
+        {
+            "Name": "run-one",
+            "Version": "1.17-0ubuntu2",
+            "Description": "run just one instance of a command and its args at a time\n This utility will run"
+        },
+        {
+            "Name": "samba-common",
+            "Version": "2:4.19.5+dfsg-4ubuntu9.4",
+            "Description": "common files used by both the Samba server and client\n Samba is an implementatio"
+        },
+        {
+            "Name": "samba-common-bin",
+            "Version": "2:4.19.5+dfsg-4ubuntu9.4",
+            "Description": "Samba common files used by both the server and the client\n Samba is an implement"
+        },
+        {
+            "Name": "samba-dsdb-modules",
+            "Version": "2:4.19.5+dfsg-4ubuntu9.4",
+            "Description": "Samba Directory Services Database\n Samba is an implementation of the SMB/CIFS pr"
+        },
+        {
+            "Name": "samba-libs",
+            "Version": "2:4.19.5+dfsg-4ubuntu9.4",
+            "Description": "Samba core libraries\n Samba is an implementation of the SMB/CIFS protocol for Un"
+        },
+        {
+            "Name": "sed",
+            "Version": "4.9-2build1",
+            "Description": "GNU stream editor for filtering/transforming text\n sed reads the specified files"
+        },
+        {
+            "Name": "sensible-utils",
+            "Version": "0.0.22",
+            "Description": "Utilities for sensible alternative selection\n This package provides a number of "
+        },
+        {
+            "Name": "session-migration",
+            "Version": "0.3.9build1",
+            "Description": "Tool to migrate in user session settings\n This tool is used to migrate in sessio"
+        },
+        {
+            "Name": "sgml-base",
+            "Version": "1.31",
+            "Description": "SGML infrastructure and SGML catalog file support\n This package creates the SGML"
+        },
+        {
+            "Name": "shared-mime-info",
+            "Version": "2.4-4",
+            "Description": "FreeDesktop.org shared MIME database and spec\n This is the shared MIME-info data"
+        },
+        {
+            "Name": "show-motd",
+            "Version": "3.12",
+            "Description": "show message of the day in interactive shells\n .\n This package installs a script"
+        },
+        {
+            "Name": "smbclient",
+            "Version": "2:4.19.5+dfsg-4ubuntu9.4",
+            "Description": "command-line SMB/CIFS clients for Unix\n Samba is an implementation of the SMB/CI"
+        },
+        {
+            "Name": "snapd",
+            "Version": "2.72+ubuntu24.04",
+            "Description": "Daemon and tooling that enable snap packages\n Install, configure, refresh and re"
+        },
+        {
+            "Name": "snmp",
+            "Version": "5.9.4+dfsg-1.1ubuntu3.2",
+            "Description": "SNMP (Simple Network Management Protocol) applications\n The Simple Network Manag"
+        },
+        {
+            "Name": "software-properties-common",
+            "Version": "0.99.49.3",
+            "Description": "manage the repositories that you install software from (common)\n This software p"
+        },
+        {
+            "Name": "squashfs-tools",
+            "Version": "1:4.6.1-1build1",
+            "Description": "Tool to create and append to squashfs filesystems\n Squashfs is a highly compress"
+        },
+        {
+            "Name": "sudo",
+            "Version": "1.9.15p5-3ubuntu5.24.04.1",
+            "Description": "Provide limited super user privileges to specific users\n Sudo is a program desig"
+        },
+        {
+            "Name": "systemd",
+            "Version": "255.4-1ubuntu8.12",
+            "Description": "system and service manager\n systemd is a system and service manager for Linux. I"
+        },
+        {
+            "Name": "systemd-dev",
+            "Version": "255.4-1ubuntu8.12",
+            "Description": "systemd development files\n This package contains the systemd and udev pkg-config"
+        },
+        {
+            "Name": "systemd-hwe-hwdb",
+            "Version": "255.1.6",
+            "Description": "udev rules for hardware enablement (HWE)\n systemd-hwe-hwdb contains hwdb rules f"
+        },
+        {
+            "Name": "systemd-resolved",
+            "Version": "255.4-1ubuntu8.12",
+            "Description": "systemd DNS resolver\n This package provides systemd's DNS resolver and the comma"
+        },
+        {
+            "Name": "systemd-sysv",
+            "Version": "255.4-1ubuntu8.12",
+            "Description": "system and service manager - SysV compatibility symlinks\n This package provides "
+        },
+        {
+            "Name": "systemd-timesyncd",
+            "Version": "255.4-1ubuntu8.12",
+            "Description": "minimalistic service to synchronize local time with NTP servers\n The package con"
+        },
+        {
+            "Name": "sysvinit-utils",
+            "Version": "3.08-6ubuntu3",
+            "Description": "System-V-like utilities\n This package contains the important System-V-like utili"
+        },
+        {
+            "Name": "tar",
+            "Version": "1.35+dfsg-3build1",
+            "Description": "GNU version of the tar archiving utility\n Tar is a program for packaging a set o"
+        },
+        {
+            "Name": "telnet",
+            "Version": "0.17+2.5-3ubuntu4",
+            "Description": "transitional dummy package for inetutils-telnet default switch\n This package wil"
+        },
+        {
+            "Name": "time",
+            "Version": "1.9-0.2build1",
+            "Description": "GNU time program for measuring CPU resource usage\n The 'time' command runs anoth"
+        },
+        {
+            "Name": "tmux",
+            "Version": "3.4-1ubuntu0.1",
+            "Description": "terminal multiplexer\n tmux enables a number of terminals (or windows) to be acce"
+        },
+        {
+            "Name": "tzdata",
+            "Version": "2025b-0ubuntu0.24.04.1",
+            "Description": "time zone and daylight-saving time data\n This package contains data required for"
+        },
+        {
+            "Name": "ubuntu-keyring",
+            "Version": "2023.11.28.1",
+            "Description": "GnuPG keys of the Ubuntu archive\n The Ubuntu project digitally signs its Release"
+        },
+        {
+            "Name": "ubuntu-minimal",
+            "Version": "1.539.2",
+            "Description": "Minimal core of Ubuntu\n This package depends on all of the packages in the Ubunt"
+        },
+        {
+            "Name": "ubuntu-mono",
+            "Version": "24.04-0ubuntu1",
+            "Description": "Ubuntu Mono Icon theme\n Dark and Light panel icons to make your desktop beautifu"
+        },
+        {
+            "Name": "ubuntu-pro-client",
+            "Version": "37.1ubuntu0~24.04",
+            "Description": "Management tools for Ubuntu Pro\n Ubuntu Pro is a suite of additional services pr"
+        },
+        {
+            "Name": "ubuntu-pro-client-l10n",
+            "Version": "37.1ubuntu0~24.04",
+            "Description": "Translations for Ubuntu Pro Client\n This package delivers translations of Ubuntu"
+        },
+        {
+            "Name": "ubuntu-release-upgrader-core",
+            "Version": "1:24.04.27",
+            "Description": "manage release upgrades\n This is the core of the Ubuntu Release Upgrader"
+        },
+        {
+            "Name": "ubuntu-wsl",
+            "Version": "1.539.2",
+            "Description": "Ubuntu on Windows tools - Windows Subsystem for Linux integration\n Utilities for"
+        },
+        {
+            "Name": "ucf",
+            "Version": "3.0043+nmu1",
+            "Description": "Update Configuration File(s): preserve user changes to config files\n Debian poli"
+        },
+        {
+            "Name": "udev",
+            "Version": "255.4-1ubuntu8.12",
+            "Description": "/dev/ and hotplug management daemon\n udev is a daemon which dynamically creates "
+        },
+        {
+            "Name": "unattended-upgrades",
+            "Version": "2.9.1+nmu4ubuntu1",
+            "Description": "automatic installation of security upgrades\n This package can download and insta"
+        },
+        {
+            "Name": "unzip",
+            "Version": "6.0-28ubuntu4.1",
+            "Description": "De-archiver for .zip files\n InfoZIP's unzip program. With the exception of multi"
+        },
+        {
+            "Name": "update-manager-core",
+            "Version": "1:24.04.12",
+            "Description": "manage release upgrades\n This is the core of update-manager and the release upgr"
+        },
+        {
+            "Name": "update-motd",
+            "Version": "3.12",
+            "Description": "complements pam_motd in libpam-modules\n .\n This package installs a script that i"
+        },
+        {
+            "Name": "usb.ids",
+            "Version": "2024.03.18-1",
+            "Description": "USB ID Repository\n This package contains the usb.ids file, a public repository o"
+        },
+        {
+            "Name": "util-linux",
+            "Version": "2.39.3-9ubuntu6.4",
+            "Description": "miscellaneous system utilities\n This package contains a number of important util"
+        },
+        {
+            "Name": "uuid-dev",
+            "Version": "2.39.3-9ubuntu6.4",
+            "Description": "Universally Unique ID library - headers and static libraries\n The libuuid librar"
+        },
+        {
+            "Name": "uuid-runtime",
+            "Version": "2.39.3-9ubuntu6.4",
+            "Description": "runtime components for the Universally Unique ID library\n The libuuid library ge"
+        },
+        {
+            "Name": "vim",
+            "Version": "2:9.1.0016-1ubuntu7.9",
+            "Description": "Vi IMproved - enhanced vi editor\n Vim is an almost compatible version of the UNI"
+        },
+        {
+            "Name": "vim-common",
+            "Version": "2:9.1.0016-1ubuntu7.9",
+            "Description": "Vi IMproved - Common files\n Vim is an almost compatible version of the UNIX edit"
+        },
+        {
+            "Name": "vim-runtime",
+            "Version": "2:9.1.0016-1ubuntu7.9",
+            "Description": "Vi IMproved - Runtime files\n Vim is an almost compatible version of the UNIX edi"
+        },
+        {
+            "Name": "vim-tiny",
+            "Version": "2:9.1.0016-1ubuntu7.9",
+            "Description": "Vi IMproved - enhanced vi editor - compact version\n Vim is an almost compatible "
+        },
+        {
+            "Name": "wget",
+            "Version": "1.21.4-1ubuntu4.1",
+            "Description": "retrieves files from the web\n Wget is a network utility to retrieve files from t"
+        },
+        {
+            "Name": "whiptail",
+            "Version": "0.52.24-2ubuntu2",
+            "Description": "Displays user-friendly dialog boxes from shell scripts\n Whiptail is a \"dialog\" r"
+        },
+        {
+            "Name": "whois",
+            "Version": "5.5.22",
+            "Description": "intelligent WHOIS client\n This package provides a commandline client for the WHO"
+        },
+        {
+            "Name": "wsl-pro-service",
+            "Version": "0.1.18~24.04.3",
+            "Description": "Ubuntu Pro for WSL - WSL service\n Ubuntu Pro for WSL is a set of applications to"
+        },
+        {
+            "Name": "wsl-setup",
+            "Version": "0.5.10~24.04",
+            "Description": "WSL integration setup\n This package helps setting up a working WSL environment w"
+        },
+        {
+            "Name": "x11-common",
+            "Version": "1:7.7+23ubuntu3",
+            "Description": "X Window System (X.Org) infrastructure\n x11-common contains the filesystem infra"
+        },
+        {
+            "Name": "x11-utils",
+            "Version": "7.7+6build2",
+            "Description": "X11 utilities\n An X client is a program that interfaces with an X server (almost"
+        },
+        {
+            "Name": "x11-xserver-utils",
+            "Version": "7.7+10build2",
+            "Description": "X server utilities\n An X client is a program that interfaces with an X server (a"
+        },
+        {
+            "Name": "xauth",
+            "Version": "1:1.1.2-1build1",
+            "Description": "X authentication utility\n xauth is a small utility to read and manipulate Xautho"
+        },
+        {
+            "Name": "xdg-user-dirs",
+            "Version": "0.18-1build1",
+            "Description": "tool to manage well known user directories\n xdg-user-dirs is a tool to help mana"
+        },
+        {
+            "Name": "xdg-utils",
+            "Version": "1.1.3-4.1ubuntu3",
+            "Description": "desktop integration utilities from freedesktop.org\n xdg-utils contains utilities"
+        },
+        {
+            "Name": "xkb-data",
+            "Version": "2.41-2ubuntu1.1",
+            "Description": "X Keyboard Extension (XKB) configuration data\n This package contains configurati"
+        },
+        {
+            "Name": "xml-core",
+            "Version": "0.19",
+            "Description": "XML infrastructure and XML catalog file support\n This package creates the XML in"
+        },
+        {
+            "Name": "xxd",
+            "Version": "2:9.1.0016-1ubuntu7.9",
+            "Description": "tool to make (or reverse) a hex dump\n xxd creates a hex dump of a given file or "
+        },
+        {
+            "Name": "xz-utils",
+            "Version": "5.6.1+really5.4.5-1ubuntu0.2",
+            "Description": "XZ-format compression utilities\n XZ is the successor to the Lempel-Ziv/Markov-ch"
+        },
+        {
+            "Name": "zip",
+            "Version": "3.0-13ubuntu0.2",
+            "Description": "Archiver for .zip files\n This is InfoZIP's zip program. It produces files that a"
+        },
+        {
+            "Name": "zlib1g",
+            "Version": "1:1.3.dfsg-3.1ubuntu2.1",
+            "Description": "compression library - runtime\n zlib is a library implementing the deflate compre"
+        },
+        {
+            "Name": "zlib1g-dev",
+            "Version": "1:1.3.dfsg-3.1ubuntu2.1",
+            "Description": "compression library - development\n zlib is a library implementing the deflate co"
+        },
+        {
+            "Name": "zsh",
+            "Version": "5.9-6ubuntu2",
+            "Description": "shell with lots of features\n Zsh is a UNIX command interpreter (shell) usable as"
+        },
+        {
+            "Name": "zsh-common",
+            "Version": "5.9-6ubuntu2",
+            "Description": "architecture independent files for Zsh\n Zsh is a UNIX command interpreter (shell"
+        },
+        {
+            "Name": "zutty",
+            "Version": "0.14.8.20231210+dfsg1-1",
+            "Description": "Efficient full-featured X11 terminal emulator\n Zutty is a terminal emulator for "
+        }
+    ],
+    "LinuxUpdates": [
+        {
+            "Name": "alsa-ucm-conf",
+            "CurrentVersion": "1.2.10-1ubuntu5.7",
+            "AvailableVersion": "1.2.10-1ubuntu5.8",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "snapd",
+            "CurrentVersion": "2.72+ubuntu24.04",
+            "AvailableVersion": "2.73+ubuntu24.04",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        }
+    ],
+    "WindowsApps": [],
+    "WindowsUpdates": [],
+    "MacOSApps": [],
+    "MacosUpdates": []
+}
