@@ -51,6 +51,9 @@ func (w WindowsUpdatesManager) getInstalledApps() ([]WindowsApp, error) {
 		`SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall`,
 	}
 
+	// Keep a list of all found applications to avoid duplicates
+	seenApps := make(map[string]bool)
+
 	i := 0
 	for _, key := range keys {
 		for _, path := range paths {
@@ -70,9 +73,17 @@ func (w WindowsUpdatesManager) getInstalledApps() ([]WindowsApp, error) {
 					version, _, errVer := subKey.GetStringValue("DisplayVersion")
 					publisher, _, errPub := subKey.GetStringValue("Publisher")
 
-					fmt.Println(displayName)
+					// Avoid duplicates
+					uniqueID := fmt.Sprintf("%s|%s|%s", displayName, version, publisher)
+					if seenApps[uniqueID] {
+						subKey.Close()
+						continue
+					}
 
+					// Only add if we have a name
 					if err == nil && displayName != "" && errVer == nil && errPub == nil {
+						seenApps[uniqueID] = true
+
 						apps = append(apps, WindowsApp{
 							Name:      displayName,
 							Version:   version,
