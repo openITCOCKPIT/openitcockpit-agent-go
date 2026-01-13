@@ -1,0 +1,2187 @@
+{
+    "Enabled": true,
+    "Panding": false,
+    "LastUpdate": 1768305872,
+    "Stats": {
+        "InstalledPackages": 431,
+        "UpgradablePackages": 2,
+        "SecurityUpdates": 0,
+        "RebootRequired": false,
+        "LastError": null,
+        "OperatingSystem": "macos",
+        "PackageManager": "macos-updates"
+    },
+    "LinuxPackages": [],
+    "LinuxUpdates": [],
+    "WindowsApps": [],
+    "WindowsUpdates": [],
+    "MacOSApps": [
+        {
+            "Name": "Ordneraktionen konfigurieren",
+            "Version": "1.2",
+            "Description": ""
+        },
+        {
+            "Name": "Schlüsselbund­verwaltung",
+            "Version": "11.0",
+            "Description": ""
+        },
+        {
+            "Name": "Ticket-Viewer",
+            "Version": "4.1",
+            "Description": ""
+        },
+        {
+            "Name": "Diagnose für drahtlose Umgebungen",
+            "Version": "11.0",
+            "Description": ""
+        },
+        {
+            "Name": "iOS-App-Installationsprogramm",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Finder",
+            "Version": "26.1",
+            "Description": ""
+        },
+        {
+            "Name": "AirDrop",
+            "Version": "26.1",
+            "Description": ""
+        },
+        {
+            "Name": "Computer",
+            "Version": "26.1",
+            "Description": ""
+        },
+        {
+            "Name": "Netzwerk",
+            "Version": "26.1",
+            "Description": ""
+        },
+        {
+            "Name": "Zuletzt benutzt",
+            "Version": "26.1",
+            "Description": ""
+        },
+        {
+            "Name": "iCloud Drive",
+            "Version": "26.1",
+            "Description": ""
+        },
+        {
+            "Name": "Automator Application Stub",
+            "Version": "1.3",
+            "Description": ""
+        },
+        {
+            "Name": "Automator-Installationsprogramm",
+            "Version": "2.10",
+            "Description": ""
+        },
+        {
+            "Name": "Batterien",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Bluetooth-Assistent",
+            "Version": "9.0",
+            "Description": "9.0 (1)"
+        },
+        {
+            "Name": "BluetoothUIServer",
+            "Version": "9.0",
+            "Description": "kBluetoothCFBundleGetInfoString"
+        },
+        {
+            "Name": "BluetoothUIService",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "CalendarFileHandler",
+            "Version": "8.0",
+            "Description": ""
+        },
+        {
+            "Name": "Captive Network Assistant",
+            "Version": "5.0",
+            "Description": ""
+        },
+        {
+            "Name": "Zertifikatsassistent",
+            "Version": "5.0",
+            "Description": ""
+        },
+        {
+            "Name": "Kontrollzentrum",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "ControlStrip",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "CoreLocationAgent",
+            "Version": "3060.0.18",
+            "Description": "Copyright © 2013 Apple Inc."
+        },
+        {
+            "Name": "CoreServicesUIAgent",
+            "Version": "369",
+            "Description": "Copyright © 2009 Apple Inc."
+        },
+        {
+            "Name": "Abdeckungs­details",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Database Events",
+            "Version": "1.0.6",
+            "Description": ""
+        },
+        {
+            "Name": "Diagnostics Reporter",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "DiscHelper",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "DiskImageMounter",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Dock",
+            "Version": "1.8",
+            "Description": "Dock 1.8"
+        },
+        {
+            "Name": "Dwell Control",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Erweiterte Protokollierung",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Löschassistent",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "EscrowSecurityAlert",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Family",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "FamilyExtensionHost",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "FileProvider-Feedback",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "FolderActionsDispatcher",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Game Center",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "GameOverlayUI",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Spiele",
+            "Version": "820.1.14",
+            "Description": ""
+        },
+        {
+            "Name": "IOUIAgent",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Image Events",
+            "Version": "1.1.6",
+            "Description": ""
+        },
+        {
+            "Name": "Install Command Line Developer Tools",
+            "Version": "2416",
+            "Description": ""
+        },
+        {
+            "Name": "Installation wird durchgeführt",
+            "Version": "3.0",
+            "Description": ""
+        },
+        {
+            "Name": "Installer Progress",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Installationsprogramm",
+            "Version": "6.2.0",
+            "Description": ""
+        },
+        {
+            "Name": "JavaLauncher",
+            "Version": "326",
+            "Description": ""
+        },
+        {
+            "Name": "KeyboardAccessAgent",
+            "Version": "10",
+            "Description": ""
+        },
+        {
+            "Name": "KeyboardSetupAssistant",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Keychain Circle Notification",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Sprachauswahl",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "MDMMigrationTrampoline",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "MTLReplayer",
+            "Version": "311.2",
+            "Description": ""
+        },
+        {
+            "Name": "ManagedClient",
+            "Version": "18.0",
+            "Description": ""
+        },
+        {
+            "Name": "Dienstprogramm für Speichersteckplätze",
+            "Version": "1.5.3",
+            "Description": ""
+        },
+        {
+            "Name": "Musik­erkennung",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "NetAuthAgent",
+            "Version": "6.2",
+            "Description": ""
+        },
+        {
+            "Name": "Mitteilungszentrale",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "NowPlayingTouchUI",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "OBEXAgent",
+            "Version": "9.0",
+            "Description": "7.0.0, Copyright © 2002-2018 Apple Inc. All rights reserved."
+        },
+        {
+            "Name": "ODSAgent",
+            "Version": "1.9",
+            "Description": "1.9 (190.2), Copyright © 2007-2009 Apple Inc. All Rights Reserved."
+        },
+        {
+            "Name": "OSDUIHelper",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "PIPAgent",
+            "Version": "2.0",
+            "Description": ""
+        },
+        {
+            "Name": "Gekoppelte Geräte",
+            "Version": "7.1",
+            "Description": ""
+        },
+        {
+            "Name": "Pass Viewer",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "PassViewer",
+            "Version": "",
+            "Description": ""
+        },
+        {
+            "Name": "PeopleMessageService",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Kontakte",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "PosterBoard",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "PowerChime",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "PreviewShell",
+            "Version": "16.0",
+            "Description": ""
+        },
+        {
+            "Name": "Pro Display-Kalibrierung",
+            "Version": "211.25",
+            "Description": ""
+        },
+        {
+            "Name": "Problem Reporter",
+            "Version": "10.13",
+            "Description": ""
+        },
+        {
+            "Name": "Profilinstallation",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "RapportUIAgent",
+            "Version": "7.1",
+            "Description": ""
+        },
+        {
+            "Name": "RegisterPluginIMApp",
+            "Version": "26.200",
+            "Description": ""
+        },
+        {
+            "Name": "ARDAgent",
+            "Version": "3.9.8",
+            "Description": ""
+        },
+        {
+            "Name": "Remote Desktop-Nachricht",
+            "Version": "3.9.8",
+            "Description": ""
+        },
+        {
+            "Name": "SSMenuAgent",
+            "Version": "3.9.8",
+            "Description": ""
+        },
+        {
+            "Name": "Rosetta 2 Updater",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Bildschirmzeit",
+            "Version": "3.0",
+            "Description": ""
+        },
+        {
+            "Name": "ScreenSaverEngine",
+            "Version": "5.0",
+            "Description": ""
+        },
+        {
+            "Name": "Skript-Menü",
+            "Version": "1",
+            "Description": ""
+        },
+        {
+            "Name": "ScriptMonitor",
+            "Version": "1.0.1",
+            "Description": ""
+        },
+        {
+            "Name": "App Store",
+            "Version": "3.0",
+            "Description": ""
+        },
+        {
+            "Name": "Apps",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Automator",
+            "Version": "2.10",
+            "Description": ""
+        },
+        {
+            "Name": "Bücher",
+            "Version": "8.1",
+            "Description": ""
+        },
+        {
+            "Name": "Rechner",
+            "Version": "12.0",
+            "Description": ""
+        },
+        {
+            "Name": "Kalender",
+            "Version": "16.0",
+            "Description": ""
+        },
+        {
+            "Name": "Schach",
+            "Version": "3.18",
+            "Description": "3.18, Copyright 2003–2024 Apple Inc."
+        },
+        {
+            "Name": "Uhr",
+            "Version": "1.1",
+            "Description": ""
+        },
+        {
+            "Name": "Kontakte",
+            "Version": "14.0",
+            "Description": ""
+        },
+        {
+            "Name": "SystemUIServer",
+            "Version": "1.7",
+            "Description": ""
+        },
+        {
+            "Name": "TextInputMenuAgent",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "TextInputSwitcher",
+            "Version": "1.1",
+            "Description": ""
+        },
+        {
+            "Name": "ThermalTrap",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "TMHelperAgent",
+            "Version": "13",
+            "Description": ""
+        },
+        {
+            "Name": "Tipps",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "UIKitSystem",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "UniversalAccessControl",
+            "Version": "7.0",
+            "Description": ""
+        },
+        {
+            "Name": "Universelle Steuerung",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "UnmountAssistantAgent",
+            "Version": "5.0",
+            "Description": ""
+        },
+        {
+            "Name": "UserNotificationCenter",
+            "Version": "82",
+            "Description": ""
+        },
+        {
+            "Name": "VoiceOver",
+            "Version": "10",
+            "Description": ""
+        },
+        {
+            "Name": "Hintergrundbild",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Zifferblatt-Hilfe",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "WiFiAgent",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "WidgetKit Simulator",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "WindowManager",
+            "Version": "341.1.4",
+            "Description": "WindowManager"
+        },
+        {
+            "Name": "WindowManagerShowDesktopEducation",
+            "Version": "1.0",
+            "Description": "WindowManagerShowDesktopEducation"
+        },
+        {
+            "Name": "WorkoutAlert-Mac",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "iCloud+",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "iCloud",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "liquiddetectiond",
+            "Version": "",
+            "Description": ""
+        },
+        {
+            "Name": "loginwindow",
+            "Version": "9.0",
+            "Description": ""
+        },
+        {
+            "Name": "rcd",
+            "Version": "362",
+            "Description": "362"
+        },
+        {
+            "Name": "screencaptureui",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Passwörter",
+            "Version": "2.1",
+            "Description": ""
+        },
+        {
+            "Name": "Telefon",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Photo Booth",
+            "Version": "13.1",
+            "Description": ""
+        },
+        {
+            "Name": "Fotos",
+            "Version": "11.0",
+            "Description": ""
+        },
+        {
+            "Name": "Podcasts",
+            "Version": "1.1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Vorschau",
+            "Version": "11.0",
+            "Description": ""
+        },
+        {
+            "Name": "QuickTime Player",
+            "Version": "10.5",
+            "Description": "10.5, Copyright © 2009-2025 Apple Inc. All Rights Reserved."
+        },
+        {
+            "Name": "Erinnerungen",
+            "Version": "7.0",
+            "Description": ""
+        },
+        {
+            "Name": "Kurzbefehle",
+            "Version": "7.0",
+            "Description": ""
+        },
+        {
+            "Name": "Siri",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Notizzettel",
+            "Version": "10.3",
+            "Description": ""
+        },
+        {
+            "Name": "Aktien",
+            "Version": "8.1",
+            "Description": ""
+        },
+        {
+            "Name": "System­einstellungen",
+            "Version": "15.0",
+            "Description": ""
+        },
+        {
+            "Name": "TV",
+            "Version": "1.6.1",
+            "Description": "TV 1.6.1.44, © 2019–2025 Apple Inc. All rights reserved."
+        },
+        {
+            "Name": "TextEdit",
+            "Version": "1.20",
+            "Description": ""
+        },
+        {
+            "Name": "Time Machine",
+            "Version": "1.3",
+            "Description": ""
+        },
+        {
+            "Name": "Tipps",
+            "Version": "26.1",
+            "Description": ""
+        },
+        {
+            "Name": "Aktivitätsanzeige",
+            "Version": "10.14",
+            "Description": ""
+        },
+        {
+            "Name": "AirPort-Dienstprogramm",
+            "Version": "6.3.9",
+            "Description": "6.3.9, Copyright 2001 -2025 Apple Inc."
+        },
+        {
+            "Name": "Audio-MIDI-Setup",
+            "Version": "3.7",
+            "Description": "3.7, Copyright 2002–2025 Apple Inc."
+        },
+        {
+            "Name": "Bluetooth-Datenaustausch",
+            "Version": "9.0",
+            "Description": "7.0.0, Copyright © 2002-2018 Apple Inc. All rights reserved."
+        },
+        {
+            "Name": "Boot Camp-Assistent",
+            "Version": "6.1.0",
+            "Description": ""
+        },
+        {
+            "Name": "ColorSync-Dienstprogramm",
+            "Version": "12.2.0",
+            "Description": ""
+        },
+        {
+            "Name": "Konsole",
+            "Version": "1.1",
+            "Description": ""
+        },
+        {
+            "Name": "Digital Color Meter",
+            "Version": "6.10",
+            "Description": ""
+        },
+        {
+            "Name": "Festplatten­dienstprogramm",
+            "Version": "22.7",
+            "Description": ""
+        },
+        {
+            "Name": "Grapher",
+            "Version": "2.8",
+            "Description": ""
+        },
+        {
+            "Name": "Lupe",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Migrations­assistent",
+            "Version": "26.1",
+            "Description": ""
+        },
+        {
+            "Name": "Druckzentrale",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Bildschirm­freigabe",
+            "Version": "6.1",
+            "Description": ""
+        },
+        {
+            "Name": "Bildschirmfoto",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Skripteditor",
+            "Version": "2.11",
+            "Description": ""
+        },
+        {
+            "Name": "System­informationen",
+            "Version": "11.0",
+            "Description": ""
+        },
+        {
+            "Name": "Terminal",
+            "Version": "2.15",
+            "Description": ""
+        },
+        {
+            "Name": "VoiceOver-Dienstprogramm",
+            "Version": "10",
+            "Description": ""
+        },
+        {
+            "Name": "Sprachmemos",
+            "Version": "3.2",
+            "Description": ""
+        },
+        {
+            "Name": "Wetter",
+            "Version": "6.0",
+            "Description": ""
+        },
+        {
+            "Name": "iPhone-Synchronisierung",
+            "Version": "1.5",
+            "Description": ""
+        },
+        {
+            "Name": "Über diesen Mac",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Archivierungsprogramm",
+            "Version": "10.15",
+            "Description": ""
+        },
+        {
+            "Name": "DVD-Player",
+            "Version": "6.0",
+            "Description": ""
+        },
+        {
+            "Name": "Schreibtischansicht",
+            "Version": "2.0",
+            "Description": ""
+        },
+        {
+            "Name": "Verzeichnisdienste",
+            "Version": "7.0",
+            "Description": ""
+        },
+        {
+            "Name": "Dienstprogramm für Erweiterungssteckplätze",
+            "Version": "2.0",
+            "Description": ""
+        },
+        {
+            "Name": "Feedback-Assistent",
+            "Version": "5.1",
+            "Description": ""
+        },
+        {
+            "Name": "Systemassistent",
+            "Version": "10.10",
+            "Description": ""
+        },
+        {
+            "Name": "ShortcutDroplet",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Shortcuts Events",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "ShortcutsActions",
+            "Version": "",
+            "Description": ""
+        },
+        {
+            "Name": "Siri",
+            "Version": "3505.11.1",
+            "Description": ""
+        },
+        {
+            "Name": "Softwareupdate",
+            "Version": "6",
+            "Description": "Software Update version 4.0, Copyright © 2000-2009, Apple Inc. All rights reserved."
+        },
+        {
+            "Name": "SpacesTouchBarAgent",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Spotlight",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "StageManagerOnboarding",
+            "Version": "1.0",
+            "Description": "StageManagerOnboarding"
+        },
+        {
+            "Name": "System Events",
+            "Version": "1.3.6",
+            "Description": ""
+        },
+        {
+            "Name": "SystemIntents",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "CharacterPalette",
+            "Version": "2.0.1",
+            "Description": ""
+        },
+        {
+            "Name": "Diktat",
+            "Version": "6.2.41.5",
+            "Description": ""
+        },
+        {
+            "Name": "EmojiFunctionRowIM",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "JapaneseIM-KanaTyping",
+            "Version": "6.3",
+            "Description": ""
+        },
+        {
+            "Name": "JapaneseIM-RomajiTyping",
+            "Version": "6.3",
+            "Description": ""
+        },
+        {
+            "Name": "KoreanIM",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "PluginIM",
+            "Version": "26.200",
+            "Description": ""
+        },
+        {
+            "Name": "PressAndHold",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "SCIM",
+            "Version": "104",
+            "Description": ""
+        },
+        {
+            "Name": "TCIM",
+            "Version": "104",
+            "Description": ""
+        },
+        {
+            "Name": "TYIM",
+            "Version": "104",
+            "Description": ""
+        },
+        {
+            "Name": "TamilIM",
+            "Version": "1.6",
+            "Description": "Tamil Input Method 1.5"
+        },
+        {
+            "Name": "TrackpadIM",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "TransliterationIM",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "VietnameseIM",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "AOSAlertManager",
+            "Version": "1.07",
+            "Description": ""
+        },
+        {
+            "Name": "AOSHeartbeat",
+            "Version": "1.07",
+            "Description": ""
+        },
+        {
+            "Name": "AOSPushRelay",
+            "Version": "1.07",
+            "Description": ""
+        },
+        {
+            "Name": "ClassroomStudentMenuExtra",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Kalibrierungsassistent",
+            "Version": "4.19",
+            "Description": "4.19, Copyright 2014-2024 Apple Computer, Inc."
+        },
+        {
+            "Name": "SpeechRecognitionServer",
+            "Version": "9.0.78",
+            "Description": ""
+        },
+        {
+            "Name": "DiskImages UI Agent",
+            "Version": "680",
+            "Description": ""
+        },
+        {
+            "Name": "AXVisualSupportAgent",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Bedienungshilfen-Einführung",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "DFRHUD",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "universalAccessAuthWarn",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "imagent",
+            "Version": "10.0",
+            "Description": ""
+        },
+        {
+            "Name": "IMAutomaticHistoryDeletionAgent",
+            "Version": "10.0",
+            "Description": ""
+        },
+        {
+            "Name": "AutoFillPanelService",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "AutomationModeUI",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "FindMyMacMessenger",
+            "Version": "4.1",
+            "Description": ""
+        },
+        {
+            "Name": "STMUIHelper",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "privatecloudcomputed",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Webseite erstellen",
+            "Version": "10.1",
+            "Description": "10.1, © Copyright 2003-2014 Apple  Inc. All rights reserved."
+        },
+        {
+            "Name": "MakePDF",
+            "Version": "10.1",
+            "Description": "10.1, © Copyright 2003-2015 Apple Inc. All rights reserved."
+        },
+        {
+            "Name": "AirScanScanner",
+            "Version": "18",
+            "Description": ""
+        },
+        {
+            "Name": "50onPaletteServer",
+            "Version": "1.1.0",
+            "Description": ""
+        },
+        {
+            "Name": "AinuIM",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Assistive Control",
+            "Version": "2.0",
+            "Description": ""
+        },
+        {
+            "Name": "BackgroundTaskManagementAgent",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "nbagent",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "iCloud Drive",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "iCloudUserNotificationsd",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "IMTransferAgent",
+            "Version": "10.0",
+            "Description": ""
+        },
+        {
+            "Name": "Live-Untertitel",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "LiveSpeech",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "identityservicesd",
+            "Version": "10.0",
+            "Description": ""
+        },
+        {
+            "Name": "IDSRemoteURLConnectionAgent",
+            "Version": "10.0",
+            "Description": ""
+        },
+        {
+            "Name": "eaptlstrust",
+            "Version": "13.0",
+            "Description": ""
+        },
+        {
+            "Name": "storeuid",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "ScreenReaderUIServer",
+            "Version": "10",
+            "Description": ""
+        },
+        {
+            "Name": "VoiceOver-Kurzübersicht",
+            "Version": "10",
+            "Description": ""
+        },
+        {
+            "Name": "sociallayerd",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "SoftwareUpdateNotificationManager",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Sprach-Downloader",
+            "Version": "9.0.78",
+            "Description": ""
+        },
+        {
+            "Name": "UASharedPasteboardProgressUI",
+            "Version": "54.1",
+            "Description": ""
+        },
+        {
+            "Name": "ParentalControls",
+            "Version": "4.1",
+            "Description": "2.0, Copyright Apple Inc. 2007-2019"
+        },
+        {
+            "Name": "FeedbackRemoteView",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "FollowUpUI",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "AppSSOAgent",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "KerberosMenuExtra",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "AskPermissionUI",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Konfliktlöser",
+            "Version": "8.1",
+            "Description": "1.0, Copyright Apple Computer Inc. 2004"
+        },
+        {
+            "Name": "syncuid",
+            "Version": "8.1",
+            "Description": "4.0, Copyright Apple Computer Inc. 2004"
+        },
+        {
+            "Name": "Calibration Assistant",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "AMSEngagementViewService",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "AquaAppearanceHelper",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "CIMFindInputCodeTool",
+            "Version": "104",
+            "Description": ""
+        },
+        {
+            "Name": "AccessibilityVisualsAgent",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Systemsprachausgabe",
+            "Version": "9.2.22",
+            "Description": "9.2.22"
+        },
+        {
+            "Name": "qlmanage",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "quicklookd",
+            "Version": "5.0",
+            "Description": "5.0, Copyright Apple Inc. 2007-2013"
+        },
+        {
+            "Name": "SyncServer",
+            "Version": "8.1",
+            "Description": "© 2002-2003 Apple"
+        },
+        {
+            "Name": "FontRegistryUIAgent",
+            "Version": "81.0",
+            "Description": "Copyright © 2008-2013 Apple Inc."
+        },
+        {
+            "Name": "SmartCard-Verknüpfung",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Quick Look Simulator",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "QuickLookUIHelper",
+            "Version": "5.0",
+            "Description": "5.0, Copyright Apple Inc. 2007-2013"
+        },
+        {
+            "Name": "Wish",
+            "Version": "8.5.9",
+            "Description": "Wish Shell 8.5.9,\nCopyright © 1989-2025 Tcl Core Team,\nCopyright © 2002-2025 Daniel A. Steffen,\nCopyright © 2001-2009 Apple Inc.,\nCopyright © 2001-2002 Jim Ingham \u0026 Ian Reid"
+        },
+        {
+            "Name": "LinkedNotesUIService",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "CinematicFramingOnboardingUI",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "ContinuityCaptureOnboardingUI",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "AddressBookSync",
+            "Version": "14.0",
+            "Description": ""
+        },
+        {
+            "Name": "ABAssistantService",
+            "Version": "14.0",
+            "Description": ""
+        },
+        {
+            "Name": "AddressBookManager",
+            "Version": "14.0",
+            "Description": ""
+        },
+        {
+            "Name": "AddressBookSourceSync",
+            "Version": "14.0",
+            "Description": ""
+        },
+        {
+            "Name": "AppleSpell",
+            "Version": "2.4",
+            "Description": ""
+        },
+        {
+            "Name": "ChinesischerTextKonvertierungsService",
+            "Version": "2.1",
+            "Description": "Chinese Text Converter 1.1"
+        },
+        {
+            "Name": "OpenSpell",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "SpeechService",
+            "Version": "9.2.22",
+            "Description": "9.2.22"
+        },
+        {
+            "Name": "Spotlight",
+            "Version": "3.0",
+            "Description": ""
+        },
+        {
+            "Name": "Zusammenfassung",
+            "Version": "2.0",
+            "Description": ""
+        },
+        {
+            "Name": "AOSUIPrefPaneLauncher",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "AVB-Konfiguration",
+            "Version": "1400.10",
+            "Description": ""
+        },
+        {
+            "Name": "Reader für Bedienungshilfen",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "AccessibilityUIServer",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "AddPrinter",
+            "Version": "607",
+            "Description": ""
+        },
+        {
+            "Name": "AddressBookUrlForwarder",
+            "Version": "14.0",
+            "Description": ""
+        },
+        {
+            "Name": "AirPlayUIAgent",
+            "Version": "2.0",
+            "Description": ""
+        },
+        {
+            "Name": "AirPort-Basisstation-Agent",
+            "Version": "2.2.1",
+            "Description": "2.2.1 (221.12), Copyright © 2006 -2024 Apple Inc. All Rights Reserved."
+        },
+        {
+            "Name": "Apple Diagnose",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "AppleScript-Dienstprogramm",
+            "Version": "1.1.2",
+            "Description": ""
+        },
+        {
+            "Name": "Lexikon",
+            "Version": "2.3.0",
+            "Description": ""
+        },
+        {
+            "Name": "FaceTime",
+            "Version": "36",
+            "Description": ""
+        },
+        {
+            "Name": "Wo ist?",
+            "Version": "4.0",
+            "Description": ""
+        },
+        {
+            "Name": "Schriftsammlung",
+            "Version": "11.0",
+            "Description": ""
+        },
+        {
+            "Name": "Freeform",
+            "Version": "4.1",
+            "Description": ""
+        },
+        {
+            "Name": "Spiele",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Home",
+            "Version": "10.0",
+            "Description": ""
+        },
+        {
+            "Name": "Digitale Bilder",
+            "Version": "8.0",
+            "Description": ""
+        },
+        {
+            "Name": "Image Playground",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Journal",
+            "Version": "2.0",
+            "Description": ""
+        },
+        {
+            "Name": "Mail",
+            "Version": "16.0",
+            "Description": ""
+        },
+        {
+            "Name": "Karten",
+            "Version": "3.0",
+            "Description": ""
+        },
+        {
+            "Name": "Nachrichten",
+            "Version": "26.0",
+            "Description": ""
+        },
+        {
+            "Name": "Mission Control",
+            "Version": "1.2",
+            "Description": ""
+        },
+        {
+            "Name": "Musik",
+            "Version": "1.6.1",
+            "Description": "Music 1.6.1.44, © 2019–2025 Apple Inc. All rights reserved."
+        },
+        {
+            "Name": "Notizen",
+            "Version": "4.13",
+            "Description": ""
+        },
+        {
+            "Name": "Citrix Workspace",
+            "Version": "25.08.10",
+            "Description": "25.08.10"
+        },
+        {
+            "Name": "Deinstallieren von Citrix Workspace",
+            "Version": "25.08.10",
+            "Description": "25.08.10"
+        },
+        {
+            "Name": "Citrix Enterprise Browser",
+            "Version": "139.1.1.27",
+            "Description": "Citrix Enterprise Browser 139.1.1.27, Copyright © 2021-2025. Citrix Systems, Inc. All rights reserved."
+        },
+        {
+            "Name": "CitrixEndpointAnalysis",
+            "Version": "25.6.10",
+            "Description": ""
+        },
+        {
+            "Name": "deviceTRUST Location",
+            "Version": "25.3",
+            "Description": ""
+        },
+        {
+            "Name": "OpenVPN Connect",
+            "Version": "3.2.7",
+            "Description": ""
+        },
+        {
+            "Name": "Uninstall OpenVPN Connect",
+            "Version": "0.1",
+            "Description": "OpenVPN Uninstaller"
+        },
+        {
+            "Name": "Microsoft Teams",
+            "Version": "25331.1107.4213.8634",
+            "Description": ""
+        },
+        {
+            "Name": "Discord",
+            "Version": "0.0.372",
+            "Description": ""
+        },
+        {
+            "Name": "OneDrive",
+            "Version": "25.224.1116",
+            "Description": ""
+        },
+        {
+            "Name": "FortiClient",
+            "Version": "7.4.2.1717",
+            "Description": ""
+        },
+        {
+            "Name": "FortiClientUninstaller",
+            "Version": "1.2",
+            "Description": ""
+        },
+        {
+            "Name": "Google Chrome",
+            "Version": "143.0.7499.170",
+            "Description": "Google Chrome 143.0.7499.170, Copyright 2025 Google LLC. All rights reserved."
+        },
+        {
+            "Name": "Firefox",
+            "Version": "146.0.1",
+            "Description": "Firefox 146.0.1"
+        },
+        {
+            "Name": "Screenshot Capture",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "DockDoor",
+            "Version": "1.6.2",
+            "Description": ""
+        },
+        {
+            "Name": "DisplayLink End-User Cleaner",
+            "Version": "1.0.0",
+            "Description": ""
+        },
+        {
+            "Name": "The Unarchiver",
+            "Version": "4.3.9",
+            "Description": ""
+        },
+        {
+            "Name": "Sublime Text",
+            "Version": "Build 4200",
+            "Description": ""
+        },
+        {
+            "Name": "JetBrains Toolbox",
+            "Version": "3.2.0.65851",
+            "Description": ""
+        },
+        {
+            "Name": "GoogleUpdater",
+            "Version": "144.0.7547.0",
+            "Description": ""
+        },
+        {
+            "Name": "AppleMobileDeviceHelper",
+            "Version": "5.0",
+            "Description": ""
+        },
+        {
+            "Name": "MobileDeviceUpdater",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "AppleMobileSync",
+            "Version": "5.0",
+            "Description": ""
+        },
+        {
+            "Name": "AirScanLegacyDiscovery",
+            "Version": "607",
+            "Description": ""
+        },
+        {
+            "Name": "Recursive File Processing Droplet",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Droplet with Settable Properties",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Recursive Image File Processing Droplet",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "Cocoa-AppleScript Applet",
+            "Version": "1.0",
+            "Description": ""
+        },
+        {
+            "Name": "GarageBand",
+            "Version": "10.4.13",
+            "Description": "GarageBand 10.4.13, Copyright © 2004–2025 Apple Inc. All Rights Reserved"
+        },
+        {
+            "Name": "Accessibility Inspector",
+            "Version": "5.0",
+            "Description": ""
+        },
+        {
+            "Name": "DisplayLink Manager",
+            "Version": "14.2.0",
+            "Description": ""
+        },
+        {
+            "Name": "Microsoft AutoUpdate",
+            "Version": "4.81.2",
+            "Description": ""
+        },
+        {
+            "Name": "EdgeUpdater",
+            "Version": "137.0.3249.0",
+            "Description": ""
+        },
+        {
+            "Name": "Microsoft Defender",
+            "Version": "101.25102.0019",
+            "Description": ""
+        },
+        {
+            "Name": "Microsoft Intune Agent",
+            "Version": "2512.003",
+            "Description": ""
+        },
+        {
+            "Name": "BetterDisplay",
+            "Version": "4.1.1",
+            "Description": ""
+        },
+        {
+            "Name": "EPSON Scanner",
+            "Version": "5.7.24",
+            "Description": "5.7.24, Copyright(C) Seiko Epson Corporation 2002-2015 All rights reserved."
+        },
+        {
+            "Name": "MRT",
+            "Version": "1.93",
+            "Description": ""
+        },
+        {
+            "Name": "XProtect",
+            "Version": "156",
+            "Description": ""
+        },
+        {
+            "Name": "Unternehmensportal",
+            "Version": "5.2510.1",
+            "Description": ""
+        },
+        {
+            "Name": "PhpStorm",
+            "Version": "2025.2.5",
+            "Description": "PhpStorm 2025.2.5, build PS-252.28238.9. Copyright JetBrains s.r.o., (c) 2000-2025"
+        },
+        {
+            "Name": "Sequel Ace",
+            "Version": "4.1.5",
+            "Description": ""
+        },
+        {
+            "Name": "LimeChat",
+            "Version": "2.47",
+            "Description": "LimeChat for Mac, Copyright 2007-2020 Satoshi Nakagawa"
+        },
+        {
+            "Name": "VisualXML",
+            "Version": "1.4.1",
+            "Description": ""
+        },
+        {
+            "Name": "draw.io",
+            "Version": "25.0.2",
+            "Description": ""
+        },
+        {
+            "Name": "Imagine",
+            "Version": "0.7.3",
+            "Description": ""
+        },
+        {
+            "Name": "Microsoft Remote Desktop",
+            "Version": "10.9.10",
+            "Description": ""
+        },
+        {
+            "Name": "GoToMeeting",
+            "Version": "10.20.0.19992",
+            "Description": "GoToMeeting v10.20.0.19992, Copyright © 2024 LogMeIn, Inc."
+        },
+        {
+            "Name": "Affinity Publisher 2",
+            "Version": "2.2.1",
+            "Description": ""
+        },
+        {
+            "Name": "Skype for Business",
+            "Version": "16.31.11",
+            "Description": ""
+        },
+        {
+            "Name": "Spotify",
+            "Version": "1.2.70.409",
+            "Description": ""
+        },
+        {
+            "Name": "Docker",
+            "Version": "4.43.2",
+            "Description": ""
+        },
+        {
+            "Name": "com.microsoft.dlp.daemon",
+            "Version": "1.25102.103",
+            "Description": ""
+        },
+        {
+            "Name": "com.microsoft.dlp.ux",
+            "Version": "1.25102.103",
+            "Description": ""
+        },
+        {
+            "Name": "com.microsoft.dlp.agent",
+            "Version": "1.25102.103",
+            "Description": ""
+        },
+        {
+            "Name": "Electron",
+            "Version": "33.2.1",
+            "Description": ""
+        },
+        {
+            "Name": "Install Spotify",
+            "Version": "1.2.4.912.g949d5fd0",
+            "Description": ""
+        },
+        {
+            "Name": "Affinity Photo 2",
+            "Version": "2.6.5",
+            "Description": ""
+        },
+        {
+            "Name": "YouTube",
+            "Version": "",
+            "Description": ""
+        },
+        {
+            "Name": "jquery",
+            "Version": "",
+            "Description": ""
+        },
+        {
+            "Name": "Double-Click To Start Support Session",
+            "Version": "23.2.2.1c736bc987b79d38772272b47827c465b5b1b888",
+            "Description": "23.2.2.1c736bc987b79d38772272b47827c465b5b1b888 Copyright © 2002-2023 BeyondTrust Corporation. Redistribution Prohibited. All Rights Reserved."
+        },
+        {
+            "Name": "FileZilla",
+            "Version": "3.67.1",
+            "Description": "FileZilla Client 3.67.1, Copyright (C) 2004-2024  Tim Kosse, Website: https://filezilla-project.org"
+        },
+        {
+            "Name": "OBS",
+            "Version": "27.1.3",
+            "Description": ""
+        },
+        {
+            "Name": "Inkscape",
+            "Version": "1.0.2 (e86c8708)",
+            "Description": ""
+        },
+        {
+            "Name": "VisualDesigner",
+            "Version": "5.11",
+            "Description": ""
+        },
+        {
+            "Name": "TeamViewer",
+            "Version": "15.21.4",
+            "Description": ""
+        },
+        {
+            "Name": "zoom.us",
+            "Version": "6.1.6 (37851)",
+            "Description": ""
+        },
+        {
+            "Name": "Visual Studio Code",
+            "Version": "1.105.1",
+            "Description": ""
+        },
+        {
+            "Name": "coconutBattery",
+            "Version": "3.9.17",
+            "Description": ""
+        },
+        {
+            "Name": "VirtualBox",
+            "Version": "7.1.6",
+            "Description": "Oracle VirtualBox Manager 7.1.6, © 2007-2025 Oracle and/or its affiliates"
+        },
+        {
+            "Name": "Uninstall_Citrix_Endpoint_Analysis",
+            "Version": "23.11.16",
+            "Description": ""
+        },
+        {
+            "Name": "Canon IJScanner6",
+            "Version": "4.0.0",
+            "Description": "Canon IJScanner6 version 4.0.0, Copyright CANON INC. 2009-2014"
+        },
+        {
+            "Name": "https+++ngxtension.netlify",
+            "Version": "",
+            "Description": ""
+        },
+        {
+            "Name": "https+++nice-angular-authguard.netlify",
+            "Version": "",
+            "Description": ""
+        },
+        {
+            "Name": "iMovie",
+            "Version": "10.4.3",
+            "Description": ""
+        },
+        {
+            "Name": "https+++4d9qp0.csb",
+            "Version": "",
+            "Description": ""
+        },
+        {
+            "Name": "NativeMessagingHost",
+            "Version": "6.0",
+            "Description": ""
+        },
+        {
+            "Name": "GoToOpener",
+            "Version": "1.0.544",
+            "Description": ""
+        },
+        {
+            "Name": "IDLE 3",
+            "Version": "3.11.4",
+            "Description": "3.11.4, © 2001-2023 Python Software Foundation"
+        },
+        {
+            "Name": "Python Launcher 3",
+            "Version": "3.11.4",
+            "Description": "3.11.4, © 2001-2023 Python Software Foundation"
+        },
+        {
+            "Name": "Python",
+            "Version": "3.12.5",
+            "Description": "3.12.5, (c) 2001-2023 Python Software Foundation."
+        },
+        {
+            "Name": "group.is.workflow.my",
+            "Version": "",
+            "Description": ""
+        },
+        {
+            "Name": "Pages",
+            "Version": "14.4",
+            "Description": ""
+        },
+        {
+            "Name": "Numbers",
+            "Version": "14.4",
+            "Description": ""
+        },
+        {
+            "Name": "Keynote",
+            "Version": "14.4",
+            "Description": ""
+        },
+        {
+            "Name": "IDLE 3",
+            "Version": "3.12.5",
+            "Description": "3.12.5, © 2001-2023 Python Software Foundation"
+        },
+        {
+            "Name": "Python Launcher 3",
+            "Version": "3.12.5",
+            "Description": "3.12.5, © 2001-2023 Python Software Foundation"
+        },
+        {
+            "Name": "NativeMessagingHost",
+            "Version": "5.0",
+            "Description": ""
+        },
+        {
+            "Name": "Acrobat Update Helper",
+            "Version": "1 . 2 . 6",
+            "Description": "1 . 2 . 6, ©2009-2015 Adobe Systems Incorporated. All rights reserved."
+        },
+        {
+            "Name": "Adobe Acrobat Updater",
+            "Version": "1 . 2 . 6",
+            "Description": "1 . 2 . 6, ©2009-2015 Adobe Systems Incorporated. All rights reserved."
+        },
+        {
+            "Name": "https+++xgkft.csb",
+            "Version": "",
+            "Description": ""
+        },
+        {
+            "Name": "https+++zzun",
+            "Version": "",
+            "Description": ""
+        },
+        {
+            "Name": "Brother Status Monitor",
+            "Version": "3.23.0",
+            "Description": ""
+        },
+        {
+            "Name": "Brother Scanner",
+            "Version": "2.9.0",
+            "Description": "2.9.0, © 2007-2016 Brother Industries, Ltd. All Rights Reserved."
+        },
+        {
+            "Name": "Canon IJScanner2",
+            "Version": "4.0.0",
+            "Description": "Canon IJScanner2 version 4.0.0, Copyright CANON INC. 2009-2014"
+        },
+        {
+            "Name": "EPFaxAutoSetupTool",
+            "Version": "1.71",
+            "Description": "Copyright(C) Seiko Epson Corporation 2009-2015. All rights reserved."
+        },
+        {
+            "Name": "epsonfax",
+            "Version": "1.71",
+            "Description": "Copyright(C) Seiko Epson Corporation 2009-2015. All rights reserved."
+        },
+        {
+            "Name": "commandFilter",
+            "Version": "1.71",
+            "Description": "Copyright(C) Seiko Epson Corporation 2012-2015. All rights reserved."
+        },
+        {
+            "Name": "rastertoepfax",
+            "Version": "1.71",
+            "Description": "Copyright(C) Seiko Epson Corporation 2009-2015. All rights reserved."
+        },
+        {
+            "Name": "FAX Utility",
+            "Version": "1.73",
+            "Description": "1.73, Copyright(C) Seiko Epson Corporation 2009-2015. All rights reserved."
+        },
+        {
+            "Name": "Monitor zum Faxempfang",
+            "Version": "1.71",
+            "Description": "1.71, Copyright(C) Seiko Epson Corporation 2009-2015. All rights reserved."
+        },
+        {
+            "Name": "IDLE 3",
+            "Version": "3.10.14",
+            "Description": "3.10.14, © 2001-2023 Python Software Foundation"
+        },
+        {
+            "Name": "Python Launcher 3",
+            "Version": "3.10.14",
+            "Description": "3.10.14, © 2001-2023 Python Software Foundation"
+        },
+        {
+            "Name": "Python",
+            "Version": "3.11.4",
+            "Description": "3.11.4, (c) 2001-2023 Python Software Foundation."
+        },
+        {
+            "Name": "Canon IJScanner4",
+            "Version": "4.0.0",
+            "Description": "Canon IJScanner4 version 4.0.0, Copyright CANON INC. 2009-2014"
+        },
+        {
+            "Name": "NewApp",
+            "Version": "",
+            "Description": ""
+        },
+        {
+            "Name": "https+++appcode",
+            "Version": "",
+            "Description": ""
+        },
+        {
+            "Name": "JetBrains Toolbox",
+            "Version": "2.1.0.18144",
+            "Description": ""
+        },
+        {
+            "Name": "Python",
+            "Version": "3.10.14",
+            "Description": "3.10.14, (c) 2001-2023 Python Software Foundation."
+        },
+        {
+            "Name": "Google Drive",
+            "Version": "",
+            "Description": ""
+        },
+        {
+            "Name": "Tabellen",
+            "Version": "",
+            "Description": ""
+        },
+        {
+            "Name": "Gmail",
+            "Version": "",
+            "Description": ""
+        },
+        {
+            "Name": "Präsentationen",
+            "Version": "",
+            "Description": ""
+        },
+        {
+            "Name": "Dokumente",
+            "Version": "",
+            "Description": ""
+        },
+        {
+            "Name": "Mockoon",
+            "Version": "9.3.0",
+            "Description": ""
+        },
+        {
+            "Name": "Read CHM",
+            "Version": "1.6",
+            "Description": ""
+        },
+        {
+            "Name": "Spotify",
+            "Version": "1.2.74.477",
+            "Description": ""
+        },
+        {
+            "Name": "Adobe Acrobat",
+            "Version": "25.001.20997",
+            "Description": "Adobe Acrobat X 25.001.20997, ©1984 -2025 Adobe Systems Incorporated. All rights reserved."
+        },
+        {
+            "Name": "Xcode",
+            "Version": "26.2",
+            "Description": ""
+        },
+        {
+            "Name": "Simulator",
+            "Version": "26.0",
+            "Description": ""
+        },
+        {
+            "Name": "Create ML",
+            "Version": "6.2",
+            "Description": ""
+        },
+        {
+            "Name": "Instruments",
+            "Version": "26.2",
+            "Description": ""
+        },
+        {
+            "Name": "FileMerge",
+            "Version": "2.11",
+            "Description": ""
+        },
+        {
+            "Name": "Icon Composer",
+            "Version": "1.2",
+            "Description": ""
+        },
+        {
+            "Name": "Reality Composer Pro",
+            "Version": "2.0",
+            "Description": ""
+        },
+        {
+            "Name": "Microsoft Edge",
+            "Version": "143.0.3650.139",
+            "Description": "Microsoft Edge 143.0.3650.139, © 2026 Microsoft Corporation. All rights reserved."
+        },
+        {
+            "Name": "openITCOCKPIT-Desktop",
+            "Version": "5.2.0",
+            "Description": ""
+        },
+        {
+            "Name": "Affinity Designer 2",
+            "Version": "2.6.5",
+            "Description": ""
+        },
+        {
+            "Name": "iTerm",
+            "Version": "3.6.6",
+            "Description": "3.6.6"
+        },
+        {
+            "Name": "Python",
+            "Version": "3.9.6",
+            "Description": "3.9.6, (c) 2001-2020 Python Software Foundation."
+        },
+        {
+            "Name": "https+++itf-full-stack-essentials.netlify",
+            "Version": "",
+            "Description": ""
+        },
+        {
+            "Name": "Microsoft OneNote",
+            "Version": "16.104.1",
+            "Description": "SZLONGVERSION"
+        },
+        {
+            "Name": "Microsoft PowerPoint",
+            "Version": "16.104.1",
+            "Description": ""
+        },
+        {
+            "Name": "Microsoft Excel",
+            "Version": "16.104.1",
+            "Description": ""
+        },
+        {
+            "Name": "Microsoft Outlook",
+            "Version": "16.104.1",
+            "Description": ""
+        },
+        {
+            "Name": "Microsoft Word",
+            "Version": "16.104.1",
+            "Description": ""
+        },
+        {
+            "Name": "Citrix Workspace Updater",
+            "Version": "25.08.10",
+            "Description": "25.08.10"
+        }
+    ],
+    "MacosUpdates": [
+        {
+            "Name": "Command Line Tools for Xcode 26.2-26.2",
+            "Description": "Command Line Tools for Xcode 26.2",
+            "Version": "26.2"
+        },
+        {
+            "Name": "macOS Tahoe 26.2-25C56",
+            "Description": "macOS Tahoe 26.2",
+            "Version": "26.2"
+        }
+    ]
+}
