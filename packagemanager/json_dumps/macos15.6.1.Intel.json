@@ -9,7 +9,12 @@
         "RebootRequired": false,
         "LastError": null,
         "OperatingSystem": "macos",
-        "PackageManager": "macos-updates"
+        "PackageManager": "macos-updates",
+        "OsName": "macos",
+        "OsVersion": "15.6.1",
+        "OsFamily": "darwin",
+        "AgentVersion": "3.4.0",
+        "Uptime": 33897
     },
     "LinuxPackages": [],
     "LinuxUpdates": [],

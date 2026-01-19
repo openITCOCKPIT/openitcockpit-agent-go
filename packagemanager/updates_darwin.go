@@ -79,13 +79,11 @@ func (m MacOSUpdatesManager) CollectPackageInfo(ctx context.Context, limitDescri
 		}, err
 	}
 
-	fmt.Println(info)
-
-	// Platform: ""
+	// Platform: "darwin"
 	// PlatformFamily: "Standalone Workstation"
 	// PlatformFamily: "Server"
-	// PlatformVersion: ""
-	// KernelVersion: ""
+	// PlatformVersion: "26.2"
+	// KernelVersion: "25.2.0"
 	result := PackageInfo{
 		Enabled:    true,
 		Pending:    false,
@@ -93,9 +91,9 @@ func (m MacOSUpdatesManager) CollectPackageInfo(ctx context.Context, limitDescri
 		Stats: PackageStats{
 			PackageManager:  "macos-updates",
 			OperatingSystem: "macos",
-			OsName:          info.Platform,
+			OsName:          "macos",
 			OsVersion:       info.PlatformVersion,
-			OsFamily:        "macos", // keep it simple
+			OsFamily:        info.Platform, // darwin
 			Uptime:          int64(info.Uptime),
 			AgentVersion:    config.AgentVersion,
 		},
