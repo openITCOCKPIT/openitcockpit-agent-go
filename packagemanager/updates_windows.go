@@ -244,21 +244,29 @@ func containsIgnoreCase(slice []string, item string) bool {
 
 func (w WindowsUpdatesManager) CollectPackageInfo(ctx context.Context, limitDescriptionLength int64, enableUpdateCheck bool) (PackageInfo, error) {
 	info, err := host.InfoWithContext(ctx)
-	if info == nil {
-		return PackageInfo{}, err
+	if err != nil {
+		return PackageInfo{
+			Stats: PackageStats{
+				LastError: err,
+			},
+		}, err
 	}
 
+	// Platform: "Microsoft Windows 11 Enterprise"
+	// PlatformFamily: "Standalone Workstation"
+	// PlatformVersion: "24H2"
+	// KernelVersion: "10.0.26100.7462 Build 26100.7462"
 	result := PackageInfo{
-		Enabled:      true,
-		Pending:      false,
-		LastUpdate:   time.Now().Unix(),
-		OsName:       info.Platform,
-		OsVersion:    info.PlatformVersion,
-		Uptime:       int64(info.Uptime),
-		AgentVersion: config.AgentVersion,
+		Enabled:    true,
+		Pending:    false,
+		LastUpdate: time.Now().Unix(),
 		Stats: PackageStats{
 			PackageManager:  "windows-updates",
 			OperatingSystem: "windows",
+			OsName:          info.Platform,
+			OsVersion:       fmt.Sprintf("%s (%s)", info.PlatformVersion, info.KernelVersion),
+			Uptime:          int64(info.Uptime),
+			AgentVersion:    config.AgentVersion,
 		},
 	}
 

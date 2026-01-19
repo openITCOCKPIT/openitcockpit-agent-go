@@ -203,21 +203,25 @@ func (z ZypperManager) RebootRequired(ctx context.Context) (bool, error) {
 
 func (z ZypperManager) CollectPackageInfo(ctx context.Context, limitDescriptionLength int64, enableUpdateCheck bool) (PackageInfo, error) {
 	info, err := host.InfoWithContext(ctx)
-	if info == nil {
-		return PackageInfo{}, err
+	if err != nil {
+		return PackageInfo{
+			Stats: PackageStats{
+				LastError: err,
+			},
+		}, err
 	}
 
 	result := PackageInfo{
-		Enabled:      true,
-		Pending:      false,
-		LastUpdate:   time.Now().Unix(),
-		OsName:       info.Platform,
-		OsVersion:    info.PlatformVersion,
-		Uptime:       int64(info.Uptime),
-		AgentVersion: config.AgentVersion,
+		Enabled:    true,
+		Pending:    false,
+		LastUpdate: time.Now().Unix(),
 		Stats: PackageStats{
 			PackageManager:  "zypper",
 			OperatingSystem: "linux",
+			OsName:          info.Platform,
+			OsVersion:       info.PlatformVersion,
+			Uptime:          int64(info.Uptime),
+			AgentVersion:    config.AgentVersion,
 		},
 	}
 

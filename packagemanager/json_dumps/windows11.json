@@ -9,7 +9,11 @@
         "RebootRequired": true,
         "LastError": null,
         "OperatingSystem": "windows",
-        "PackageManager": "windows-updates"
+        "PackageManager": "windows-updates",
+        "OsName": "Microsoft Windows 11 Enterprise",
+        "OsVersion": "24H2 (10.0.26100.7462 Build 26100.7462)",
+        "AgentVersion": "3.4.0",
+        "Uptime": 894262
     },
     "LinuxPackages": [],
     "LinuxUpdates": [],

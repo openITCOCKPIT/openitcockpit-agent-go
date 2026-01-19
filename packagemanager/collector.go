@@ -15,11 +15,6 @@ type PackageInfo struct {
 	LastUpdate int64
 	Stats      PackageStats
 
-	OsName       string // e.g. "ubuntu", "Windows", "macOS"
-	OsVersion    string
-	AgentVersion string
-	Uptime       int64
-
 	// Exclude from json
 	LinuxPackages  []Package
 	LinuxUpdates   []PackageUpdate
@@ -39,6 +34,10 @@ type PackageStats struct {
 	LastError          error
 	OperatingSystem    string
 	PackageManager     string
+	OsName             string // e.g. "ubuntu", "Microsoft Windows 11 Enterprise", "macOS"
+	OsVersion          string // e.g. "24.04", "24H2 (10.0.26100.7462 Build 26100.7462)", "12.5.1"
+	AgentVersion       string // e.g. "3.4.0"
+	Uptime             int64  // system uptime in seconds
 }
 
 type SoftwareCollector struct {
