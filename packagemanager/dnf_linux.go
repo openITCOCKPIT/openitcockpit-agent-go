@@ -7,7 +7,9 @@ import (
 	"strings"
 	"time"
 
+	"github.com/openITCOCKPIT/openitcockpit-agent-go/config"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/utils"
+	"github.com/shirou/gopsutil/v4/host"
 )
 
 // DnfManager implements PackageManager for dnf or yum
@@ -35,7 +37,17 @@ func (d DnfManager) IsAvailable() bool {
 // UpdateMetadata updates the package metadata using dnf
 func (d DnfManager) UpdateMetadata(ctx context.Context) error {
 	// DNF automatically updates metadata during operations, so no action is needed here.
-	return nil
+	// However, we can run a check-update with --refresh to force a metadata refresh.
+	bin := d.getPkgManagerBinary()
+	timeout := 60 * time.Second
+	_, err := utils.RunCommand(ctx, utils.CommandArgs{
+		Command: bin + " --refresh --quiet check-update",
+		Timeout: timeout,
+		Env: map[string]string{
+			"LANG": "C",
+		},
+	})
+	return err
 }
 
 // ListInstalledPackages lists installed packages using dnf
@@ -338,10 +350,19 @@ func (d DnfManager) RebootRequired(ctx context.Context) (bool, error) {
 }
 
 func (d DnfManager) CollectPackageInfo(ctx context.Context, limitDescriptionLength int64, enableUpdateCheck bool) (PackageInfo, error) {
+	info, err := host.InfoWithContext(ctx)
+	if info == nil {
+		return PackageInfo{}, err
+	}
+
 	result := PackageInfo{
-		Enabled:    true,
-		Panding:    false,
-		LastUpdate: time.Now().Unix(),
+		Enabled:      true,
+		Pending:      false,
+		LastUpdate:   time.Now().Unix(),
+		OsName:       info.Platform,
+		OsVersion:    info.PlatformVersion,
+		Uptime:       int64(info.Uptime),
+		AgentVersion: config.AgentVersion,
 		Stats: PackageStats{
 			PackageManager:  "dnf",
 			OperatingSystem: "linux",

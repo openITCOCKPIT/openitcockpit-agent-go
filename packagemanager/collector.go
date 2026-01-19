@@ -11,9 +11,14 @@ import (
 
 type PackageInfo struct {
 	Enabled    bool
-	Panding    bool
+	Pending    bool
 	LastUpdate int64
 	Stats      PackageStats
+
+	OsName       string // e.g. "ubuntu", "Windows", "macOS"
+	OsVersion    string
+	AgentVersion string
+	Uptime       int64
 
 	// Exclude from json
 	LinuxPackages  []Package
@@ -71,7 +76,7 @@ func (s *SoftwareCollector) Start(ctx context.Context) error {
 		// after the agent is running for 90 seconds.
 		// this ensures that the agent is running long enough (certificate exchange etc)
 		// to not do the heavy collection work too early.
-		firstRunDelay := 90 * time.Second
+		firstRunDelay := 9 * time.Second //todo set to 90
 		firstRunTrigger := time.NewTimer(firstRunDelay)
 		checkTimeout := time.Duration(checkInterval-1) * time.Second
 		defer firstRunTrigger.Stop()
@@ -105,7 +110,7 @@ func (s *SoftwareCollector) Start(ctx context.Context) error {
 		// Tell the webserver that we have pending data collection
 		s.Result <- &PackageInfo{
 			Enabled: true,
-			Panding: true,
+			Pending: true,
 		}
 
 		for {

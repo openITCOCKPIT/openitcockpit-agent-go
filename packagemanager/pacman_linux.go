@@ -7,7 +7,9 @@ import (
 	"strings"
 	"time"
 
+	"github.com/openITCOCKPIT/openitcockpit-agent-go/config"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/utils"
+	"github.com/shirou/gopsutil/v4/host"
 )
 
 // PacmanManager implements PackageManager for pacman
@@ -200,10 +202,19 @@ func (p PacmanManager) RebootRequired(ctx context.Context) (bool, error) {
 }
 
 func (p PacmanManager) CollectPackageInfo(ctx context.Context, limitDescriptionLength int64, enableUpdateCheck bool) (PackageInfo, error) {
+	info, err := host.InfoWithContext(ctx)
+	if info == nil {
+		return PackageInfo{}, err
+	}
+
 	result := PackageInfo{
-		Enabled:    true,
-		Panding:    false,
-		LastUpdate: time.Now().Unix(),
+		Enabled:      true,
+		Pending:      false,
+		LastUpdate:   time.Now().Unix(),
+		OsName:       info.Platform, // "arch"
+		OsVersion:    info.PlatformVersion,
+		Uptime:       int64(info.Uptime),
+		AgentVersion: config.AgentVersion,
 		Stats: PackageStats{
 			PackageManager:  "pacman",
 			OperatingSystem: "linux",

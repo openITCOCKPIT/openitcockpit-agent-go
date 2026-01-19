@@ -6,7 +6,9 @@ import (
 	"os/exec"
 	"time"
 
+	"github.com/openITCOCKPIT/openitcockpit-agent-go/config"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/utils"
+	"github.com/shirou/gopsutil/v4/host"
 )
 
 // ZypperManager implements PackageManager for zypper
@@ -200,10 +202,19 @@ func (z ZypperManager) RebootRequired(ctx context.Context) (bool, error) {
 }
 
 func (z ZypperManager) CollectPackageInfo(ctx context.Context, limitDescriptionLength int64, enableUpdateCheck bool) (PackageInfo, error) {
+	info, err := host.InfoWithContext(ctx)
+	if info == nil {
+		return PackageInfo{}, err
+	}
+
 	result := PackageInfo{
-		Enabled:    true,
-		Panding:    false,
-		LastUpdate: time.Now().Unix(),
+		Enabled:      true,
+		Pending:      false,
+		LastUpdate:   time.Now().Unix(),
+		OsName:       info.Platform,
+		OsVersion:    info.PlatformVersion,
+		Uptime:       int64(info.Uptime),
+		AgentVersion: config.AgentVersion,
 		Stats: PackageStats{
 			PackageManager:  "zypper",
 			OperatingSystem: "linux",

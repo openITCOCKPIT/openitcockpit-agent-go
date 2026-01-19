@@ -7,7 +7,9 @@ import (
 	"strings"
 	"time"
 
+	"github.com/openITCOCKPIT/openitcockpit-agent-go/config"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/utils"
+	"github.com/shirou/gopsutil/v4/host"
 )
 
 // AptManager implements PackageManager for apt
@@ -167,10 +169,20 @@ func (a AptManager) RebootRequired(ctx context.Context) (bool, error) {
 }
 
 func (a AptManager) CollectPackageInfo(ctx context.Context, limitDescriptionLength int64, enableUpdateCheck bool) (PackageInfo, error) {
+
+	info, err := host.InfoWithContext(ctx)
+	if info == nil {
+		return PackageInfo{}, err
+	}
+
 	result := PackageInfo{
-		Enabled:    true,
-		Panding:    false,
-		LastUpdate: time.Now().Unix(),
+		Enabled:      true,
+		Pending:      false,
+		LastUpdate:   time.Now().Unix(),
+		OsName:       info.Platform,        // "ubuntu"
+		OsVersion:    info.PlatformVersion, // "24.04"
+		Uptime:       int64(info.Uptime),
+		AgentVersion: config.AgentVersion,
 		Stats: PackageStats{
 			PackageManager:  "apt",
 			OperatingSystem: "linux",

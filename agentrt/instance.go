@@ -54,7 +54,7 @@ type AgentInstance struct {
 
 type PackageInfoJson struct {
 	Enabled    bool
-	Panding    bool
+	Pending    bool
 	LastUpdate int64
 	Stats      packagemanager.PackageStats
 }
@@ -87,7 +87,7 @@ func (a *AgentInstance) processCheckResult(result map[string]interface{}) {
 		// To not have a huge JSON blob in the check result, we only pass the Stats part
 		result["packagemanager"] = PackageInfoJson{
 			Enabled:    a.packageManagerResult.Enabled,
-			Panding:    a.packageManagerResult.Panding,
+			Pending:    a.packageManagerResult.Pending,
 			LastUpdate: a.packageManagerResult.LastUpdate,
 			Stats:      a.packageManagerResult.Stats,
 		}

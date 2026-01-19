@@ -140,7 +140,7 @@ func (w *handler) setPackageManagerState(newState packagemanager.PackageInfo) {
 	// as slices are reference types
 	w.packageManagerState = packagemanager.PackageInfo{
 		Enabled:        newState.Enabled,
-		Panding:        newState.Panding,
+		Pending:        newState.Pending,
 		LastUpdate:     newState.LastUpdate,
 		Stats:          newState.Stats,
 		LinuxPackages:  append([]packagemanager.Package{}, newState.LinuxPackages...),
