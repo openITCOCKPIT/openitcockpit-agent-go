@@ -12,7 +12,7 @@
             "program": "${workspaceFolder}",
             "env": {
                 "OITC_AGENT_DEBUG": "1",
-                "GOTMPDIR": "${env:USERPROFILE}\\git\\go-tmp\\"
+                //"GOTMPDIR": "${env:USERPROFILE}\\git\\go-tmp\\"
             },
             "args": ["-c", "./config.ini", "--disable-logfile", "--debug"]
             //"args": ["-c", ".\\config.ini", "--disable-logfile", "--debug"] // Windows

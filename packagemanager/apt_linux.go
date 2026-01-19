@@ -179,6 +179,10 @@ func (a AptManager) CollectPackageInfo(ctx context.Context, limitDescriptionLeng
 		}, err
 	}
 
+	// Platform: "ubuntu"
+	// PlatformFamily: "debian"
+	// PlatformVersion: "24.04"
+	// KernelVersion: "6.6.87.2-microsoft-standard-WSL2"
 	result := PackageInfo{
 		Enabled:    true,
 		Pending:    false,

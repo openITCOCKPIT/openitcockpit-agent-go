@@ -9,7 +9,11 @@
         "RebootRequired": false,
         "LastError": null,
         "OperatingSystem": "linux",
-        "PackageManager": "apt"
+        "PackageManager": "apt",
+        "OsName": "ubuntu",
+        "OsVersion": "24.04",
+        "AgentVersion": "3.4.0",
+        "Uptime": 30585
     },
     "LinuxPackages": [
         {
