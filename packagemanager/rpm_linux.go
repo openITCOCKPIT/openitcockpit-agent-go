@@ -115,6 +115,10 @@ func (r RpmManager) CollectPackageInfo(ctx context.Context, limitDescriptionLeng
 		}, err
 	}
 
+	// Platform: "almalinux"
+	// PlatformFamily: "rhel"
+	// PlatformVersion: "9.7"
+	// KernelVersion: "6.6.87.2-microsoft-standard-WSL2"
 	result := PackageInfo{
 		Enabled:    true,
 		Pending:    false,
@@ -124,6 +128,7 @@ func (r RpmManager) CollectPackageInfo(ctx context.Context, limitDescriptionLeng
 			OperatingSystem: "linux",
 			OsName:          info.Platform,
 			OsVersion:       info.PlatformVersion,
+			OsFamily:        info.PlatformFamily,
 			Uptime:          int64(info.Uptime),
 			AgentVersion:    config.AgentVersion,
 		},

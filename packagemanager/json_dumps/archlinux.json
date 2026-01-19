@@ -9,7 +9,12 @@
         "RebootRequired": false,
         "LastError": null,
         "OperatingSystem": "linux",
-        "PackageManager": "pacman"
+        "PackageManager": "pacman",
+        "OsName": "arch",
+        "OsVersion": "20260104.0.477168",
+        "OsFamily": "arch",
+        "AgentVersion": "3.4.0",
+        "Uptime": 30877
     },
     "LinuxPackages": [
         {

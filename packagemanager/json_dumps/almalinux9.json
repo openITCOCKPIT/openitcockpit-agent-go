@@ -9,7 +9,12 @@
         "RebootRequired": false,
         "LastError": null,
         "OperatingSystem": "linux",
-        "PackageManager": "dnf"
+        "PackageManager": "dnf",
+        "OsName": "almalinux",
+        "OsVersion": "9.7",
+        "OsFamily": "rhel",
+        "AgentVersion": "3.4.0",
+        "Uptime": 31534
     },
     "LinuxPackages": [
         {

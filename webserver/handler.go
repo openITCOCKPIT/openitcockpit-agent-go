@@ -138,6 +138,11 @@ func (w *handler) setPackageManagerState(newState packagemanager.PackageInfo) {
 
 	// Copy the data to avoid bugs with references
 	// as slices are reference types
+	if newState.Stats.LastError != nil {
+		newState.Stats.LastErrorString = newState.Stats.LastError.Error()
+	}
+
+	// Deep copy slices
 	w.packageManagerState = packagemanager.PackageInfo{
 		Enabled:        newState.Enabled,
 		Pending:        newState.Pending,

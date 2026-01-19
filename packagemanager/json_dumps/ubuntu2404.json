@@ -12,6 +12,7 @@
         "PackageManager": "apt",
         "OsName": "ubuntu",
         "OsVersion": "24.04",
+        "OsFamily": "debian",
         "AgentVersion": "3.4.0",
         "Uptime": 30585
     },

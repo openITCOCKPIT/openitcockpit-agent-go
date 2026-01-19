@@ -211,6 +211,10 @@ func (z ZypperManager) CollectPackageInfo(ctx context.Context, limitDescriptionL
 		}, err
 	}
 
+	// Platform: "opensuse-tumbleweed"
+	// PlatformFamily: "suse"
+	// PlatformVersion: "20260113"
+	// KernelVersion: "6.6.87.2-microsoft-standard-WSL2"
 	result := PackageInfo{
 		Enabled:    true,
 		Pending:    false,
@@ -220,6 +224,7 @@ func (z ZypperManager) CollectPackageInfo(ctx context.Context, limitDescriptionL
 			OperatingSystem: "linux",
 			OsName:          info.Platform,
 			OsVersion:       info.PlatformVersion,
+			OsFamily:        info.PlatformFamily,
 			Uptime:          int64(info.Uptime),
 			AgentVersion:    config.AgentVersion,
 		},

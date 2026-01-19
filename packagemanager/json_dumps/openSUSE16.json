@@ -9,7 +9,12 @@
         "RebootRequired": false,
         "LastError": null,
         "OperatingSystem": "linux",
-        "PackageManager": "zypper"
+        "PackageManager": "zypper",
+        "OsName": "opensuse-tumbleweed",
+        "OsVersion": "20260113",
+        "OsFamily": "suse",
+        "AgentVersion": "3.4.0",
+        "Uptime": 32046
     },
     "LinuxPackages": [
         {

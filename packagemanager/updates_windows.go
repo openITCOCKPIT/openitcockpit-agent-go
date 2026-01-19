@@ -254,6 +254,8 @@ func (w WindowsUpdatesManager) CollectPackageInfo(ctx context.Context, limitDesc
 
 	// Platform: "Microsoft Windows 11 Enterprise"
 	// PlatformFamily: "Standalone Workstation"
+	// PlatformFamily: "Server (Domain Controller)"
+	// PlatformFamily: "Server"
 	// PlatformVersion: "24H2"
 	// KernelVersion: "10.0.26100.7462 Build 26100.7462"
 	result := PackageInfo{
@@ -265,6 +267,7 @@ func (w WindowsUpdatesManager) CollectPackageInfo(ctx context.Context, limitDesc
 			OperatingSystem: "windows",
 			OsName:          info.Platform,
 			OsVersion:       fmt.Sprintf("%s (%s)", info.PlatformVersion, info.KernelVersion),
+			OsFamily:        "windows", // keep it simple
 			Uptime:          int64(info.Uptime),
 			AgentVersion:    config.AgentVersion,
 		},

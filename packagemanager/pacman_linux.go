@@ -211,6 +211,10 @@ func (p PacmanManager) CollectPackageInfo(ctx context.Context, limitDescriptionL
 		}, err
 	}
 
+	// Platform: "arch"
+	// PlatformFamily: "arch"
+	// PlatformVersion: "20260104.0.477168"
+	// KernelVersion: "6.6.87.2-microsoft-standard-WSL2"
 	result := PackageInfo{
 		Enabled:    true,
 		Pending:    false,
@@ -220,6 +224,7 @@ func (p PacmanManager) CollectPackageInfo(ctx context.Context, limitDescriptionL
 			OperatingSystem: "linux",
 			OsName:          info.Platform, // "arch"
 			OsVersion:       info.PlatformVersion,
+			OsFamily:        info.PlatformFamily,
 			Uptime:          int64(info.Uptime),
 			AgentVersion:    config.AgentVersion,
 		},

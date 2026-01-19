@@ -192,6 +192,7 @@ func (a AptManager) CollectPackageInfo(ctx context.Context, limitDescriptionLeng
 			OperatingSystem: "linux",
 			OsName:          info.Platform,        // "ubuntu"
 			OsVersion:       info.PlatformVersion, // "24.04"
+			OsFamily:        info.PlatformFamily,  // "debian"
 			Uptime:          int64(info.Uptime),
 			AgentVersion:    config.AgentVersion,
 		},
