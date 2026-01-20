@@ -23,6 +23,9 @@ func (m MacOSUpdatesManager) ListInstalledApps(ctx context.Context) ([]Package, 
 
 func (m MacOSUpdatesManager) getInstalledApps(ctx context.Context) (string, error) {
 	timeout := time.Duration(120 * time.Second)
+	// The app name is taken from the apps Info.plist CFBundleName key
+	// This is localized and there is no easy way to get the non localized name
+	// https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/AboutInformationPropertyListFiles.html#//apple_ref/doc/uid/TP40009254-SW1
 	result, err := utils.RunCommand(ctx, utils.CommandArgs{
 		Command: "system_profiler SPApplicationsDataType -json",
 		Timeout: timeout,
