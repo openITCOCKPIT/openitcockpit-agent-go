@@ -152,7 +152,7 @@ func (w *handler) setPackageManagerState(newState packagemanager.PackageInfo) {
 		LinuxUpdates:   append([]packagemanager.PackageUpdate{}, newState.LinuxUpdates...),
 		WindowsApps:    append([]packagemanager.WindowsApp{}, newState.WindowsApps...),
 		WindowsUpdates: append([]packagemanager.WindowsUpdate{}, newState.WindowsUpdates...),
-		MacOSApps:      append([]packagemanager.Package{}, newState.MacOSApps...),
+		MacosApps:      append([]packagemanager.Package{}, newState.MacosApps...),
 		MacosUpdates:   append([]packagemanager.MacosUpdate{}, newState.MacosUpdates...),
 	}
 }

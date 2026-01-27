@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-type MacOSAppsJson struct {
+type MacosAppsJson struct {
 	SPApplicationsDataType []struct {
 		Name string `json:"_name"`
 		//ArchKind     string    `json:"arch_kind"`
@@ -71,7 +71,7 @@ func parseMacOSSoftwareUpdateOutput(output string) ([]MacosUpdate, error) {
 func parseMacOSInstalledAppsOutput(output string) ([]Package, error) {
 	var apps []Package
 
-	var data MacOSAppsJson
+	var data MacosAppsJson
 	err := json.Unmarshal([]byte(output), &data)
 	if err != nil {
 		return nil, err

@@ -29,14 +29,15 @@ type AgentInstance struct {
 	shutdown chan struct{}
 	reload   chan chan struct{}
 
-	stateWebserver               chan []byte
-	statePushClient              chan []byte
-	prometheusStateWebserver     chan map[string]string
-	packageManagerStateWebserver chan packagemanager.PackageInfo
-	checkResult                  chan map[string]interface{}
-	customCheckResultChan        chan *checkrunner.CustomCheckResult
-	prometheusExporterResultChan chan *checkrunner.PrometheusExporterResult
-	packageManagerResultChan     chan *packagemanager.PackageInfo
+	stateWebserver                chan []byte
+	statePushClient               chan []byte
+	statePushClientPackageManager chan packagemanager.PackageInfo
+	prometheusStateWebserver      chan map[string]string
+	packageManagerStateWebserver  chan packagemanager.PackageInfo
+	checkResult                   chan map[string]interface{}
+	customCheckResultChan         chan *checkrunner.CustomCheckResult
+	prometheusExporterResultChan  chan *checkrunner.PrometheusExporterResult
+	packageManagerResultChan      chan *packagemanager.PackageInfo
 
 	customCheckResults map[string]interface{}
 
@@ -218,7 +219,8 @@ func (a *AgentInstance) doReload(ctx context.Context, cfg *config.Configuration)
 	}
 	if cfg.OITC.Push {
 		a.pushClient = &pushclient.PushClient{
-			StateInput: a.statePushClient,
+			StateInput:               a.statePushClient,
+			StateInputPackageManager: a.statePushClientPackageManager,
 		}
 		if err := a.pushClient.Start(ctx, cfg); err != nil {
 			log.Fatalln("Could not load push client: ", err)
@@ -319,6 +321,7 @@ func (a *AgentInstance) stop() {
 func (a *AgentInstance) Start(parent context.Context) {
 	a.stateWebserver = make(chan []byte)
 	a.statePushClient = make(chan []byte)
+	a.statePushClientPackageManager = make(chan packagemanager.PackageInfo)
 	a.checkResult = make(chan map[string]interface{})
 	a.customCheckResultChan = make(chan *checkrunner.CustomCheckResult)
 	a.customCheckResults = map[string]interface{}{}
@@ -380,7 +383,27 @@ func (a *AgentInstance) Start(parent context.Context) {
 				a.prometheusExporterResults[res.Name] = res.Result
 			case res := <-a.packageManagerResultChan:
 				// received package manager result
+				// Update the stats for push data and also the data for the webserver (pull mode)
 				a.packageManagerResult = *res
+
+				// In push mode, we also pass the data to the push client.
+				// otherwise the data would be pushed with each check result
+				if a.pushClient != nil {
+					a.wg.Add(1)
+					go func() {
+						defer a.wg.Done()
+
+						t := time.NewTimer(time.Second * 10)
+						defer t.Stop()
+
+						select {
+						case a.statePushClientPackageManager <- *res: // Pass Package Manager data to push client
+						case <-t.C:
+							log.Errorln("Internal error: could not store package manager result for push client: timeout")
+						}
+					}()
+				}
+
 			}
 
 		}

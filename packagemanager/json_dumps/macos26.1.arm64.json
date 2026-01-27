@@ -20,7 +20,7 @@
     "LinuxUpdates": [],
     "WindowsApps": [],
     "WindowsUpdates": [],
-    "MacOSApps": [
+    "MacosApps": [
         {
             "Name": "Ordneraktionen konfigurieren",
             "Version": "1.2",

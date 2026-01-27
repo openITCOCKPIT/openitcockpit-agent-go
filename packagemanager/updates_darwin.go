@@ -124,7 +124,7 @@ func (m MacOSUpdatesManager) CollectPackageInfo(ctx context.Context, limitDescri
 		availableUpdates[i].Description = truncateDescription(availableUpdates[i].Description, limitDescriptionLength)
 	}
 
-	result.MacOSApps = installedApps
+	result.MacosApps = installedApps
 	result.MacosUpdates = availableUpdates
 
 	return result, nil

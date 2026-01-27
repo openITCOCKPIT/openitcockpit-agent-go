@@ -20,7 +20,7 @@ type PackageInfo struct {
 	LinuxUpdates   []PackageUpdate
 	WindowsApps    []WindowsApp
 	WindowsUpdates []WindowsUpdate
-	MacOSApps      []Package
+	MacosApps      []Package
 	MacosUpdates   []MacosUpdate
 }
 

@@ -428,6 +428,6 @@
             "RebootRequired": false
         }
     ],
-    "MacOSApps": [],
+    "MacosApps": [],
     "MacosUpdates": []
 }

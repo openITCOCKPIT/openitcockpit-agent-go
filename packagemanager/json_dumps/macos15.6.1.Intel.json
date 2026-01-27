@@ -20,7 +20,7 @@
     "LinuxUpdates": [],
     "WindowsApps": [],
     "WindowsUpdates": [],
-    "MacOSApps": [
+    "MacosApps": [
         {
             "Name": "App Store",
             "Version": "3.0",
