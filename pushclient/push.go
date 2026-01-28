@@ -69,15 +69,16 @@ type PushClient struct {
 	StateInput               chan []byte
 	StateInputPackageManager chan packagemanager.PackageInfo
 
-	shutdown           chan struct{}
-	wg                 sync.WaitGroup
-	configuration      config.PushConfiguration
-	authConfiguration  authConfiguration
-	client             http.Client
-	urlSubmitCheckData *url.URL
-	urlRegisterAgent   *url.URL
-	apiKeyHeader       string
-	timeout            time.Duration
+	shutdown             chan struct{}
+	wg                   sync.WaitGroup
+	configuration        config.PushConfiguration
+	authConfiguration    authConfiguration
+	client               http.Client
+	urlSubmitCheckData   *url.URL
+	urlRegisterAgent     *url.URL
+	urlSubmitPackageInfo *url.URL
+	apiKeyHeader         string
+	timeout              time.Duration
 }
 
 type registerAgentRequest struct {
@@ -102,6 +103,11 @@ type submitCheckDataRequest struct {
 type submitCheckDataResponse struct {
 	ReceivedChecks int64  `json:"received_checks"`
 	Error          string `json:"error"`
+}
+
+type submitPackageInfoRequest struct {
+	Success bool   `json:"success"`
+	Error   string `json:"error"`
 }
 
 func (p *PushClient) saveAuthConfig() error {
@@ -288,14 +294,9 @@ func (p *PushClient) submitSoftwareInventoryData(ctx context.Context, pkgInfo pa
 		AgentUUID: p.authConfiguration.UUID,
 		Password:  p.authConfiguration.Password,
 	}
-	res := submitCheckDataResponse{}
+	res := submitPackageInfoRequest{}
 
-	url := *p.urlSubmitCheckData // * to make a copy of the struct to avoid mutating p.urlSubmitCheckData
-	q := url.Query()
-	q.Set("type", "packagemanager")
-	url.RawQuery = q.Encode()
-
-	status, err := p.httpRequest(ctx, &url, &req, &res)
+	status, err := p.httpRequest(ctx, p.urlSubmitPackageInfo, &req, &res)
 	if err != nil {
 		log.Errorln("Push client: ", err)
 		return
@@ -306,7 +307,7 @@ func (p *PushClient) submitSoftwareInventoryData(ctx context.Context, pkgInfo pa
 		log.Errorln("Push Client: authentication error (probably incorrect api key)")
 		return
 	case 200:
-		log.Debugln("Push Client: submitted ", res.ReceivedChecks, " checks")
+		log.Debugln("Push Client: submitted software inventory data successfully")
 		return
 	default:
 		if res.Error != "" {
@@ -396,6 +397,12 @@ func (p *PushClient) Start(ctx context.Context, cfg *config.Configuration) error
 		return err
 	}
 	p.urlRegisterAgent.Path = path.Join(p.urlRegisterAgent.Path, "agentconnector", "register_agent.json")
+
+	p.urlSubmitPackageInfo, err = url.Parse(p.configuration.URL)
+	if err != nil {
+		return err
+	}
+	p.urlSubmitPackageInfo.Path = path.Join(p.urlSubmitPackageInfo.Path, "agentconnector", "submit_package_info.json")
 
 	p.apiKeyHeader = fmt.Sprint("X-OITC-API ", p.configuration.Apikey)
 

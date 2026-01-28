@@ -213,21 +213,33 @@ func (w WindowsUpdatesManager) parsePowerShellUpdateSessionOutput(output string)
 
 func (w WindowsUpdatesManager) RebootRequired(ctx context.Context) (bool, error) {
 	// https://stackoverflow.com/a/47869761/11885414
-	checks := []struct {
-		key  registry.Key
-		path string
-	}{
-		{registry.LOCAL_MACHINE, `SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WindowsUpdate\\Auto Update\\RebootRequired`},
-		{registry.LOCAL_MACHINE, `SYSTEM\\CurrentControlSet\\Control\\Session Manager`},
-		{registry.LOCAL_MACHINE, `SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Component Based Servicing\\RebootPending`},
+	// 1. Check Windows Update reboot required key
+	// Indicates that Windows Update has installed updates that require a reboot to complete.
+	wuKey, err := registry.OpenKey(registry.LOCAL_MACHINE, `SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired`, registry.READ)
+	if err == nil {
+		wuKey.Close()
+		return true, nil
 	}
-	for _, check := range checks {
-		k, err := registry.OpenKey(check.key, check.path, registry.READ)
-		if err == nil {
-			k.Close()
+
+	// 2. Check PendingFileRenameOperations value in Session Manager
+	// This key is checked for the presence of the "PendingFileRenameOperations" value, which signals that files are scheduled to be replaced or deleted on the next reboot.
+	smKey, err := registry.OpenKey(registry.LOCAL_MACHINE, `SYSTEM\CurrentControlSet\Control\Session Manager`, registry.READ)
+	if err == nil {
+		defer smKey.Close()
+		val, _, err := smKey.GetStringsValue("PendingFileRenameOperations")
+		if err == nil && len(val) > 0 {
 			return true, nil
 		}
 	}
+
+	// 3. Check Component Based Servicing reboot pending key
+	// Used by the Windows servicing stack (CBS) to indicate that a reboot is required to complete servicing operations, such as installing or removing Windows components or updates.
+	cbsKey, err := registry.OpenKey(registry.LOCAL_MACHINE, `SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending`, registry.READ)
+	if err == nil {
+		cbsKey.Close()
+		return true, nil
+	}
+
 	return false, nil
 }
 
