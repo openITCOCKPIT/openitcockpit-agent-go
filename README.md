@@ -213,6 +213,42 @@ Please see the [full documentation](https://github.com/openITCOCKPIT/openitcockp
 | Libvirt VMs | -       | ✅ [readme](https://docs.openitcockpit.io/en/agent/build-binary/#enable-libvirt-support-linux-only) | -     | -       |
 
 
+## Software Inventory
+
+This agent can collect information about installed packages, installed software, and available security updates for all major operating systems.
+The agent will also detect, if a reboot of the system is required. Reboots are often necessary to apply the latest security updates.
+
+### Linux
+
+On linux systems, the agent will collect all installed packages, and list available updates and also (if supported) security updates.
+
+| Package manager | Installed packages | Available Updates | Security Updates | Reebot Required                                                                                                     |   |
+|-----------------|--------------------|-------------------|------------------|---------------------------------------------------------------------------------------------------------------------|---|
+| `apt`           | ✅                  | ✅                 | ✅                | ✅ [Method](https://www.debian.org/doc/debian-policy/ch-opersys.html#signaling-that-a-reboot-is-required)            |   |
+| `dnf`           | ✅                  | ✅                 | ✅                | ✅ [Method](https://dnf-plugins-core.readthedocs.io/en/latest/needs_restarting.html)                                 |   |
+| `yum`           | ✅                  | ✅                 | ✅                | ✅ [Method](https://man7.org/linux/man-pages/man1/needs-restarting.1.html)                                           |   |
+| `zypper`        | ✅                  | ✅                 | ✅                | ✅ [Method](https://support.scc.suse.com/s/kb/How-to-check-if-system-reboot-is-needed-after-patching?language=en_US) |   |
+| `pacman`        | ✅                  | ✅                 | -                | _Not supported_                                                                                                     |   |
+| `rpm`           | ✅                  | -                 | -                | -                                                                                                                   |   |
+
+
+
+### Windows
+
+| Available Windows Updates                 | Installed Software | Reebot Required |
+|-------------------------------------------|--------------------|-----------------|
+| Via PowerShell `Microsoft.Update.Session` | via Registry       | via Registry    |
+
+On Windows Systems, only operating system related updates will be reported, as there is no package manager available.
+
+### macOS
+
+| Available macOS Updates | Installed Software    | Reebot Required |
+|-------------------------|-----------------------|-----------------|
+| ✅                       | via `system_profiler` | _Not supported_ |
+
+On macOS Systems, only operating system related updates will be reported, as there is no package manager available.
+
 ## License
 ```
 Copyright (C) 2021-2025  it-novum GmbH
