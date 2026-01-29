@@ -222,15 +222,14 @@ The agent will also detect, if a reboot of the system is required. Reboots are o
 
 On linux systems, the agent will collect all installed packages, and list available updates and also (if supported) security updates.
 
-| Package manager | Installed packages | Available Updates | Security Updates | Reebot Required                                                                                                     |   |
-|-----------------|--------------------|-------------------|------------------|---------------------------------------------------------------------------------------------------------------------|---|
-| `apt`           | ✅                  | ✅                 | ✅                | ✅ [Method](https://www.debian.org/doc/debian-policy/ch-opersys.html#signaling-that-a-reboot-is-required)            |   |
-| `dnf`           | ✅                  | ✅                 | ✅                | ✅ [Method](https://dnf-plugins-core.readthedocs.io/en/latest/needs_restarting.html)                                 |   |
-| `yum`           | ✅                  | ✅                 | ✅                | ✅ [Method](https://man7.org/linux/man-pages/man1/needs-restarting.1.html)                                           |   |
-| `zypper`        | ✅                  | ✅                 | ✅                | ✅ [Method](https://support.scc.suse.com/s/kb/How-to-check-if-system-reboot-is-needed-after-patching?language=en_US) |   |
-| `pacman`        | ✅                  | ✅                 | -                | _Not supported_                                                                                                     |   |
-| `rpm`           | ✅                  | -                 | -                | -                                                                                                                   |   |
-
+| Package manager | Installed packages | Available Updates | Security Updates | Reebot Required                                                                                                     |
+|-----------------|--------------------|-------------------|------------------|---------------------------------------------------------------------------------------------------------------------|
+| `apt`           | ✅                  | ✅                 | ✅                | ✅ [Method](https://www.debian.org/doc/debian-policy/ch-opersys.html#signaling-that-a-reboot-is-required)            |
+| `dnf`           | ✅                  | ✅                 | ✅                | ✅ [Method](https://dnf-plugins-core.readthedocs.io/en/latest/needs_restarting.html)                                 |
+| `yum`           | ✅                  | ✅                 | ✅                | ✅ [Method](https://man7.org/linux/man-pages/man1/needs-restarting.1.html)                                           |
+| `zypper`        | ✅                  | ✅                 | ✅                | ✅ [Method](https://support.scc.suse.com/s/kb/How-to-check-if-system-reboot-is-needed-after-patching?language=en_US) |
+| `pacman`        | ✅                  | ✅                 | -                | _Not supported_                                                                                                     |
+| `rpm`           | ✅                  | -                 | -                | -                                                                                                                   |
 
 
 ### Windows
