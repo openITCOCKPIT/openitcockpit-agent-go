@@ -215,14 +215,14 @@ Please see the [full documentation](https://github.com/openITCOCKPIT/openitcockp
 
 ## Software Inventory
 
-This agent can collect information about installed packages, installed software, and available security updates for all major operating systems.
-The agent will also detect, if a reboot of the system is required. Reboots are often necessary to apply the latest security updates.
+The openITCOCKPIT Agent collects detailed information about installed packages, installed software, and available security updates across all major operating systems. It also detects when a system reboot is required. An important step to ensure that the latest security updates are fully applied.
 
 ### Linux
 
-On linux systems, the agent will collect all installed packages, and list available updates and also (if supported) security updates.
 
-| Package manager | Installed packages | Available Updates | Security Updates | Reebot Required                                                                                                     |
+On Linux systems, the agent gathers a complete list of installed packages, identifies available updates, and, where supported, highlights security updates.
+
+| Package Manager | Installed Packages | Available Updates | Security Updates | Reboot Required                                                                                                     |
 |-----------------|--------------------|-------------------|------------------|---------------------------------------------------------------------------------------------------------------------|
 | `apt`           | ✅                  | ✅                 | ✅                | ✅ [Method](https://www.debian.org/doc/debian-policy/ch-opersys.html#signaling-that-a-reboot-is-required)            |
 | `dnf`           | ✅                  | ✅                 | ✅                | ✅ [Method](https://dnf-plugins-core.readthedocs.io/en/latest/needs_restarting.html)                                 |
@@ -234,19 +234,20 @@ On linux systems, the agent will collect all installed packages, and list availa
 
 ### Windows
 
-| Available Windows Updates                 | Installed Software | Reebot Required |
+| Available Windows Updates                 | Installed Software | Reboot Required |
 |-------------------------------------------|--------------------|-----------------|
 | Via PowerShell `Microsoft.Update.Session` | via Registry       | via Registry    |
 
-On Windows Systems, only operating system related updates will be reported, as there is no package manager available.
+On Windows systems, only operating system updates are reported, as there is no unified package manager. The agent retrieves information about installed software and reboot requirements via the Windows Registry.
+
 
 ### macOS
 
-| Available macOS Updates | Installed Software    | Reebot Required |
+| Available macOS Updates | Installed Software    | Reboot Required |
 |-------------------------|-----------------------|-----------------|
 | ✅                       | via `system_profiler` | _Not supported_ |
 
-On macOS Systems, only operating system related updates will be reported, as there is no package manager available.
+On macOS systems, only operating system updates are reported, as there is no package manager. Installed software information is collected using `system_profiler`. Reboot detection is not supported on macOS.
 
 ## License
 ```
