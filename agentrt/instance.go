@@ -275,6 +275,14 @@ func (a *AgentInstance) doSoftwareCollectorReload(ctx context.Context, cfg *conf
 
 func (a *AgentInstance) stop() {
 	wg := sync.WaitGroup{}
+	if a.softwareCollector != nil {
+		wg.Add(1)
+		go func() {
+			a.softwareCollector.Shutdown()
+			a.softwareCollector = nil
+			wg.Done()
+		}()
+	}
 	if a.logHandler != nil {
 		wg.Add(1)
 		go func() {

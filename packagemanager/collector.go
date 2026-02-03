@@ -46,22 +46,28 @@ type SoftwareCollector struct {
 	Configuration *config.Configuration
 	Result        chan *PackageInfo
 
-	wg       sync.WaitGroup
-	shutdown chan struct{}
+	wg sync.WaitGroup
+	//shutdown chan struct{} // deprecated, kept for compatibility if needed
+	cancel context.CancelFunc
 }
 
+// Shutdown gracefully stops the collector by cancelling the context and waiting for goroutines to finish
 func (s *SoftwareCollector) Shutdown() {
-	close(s.shutdown)
+	if s.cancel != nil {
+		s.cancel()
+	}
 	s.wg.Wait()
 }
 
-// Start the check runner and returns immediatly (SHOULD NOT RUN IN GOROUTINE)
-func (s *SoftwareCollector) Start(ctx context.Context) error {
-	s.shutdown = make(chan struct{})
+// Start the check runner and returns immediately (SHOULD NOT RUN IN GOROUTINE)
+func (s *SoftwareCollector) Start(parentCtx context.Context) error {
+	// Create a cancellable context for the collector
+	ctx, cancel := context.WithCancel(parentCtx)
+	s.cancel = cancel
 
 	log.Infoln("Packagemanager: Software inventory is enabled")
 
-	// convert check intervall from minutes (config) to seconds
+	// convert check interval from minutes (config) to seconds
 	checkInterval := s.Configuration.Packagemanager.CheckInterval * 60
 
 	// Start a first run delayed after startup
@@ -69,15 +75,12 @@ func (s *SoftwareCollector) Start(ctx context.Context) error {
 	go func() {
 		defer s.wg.Done()
 
-		ctx, cancel := context.WithCancel(ctx)
-		defer cancel()
-
-		// Normaly the check interval is a large value such as 1 hour or more
+		// Normally the check interval is a large value such as 1 hour or more
 		// To get fresh data after the agent was started, we want to run the first check
 		// after the agent is running for 90 seconds.
 		// this ensures that the agent is running long enough (certificate exchange etc)
 		// to not do the heavy collection work too early.
-		firstRunDelay := 9 * time.Second //todo set to 90
+		firstRunDelay := 90 * time.Second
 		firstRunTrigger := time.NewTimer(firstRunDelay)
 		checkTimeout := time.Duration(checkInterval-1) * time.Second
 		defer firstRunTrigger.Stop()
@@ -86,12 +89,9 @@ func (s *SoftwareCollector) Start(ctx context.Context) error {
 			select {
 			case <-ctx.Done():
 				return
-			case _, ok := <-s.shutdown:
-				if !ok {
-					return
-				}
 			case <-firstRunTrigger.C:
 				go s.runCollection(ctx, checkTimeout)
+				return // exit after first run
 			}
 		}
 	}()
@@ -102,25 +102,32 @@ func (s *SoftwareCollector) Start(ctx context.Context) error {
 	go func() {
 		defer s.wg.Done()
 
-		ctx, cancel := context.WithCancel(ctx)
-		defer cancel()
-
 		ticker := time.NewTicker(time.Duration(checkInterval) * time.Second)
 		defer ticker.Stop()
 
 		// Tell the webserver that we have pending data collection
-		s.Result <- &PackageInfo{
+		select {
+		case s.Result <- &PackageInfo{
 			Enabled: true,
 			Pending: true,
+		}:
+			// sent successfully
+		default:
+			// channel not ready, skip or log
+			log.Warnln("Packagemanager: Unable to send pending status, channel not ready")
 		}
 
 		for {
 			select {
 			case <-ctx.Done():
-				return
-			case _, ok := <-s.shutdown:
-				if !ok {
-					return
+				// Drain ticker channel to avoid goroutine leak
+				for {
+					select {
+					case <-ticker.C:
+						// drain
+					default:
+						return
+					}
 				}
 			case <-ticker.C:
 				go s.runCollection(ctx, checkTimeout)
