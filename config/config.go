@@ -15,7 +15,7 @@ import (
 )
 
 // AgentVersion as the name says
-const AgentVersion = "3.4.0"
+const AgentVersion = "3.5.0"
 
 // CustomCheck are external plugins and scripts which should be executed by the Agent
 type CustomCheck struct {
