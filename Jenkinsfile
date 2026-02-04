@@ -376,14 +376,16 @@ pipeline {
                         label 'windows'
                     }
                     environment {
+                        branch = "${env.BRANCH_NAME}"
                         GOOS = 'windows'
                         BINNAME = 'openitcockpit-agent.exe'
+                        SM_CLIENT_CERT_FILE = "C:\\Users\\Administrator\\.digicert-ucpc\\certs\\e7499691-a05e-40d0-a8b5-4620fc5ebe82\\20260204102732-d51901f3-2cc4-4538-92e8-30cc33f94013.p12"
+                        SM_HOST = "https://clientauth.one.digicert.com"
                     }
                     stages {
                         stage('amd64') {
                             environment {
                                 GOARCH = 'amd64'
-                                branch = "${env.BRANCH_NAME}"
                             }
                             steps {
                                 package_windows(branch)
