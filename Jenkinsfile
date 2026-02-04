@@ -681,14 +681,14 @@ def package_windows(branch) {
         powershell "& \"C:\\Program Files\\DigiCert\\DigiCert One Signing Manager Tools\\smctl.exe\" healthcheck"
 
         //powershell "& $ADVINST /loadpathvars \"build\\msi\\PathVariables_Jenkins.apf\""
-        powershell "& $ADVINST /loadpathvars \"build\\msi\\PathVariables_JenkinsOA66.apf\""
-        //powershell "& $ADVINST /edit \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\" \\UpdatePathVariable -name AGENT_SOURCE -value \"C:\\jenkins\\workspace\\openitcockpit-agent-go_${branch}\" -valuetype Folder -global"
+        //powershell "& $ADVINST /loadpathvars \"build\\msi\\PathVariables_JenkinsOA66.apf\""
+        powershell "& $ADVINST /edit \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\" \\UpdatePathVariable -name AGENT_SOURCE -value \"C:\\jenkins\\workspace\\openitcockpit-agent-go_${branch}\" -valuetype Folder -global"
         powershell "& $ADVINST /edit \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\" \\SetVersion \"$VERSION\""
 
-        if (env.BRANCH_NAME != 'main') {
+        //if (env.BRANCH_NAME != 'main') {
             // Disable code-signing for development builds branches
-            powershell "& $ADVINST /edit \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\" \\ResetSig"
-        }
+        //    powershell "& $ADVINST /edit \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\" \\ResetSig"
+        //}
 
         powershell "& $ADVINST /build \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\""
         archiveArtifacts artifacts: 'release/packages/**', fingerprint: true
