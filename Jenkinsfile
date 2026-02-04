@@ -379,7 +379,8 @@ pipeline {
                         branch = "${env.BRANCH_NAME}"
                         GOOS = 'windows'
                         BINNAME = 'openitcockpit-agent.exe'
-                        SM_CLIENT_CERT_FILE = "C:\\Users\\Administrator\\.digicert-ucpc\\certs\\e7499691-a05e-40d0-a8b5-4620fc5ebe82\\20260204102732-d51901f3-2cc4-4538-92e8-30cc33f94013.p12"
+                        //SM_CLIENT_CERT_FILE = "C:\\Users\\Administrator\\.digicert-ucpc\\certs\\e7499691-a05e-40d0-a8b5-4620fc5ebe82\\20260204102732-d51901f3-2cc4-4538-92e8-30cc33f94013.p12"
+                        SM_CLIENT_CERT_FILE = "C:\\Users\\Administrator\\Certificate_pkcs12.p12"
                         SM_HOST = "https://clientauth.one.digicert.com"
                     }
                     stages {
@@ -388,7 +389,10 @@ pipeline {
                                 GOARCH = 'amd64'
                             }
                             steps {
-                                withCredentials([string(credentialsId: 'SM_API_KEY', variable: 'SM_API_KEY')]) {
+                                withCredentials([
+                                    string(credentialsId: 'SM_API_KEY', variable: 'SM_API_KEY'),
+                                    string(credentialsId: 'SM_CLIENT_CERT_PASSWORD', variable: 'SM_CLIENT_CERT_PASSWORD')
+                                ]) {
                                     package_windows(branch)
                                 }
                             }
@@ -398,7 +402,10 @@ pipeline {
                                 GOARCH = '386'
                             }
                             steps {
-                                withCredentials([string(credentialsId: 'SM_API_KEY', variable: 'SM_API_KEY')]) {
+                                withCredentials([
+                                    string(credentialsId: 'SM_API_KEY', variable: 'SM_API_KEY'),
+                                    string(credentialsId: 'SM_CLIENT_CERT_PASSWORD', variable: 'SM_CLIENT_CERT_PASSWORD')
+                                ]) {
                                     package_windows(branch)
                                 }
                             }
