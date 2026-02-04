@@ -658,7 +658,7 @@ def package_windows(branch) {
         bat 'TYPE example\\prometheus_exporters_linux.ini | MORE /P > example\\prometheus_exporters_example.ini'
 
         //powershell "& $ADVINST /loadpathvars \"build\\msi\\PathVariables_Jenkins.apf\""
-        powershell "& $ADVINST /edit \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\" \\SetPathVariable AGENT_SOURCE \"C:\\jenkins\\workspace\\openitcockpit-agent-go_${branch}\""
+        powershell "& $ADVINST /edit \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\" \\UpdatePathVariable -name AGENT_SOURCE -value \"C:\\jenkins\\workspace\\openitcockpit-agent-go_${branch}\" -valuetype Folder -global"
         powershell "& $ADVINST /edit \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\" \\SetVersion \"$VERSION\""
         powershell "& $ADVINST /build \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\""
         archiveArtifacts artifacts: 'release/packages/**', fingerprint: true
