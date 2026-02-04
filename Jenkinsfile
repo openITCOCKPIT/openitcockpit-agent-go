@@ -388,7 +388,9 @@ pipeline {
                                 GOARCH = 'amd64'
                             }
                             steps {
-                                package_windows(branch)
+                                withCredentials([string(credentialsId: 'SM_API_KEY', variable: 'SM_API_KEY')]) {
+                                    package_windows(branch)
+                                }
                             }
                         }
                         stage('386') {
@@ -396,7 +398,9 @@ pipeline {
                                 GOARCH = '386'
                             }
                             steps {
-                                package_windows(branch)
+                                withCredentials([string(credentialsId: 'SM_API_KEY', variable: 'SM_API_KEY')]) {
+                                    package_windows(branch)
+                                }
                             }
                         }
                     }
