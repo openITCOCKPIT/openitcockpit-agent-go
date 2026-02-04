@@ -389,6 +389,10 @@ pipeline {
                                 GOARCH = 'amd64'
                             }
                             steps {
+                                // To get a new SM_CLIENT_CERT_FILE, SM_API_KEY or SM_CLIENT_CERT_PASSWORD
+                                // Go to https://one.digicert.com/ click on the User Icon in the top right corner and select "Admin Profile"
+                                // Now scroll down and create a new API Key and/or Client Certificate for Code Signing
+                                // Also update the credentials in Jenkins with the new values
                                 withCredentials([
                                     string(credentialsId: 'SM_API_KEY', variable: 'SM_API_KEY'),
                                     string(credentialsId: 'SM_CLIENT_CERT_PASSWORD', variable: 'SM_CLIENT_CERT_PASSWORD')
@@ -678,6 +682,12 @@ def package_windows(branch) {
         //powershell "& $ADVINST /loadpathvars \"build\\msi\\PathVariables_Jenkins.apf\""
         powershell "& $ADVINST /edit \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\" \\UpdatePathVariable -name AGENT_SOURCE -value \"C:\\jenkins\\workspace\\openitcockpit-agent-go_${branch}\" -valuetype Folder -global"
         powershell "& $ADVINST /edit \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\" \\SetVersion \"$VERSION\""
+
+        if (env.BRANCH_NAME != 'main') {
+            // Disable code-signing for development builds branches
+            powershell "& $ADVINST /edit \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\" \\ResetSig
+        }
+
         powershell "& $ADVINST /build \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\""
         archiveArtifacts artifacts: 'release/packages/**', fingerprint: true
     }
