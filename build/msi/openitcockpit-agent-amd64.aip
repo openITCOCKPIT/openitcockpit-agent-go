@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="17.6" version="23.4" Modules="professional" RootPath="." Language="de" Id="{E9288F5E-2AE7-47CD-B0B1-6A57BBA9B105}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="17.6" version="18.8.1" Modules="professional" RootPath="." Language="de" Id="{E9288F5E-2AE7-47CD-B0B1-6A57BBA9B105}">
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
+    <ROW Property="AI_CURRENT_YEAR" Value="2025" ValueLocId="-"/>
     <ROW Property="AI_PRODUCTNAME_ARP" Value="[|DISPLAYNAME]"/>
     <ROW Property="AI_ThemeStyle" Value="aero" MsiKey="AI_ThemeStyle"/>
     <ROW Property="AI_UNINSTALLER" Value="msiexec.exe"/>
@@ -16,11 +17,11 @@
     <ROW Property="BannerBitmap" Value="banner.jpg" MultiBuildValue="DefaultBuild:BannerTop.bmp" Type="1" MsiKey="BannerBitmap"/>
     <ROW Property="DISPLAYNAME" Value="openITCOCKPIT Monitoring Agent"/>
     <ROW Property="DialogBitmap" Value="dialog.jpg" MultiBuildValue="DefaultBuild:Dialog.bmp" Type="1" MsiKey="DialogBitmap"/>
-    <ROW Property="Manufacturer" Value="Allgeier IT Services GmbH"/>
+    <ROW Property="Manufacturer" Value="it-novum"/>
     <ROW Property="ProductCode" Value="1031:{D055B6F9-D527-4772-B38E-82594C8ECC02} 1033:{D055B6F9-D527-4772-B38E-82594C8ECC02} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1031"/>
     <ROW Property="ProductName" Value="openitcockpit-agent"/>
-    <ROW Property="ProductVersion" Value="2.0.0" Options="32"/>
+    <ROW Property="ProductVersion" Value="2.0.0" Type="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;UPGRADE_1"/>
     <ROW Property="UpgradeCode" Value="{F0D5102E-1A5C-4F7D-A100-8C86E2F96794}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
@@ -32,8 +33,8 @@
     <ROW Property="WindowsTypeNT50Display" MultiBuildValue="DefaultBuild:Windows 2000" ValueLocId="-"/>
     <ROW Property="WindowsTypeNT5X" MultiBuildValue="DefaultBuild:Windows XP/2003" ValueLocId="-"/>
     <ROW Property="WindowsTypeNT5XDisplay" MultiBuildValue="DefaultBuild:Windows XP/2003" ValueLocId="-"/>
-    <ROW Property="WindowsTypeNT60" MultiBuildValue="DefaultBuild:Windows Vista/Server 2008" ValueLocId="-"/>
-    <ROW Property="WindowsTypeNT60Display" MultiBuildValue="DefaultBuild:Windows Vista/Server 2008" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT64" MultiBuildValue="DefaultBuild:Windows Vista x64, Windows Server 2008 x64" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT64Display" MultiBuildValue="DefaultBuild:Windows Vista x64, Windows Server 2008 x64" ValueLocId="-"/>
     <ROW Property="WindowsTypeNTDisplay" MultiBuildValue="DefaultBuild:32-bit Windows versions" ValueLocId="-"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
@@ -68,10 +69,6 @@
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
   </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.BootstrapperUISequenceComponent">
-    <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Sequence="249"/>
-    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="251"/>
-  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
     <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="0" PackageFolder="..\..\release\packages\windows" PackageFileName="openitcockpit-agent-[|ProductVersion]-amd64" Languages="de;en" LangOpt="1" InstallationType="4" UseLargeSchema="true" Unicode="true" MsiPackageType="x64" UACExecutionLevel="2"/>
   </COMPONENT>
@@ -81,7 +78,7 @@
     <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DigCertStoreComponent">
-    <ROW SignOptions="7" SignTool="0" UseSha256="1" Subject="CN=Allgeier IT Services GmbH, OU=OSS, O=Allgeier IT Services GmbH, L=München, C=DE" Store="User\MY" CustomToolPath="..\..\..\..\..\..\Program Files\DigiCert\DigiCert One Signing Manager Tools\smctl.exe" CustomToolCmdLine="smctl.exe sign --verbose --keypair-alias=key_1448342544  --input"/>
+    <ROW TimeStampUrl="http://timestamp.digicert.com" SignerDescription="[|ProductName]" SignOptions="7" SignTool="0" UseSha256="1" Subject="CN=DigiCert Trusted G4 Code Signing RSA4096 SHA384 2021 CA1, O=&quot;DigiCert, Inc.&quot;, C=US"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
     <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
@@ -92,7 +89,6 @@
     <ROW Fragment="SequenceDialogs.aip" Path="&lt;AI_THEMES&gt;classic\fragments\SequenceDialogs.aip"/>
     <ROW Fragment="Sequences.aip" Path="&lt;AI_FRAGS&gt;Sequences.aip"/>
     <ROW Fragment="StaticUIStrings.aip" Path="&lt;AI_FRAGS&gt;StaticUIStrings.aip"/>
-    <ROW Fragment="Themes.aip" Path="&lt;AI_FRAGS&gt;Themes.aip"/>
     <ROW Fragment="UI.aip" Path="&lt;AI_THEMES&gt;classic\fragments\UI.aip"/>
     <ROW Fragment="Validation.aip" Path="&lt;AI_FRAGS&gt;Validation.aip"/>
     <ROW Fragment="VerifyRemoveDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRemoveDlg.aip"/>
@@ -106,9 +102,6 @@
     <ROW Action="AI_AiRestoreDeferred" Description="Wiederherstellungsvorgang ausführen" DescriptionLocId="ActionText.Description.AI_AiRestoreDeferred" Template="Pfad: [1]" TemplateLocId="ActionText.Template.AI_AiRestoreDeferred"/>
     <ROW Action="AI_AiRestoreDeferredImpersonate" Description="Wiederherstellungsvorgang ausführen" DescriptionLocId="ActionText.Description.AI_AiRestoreDeferred" Template="Pfad: [1]" TemplateLocId="ActionText.Template.AI_AiRestoreDeferred"/>
     <ROW Action="AI_AiRestoreRollback" Description="Rollback Wiederherstellung" DescriptionLocId="ActionText.Description.AI_AiRestoreRollback" Template="Pfad: [1]" TemplateLocId="ActionText.Template.AI_AiRestoreRollback"/>
-    <ROW Action="AI_DeleteLzma" Description="Lösche die aus dem Archiv extrahierten Dateien" DescriptionLocId="ActionText.Description.AI_DeleteLzma" TemplateLocId="-"/>
-    <ROW Action="AI_DeleteRLzma" Description="Lösche die aus dem Archiv extrahierten Dateien" DescriptionLocId="ActionText.Description.AI_DeleteLzma" TemplateLocId="-"/>
-    <ROW Action="AI_ExtractLzma" Description="Extrahiere Dateien aus dem Archiv" DescriptionLocId="ActionText.Description.AI_ExtractLzma" TemplateLocId="-"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
     <ROW Name="BannerTop.bmp" SourcePath="images\BannerTop.bmp"/>
@@ -116,8 +109,6 @@
     <ROW Name="PowerShellScriptLauncher.dll" SourcePath="&lt;AI_CUSTACTS&gt;PowerShellScriptLauncher.dll"/>
     <ROW Name="ResourceCleaner.dll" SourcePath="&lt;AI_CUSTACTS&gt;ResourceCleaner.dll"/>
     <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
-    <ROW Name="lzmaextractor.dll" SourcePath="&lt;AI_CUSTACTS&gt;lzmaextractor.dll"/>
-    <ROW Name="viewer.exe" SourcePath="&lt;AI_CUSTACTS&gt;viewer.exe" DigSign="true"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlComponent">
     <ROW Dialog_="LicenseAgreementDlg" Control="AgreementText" Type="ScrollableText" X="20" Y="60" Width="330" Height="120" Attributes="7" Text="License-en.rtf" Order="400" TextLocId="-" MsiKey="LicenseAgreementDlg#AgreementText"/>
@@ -166,15 +157,8 @@
     <ROW Action="AI_DATA_SETTER_1" Type="51" Source="CustomActionData" Target="AEQAaQBnAGkAdABhAGwAbAB5AFMAaQBnAG4AUwBjAHIAaQBwAHQAAgAxAAEARgBsAGEAZwBzAAIANgABAFAAYQByAGEAbQBzAAIALQBBAFAAUABEAEkAUgAgACIAWwBBAFAAUABEAEkAUgBdACIAAQBTAGMAcgBpAHAAdAACACMAIABCAGwAbwBjAGsAIABmAG8AcgAgAGQAZQBjAGwAYQByAGkAbgBnACAAdABoAGUAIABzAGMAcgBpAHAAdAAgAHAAYQByAGEAbQBlAHQAZQByAHMALgANAAoAUABhAHIAYQBtACgAJABBAFAAUABEAEkAUgApAA0ACgANAAoAdwByAGkAdABlAC0AaABvAHMAdAAgACIAQwBoAGUAYwBrAGkAbgBnACAAZgBvAHIAIAAnAG8AcABlAG4AaQB0AGMAbwBjAGsAcABpAHQALQBhAGcAZQBuAHQALQBpAG4AJwAgAGYAaQByAGUAdwBhAGwAbAAgAHIAdQBsAGUAIgANAAoAaQBmACAAKAAkACgARwBlAHQALQBOAGUAdABGAGkAcgBlAHcAYQBsAGwAUgB1AGwAZQAgIBMATgBhAG0AZQAgACIAbwBwAGUAbgBpAHQAYwBvAGMAawBwAGkAdAAtAGEAZwBlAG4AdAAtAGkAbgAiACkAKQANAAoAWwBcAHsAXQANAAoAIAAgACAAIAB3AHIAaQB0AGUALQBoAG8AcwB0ACAAIgBGAGkAcgBlAHcAYQBsAGwAIAByAHUAbABlACAAZgBvAHIAIAAnAG8AcABlAG4ASQBUAEMATwBDAEsAUABJAFQAIABNAG8AbgBpAHQAbwByAGkAbgBnACAAQQBnAGUAbgB0ACAASQBuACcAIABlAHgAaQBzAHQAcwAiAA0ACgAgACAAIAAgAFIAZQBtAG8AdgBlAC0ATgBlAHQARgBpAHIAZQB3AGEAbABsAFIAdQBsAGUAIAAtAE4AYQBtAGUAIAAiAG8AcABlAG4AaQB0AGMAbwBjAGsAcABpAHQALQBhAGcAZQBuAHQALQBpAG4AIgANAAoAWwBcAH0AXQANAAoADQAKAHcAcgBpAHQAZQAtAGgAbwBzAHQAIAAiAEMAaABlAGMAawBpAG4AZwAgAGYAbwByACAAJwBvAHAAZQBuAGkAdABjAG8AYwBrAHAAaQB0AC0AYQBnAGUAbgB0AC0AbwB1AHQAJwAgAGYAaQByAGUAdwBhAGwAbAAgAHIAdQBsAGUAIgANAAoAaQBmACAAKAAkACgARwBlAHQALQBOAGUAdABGAGkAcgBlAHcAYQBsAGwAUgB1AGwAZQAgIBMATgBhAG0AZQAgACIAbwBwAGUAbgBpAHQAYwBvAGMAawBwAGkAdAAtAGEAZwBlAG4AdAAtAG8AdQB0ACIAKQApAA0ACgBbAFwAewBdAA0ACgAgACAAIAAgAHcAcgBpAHQAZQAtAGgAbwBzAHQAIAAiAEYAaQByAGUAdwBhAGwAbAAgAHIAdQBsAGUAIABmAG8AcgAgACcAbwBwAGUAbgBJAFQAQwBPAEMASwBQAEkAVAAgAE0AbwBuAGkAdABvAHIAaQBuAGcAIABBAGcAZQBuAHQAIABPAHUAdAAnACAAZQB4AGkAcwB0AHMAIgANAAoAIAAgACAAIABSAGUAbQBvAHYAZQAtAE4AZQB0AEYAaQByAGUAdwBhAGwAbABSAHUAbABlACAALQBOAGEAbQBlACAAIgBvAHAAZQBuAGkAdABjAG8AYwBrAHAAaQB0AC0AYQBnAGUAbgB0AC0AbwB1AHQAIgANAAoAWwBcAH0AXQANAAo="/>
     <ROW Action="AI_DATA_SETTER_2" Type="51" Source="CustomActionData" Target="AEQAaQBnAGkAdABhAGwAbAB5AFMAaQBnAG4AUwBjAHIAaQBwAHQAAgAxAAEARgBsAGEAZwBzAAIANgABAFAAYQByAGEAbQBzAAIALQBBAFAAUABEAEkAUgAgACIAWwBBAFAAUABEAEkAUgBdACIAAQBTAGMAcgBpAHAAdAACACMAIABCAGwAbwBjAGsAIABmAG8AcgAgAGQAZQBjAGwAYQByAGkAbgBnACAAdABoAGUAIABzAGMAcgBpAHAAdAAgAHAAYQByAGEAbQBlAHQAZQByAHMALgANAAoAUABhAHIAYQBtACgAJABBAFAAUABEAEkAUgApAA0ACgANAAoAaQBmACAAKAAkAEEAUABQAEQASQBSACAALQBuAG8AdABtAGEAdABjAGgAIAAnAFwAXAAkACcAKQANAAoAWwBcAHsAXQANAAoAIAAgACAAIAAkAEEAUABQAEQASQBSACAAKwA9ACAAJwBcACcADQAKAFsAXAB9AF0ADQAKAA0ACgAkAEMAbwBuAGYAaQBnAEMAZgBnACAAPQAgACQAQQBQAFAARABJAFIAIAArACAAJwBjAG8AbgBmAGkAZwAuAGMAZgBnACcADQAKACQAQwBvAG4AZgBpAGcASQBuAGkAIAA9ACAAJABBAFAAUABEAEkAUgAgACsAIAAnAGMAbwBuAGYAaQBnAC4AaQBuAGkAJwANAAoAaQBmACgAVABlAHMAdAAtAFAAYQB0AGgAIAAtAFAAYQB0AGgAIAAkAEMAbwBuAGYAaQBnAEMAZgBnACkADQAKAFsAXAB7AF0ADQAKACAAIAAgACAATQBvAHYAZQAtAEkAdABlAG0AIAAtAFAAYQB0AGgAIAAkAEMAbwBuAGYAaQBnAEMAZgBnACAALQBEAGUAcwB0AGkAbgBhAHQAaQBvAG4AIAAkAEMAbwBuAGYAaQBnAEkAbgBpAA0ACgBbAFwAfQBdAA0ACgANAAoAJABDAHUAcwB0AG8AbQBjAGgAZQBjAGsAcwBDAGYAZwAgAD0AIAAkAEEAUABQAEQASQBSACAAKwAgACcAYwB1AHMAdABvAG0AYwBoAGUAYwBrAHMALgBjAGYAZwAnAA0ACgAkAEMAdQBzAHQAbwBtAGMAaABlAGMAawBzAEkAbgBpACAAPQAgACQAQQBQAFAARABJAFIAIAArACAAJwBjAHUAcwB0AG8AbQBjAGgAZQBjAGsAcwAuAGkAbgBpACcADQAKAGkAZgAoAFQAZQBzAHQALQBQAGEAdABoACAALQBQAGEAdABoACAAJABDAHUAcwB0AG8AbQBjAGgAZQBjAGsAcwBDAGYAZwApAA0ACgBbAFwAewBdAA0ACgAgACAAIAAgAE0AbwB2AGUALQBJAHQAZQBtACAALQBQAGEAdABoACAAJABDAHUAcwB0AG8AbQBjAGgAZQBjAGsAcwBDAGYAZwAgAC0ARABlAHMAdABpAG4AYQB0AGkAbwBuACAAJABDAHUAcwB0AG8AbQBjAGgAZQBjAGsAcwBJAG4AaQANAAoAWwBcAH0AXQANAAoADQAKAA0ACg=="/>
     <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
-    <ROW Action="AI_DeleteCadLzma" Type="51" Source="AI_DeleteLzma" Target="[AI_SETUPEXEPATH]"/>
-    <ROW Action="AI_DeleteLzma" Type="1025" Source="lzmaextractor.dll" Target="DeleteLZMAFiles"/>
-    <ROW Action="AI_DeleteRCadLzma" Type="51" Source="AI_DeleteRLzma" Target="[AI_SETUPEXEPATH]"/>
-    <ROW Action="AI_DeleteRLzma" Type="1281" Source="lzmaextractor.dll" Target="DeleteLZMAFiles"/>
     <ROW Action="AI_DpiContentScale" Type="1" Source="aicustact.dll" Target="DpiContentScale"/>
     <ROW Action="AI_EnableDebugLog" Type="321" Source="aicustact.dll" Target="EnableDebugLog"/>
-    <ROW Action="AI_ExtractCadLzma" Type="51" Source="AI_ExtractLzma" Target="[AI_SETUPEXEPATH]"/>
-    <ROW Action="AI_ExtractLzma" Type="1025" Source="lzmaextractor.dll" Target="ExtractLZMAFiles"/>
-    <ROW Action="AI_FindExeLzma" Type="1" Source="lzmaextractor.dll" Target="FindEXE"/>
     <ROW Action="AI_GetArpIconPath" Type="1" Source="aicustact.dll" Target="GetArpIconPath"/>
     <ROW Action="AI_InstallModeCheck" Type="1" Source="aicustact.dll" Target="UpdateInstallMode" WithoutSeq="true"/>
     <ROW Action="AI_PREPARE_UPGRADE" Type="65" Source="aicustact.dll" Target="PrepareUpgrade"/>
@@ -217,20 +201,11 @@
     <ROW Action="AI_DATA_SETTER_1" Condition="( Installed AND ( REMOVE = &quot;ALL&quot; OR AI_INSTALL_MODE = &quot;Remove&quot; ) ) AND ( (VersionNT &gt; 501) OR (VersionNT = 501 AND ServicePackLevel &gt;= 2) )" Sequence="6401"/>
     <ROW Action="AI_AiBackupImmediate" Sequence="1401"/>
     <ROW Action="AI_AiBackupRollback" Sequence="1502"/>
-    <ROW Action="AI_AiRestoreDeferredImpersonate" Sequence="6597"/>
-    <ROW Action="AI_AiRestoreDeferred" Sequence="6598"/>
+    <ROW Action="AI_AiRestoreDeferredImpersonate" Sequence="6598"/>
+    <ROW Action="AI_AiRestoreDeferred" Sequence="6599"/>
     <ROW Action="MoveConfigCnfToIni" Condition="( ( NOT Installed ) OR ( Installed AND REMOVE &lt;&gt; &quot;ALL&quot; AND AI_INSTALL_MODE &lt;&gt; &quot;Remove&quot; ) ) AND ( (VersionNT &gt; 501) OR (VersionNT = 501 AND ServicePackLevel &gt;= 2) )" Sequence="3602"/>
     <ROW Action="AI_DATA_SETTER_2" Condition="( ( NOT Installed ) OR ( Installed AND REMOVE &lt;&gt; &quot;ALL&quot; AND AI_INSTALL_MODE &lt;&gt; &quot;Remove&quot; ) ) AND ( (VersionNT &gt; 501) OR (VersionNT = 501 AND ServicePackLevel &gt;= 2) )" Sequence="3601"/>
     <ROW Action="AI_AiBackupRollbackImpersonate" Sequence="1501"/>
-    <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Sequence="99" Builds="DefaultBuild"/>
-    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="101" Builds="DefaultBuild"/>
-    <ROW Action="AI_DeleteCadLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="199" Builds="DefaultBuild"/>
-    <ROW Action="AI_DeleteRCadLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="198" Builds="DefaultBuild"/>
-    <ROW Action="AI_ExtractCadLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="197" Builds="DefaultBuild"/>
-    <ROW Action="AI_FindExeLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="196" Builds="DefaultBuild"/>
-    <ROW Action="AI_ExtractLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="1549" Builds="DefaultBuild"/>
-    <ROW Action="AI_DeleteRLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="1548" Builds="DefaultBuild"/>
-    <ROW Action="AI_DeleteLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="6599" Builds="DefaultBuild"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
     <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
@@ -242,17 +217,16 @@
     <ROW Action="AI_RestartElevated" Sequence="51" Builds="DefaultBuild"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
+    <ROW Condition="( Version9X OR ( NOT VersionNT64 ) OR ( VersionNT64 AND ((VersionNT64 &lt;&gt; 600) OR (MsiNTProductType &lt;&gt; 1)) AND ((VersionNT64 &lt;&gt; 600) OR (MsiNTProductType = 1)) ) )" Description="[ProductName] kann unter den folgenden Windows-Versionen nicht installiert werden: [WindowsTypeNT64Display]." DescriptionLocId="AI.LaunchCondition.NoSpecificNT64" IsPredefined="true" Builds="DefaultBuild"/>
     <ROW Condition="( Version9X OR VersionNT64 )" Description="[ProductName] kann nicht auf [WindowsTypeNTDisplay] installiert werden." DescriptionLocId="AI.LaunchCondition.NoNT" IsPredefined="true" Builds="DefaultBuild"/>
     <ROW Condition="((VersionNT &lt;&gt; 501) AND (VersionNT &lt;&gt; 502))" Description="[ProductName] kann nicht auf [WindowsTypeNT5XDisplay] installiert werden." DescriptionLocId="AI.LaunchCondition.NoNT5X" IsPredefined="true" Builds="DefaultBuild"/>
     <ROW Condition="(VersionNT &lt;&gt; 400)" Description="[ProductName] kann nicht auf [WindowsTypeNT40Display] installiert werden." DescriptionLocId="AI.LaunchCondition.NoNT40" IsPredefined="true" Builds="DefaultBuild"/>
     <ROW Condition="(VersionNT &lt;&gt; 500)" Description="[ProductName] kann nicht auf [WindowsTypeNT50Display] installiert werden." DescriptionLocId="AI.LaunchCondition.NoNT50" IsPredefined="true" Builds="DefaultBuild"/>
-    <ROW Condition="(VersionNT &lt;&gt; 600)" Description="[ProductName] kann nicht auf [WindowsTypeNT60Display] installiert werden." DescriptionLocId="AI.LaunchCondition.NoNT60" IsPredefined="true" Builds="DefaultBuild"/>
     <ROW Condition="VersionNT" Description="[ProductName] kann nicht auf [WindowsType9XDisplay] installiert werden." DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="DefaultBuild"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
     <ROW Registry="Comments" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="Comments" Value="[ARPCOMMENTS]" Component_="AI_CustomARPName"/>
     <ROW Registry="Contact" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="Contact" Value="[ARPCONTACT]" Component_="AI_CustomARPName"/>
-    <ROW Registry="CurrentVersion" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion" Name="\"/>
     <ROW Registry="DisplayIcon" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="DisplayIcon" Value="[ARP_ICON_PATH]" Component_="AI_CustomARPName"/>
     <ROW Registry="DisplayName" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="DisplayName" Value="[AI_PRODUCTNAME_ARP]" Component_="AI_CustomARPName"/>
     <ROW Registry="DisplayVersion" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="DisplayVersion" Value="[ProductVersion]" Component_="AI_CustomARPName"/>
@@ -262,26 +236,18 @@
     <ROW Registry="InstallLocation" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="InstallLocation" Value="[APPDIR]" Component_="AI_CustomARPName"/>
     <ROW Registry="InstallLocation_1" Root="-1" Key="Software\[Manufacturer]\InstalledProducts\[ProductName]" Name="InstallLocation" Value="[APPDIR]" Component_="InstallLocation"/>
     <ROW Registry="InstalledProducts" Root="-1" Key="Software\[Manufacturer]\InstalledProducts" Name="+" Component_="InstalledProducts"/>
-    <ROW Registry="Manufacturer" Root="-1" Key="Software\[Manufacturer]" Name="\"/>
-    <ROW Registry="Microsoft" Root="-1" Key="Software\Microsoft" Name="\"/>
     <ROW Registry="ModifyPath" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="ModifyPath" Value="[AI_UNINSTALLER] /i [ProductCode] AI_UNINSTALLER_CTP=1" Component_="AI_CustomARPName"/>
     <ROW Registry="NoRepair" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="NoRepair" Value="#1" Component_="AI_CustomARPName" VirtualValue="#"/>
     <ROW Registry="Path" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Path" Value="[APPDIR]" Component_="ProductInformation"/>
-    <ROW Registry="ProductName" Root="-1" Key="Software\[Manufacturer]\InstalledProducts\[ProductName]" Name="\"/>
-    <ROW Registry="ProductNameProductVersion" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="\"/>
-    <ROW Registry="ProductName_1" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="\"/>
     <ROW Registry="Publisher" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="Publisher" Value="[Manufacturer]" Component_="AI_CustomARPName"/>
     <ROW Registry="Readme" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="Readme" Value="[ARPREADME]" Component_="AI_CustomARPName"/>
-    <ROW Registry="Software" Root="-1" Key="Software" Name="\"/>
     <ROW Registry="URLInfoAbout" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="URLInfoAbout" Value="[ARPURLINFOABOUT]" Component_="AI_CustomARPName"/>
     <ROW Registry="URLUpdateInfo" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="URLUpdateInfo" Value="[ARPURLUPDATEINFO]" Component_="AI_CustomARPName"/>
-    <ROW Registry="Uninstall" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall" Name="\"/>
     <ROW Registry="UninstallPath" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="UninstallPath" Value="[AI_UNINSTALLER] /x [ProductCode] AI_UNINSTALLER_CTP=1" Component_="AI_CustomARPName"/>
     <ROW Registry="UninstallString" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="UninstallString" Value="[AI_UNINSTALLER] /x [ProductCode] AI_UNINSTALLER_CTP=1" Component_="AI_CustomARPName"/>
     <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
     <ROW Registry="VersionMajor" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="VersionMajor" Value="#2" Component_="AI_CustomARPName" VirtualValue="#"/>
     <ROW Registry="VersionMinor" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="VersionMinor" Value="#0" Component_="AI_CustomARPName" VirtualValue="#"/>
-    <ROW Registry="Windows" Root="-1" Key="Software\Microsoft\Windows" Name="\"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiServConfigComponent">
     <ROW MsiServiceConfig="DienstName" Name="openITCOCKPITAgent" Event="1" ConfigType="3" Argument="1" Component_="APPDIR"/>
