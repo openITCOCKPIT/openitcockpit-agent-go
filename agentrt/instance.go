@@ -228,7 +228,7 @@ func (a *AgentInstance) doReload(ctx context.Context, cfg *config.Configuration)
 	}
 	a.doCustomCheckReload(ctx, cfg.CustomCheckConfiguration)
 	a.doPrometheusExporterCheckReload(ctx, cfg.PrometheusExporterConfiguration)
-	a.doSoftwareCollectorReload(ctx, cfg)
+	//a.doSoftwareCollectorReload(ctx, cfg)
 }
 
 func (a *AgentInstance) doCustomCheckReload(ctx context.Context, ccc []*config.CustomCheck) {
