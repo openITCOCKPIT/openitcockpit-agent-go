@@ -685,7 +685,7 @@ def package_windows(branch) {
 
         if (env.BRANCH_NAME != 'main') {
             // Disable code-signing for development builds branches
-            powershell "& $ADVINST /edit \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\" \\ResetSig
+            powershell "& $ADVINST /edit \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\" \\ResetSig"
         }
 
         powershell "& $ADVINST /build \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\""
