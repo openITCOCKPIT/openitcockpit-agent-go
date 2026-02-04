@@ -380,9 +380,10 @@ pipeline {
                         stage('amd64') {
                             environment {
                                 GOARCH = 'amd64'
+                                branch = "${env.BRANCH_NAME}"
                             }
                             steps {
-                                package_windows()
+                                package_windows(branch)
                             }
                         }
                         stage('386') {
@@ -390,7 +391,7 @@ pipeline {
                                 GOARCH = '386'
                             }
                             steps {
-                                package_windows()
+                                package_windows(branch)
                             }
                         }
                     }
@@ -640,7 +641,7 @@ def package_linux() {
     }
 }
 
-def package_windows() {
+def package_windows(branch) {
     timeout(time: 5, unit: 'MINUTES') {
         cleanup_windows()
 
@@ -656,7 +657,8 @@ def package_windows() {
         bat 'move example\\prometheus_exporters_example.ini example\\prometheus_exporters_linux.ini'
         bat 'TYPE example\\prometheus_exporters_linux.ini | MORE /P > example\\prometheus_exporters_example.ini'
 
-        powershell "& $ADVINST /loadpathvars \"build\\msi\\PathVariables_Jenkins.apf\""
+        //powershell "& $ADVINST /loadpathvars \"build\\msi\\PathVariables_Jenkins.apf\""
+        powershell "& $ADVINST /edit \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\" \\SetPathVariable AGENT_SOURCE \"C:\jenkins\workspace\openitcockpit-agent-go_${branch}\""
         powershell "& $ADVINST /edit \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\" \\SetVersion \"$VERSION\""
         powershell "& $ADVINST /build \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\""
         archiveArtifacts artifacts: 'release/packages/**', fingerprint: true
