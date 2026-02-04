@@ -3,8 +3,8 @@ pipeline {
     environment {
         CIBUILD = "1"
         //ADVINST = "\"C:\\Program Files (x86)\\Caphyon\\Advanced Installer\\bin\\x86\\advinst.exe\""
-        //ADVINST = "\"C:\\Program Files (x86)\\Caphyon\\Advanced Installer 23.4\\bin\\x86\\AdvancedInstaller.com\""
-        ADVINST = "\"C:\\Program Files (x86)\\Caphyon\\Advanced Installer 18.8.1\\bin\\x86\\AdvancedInstaller.com\""
+        ADVINST = "\"C:\\Program Files (x86)\\Caphyon\\Advanced Installer 23.4\\bin\\x86\\AdvancedInstaller.com\""
+        //ADVINST = "\"C:\\Program Files (x86)\\Caphyon\\Advanced Installer 18.8.1\\bin\\x86\\AdvancedInstaller.com\""
         // AdvancedInstaller.com is the command line interface of Advanced Installer
         // advinst.exe is for the GUI version
         // https://www.advancedinstaller.com/user-guide/command-line.html
@@ -683,7 +683,6 @@ def package_windows(branch) {
         //powershell "& $ADVINST /loadpathvars \"build\\msi\\PathVariables_Jenkins.apf\""
         powershell "& $ADVINST /loadpathvars \"build\\msi\\PathVariables_JenkinsOA66.apf\""
         //powershell "& $ADVINST /edit \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\" \\UpdatePathVariable -name AGENT_SOURCE -value \"C:\\jenkins\\workspace\\openitcockpit-agent-go_${branch}\" -valuetype Folder -global"
-        //powershell "& $ADVINST /edit \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\" \\UpdatePathVariable -name AGENT_SOURCE -value \"C:\\jenkins\\workspace\\openitcockpit-agent-go_${branch}\" -valuetype Folder"
         powershell "& $ADVINST /edit \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\" \\SetVersion \"$VERSION\""
 
         if (env.BRANCH_NAME != 'main') {
