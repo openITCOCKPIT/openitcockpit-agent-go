@@ -77,6 +77,11 @@ func newAgentInstance() *agentrt.AgentInstance {
 }
 
 func (m *myservice) Execute(args []string, r <-chan svc.ChangeRequest, changes chan<- svc.Status) (ssec bool, errno uint32) {
+
+	// To debug the windows service:
+	// 1. Build a new binary: go build -o openitcockpit-agent-go.exe
+	// 2. Start in Debugger using "Debug Service Binary" configuration
+
 	const cmdsAccepted = svc.AcceptStop | svc.AcceptShutdown
 	changes <- svc.Status{State: svc.StartPending}
 
