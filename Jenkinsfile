@@ -3,7 +3,8 @@ pipeline {
     environment {
         CIBUILD = "1"
         //ADVINST = "\"C:\\Program Files (x86)\\Caphyon\\Advanced Installer\\bin\\x86\\advinst.exe\""
-        ADVINST = "\"C:\\Program Files (x86)\\Caphyon\\Advanced Installer 23.4\\bin\\x86\\AdvancedInstaller.com\""
+        //ADVINST = "\"C:\\Program Files (x86)\\Caphyon\\Advanced Installer 23.4\\bin\\x86\\AdvancedInstaller.com\""
+        ADVINST = "\"C:\\Program Files (x86)\\Caphyon\\Advanced Installer 18.8.1\\bin\\x86\\AdvancedInstaller.com\""
         // AdvancedInstaller.com is the command line interface of Advanced Installer
         // advinst.exe is for the GUI version
         // https://www.advancedinstaller.com/user-guide/command-line.html
