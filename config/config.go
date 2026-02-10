@@ -15,7 +15,7 @@ import (
 )
 
 // AgentVersion as the name says
-const AgentVersion = "3.4.0"
+const AgentVersion = "3.5.0"
 
 // CustomCheck are external plugins and scripts which should be executed by the Agent
 type CustomCheck struct {
@@ -60,6 +60,13 @@ type PrometheusExporter struct {
 	Path     string `mapstructure:"path"`   // /metrics
 	Interval int64  `mapstructure:"interval"`
 	Timeout  int64  `mapstructure:"timeout"`
+}
+
+type PackagemanagerConfiguration struct {
+	Enabled                bool  `mapstructure:"enabled"`
+	EnableUpdateCheck      bool  `mapstructure:"enable-update-check"`
+	CheckInterval          int64 `mapstructure:"check-interval"`
+	LimitDescriptionLength int64 `mapstructure:"limit-description-length"`
 }
 
 // Configuration with all sub configuration structs
@@ -146,6 +153,9 @@ type Configuration struct {
 	// Prometheus Exporter / Proxy
 	Prometheus                      *PrometheusConfiguration `json:"prometheus"`
 	PrometheusExporterConfiguration []*PrometheusExporter    `json:"prometheus_exporter_configuration" mapstructure:"-"`
+
+	// Packagemanager
+	Packagemanager *PackagemanagerConfiguration `json:"packagemanager"`
 }
 
 var defaultValue = map[string]interface{}{
@@ -191,6 +201,12 @@ var prometheusDefaultvalue = map[string]interface{}{
 	"exporters": filepath.Join(platformpaths.Get().ConfigPath(), "prometheus_exporters.ini"),
 }
 
+var packagemanagerDefaultvalue = map[string]interface{}{
+	"enabled":                  true,
+	"check-interval":           60,
+	"limit-description-length": 80,
+}
+
 func setConfigurationDefaults(v *viper.Viper) {
 	for key, value := range defaultValue {
 		v.SetDefault("default."+key, value)
@@ -202,6 +218,9 @@ func setConfigurationDefaults(v *viper.Viper) {
 
 	for key, value := range prometheusDefaultvalue {
 		v.SetDefault("prometheus."+key, value)
+	}
+	for key, value := range packagemanagerDefaultvalue {
+		v.SetDefault("packagemanager."+key, value)
 	}
 }
 

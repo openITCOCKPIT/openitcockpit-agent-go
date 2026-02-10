@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/config"
-	"github.com/shirou/gopsutil/v3/host"
+	"github.com/shirou/gopsutil/v4/host"
 )
 
 // Run the actual check

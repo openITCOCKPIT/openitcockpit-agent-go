@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/config"
-	"github.com/shirou/gopsutil/v3/load"
+	"github.com/shirou/gopsutil/v4/load"
 )
 
 // CheckLoad gathers information about system CPU load

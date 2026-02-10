@@ -11,6 +11,7 @@ import (
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/checks"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/config"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/loghandler"
+	"github.com/openITCOCKPIT/openitcockpit-agent-go/packagemanager"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/pushclient"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/webserver"
 	log "github.com/sirupsen/logrus"
@@ -28,23 +29,35 @@ type AgentInstance struct {
 	shutdown chan struct{}
 	reload   chan chan struct{}
 
-	stateWebserver               chan []byte
-	statePushClient              chan []byte
-	prometheusStateWebserver     chan map[string]string
-	checkResult                  chan map[string]interface{}
-	customCheckResultChan        chan *checkrunner.CustomCheckResult
-	prometheusExporterResultChan chan *checkrunner.PrometheusExporterResult
+	stateWebserver                chan []byte
+	statePushClient               chan []byte
+	statePushClientPackageManager chan packagemanager.PackageInfo
+	prometheusStateWebserver      chan map[string]string
+	packageManagerStateWebserver  chan packagemanager.PackageInfo
+	checkResult                   chan map[string]interface{}
+	customCheckResultChan         chan *checkrunner.CustomCheckResult
+	prometheusExporterResultChan  chan *checkrunner.PrometheusExporterResult
+	packageManagerResultChan      chan *packagemanager.PackageInfo
 
 	customCheckResults map[string]interface{}
 
 	prometheusExporterResults map[string]string
+	packageManagerResult      packagemanager.PackageInfo
 
 	logHandler             *loghandler.LogHandler
 	webserver              *webserver.Server
 	checkRunner            *checkrunner.CheckRunner
 	customCheckHandler     *checkrunner.CustomCheckHandler
 	prometheusCheckHandler *checkrunner.PrometheusCheckHandler
+	softwareCollector      *packagemanager.SoftwareCollector
 	pushClient             *pushclient.PushClient
+}
+
+type PackageInfoJson struct {
+	Enabled    bool
+	Pending    bool
+	LastUpdate int64
+	Stats      packagemanager.PackageStats
 }
 
 func (a *AgentInstance) processCheckResult(result map[string]interface{}) {
@@ -71,6 +84,21 @@ func (a *AgentInstance) processCheckResult(result map[string]interface{}) {
 		result["prometheus_exporters"] = keys
 	}
 
+	if a.packageManagerResult.Enabled {
+		// To not have a huge JSON blob in the check result, we only pass the Stats part
+		result["packagemanager"] = PackageInfoJson{
+			Enabled:    a.packageManagerResult.Enabled,
+			Pending:    a.packageManagerResult.Pending,
+			LastUpdate: a.packageManagerResult.LastUpdate,
+			Stats:      a.packageManagerResult.Stats,
+		}
+	} else {
+		result["packagemanager"] = map[string]interface{}{
+			"enabled": false,
+			"pending": false,
+		}
+	}
+
 	data, err := json.Marshal(result)
 	if err != nil {
 		log.Errorln("Internal error: could not serialize check result: ", err)
@@ -91,12 +119,26 @@ func (a *AgentInstance) processCheckResult(result map[string]interface{}) {
 			t := time.NewTimer(time.Second * 10)
 			defer t.Stop()
 
-			// we may have to give the webserver some time to think about it
+			//log.Debugln("[processCheckResult] Attempting to send check result to stateWebserver channel")
 			select {
 			case a.stateWebserver <- data: // Pass checkresult json to webserver
-			case a.prometheusStateWebserver <- prometheus_results_data: // Pass Prometheus Exporter data to webserver
+				//log.Debugln("[processCheckResult] Successfully sent check result to stateWebserver channel")
 			case <-t.C:
 				log.Errorln("Internal error: could not store check result for webserver: timeout")
+			}
+
+			select {
+			case a.prometheusStateWebserver <- prometheus_results_data: // Pass Prometheus Exporter data to webserver
+				//log.Debugln("[processCheckResult] Successfully sent prometheus results to prometheusStateWebserver channel")
+			case <-t.C:
+				log.Errorln("Internal error: could not store check result for webserver: timeout")
+			}
+
+			select {
+			case a.packageManagerStateWebserver <- a.packageManagerResult: // Pass Package Manager data to webserver
+				//log.Debugln("[processCheckResult] Successfully sent package manager results to packageManagerStateWebserver channel")
+			case <-t.C:
+				log.Errorln("Internal error: could not store package manager result for webserver: timeout")
 			}
 		}()
 	}
@@ -129,6 +171,9 @@ func (a *AgentInstance) doReload(ctx context.Context, cfg *config.Configuration)
 	if a.prometheusStateWebserver == nil {
 		a.prometheusStateWebserver = make(chan map[string]string)
 	}
+	if a.packageManagerStateWebserver == nil {
+		a.packageManagerStateWebserver = make(chan packagemanager.PackageInfo)
+	}
 
 	// we do not stop the webserver on every reload for better availability during the wizard setup
 
@@ -139,9 +184,10 @@ func (a *AgentInstance) doReload(ctx context.Context, cfg *config.Configuration)
 
 	if a.webserver == nil && (!cfg.OITC.Push || (cfg.OITC.Push && cfg.OITC.EnableWebserver)) {
 		a.webserver = &webserver.Server{
-			StateInput:      a.stateWebserver,
-			PrometheusInput: a.prometheusStateWebserver,
-			Reloader:        a, // Set agent instance to Reloader interface for the webserver handler
+			StateInput:          a.stateWebserver,
+			PrometheusInput:     a.prometheusStateWebserver,
+			PackageManagerInput: a.packageManagerStateWebserver,
+			Reloader:            a, // Set agent instance to Reloader interface for the webserver handler
 		}
 		a.webserver.Start(ctx)
 	}
@@ -173,7 +219,8 @@ func (a *AgentInstance) doReload(ctx context.Context, cfg *config.Configuration)
 	}
 	if cfg.OITC.Push {
 		a.pushClient = &pushclient.PushClient{
-			StateInput: a.statePushClient,
+			StateInput:               a.statePushClient,
+			StateInputPackageManager: a.statePushClientPackageManager,
 		}
 		if err := a.pushClient.Start(ctx, cfg); err != nil {
 			log.Fatalln("Could not load push client: ", err)
@@ -181,6 +228,7 @@ func (a *AgentInstance) doReload(ctx context.Context, cfg *config.Configuration)
 	}
 	a.doCustomCheckReload(ctx, cfg.CustomCheckConfiguration)
 	a.doPrometheusExporterCheckReload(ctx, cfg.PrometheusExporterConfiguration)
+	a.doSoftwareCollectorReload(ctx, cfg)
 }
 
 func (a *AgentInstance) doCustomCheckReload(ctx context.Context, ccc []*config.CustomCheck) {
@@ -211,8 +259,30 @@ func (a *AgentInstance) doPrometheusExporterCheckReload(ctx context.Context, exp
 	}
 }
 
+func (a *AgentInstance) doSoftwareCollectorReload(ctx context.Context, cfg *config.Configuration) {
+	if a.softwareCollector != nil {
+		a.softwareCollector.Shutdown()
+		a.softwareCollector = nil
+	}
+	if cfg.Packagemanager.Enabled {
+		a.softwareCollector = &packagemanager.SoftwareCollector{
+			Configuration: cfg,
+			Result:        a.packageManagerResultChan,
+		}
+		a.softwareCollector.Start(ctx)
+	}
+}
+
 func (a *AgentInstance) stop() {
 	wg := sync.WaitGroup{}
+	if a.softwareCollector != nil {
+		wg.Add(1)
+		go func() {
+			a.softwareCollector.Shutdown()
+			a.softwareCollector = nil
+			wg.Done()
+		}()
+	}
 	if a.logHandler != nil {
 		wg.Add(1)
 		go func() {
@@ -259,11 +329,16 @@ func (a *AgentInstance) stop() {
 func (a *AgentInstance) Start(parent context.Context) {
 	a.stateWebserver = make(chan []byte)
 	a.statePushClient = make(chan []byte)
+	a.statePushClientPackageManager = make(chan packagemanager.PackageInfo)
 	a.checkResult = make(chan map[string]interface{})
 	a.customCheckResultChan = make(chan *checkrunner.CustomCheckResult)
 	a.customCheckResults = map[string]interface{}{}
 	a.prometheusExporterResultChan = make(chan *checkrunner.PrometheusExporterResult)
 	a.prometheusExporterResults = make(map[string]string)
+	a.packageManagerResultChan = make(chan *packagemanager.PackageInfo)
+	a.packageManagerResult = packagemanager.PackageInfo{
+		Enabled: false,
+	}
 	a.shutdown = make(chan struct{})
 	a.reload = make(chan chan struct{})
 	a.logHandler = &loghandler.LogHandler{
@@ -314,6 +389,29 @@ func (a *AgentInstance) Start(parent context.Context) {
 			case res := <-a.prometheusExporterResultChan:
 				// received check result from prometheus exporter
 				a.prometheusExporterResults[res.Name] = res.Result
+			case res := <-a.packageManagerResultChan:
+				// received package manager result
+				// Update the stats for push data and also the data for the webserver (pull mode)
+				a.packageManagerResult = *res
+
+				// In push mode, we also pass the data to the push client.
+				// otherwise the data would be pushed with each check result
+				if a.pushClient != nil {
+					a.wg.Add(1)
+					go func() {
+						defer a.wg.Done()
+
+						t := time.NewTimer(time.Second * 10)
+						defer t.Stop()
+
+						select {
+						case a.statePushClientPackageManager <- *res: // Pass Package Manager data to push client
+						case <-t.C:
+							log.Errorln("Internal error: could not store package manager result for push client: timeout")
+						}
+					}()
+				}
+
 			}
 
 		}

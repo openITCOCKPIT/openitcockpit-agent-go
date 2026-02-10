@@ -2,7 +2,12 @@ pipeline {
     agent any
     environment {
         CIBUILD = "1"
-        ADVINST = "\"C:\\Program Files (x86)\\Caphyon\\Advanced Installer\\bin\\x86\\advinst.exe\""
+        //ADVINST = "\"C:\\Program Files (x86)\\Caphyon\\Advanced Installer\\bin\\x86\\advinst.exe\""
+        ADVINST = "\"C:\\Program Files (x86)\\Caphyon\\Advanced Installer 23.4\\bin\\x86\\AdvancedInstaller.com\""
+        //ADVINST = "\"C:\\Program Files (x86)\\Caphyon\\Advanced Installer 18.8.1\\bin\\x86\\AdvancedInstaller.com\""
+        // AdvancedInstaller.com is the command line interface of Advanced Installer
+        // advinst.exe is for the GUI version
+        // https://www.advancedinstaller.com/user-guide/command-line.html
     }
     stages {
         stage('Test') {
@@ -372,8 +377,12 @@ pipeline {
                         label 'windows'
                     }
                     environment {
+                        branch = "${env.BRANCH_NAME}"
                         GOOS = 'windows'
                         BINNAME = 'openitcockpit-agent.exe'
+                        //SM_CLIENT_CERT_FILE = "C:\\Users\\Administrator\\.digicert-ucpc\\certs\\e7499691-a05e-40d0-a8b5-4620fc5ebe82\\20260204102732-d51901f3-2cc4-4538-92e8-30cc33f94013.p12"
+                        SM_CLIENT_CERT_FILE = "C:\\Users\\Administrator\\Certificate_pkcs12.p12"
+                        SM_HOST = "https://clientauth.one.digicert.com"
                     }
                     stages {
                         stage('amd64') {
@@ -381,7 +390,16 @@ pipeline {
                                 GOARCH = 'amd64'
                             }
                             steps {
-                                package_windows()
+                                // To get a new SM_CLIENT_CERT_FILE, SM_API_KEY or SM_CLIENT_CERT_PASSWORD
+                                // Go to https://one.digicert.com/ click on the User Icon in the top right corner and select "Admin Profile"
+                                // Now scroll down and create a new API Key and/or Client Certificate for Code Signing
+                                // Also update the credentials in Jenkins with the new values
+                                withCredentials([
+                                    string(credentialsId: 'SM_API_KEY', variable: 'SM_API_KEY'),
+                                    string(credentialsId: 'SM_CLIENT_CERT_PASSWORD', variable: 'SM_CLIENT_CERT_PASSWORD')
+                                ]) {
+                                    package_windows(branch)
+                                }
                             }
                         }
                         stage('386') {
@@ -389,7 +407,12 @@ pipeline {
                                 GOARCH = '386'
                             }
                             steps {
-                                package_windows()
+                                withCredentials([
+                                    string(credentialsId: 'SM_API_KEY', variable: 'SM_API_KEY'),
+                                    string(credentialsId: 'SM_CLIENT_CERT_PASSWORD', variable: 'SM_CLIENT_CERT_PASSWORD')
+                                ]) {
+                                    package_windows(branch)
+                                }
                             }
                         }
                     }
@@ -639,7 +662,7 @@ def package_linux() {
     }
 }
 
-def package_windows() {
+def package_windows(branch) {
     timeout(time: 5, unit: 'MINUTES') {
         cleanup_windows()
 
@@ -655,8 +678,17 @@ def package_windows() {
         bat 'move example\\prometheus_exporters_example.ini example\\prometheus_exporters_linux.ini'
         bat 'TYPE example\\prometheus_exporters_linux.ini | MORE /P > example\\prometheus_exporters_example.ini'
 
-        powershell "& $ADVINST /loadpathvars \"build\\msi\\PathVariables_Jenkins.apf\""
+        powershell "& \"C:\\Program Files\\DigiCert\\DigiCert One Signing Manager Tools\\smctl.exe\" healthcheck"
+
+        //powershell "& $ADVINST /loadpathvars \"build\\msi\\PathVariables_Jenkins.apf\""
+        powershell "& $ADVINST /edit \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\" \\NewPathVariable -name AGENT_SOURCE -value \"C:\\jenkins\\workspace\\openitcockpit-agent-go_${branch}\" -valuetype Folder -global"
         powershell "& $ADVINST /edit \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\" \\SetVersion \"$VERSION\""
+
+        if (env.BRANCH_NAME != 'main') {
+            // Disable code-signing for development builds branches
+            powershell "& $ADVINST /edit \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\" \\ResetSig"
+        }
+
         powershell "& $ADVINST /build \"build\\msi\\openitcockpit-agent-${GOARCH}.aip\""
         archiveArtifacts artifacts: 'release/packages/**', fingerprint: true
     }

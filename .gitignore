@@ -52,3 +52,4 @@ selfsigned.key
 server_ca-crt
 agent-freebsd.amd64.bin
 __debug_bin*
+\%ProgramData\%

@@ -2,9 +2,10 @@ package checks
 
 import (
 	"context"
+
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/winpsapi"
 	"github.com/pkg/errors"
-	"github.com/shirou/gopsutil/v3/process"
+	"github.com/shirou/gopsutil/v4/process"
 )
 
 // Run the actual check

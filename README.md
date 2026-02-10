@@ -213,6 +213,42 @@ Please see the [full documentation](https://github.com/openITCOCKPIT/openitcockp
 | Libvirt VMs | -       | ✅ [readme](https://docs.openitcockpit.io/en/agent/build-binary/#enable-libvirt-support-linux-only) | -     | -       |
 
 
+## Software Inventory
+
+The openITCOCKPIT Agent collects detailed information about installed packages, installed software, and available security updates across all major operating systems. It also detects when a system reboot is required. An important step to ensure that the latest security updates are fully applied.
+
+### Linux
+
+
+On Linux systems, the agent gathers a complete list of installed packages, identifies available updates, and, where supported, highlights security updates.
+
+| Package Manager | Installed Packages | Available Updates | Security Updates | Reboot Required                                                                                                     |
+|-----------------|--------------------|-------------------|------------------|---------------------------------------------------------------------------------------------------------------------|
+| `apt`           | ✅                  | ✅                 | ✅                | ✅ [Method](https://www.debian.org/doc/debian-policy/ch-opersys.html#signaling-that-a-reboot-is-required)            |
+| `dnf`           | ✅                  | ✅                 | ✅                | ✅ [Method](https://dnf-plugins-core.readthedocs.io/en/latest/needs_restarting.html)                                 |
+| `yum`           | ✅                  | ✅                 | ✅                | ✅ [Method](https://man7.org/linux/man-pages/man1/needs-restarting.1.html)                                           |
+| `zypper`        | ✅                  | ✅                 | ✅                | ✅ [Method](https://support.scc.suse.com/s/kb/How-to-check-if-system-reboot-is-needed-after-patching?language=en_US) |
+| `pacman`        | ✅                  | ✅                 | -                | _Not supported_                                                                                                     |
+| `rpm`           | ✅                  | -                 | -                | -                                                                                                                   |
+
+
+### Windows
+
+| Available Windows Updates                 | Installed Software | Reboot Required |
+|-------------------------------------------|--------------------|-----------------|
+| Via PowerShell `Microsoft.Update.Session` | via Registry       | via Registry    |
+
+On Windows systems, only operating system updates are reported, as there is no unified package manager. The agent retrieves information about installed software and reboot requirements via the Windows Registry.
+
+
+### macOS
+
+| Available macOS Updates | Installed Software    | Reboot Required |
+|-------------------------|-----------------------|-----------------|
+| ✅                       | via `system_profiler` | _Not supported_ |
+
+On macOS systems, only operating system updates are reported, as there is no package manager. Installed software information is collected using `system_profiler`. Reboot detection is not supported on macOS.
+
 ## License
 ```
 Copyright (C) 2021-2025  it-novum GmbH

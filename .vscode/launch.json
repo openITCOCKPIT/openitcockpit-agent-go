@@ -12,10 +12,26 @@
             "program": "${workspaceFolder}",
             "env": {
                 "OITC_AGENT_DEBUG": "1",
+                //"GOTMPDIR": "${env:USERPROFILE}\\git\\go-tmp\\"
             },
-            "args": ["-c", "./config.ini", "--disable-logfile", "--debug"]
+            "args": [
+                "-c",
+                "./config.ini",
+                "--disable-logfile",
+                "--debug"
+            ]
             //"args": ["-c", ".\\config.ini", "--disable-logfile", "--debug"] // Windows
             //"args": ["-c", "./config.ini", "--log", "/tmp/agent-debug.log", "--debug"] // With logfile
+        },
+        {
+            "name": "Debug Service Binary",
+            "type": "go",
+            "request": "launch",
+            "mode": "exec",
+            "program": "${workspaceFolder}/openitcockpit-agent-go.exe",
+            "args": [
+                "debug"
+            ]
         }
     ]
 }

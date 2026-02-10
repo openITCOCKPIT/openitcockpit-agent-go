@@ -6,7 +6,7 @@ package checks
 import (
 	"context"
 
-	"github.com/shirou/gopsutil/v3/mem"
+	"github.com/shirou/gopsutil/v4/mem"
 )
 
 // Run the actual check

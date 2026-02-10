@@ -20,6 +20,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/config"
+	"github.com/openITCOCKPIT/openitcockpit-agent-go/packagemanager"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/utils"
 	log "github.com/sirupsen/logrus"
 )
@@ -65,17 +66,19 @@ type authConfiguration struct {
 }
 
 type PushClient struct {
-	StateInput chan []byte
+	StateInput               chan []byte
+	StateInputPackageManager chan packagemanager.PackageInfo
 
-	shutdown           chan struct{}
-	wg                 sync.WaitGroup
-	configuration      config.PushConfiguration
-	authConfiguration  authConfiguration
-	client             http.Client
-	urlSubmitCheckData *url.URL
-	urlRegisterAgent   *url.URL
-	apiKeyHeader       string
-	timeout            time.Duration
+	shutdown             chan struct{}
+	wg                   sync.WaitGroup
+	configuration        config.PushConfiguration
+	authConfiguration    authConfiguration
+	client               http.Client
+	urlSubmitCheckData   *url.URL
+	urlRegisterAgent     *url.URL
+	urlSubmitPackageInfo *url.URL
+	apiKeyHeader         string
+	timeout              time.Duration
 }
 
 type registerAgentRequest struct {
@@ -100,6 +103,11 @@ type submitCheckDataRequest struct {
 type submitCheckDataResponse struct {
 	ReceivedChecks int64  `json:"received_checks"`
 	Error          string `json:"error"`
+}
+
+type submitPackageInfoRequest struct {
+	Success bool   `json:"success"`
+	Error   string `json:"error"`
 }
 
 func (p *PushClient) saveAuthConfig() error {
@@ -272,6 +280,45 @@ func (p *PushClient) submitCheckData(ctx context.Context, state []byte) {
 	}
 }
 
+func (p *PushClient) submitSoftwareInventoryData(ctx context.Context, pkgInfo packagemanager.PackageInfo) {
+	log.Infoln("Push Client: send new state to server")
+
+	data, err := json.Marshal(&pkgInfo)
+	if err != nil {
+		log.Errorln("Push Client: Could not create json for package manager status: ", err)
+		return
+	}
+
+	req := submitCheckDataRequest{
+		CheckData: (*json.RawMessage)(&data),
+		AgentUUID: p.authConfiguration.UUID,
+		Password:  p.authConfiguration.Password,
+	}
+	res := submitPackageInfoRequest{}
+
+	status, err := p.httpRequest(ctx, p.urlSubmitPackageInfo, &req, &res)
+	if err != nil {
+		log.Errorln("Push client: ", err)
+		return
+	}
+
+	switch status {
+	case 405:
+		log.Errorln("Push Client: authentication error (probably incorrect api key)")
+		return
+	case 200:
+		log.Debugln("Push Client: submitted software inventory data successfully")
+		return
+	default:
+		if res.Error != "" {
+			log.Errorln("Push Client: could not send state to server: ", res.Error)
+		} else {
+			log.Errorln("Push Client: unknown error during submit packagemanager, http status: ", status)
+		}
+		return
+	}
+}
+
 func (p *PushClient) updateState(parent context.Context, state []byte) {
 	log.Debugln("Push Client: new request")
 
@@ -282,6 +329,37 @@ func (p *PushClient) updateState(parent context.Context, state []byte) {
 		p.submitCheckData(ctx, state)
 	} else {
 		p.registerClient(ctx, state)
+	}
+}
+
+func (p *PushClient) pushPackageInfo(parent context.Context, newState packagemanager.PackageInfo) {
+	log.Debugln("Push Client: new software inventory request")
+
+	// Copy the data to avoid bugs with references
+	// as slices are reference types
+	if newState.Stats.LastError != nil {
+		newState.Stats.LastErrorString = newState.Stats.LastError.Error()
+	}
+
+	// Deep copy slices
+	packageManagerState := packagemanager.PackageInfo{
+		Enabled:        newState.Enabled,
+		Pending:        newState.Pending,
+		LastUpdate:     newState.LastUpdate,
+		Stats:          newState.Stats,
+		LinuxPackages:  append([]packagemanager.Package{}, newState.LinuxPackages...),
+		LinuxUpdates:   append([]packagemanager.PackageUpdate{}, newState.LinuxUpdates...),
+		WindowsApps:    append([]packagemanager.WindowsApp{}, newState.WindowsApps...),
+		WindowsUpdates: append([]packagemanager.WindowsUpdate{}, newState.WindowsUpdates...),
+		MacosApps:      append([]packagemanager.Package{}, newState.MacosApps...),
+		MacosUpdates:   append([]packagemanager.MacosUpdate{}, newState.MacosUpdates...),
+	}
+
+	ctx, cancel := context.WithTimeout(parent, p.timeout)
+	defer cancel()
+
+	if p.authConfiguration.Password != "" {
+		p.submitSoftwareInventoryData(ctx, packageManagerState)
 	}
 }
 
@@ -319,6 +397,12 @@ func (p *PushClient) Start(ctx context.Context, cfg *config.Configuration) error
 		return err
 	}
 	p.urlRegisterAgent.Path = path.Join(p.urlRegisterAgent.Path, "agentconnector", "register_agent.json")
+
+	p.urlSubmitPackageInfo, err = url.Parse(p.configuration.URL)
+	if err != nil {
+		return err
+	}
+	p.urlSubmitPackageInfo.Path = path.Join(p.urlSubmitPackageInfo.Path, "agentconnector", "submit_package_info.json")
 
 	p.apiKeyHeader = fmt.Sprint("X-OITC-API ", p.configuration.Apikey)
 
@@ -365,6 +449,12 @@ func (p *PushClient) Start(ctx context.Context, cfg *config.Configuration) error
 			case newState := <-p.StateInput:
 				// received new check results
 				p.updateState(ctx, newState)
+
+			case newPackages := <-p.StateInputPackageManager:
+				// received new package manager results
+				if newPackages.Enabled && !newPackages.Pending {
+					p.pushPackageInfo(ctx, newPackages)
+				}
 			}
 		}
 	}()

@@ -1,0 +1,433 @@
+{
+    "Enabled": true,
+    "Pending": false,
+    "LastUpdate": 1768920000,
+    "Stats": {
+        "InstalledPackages": 72,
+        "UpgradablePackages": 4,
+        "SecurityUpdates": 1,
+        "RebootRequired": true,
+        "LastError": "",
+        "OperatingSystem": "windows",
+        "PackageManager": "windows-updates",
+        "OsName": "Microsoft Windows 11 Enterprise",
+        "OsVersion": "24H2 (10.0.26100.7462 Build 26100.7462)",
+        "OsFamily": "windows",
+        "AgentVersion": "3.4.0",
+        "Uptime": 979400
+    },
+    "LinuxPackages": [],
+    "LinuxUpdates": [],
+    "WindowsApps": [
+        {
+            "Name": "draw.io 28.2.8",
+            "Version": "28.2.8",
+            "Publisher": "JGraph"
+        },
+        {
+            "Name": "7-Zip 25.01 (x64)",
+            "Version": "25.01",
+            "Publisher": "Igor Pavlov"
+        },
+        {
+            "Name": "Docker Desktop",
+            "Version": "4.49.0",
+            "Publisher": "Docker Inc."
+        },
+        {
+            "Name": "Firefox Developer Edition (x64 de)",
+            "Version": "148.0",
+            "Publisher": "Mozilla"
+        },
+        {
+            "Name": "Git",
+            "Version": "2.51.0",
+            "Publisher": "The Git Development Community"
+        },
+        {
+            "Name": "Mozilla Firefox (x64 de)",
+            "Version": "147.0.1",
+            "Publisher": "Mozilla"
+        },
+        {
+            "Name": "Mozilla Maintenance Service",
+            "Version": "143.0",
+            "Publisher": "Mozilla"
+        },
+        {
+            "Name": "Microsoft 365 Apps for Enterprise - de-de",
+            "Version": "16.0.19426.20218",
+            "Publisher": "Microsoft Corporation"
+        },
+        {
+            "Name": "Microsoft 365 Apps for enterprise - en-us",
+            "Version": "16.0.19426.20218",
+            "Publisher": "Microsoft Corporation"
+        },
+        {
+            "Name": "Microsoft OneDrive",
+            "Version": "25.238.1204.0001",
+            "Publisher": "Microsoft Corporation"
+        },
+        {
+            "Name": "openITCOCKPIT Monitoring Agent",
+            "Version": "3.2.0",
+            "Publisher": "it-novum"
+        },
+        {
+            "Name": "FortiClient VPN",
+            "Version": "7.4.3.1790",
+            "Publisher": "Fortinet Technologies Inc"
+        },
+        {
+            "Name": "openitcockpit-agent",
+            "Version": "3.2.0",
+            "Publisher": "it-novum"
+        },
+        {
+            "Name": "Python 3.13.7 Add to Path (64-bit)",
+            "Version": "3.13.7150.0",
+            "Publisher": "Python Software Foundation"
+        },
+        {
+            "Name": "Windows Subsystem for Linux",
+            "Version": "2.5.10.0",
+            "Publisher": "Microsoft Corporation"
+        },
+        {
+            "Name": "RealVNC Viewer 7.13.1",
+            "Version": "7.13.1.57",
+            "Publisher": "RealVNC"
+        },
+        {
+            "Name": "Microsoft Visual C++ 2022 X64 Minimum Runtime - 14.40.33816",
+            "Version": "14.40.33816",
+            "Publisher": "Microsoft Corporation"
+        },
+        {
+            "Name": "Microsoft Visual C++ 2022 X64 Additional Runtime - 14.40.33816",
+            "Version": "14.40.33816",
+            "Publisher": "Microsoft Corporation"
+        },
+        {
+            "Name": "Python 3.13.7 Test Suite (64-bit)",
+            "Version": "3.13.7150.0",
+            "Publisher": "Python Software Foundation"
+        },
+        {
+            "Name": "Office 16 Click-to-Run Licensing Component",
+            "Version": "16.0.19029.20244",
+            "Publisher": "Microsoft Corporation"
+        },
+        {
+            "Name": "Office 16 Click-to-Run Extensibility Component",
+            "Version": "16.0.19426.20170",
+            "Publisher": "Microsoft Corporation"
+        },
+        {
+            "Name": "Office 16 Click-to-Run Localization Component",
+            "Version": "16.0.19426.20170",
+            "Publisher": "Microsoft Corporation"
+        },
+        {
+            "Name": "Python 3.13.7 Development Libraries (64-bit)",
+            "Version": "3.13.7150.0",
+            "Publisher": "Python Software Foundation"
+        },
+        {
+            "Name": "BeyondTrust Jump Client - remotesupport.cloud-mgmt.net",
+            "Version": "25.2.1.0",
+            "Publisher": "BeyondTrust Corporation"
+        },
+        {
+            "Name": "Python 3.13.7 Standard Library (64-bit)",
+            "Version": "3.13.7150.0",
+            "Publisher": "Python Software Foundation"
+        },
+        {
+            "Name": "Python 3.13.7 Tcl/Tk Support (64-bit)",
+            "Version": "3.13.7150.0",
+            "Publisher": "Python Software Foundation"
+        },
+        {
+            "Name": "Microsoft Teams Meeting Add-in for Microsoft Office",
+            "Version": "1.25.28902",
+            "Publisher": "Microsoft"
+        },
+        {
+            "Name": "Go Programming Language amd64 go1.25.0",
+            "Version": "1.25.0",
+            "Publisher": "https://go.dev"
+        },
+        {
+            "Name": "Python 3.13.7 Core Interpreter (64-bit)",
+            "Version": "3.13.7150.0",
+            "Publisher": "Python Software Foundation"
+        },
+        {
+            "Name": "VMware Workstation",
+            "Version": "25.0.0",
+            "Publisher": "VMware, Inc."
+        },
+        {
+            "Name": "Python 3.13.7 pip Bootstrap (64-bit)",
+            "Version": "3.13.7150.0",
+            "Publisher": "Python Software Foundation"
+        },
+        {
+            "Name": "Python 3.13.7 Documentation (64-bit)",
+            "Version": "3.13.7150.0",
+            "Publisher": "Python Software Foundation"
+        },
+        {
+            "Name": "Python 3.13.7 Executables (64-bit)",
+            "Version": "3.13.7150.0",
+            "Publisher": "Python Software Foundation"
+        },
+        {
+            "Name": "PowerToys (Preview)",
+            "Version": "0.95.0",
+            "Publisher": "Microsoft Corporation"
+        },
+        {
+            "Name": "Node.js",
+            "Version": "24.13.0",
+            "Publisher": "Node.js Foundation"
+        },
+        {
+            "Name": "Citrix Workspace 2009",
+            "Version": "20.9.6.34",
+            "Publisher": "Citrix Systems, Inc."
+        },
+        {
+            "Name": "FileZilla 3.69.5",
+            "Version": "3.69.5",
+            "Publisher": "Tim Kosse"
+        },
+        {
+            "Name": "Google Chrome",
+            "Version": "143.0.7499.193",
+            "Publisher": "Google LLC"
+        },
+        {
+            "Name": "Microsoft Edge",
+            "Version": "144.0.3719.82",
+            "Publisher": "Microsoft Corporation"
+        },
+        {
+            "Name": "Microsoft Edge WebView2-Laufzeit",
+            "Version": "143.0.3650.139",
+            "Publisher": "Microsoft Corporation"
+        },
+        {
+            "Name": "OBS Studio",
+            "Version": "31.1.2",
+            "Publisher": "OBS Project"
+        },
+        {
+            "Name": "Microsoft Visual C++ 2022 X86 Additional Runtime - 14.40.33816",
+            "Version": "14.40.33816",
+            "Publisher": "Microsoft Corporation"
+        },
+        {
+            "Name": "Citrix Web Helper",
+            "Version": "20.9.6.21",
+            "Publisher": "Citrix Systems, Inc."
+        },
+        {
+            "Name": "Citrix Workspace(SSON)",
+            "Version": "20.9.6.21",
+            "Publisher": "Citrix Systems, Inc."
+        },
+        {
+            "Name": "Microsoft Intune Management Extension",
+            "Version": "1.97.107.0",
+            "Publisher": "Microsoft Corporation"
+        },
+        {
+            "Name": "Citrix Workspace Inside",
+            "Version": "20.9.6.65534",
+            "Publisher": "Citrix Systems, Inc."
+        },
+        {
+            "Name": "Self-Service Plug-in",
+            "Version": "20.9.6.21",
+            "Publisher": "Citrix Systems, Inc."
+        },
+        {
+            "Name": "Microsoft Visual C++ 2015-2022 Redistributable (x86) - 14.40.33816",
+            "Version": "14.40.33816.0",
+            "Publisher": "Microsoft Corporation"
+        },
+        {
+            "Name": "Citrix Screen Casting for Windows",
+            "Version": "19.11.100.48",
+            "Publisher": "Citrix Systems, Inc"
+        },
+        {
+            "Name": "Citrix Workspace (USB)",
+            "Version": "20.9.6.21",
+            "Publisher": "Citrix Systems, Inc."
+        },
+        {
+            "Name": "Microsoft Visual C++ 2015-2022 Redistributable (x64) - 14.40.33816",
+            "Version": "14.40.33816.0",
+            "Publisher": "Microsoft Corporation"
+        },
+        {
+            "Name": "Python Launcher",
+            "Version": "3.13.7150.0",
+            "Publisher": "Python Software Foundation"
+        },
+        {
+            "Name": "Citrix WorkSpace Browser",
+            "Version": "20.9.0.9",
+            "Publisher": "Citrix Systems, Inc."
+        },
+        {
+            "Name": "Citrix Authentication Manager",
+            "Version": "20.6.200.272",
+            "Publisher": "Citrix Systems, Inc."
+        },
+        {
+            "Name": "Enpass",
+            "Version": "6.11.17.2135",
+            "Publisher": "Enpass Technologies Inc."
+        },
+        {
+            "Name": "Adobe Refresh Manager",
+            "Version": "1.8.0",
+            "Publisher": "Adobe Systems Incorporated"
+        },
+        {
+            "Name": "Adobe Acrobat Reader MUI",
+            "Version": "25.001.20997",
+            "Publisher": "Adobe Systems Incorporated"
+        },
+        {
+            "Name": "Skype Meetings App",
+            "Version": "16.2.0.511",
+            "Publisher": "Microsoft Corporation"
+        },
+        {
+            "Name": "Online Plug-in",
+            "Version": "20.9.6.21",
+            "Publisher": "Citrix Systems, Inc."
+        },
+        {
+            "Name": "Microsoft Visual C++ 2022 X86 Minimum Runtime - 14.40.33816",
+            "Version": "14.40.33816",
+            "Publisher": "Microsoft Corporation"
+        },
+        {
+            "Name": "Citrix Workspace (DV)",
+            "Version": "20.9.6.21",
+            "Publisher": "Citrix Systems, Inc."
+        },
+        {
+            "Name": "Mockoon 9.3.0",
+            "Version": "9.3.0",
+            "Publisher": "Mockoon"
+        },
+        {
+            "Name": "openITCOCKPIT-Desktop 5.3.0",
+            "Version": "5.3.0",
+            "Publisher": "oprnITCOCKPIT"
+        },
+        {
+            "Name": "Antares 0.7.35",
+            "Version": "0.7.35",
+            "Publisher": "Fabio Di Stasio"
+        },
+        {
+            "Name": "Android Studio",
+            "Version": "Otter 2 Feature Drop 2025.2.2 Patch 1",
+            "Publisher": "Google"
+        },
+        {
+            "Name": "PhpStorm",
+            "Version": "2025.3.1.1",
+            "Publisher": "JetBrains s.r.o."
+        },
+        {
+            "Name": "JetBrains Toolbox",
+            "Version": "3.2.0.65851",
+            "Publisher": "JetBrains"
+        },
+        {
+            "Name": "Zoom Workplace",
+            "Version": "6.6.11 (23272)",
+            "Publisher": "Zoom Communications, Inc."
+        },
+        {
+            "Name": "Auto Dark Mode",
+            "Version": "10.4.2.29",
+            "Publisher": "Armin Osaj \u0026 Samuel Schiegg"
+        },
+        {
+            "Name": "PowerToys (Preview) x64",
+            "Version": "0.95.0",
+            "Publisher": "Microsoft Corporation"
+        },
+        {
+            "Name": "Microsoft Visual Studio Code (User)",
+            "Version": "1.108.1",
+            "Publisher": "Microsoft Corporation"
+        },
+        {
+            "Name": "Python 3.13.7 (64-bit)",
+            "Version": "3.13.7150.0",
+            "Publisher": "Python Software Foundation"
+        }
+    ],
+    "WindowsUpdates": [
+        {
+            "Title": "Security Intelligence-Update für Microsoft Defender Antivirus – KB2267602 (Version 1.443.762.0) – Aktueller Kanal (Allgemein)",
+            "Description": "Installieren Sie dieses Update, um die Dateien zu überarbeiten, die zum Erkenne",
+            "KBArticleIDs": [
+                "2267602"
+            ],
+            "IsInstalled": false,
+            "IsSecurityUpdate": true,
+            "IsOptional": false,
+            "UpdateID": "c0257e4a-626c-451e-9f54-b9e15abacd80",
+            "RevisionNumber": 200,
+            "RebootRequired": false
+        },
+        {
+            "Title": "Lenovo Driver Update (1.69.132.0)",
+            "Description": "Lenovo System  driver update released in  October 2025",
+            "KBArticleIDs": [],
+            "IsInstalled": false,
+            "IsSecurityUpdate": false,
+            "IsOptional": false,
+            "UpdateID": "fb02eeba-e36e-4740-8695-dbe706fee161",
+            "RevisionNumber": 1,
+            "RebootRequired": false
+        },
+        {
+            "Title": "Advanced Micro Devices, Inc Driver Update (1.0.19.3)",
+            "Description": "Advanced Micro Devices, Inc System  driver update released in  November 2025",
+            "KBArticleIDs": [],
+            "IsInstalled": false,
+            "IsSecurityUpdate": false,
+            "IsOptional": false,
+            "UpdateID": "37f3c28a-2dde-4acd-bd85-dbae544079cd",
+            "RevisionNumber": 1,
+            "RebootRequired": false
+        },
+        {
+            "Title": "Lenovo Driver Update (6.14.29.0)",
+            "Description": "Lenovo Monitor  driver update released in  December 2025",
+            "KBArticleIDs": [],
+            "IsInstalled": false,
+            "IsSecurityUpdate": false,
+            "IsOptional": false,
+            "UpdateID": "277fcc69-23b1-4847-b7a0-e94bbd3c3e21",
+            "RevisionNumber": 1,
+            "RebootRequired": false
+        }
+    ],
+    "MacosApps": [],
+    "MacosUpdates": []
+}

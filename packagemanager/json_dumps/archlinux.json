@@ -1,0 +1,888 @@
+{
+    "Enabled": true,
+    "Pending": false,
+    "LastUpdate": 1768337205,
+    "Stats": {
+        "InstalledPackages": 140,
+        "UpgradablePackages": 23,
+        "SecurityUpdates": 0,
+        "RebootRequired": false,
+        "LastError": null,
+        "OperatingSystem": "linux",
+        "PackageManager": "pacman",
+        "OsName": "arch",
+        "OsVersion": "20260104.0.477168",
+        "OsFamily": "arch",
+        "AgentVersion": "3.4.0",
+        "Uptime": 30877
+    },
+    "LinuxPackages": [
+        {
+            "Name": "acl",
+            "Version": "2.3.2-1",
+            "Description": "Access control list utilities, libraries and headers"
+        },
+        {
+            "Name": "archlinux-keyring",
+            "Version": "20251116-1",
+            "Description": "Arch Linux PGP keyring"
+        },
+        {
+            "Name": "attr",
+            "Version": "2.5.2-1",
+            "Description": "Extended attribute support library for ACL support"
+        },
+        {
+            "Name": "audit",
+            "Version": "4.1.2-1",
+            "Description": "Userspace components of the audit framework"
+        },
+        {
+            "Name": "base",
+            "Version": "3-2",
+            "Description": "Minimal package set to define a basic Arch Linux installation"
+        },
+        {
+            "Name": "bash",
+            "Version": "5.3.9-1",
+            "Description": "The GNU Bourne Again shell"
+        },
+        {
+            "Name": "binutils",
+            "Version": "2.45.1-1",
+            "Description": "A set of programs to assemble and manipulate binary and object files"
+        },
+        {
+            "Name": "brotli",
+            "Version": "1.1.0-3",
+            "Description": "Generic-purpose lossless compression algorithm"
+        },
+        {
+            "Name": "bzip2",
+            "Version": "1.0.8-6",
+            "Description": "A high-quality data compression program"
+        },
+        {
+            "Name": "ca-certificates",
+            "Version": "20240618-1",
+            "Description": "Common CA certificates - default providers"
+        },
+        {
+            "Name": "ca-certificates-mozilla",
+            "Version": "3.119.1-1",
+            "Description": "Mozilla's set of trusted CA certificates"
+        },
+        {
+            "Name": "ca-certificates-utils",
+            "Version": "20240618-1",
+            "Description": "Common CA certificates (utilities)"
+        },
+        {
+            "Name": "coreutils",
+            "Version": "9.9-1",
+            "Description": "The basic file, shell and text manipulation utilities of the GNU operating syste"
+        },
+        {
+            "Name": "cryptsetup",
+            "Version": "2.8.3-1",
+            "Description": "Userspace setup tool for transparent encryption of block devices using dm-crypt"
+        },
+        {
+            "Name": "curl",
+            "Version": "8.18.0-2",
+            "Description": "command line tool and library for transferring data with URLs"
+        },
+        {
+            "Name": "db5.3",
+            "Version": "5.3.28-5",
+            "Description": "The Berkeley DB embedded database system v5.3"
+        },
+        {
+            "Name": "dbus",
+            "Version": "1.16.2-1",
+            "Description": "Freedesktop.org message bus system"
+        },
+        {
+            "Name": "dbus-broker",
+            "Version": "37-2",
+            "Description": "Linux D-Bus Message Broker"
+        },
+        {
+            "Name": "dbus-broker-units",
+            "Version": "37-2",
+            "Description": "Linux D-Bus Message Broker - Service units"
+        },
+        {
+            "Name": "dbus-units",
+            "Version": "37-2",
+            "Description": "D-Bus service units (default provider)"
+        },
+        {
+            "Name": "device-mapper",
+            "Version": "2.03.38-1",
+            "Description": "Device mapper userspace library and tools"
+        },
+        {
+            "Name": "e2fsprogs",
+            "Version": "1.47.3-2",
+            "Description": "Ext2/3/4 filesystem utilities"
+        },
+        {
+            "Name": "expat",
+            "Version": "2.7.3-1",
+            "Description": "An XML parser library"
+        },
+        {
+            "Name": "fakeroot",
+            "Version": "1.37.1.2-1",
+            "Description": "Tool for simulating superuser privileges"
+        },
+        {
+            "Name": "file",
+            "Version": "5.46-5",
+            "Description": "File type identification utility"
+        },
+        {
+            "Name": "filesystem",
+            "Version": "2025.10.12-1",
+            "Description": "Base Arch Linux files"
+        },
+        {
+            "Name": "findutils",
+            "Version": "4.10.0-3",
+            "Description": "GNU utilities to locate files"
+        },
+        {
+            "Name": "gawk",
+            "Version": "5.3.2-1",
+            "Description": "GNU version of awk"
+        },
+        {
+            "Name": "gcc-libs",
+            "Version": "15.2.1+r301+gf24307422d1d-1",
+            "Description": "Runtime libraries shipped by GCC"
+        },
+        {
+            "Name": "gdbm",
+            "Version": "1.26-1",
+            "Description": "GNU database library"
+        },
+        {
+            "Name": "gettext",
+            "Version": "0.26-1",
+            "Description": "GNU internationalization library"
+        },
+        {
+            "Name": "git",
+            "Version": "2.52.0-2",
+            "Description": "the fast distributed version control system"
+        },
+        {
+            "Name": "glib2",
+            "Version": "2.86.3-1",
+            "Description": "Low level core library"
+        },
+        {
+            "Name": "glibc",
+            "Version": "2.42+r33+gde1fe81f4714-1",
+            "Description": "GNU C Library"
+        },
+        {
+            "Name": "gmp",
+            "Version": "6.3.0-2",
+            "Description": "A free library for arbitrary precision arithmetic"
+        },
+        {
+            "Name": "gnulib-l10n",
+            "Version": "20241231-1",
+            "Description": "The Gnulib localizations"
+        },
+        {
+            "Name": "gnupg",
+            "Version": "2.4.9-1",
+            "Description": "Complete and free implementation of the OpenPGP standard"
+        },
+        {
+            "Name": "gnutls",
+            "Version": "3.8.11-2",
+            "Description": "A library which provides a secure layer over a reliable transport layer"
+        },
+        {
+            "Name": "gpgme",
+            "Version": "2.0.1-1",
+            "Description": "C wrapper library for GnuPG"
+        },
+        {
+            "Name": "gpm",
+            "Version": "1.20.7.r38.ge82d1a6-6",
+            "Description": "A mouse server for the console and xterm"
+        },
+        {
+            "Name": "grep",
+            "Version": "3.12-2",
+            "Description": "A string search utility"
+        },
+        {
+            "Name": "gzip",
+            "Version": "1.14-2",
+            "Description": "GNU compression utility"
+        },
+        {
+            "Name": "htop",
+            "Version": "3.4.1-1",
+            "Description": "Interactive process viewer"
+        },
+        {
+            "Name": "hwdata",
+            "Version": "0.402-1",
+            "Description": "hardware identification databases"
+        },
+        {
+            "Name": "iana-etc",
+            "Version": "20251215-1",
+            "Description": "/etc/protocols and /etc/services provided by IANA"
+        },
+        {
+            "Name": "icu",
+            "Version": "78.1-1",
+            "Description": "International Components for Unicode library"
+        },
+        {
+            "Name": "iproute2",
+            "Version": "6.18.0-1",
+            "Description": "IP Routing Utilities"
+        },
+        {
+            "Name": "iptables",
+            "Version": "1:1.8.11-2",
+            "Description": "Linux kernel packet control tool (using legacy interface)"
+        },
+        {
+            "Name": "iputils",
+            "Version": "20250605-1",
+            "Description": "Network monitoring tools, including ping"
+        },
+        {
+            "Name": "jansson",
+            "Version": "2.14.1-1",
+            "Description": "C library for encoding, decoding and manipulating JSON data"
+        },
+        {
+            "Name": "json-c",
+            "Version": "0.18-2",
+            "Description": "JSON implementation in C"
+        },
+        {
+            "Name": "kbd",
+            "Version": "2.9.0-1",
+            "Description": "Keytable files and keyboard utilities"
+        },
+        {
+            "Name": "keyutils",
+            "Version": "1.6.3-3",
+            "Description": "Linux Key Management Utilities"
+        },
+        {
+            "Name": "kmod",
+            "Version": "34.2-1",
+            "Description": "Linux kernel module management tools and library"
+        },
+        {
+            "Name": "krb5",
+            "Version": "1.21.3-2",
+            "Description": "The Kerberos network authentication system"
+        },
+        {
+            "Name": "leancrypto",
+            "Version": "1.6.0-1",
+            "Description": "Lean cryptographic library usable for bare-metal environments"
+        },
+        {
+            "Name": "libarchive",
+            "Version": "3.8.4-1",
+            "Description": "Multi-format archive and compression library"
+        },
+        {
+            "Name": "libassuan",
+            "Version": "3.0.0-1",
+            "Description": "IPC library used by some GnuPG related software"
+        },
+        {
+            "Name": "libbpf",
+            "Version": "1.6.2-1",
+            "Description": "Library for loading eBPF programs and reading and manipulating eBPF objects from"
+        },
+        {
+            "Name": "libcap",
+            "Version": "2.77-1",
+            "Description": "POSIX 1003.1e capabilities"
+        },
+        {
+            "Name": "libcap-ng",
+            "Version": "0.8.5-3",
+            "Description": "A library for Linux that makes using posix capabilities easy"
+        },
+        {
+            "Name": "libelf",
+            "Version": "0.194-1",
+            "Description": "Handle ELF object files and DWARF debugging information (libraries)"
+        },
+        {
+            "Name": "libevent",
+            "Version": "2.1.12-4",
+            "Description": "Event notification library"
+        },
+        {
+            "Name": "libffi",
+            "Version": "3.5.2-1",
+            "Description": "Portable foreign function interface library"
+        },
+        {
+            "Name": "libgcrypt",
+            "Version": "1.11.2-1",
+            "Description": "General purpose cryptographic library based on the code from GnuPG"
+        },
+        {
+            "Name": "libgpg-error",
+            "Version": "1.58-1",
+            "Description": "Support library for libgcrypt"
+        },
+        {
+            "Name": "libidn2",
+            "Version": "2.3.8-1",
+            "Description": "Free software implementation of IDNA2008, Punycode and TR46"
+        },
+        {
+            "Name": "libksba",
+            "Version": "1.6.7-2",
+            "Description": "Library for working with X.509 certificates, CMS data and related objects"
+        },
+        {
+            "Name": "libldap",
+            "Version": "2.6.10-2",
+            "Description": "Lightweight Directory Access Protocol (LDAP) client libraries"
+        },
+        {
+            "Name": "libmakepkg-dropins",
+            "Version": "18-1",
+            "Description": "Features that can be dropped into libmakepkg to extend the functionality of make"
+        },
+        {
+            "Name": "libmnl",
+            "Version": "1.0.5-2",
+            "Description": "Minimalistic user-space library oriented to Netlink developers."
+        },
+        {
+            "Name": "libnetfilter_conntrack",
+            "Version": "1.0.9-2",
+            "Description": "Library providing an API to the in-kernel connection tracking state table"
+        },
+        {
+            "Name": "libnfnetlink",
+            "Version": "1.0.2-2",
+            "Description": "Low-level library for netfilter related kernel/userspace communication"
+        },
+        {
+            "Name": "libnftnl",
+            "Version": "1.3.1-1",
+            "Description": "Netfilter library providing interface to the nf_tables subsystem"
+        },
+        {
+            "Name": "libnghttp2",
+            "Version": "1.68.0-1",
+            "Description": "Framing layer of HTTP/2 is implemented as a reusable C library"
+        },
+        {
+            "Name": "libnghttp3",
+            "Version": "1.14.0-1",
+            "Description": "HTTP/3 library written in C"
+        },
+        {
+            "Name": "libngtcp2",
+            "Version": "1.19.0-1",
+            "Description": "Implementation of IETF QUIC protocol"
+        },
+        {
+            "Name": "libnl",
+            "Version": "3.12.0-1",
+            "Description": "Library for applications dealing with netlink sockets"
+        },
+        {
+            "Name": "libnsl",
+            "Version": "2.0.1-1",
+            "Description": "Public client interface library for NIS(YP)"
+        },
+        {
+            "Name": "libp11-kit",
+            "Version": "0.25.10-2",
+            "Description": "Loads and enumerates PKCS#11 modules (library)"
+        },
+        {
+            "Name": "libpcap",
+            "Version": "1.10.5-3",
+            "Description": "A system-independent interface for user-level packet capture"
+        },
+        {
+            "Name": "libpsl",
+            "Version": "0.21.5-2",
+            "Description": "Public Suffix List library"
+        },
+        {
+            "Name": "libsasl",
+            "Version": "2.1.28-5",
+            "Description": "Cyrus Simple Authentication Service Layer (SASL) library"
+        },
+        {
+            "Name": "libseccomp",
+            "Version": "2.5.6-1",
+            "Description": "Enhanced seccomp library"
+        },
+        {
+            "Name": "libsecret",
+            "Version": "0.21.7-1",
+            "Description": "Library for storing and retrieving passwords and other secrets"
+        },
+        {
+            "Name": "libssh2",
+            "Version": "1.11.1-1",
+            "Description": "A library implementing the SSH2 protocol as defined by Internet Drafts"
+        },
+        {
+            "Name": "libsysprof-capture",
+            "Version": "49.0-1",
+            "Description": "Kernel based performance profiler - capture library"
+        },
+        {
+            "Name": "libtasn1",
+            "Version": "4.20.0-1",
+            "Description": "The ASN.1 library used in GNUTLS"
+        },
+        {
+            "Name": "libtirpc",
+            "Version": "1.3.7-1",
+            "Description": "Transport Independent RPC library (SunRPC replacement)"
+        },
+        {
+            "Name": "libunistring",
+            "Version": "1.3-1",
+            "Description": "Library for manipulating Unicode strings and C strings"
+        },
+        {
+            "Name": "libusb",
+            "Version": "1.0.29-1",
+            "Description": "Library that provides generic access to USB devices"
+        },
+        {
+            "Name": "libutempter",
+            "Version": "1.2.3-1",
+            "Description": "Interface for terminal emulators to record user sessions to utmp and wtmp files"
+        },
+        {
+            "Name": "libverto",
+            "Version": "0.3.2-5",
+            "Description": "Main event loop abstraction library"
+        },
+        {
+            "Name": "libxcrypt",
+            "Version": "4.5.2-1",
+            "Description": "Modern library for one-way hashing of passwords"
+        },
+        {
+            "Name": "libxml2",
+            "Version": "2.15.1-4",
+            "Description": "XML C parser and toolkit"
+        },
+        {
+            "Name": "licenses",
+            "Version": "20240728-1",
+            "Description": "A set of common license files"
+        },
+        {
+            "Name": "linux-api-headers",
+            "Version": "6.17-1",
+            "Description": "Kernel headers sanitized for use in userspace"
+        },
+        {
+            "Name": "lmdb",
+            "Version": "0.9.33-1",
+            "Description": "Symas Lightning Memory-Mapped Database"
+        },
+        {
+            "Name": "lz4",
+            "Version": "1:1.10.0-2",
+            "Description": "Extremely fast compression algorithm"
+        },
+        {
+            "Name": "mpfr",
+            "Version": "4.2.2-1",
+            "Description": "Multiple-precision floating-point library"
+        },
+        {
+            "Name": "ncurses",
+            "Version": "6.5-4",
+            "Description": "System V Release 4.0 curses emulation library"
+        },
+        {
+            "Name": "nettle",
+            "Version": "3.10.2-1",
+            "Description": "A low-level cryptographic library"
+        },
+        {
+            "Name": "npth",
+            "Version": "1.8-1",
+            "Description": "The new GNU portable threads library"
+        },
+        {
+            "Name": "openssl",
+            "Version": "3.6.0-1",
+            "Description": "The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
+        },
+        {
+            "Name": "p11-kit",
+            "Version": "0.25.10-2",
+            "Description": "Loads and enumerates PKCS#11 modules"
+        },
+        {
+            "Name": "pacman",
+            "Version": "7.1.0.r7.gb9f7d4a-1",
+            "Description": "A library-based package manager with dependency support"
+        },
+        {
+            "Name": "pacman-contrib",
+            "Version": "1.13.1-1",
+            "Description": "Contributed scripts and tools for pacman systems"
+        },
+        {
+            "Name": "pacman-mirrorlist",
+            "Version": "20251021-1",
+            "Description": "Arch Linux mirror list for use by pacman"
+        },
+        {
+            "Name": "pam",
+            "Version": "1.7.1-1",
+            "Description": "PAM (Pluggable Authentication Modules) library"
+        },
+        {
+            "Name": "pambase",
+            "Version": "20250719-1",
+            "Description": "Base PAM configuration for services"
+        },
+        {
+            "Name": "pciutils",
+            "Version": "3.14.0-1",
+            "Description": "PCI bus configuration space access library and tools"
+        },
+        {
+            "Name": "pcre2",
+            "Version": "10.47-1",
+            "Description": "A library that implements Perl 5-style regular expressions. 2nd version"
+        },
+        {
+            "Name": "perl",
+            "Version": "5.42.0-1",
+            "Description": "A highly capable, feature-rich programming language"
+        },
+        {
+            "Name": "perl-error",
+            "Version": "0.17030-3",
+            "Description": "Perl/CPAN Error module - Error/exception handling in an OO-ish way"
+        },
+        {
+            "Name": "perl-mailtools",
+            "Version": "2.22-3",
+            "Description": "Various e-mail related modules"
+        },
+        {
+            "Name": "perl-timedate",
+            "Version": "2.33-9",
+            "Description": "Date formating subroutines"
+        },
+        {
+            "Name": "pinentry",
+            "Version": "1.3.2-2",
+            "Description": "Collection of simple PIN or passphrase entry dialogs which utilize the Assuan pr"
+        },
+        {
+            "Name": "popt",
+            "Version": "1.19-2",
+            "Description": "A commandline option parser"
+        },
+        {
+            "Name": "procps-ng",
+            "Version": "4.0.5-3",
+            "Description": "Utilities for monitoring your system and its processes"
+        },
+        {
+            "Name": "psmisc",
+            "Version": "23.7-1",
+            "Description": "Miscellaneous procfs tools"
+        },
+        {
+            "Name": "readline",
+            "Version": "8.3.003-1",
+            "Description": "GNU readline library"
+        },
+        {
+            "Name": "sed",
+            "Version": "4.9-3",
+            "Description": "GNU stream editor"
+        },
+        {
+            "Name": "shadow",
+            "Version": "4.18.0-1",
+            "Description": "Password and account management tool suite with support for shadow files and PAM"
+        },
+        {
+            "Name": "sqlite",
+            "Version": "3.51.1-1",
+            "Description": "A C library that implements an SQL database engine"
+        },
+        {
+            "Name": "systemd",
+            "Version": "259-1",
+            "Description": "system and service manager"
+        },
+        {
+            "Name": "systemd-libs",
+            "Version": "259-1",
+            "Description": "systemd client libraries"
+        },
+        {
+            "Name": "systemd-sysvcompat",
+            "Version": "259-1",
+            "Description": "sysvinit compat for systemd"
+        },
+        {
+            "Name": "tar",
+            "Version": "1.35-2",
+            "Description": "Utility used to store, backup, and transport files"
+        },
+        {
+            "Name": "tmux",
+            "Version": "3.6_a-1",
+            "Description": "Terminal multiplexer"
+        },
+        {
+            "Name": "tpm2-tss",
+            "Version": "4.1.3-1",
+            "Description": "Implementation of the TCG Trusted Platform Module 2.0 Software Stack (TSS2)"
+        },
+        {
+            "Name": "tzdata",
+            "Version": "2025c-1",
+            "Description": "Sources for time zone and daylight saving time data"
+        },
+        {
+            "Name": "util-linux",
+            "Version": "2.41.3-1",
+            "Description": "Miscellaneous system utilities for Linux"
+        },
+        {
+            "Name": "util-linux-libs",
+            "Version": "2.41.3-1",
+            "Description": "util-linux runtime libraries"
+        },
+        {
+            "Name": "vim",
+            "Version": "9.1.2077-1",
+            "Description": "Vi Improved, a highly configurable, improved version of the vi text editor"
+        },
+        {
+            "Name": "vim-runtime",
+            "Version": "9.1.2077-1",
+            "Description": "Vi Improved, a highly configurable, improved version of the vi text editor (shar"
+        },
+        {
+            "Name": "wget",
+            "Version": "1.25.0-3",
+            "Description": "Network utility to retrieve files from the web"
+        },
+        {
+            "Name": "xz",
+            "Version": "5.8.2-1",
+            "Description": "Library and command line tools for XZ and LZMA compressed files"
+        },
+        {
+            "Name": "zlib",
+            "Version": "1:1.3.1-2",
+            "Description": "Compression library implementing the deflate compression method found in gzip an"
+        },
+        {
+            "Name": "zlib-ng",
+            "Version": "2.3.2-1",
+            "Description": "zlib replacement with optimizations for next generation systems"
+        },
+        {
+            "Name": "zstd",
+            "Version": "1.5.7-2",
+            "Description": "Zstandard - Fast real-time compression algorithm"
+        }
+    ],
+    "LinuxUpdates": [
+        {
+            "Name": "archlinux-keyring",
+            "CurrentVersion": "20251116-1",
+            "AvailableVersion": "20260107-2",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "audit",
+            "CurrentVersion": "4.1.2-1",
+            "AvailableVersion": "4.1.2-2",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "binutils",
+            "CurrentVersion": "2.45.1-1",
+            "AvailableVersion": "2.45.1+r35+g12d0a1dbc1b9-1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "brotli",
+            "CurrentVersion": "1.1.0-3",
+            "AvailableVersion": "1.2.0-1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "ca-certificates-mozilla",
+            "CurrentVersion": "3.119.1-1",
+            "AvailableVersion": "3.120-1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "gcc-libs",
+            "CurrentVersion": "15.2.1+r301+gf24307422d1d-1",
+            "AvailableVersion": "15.2.1+r447+g6a64f6c3ebb8-1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "gdbm",
+            "CurrentVersion": "1.26-1",
+            "AvailableVersion": "1.26-2",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "glib2",
+            "CurrentVersion": "2.86.3-1",
+            "AvailableVersion": "2.86.3-2",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "glibc",
+            "CurrentVersion": "2.42+r33+gde1fe81f4714-1",
+            "AvailableVersion": "2.42+r47+ga1d3294a5bed-1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "icu",
+            "CurrentVersion": "78.1-1",
+            "AvailableVersion": "78.2-1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "libarchive",
+            "CurrentVersion": "3.8.4-1",
+            "AvailableVersion": "3.8.5-1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "libcap-ng",
+            "CurrentVersion": "0.8.5-3",
+            "AvailableVersion": "0.9-1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "libpcap",
+            "CurrentVersion": "1.10.5-3",
+            "AvailableVersion": "1.10.6-1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "libseccomp",
+            "CurrentVersion": "2.5.6-1",
+            "AvailableVersion": "2.6.0-1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "libtasn1",
+            "CurrentVersion": "4.20.0-1",
+            "AvailableVersion": "4.21.0-1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "libxml2",
+            "CurrentVersion": "2.15.1-4",
+            "AvailableVersion": "2.15.1-5",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "linux-api-headers",
+            "CurrentVersion": "6.17-1",
+            "AvailableVersion": "6.18-1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "sqlite",
+            "CurrentVersion": "3.51.1-1",
+            "AvailableVersion": "3.51.2-1",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "systemd",
+            "CurrentVersion": "259-1",
+            "AvailableVersion": "259-2",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "systemd-libs",
+            "CurrentVersion": "259-1",
+            "AvailableVersion": "259-2",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "systemd-sysvcompat",
+            "CurrentVersion": "259-1",
+            "AvailableVersion": "259-2",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "util-linux",
+            "CurrentVersion": "2.41.3-1",
+            "AvailableVersion": "2.41.3-2",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        },
+        {
+            "Name": "util-linux-libs",
+            "CurrentVersion": "2.41.3-1",
+            "AvailableVersion": "2.41.3-2",
+            "IsSecurityUpdate": false,
+            "IsPatch": false
+        }
+    ],
+    "WindowsApps": [],
+    "WindowsUpdates": [],
+    "MacosApps": [],
+    "MacosUpdates": []
+}
