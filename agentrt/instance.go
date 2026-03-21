@@ -99,7 +99,7 @@ func (a *AgentInstance) processCheckResult(result map[string]interface{}) {
 		}
 	}
 
-	data, err := json.Marshal(result)
+	data, err := json.Marshal(sanitizeFloats(result))
 	if err != nil {
 		log.Errorln("Internal error: could not serialize check result: ", err)
 		errorResult := map[string]string{

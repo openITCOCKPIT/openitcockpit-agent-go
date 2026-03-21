@@ -7,6 +7,7 @@ import (
 
 	"github.com/distatus/battery"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/config"
+	"github.com/openITCOCKPIT/openitcockpit-agent-go/safemaths"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/utils"
 	"github.com/shirou/gopsutil/v4/sensors"
 	log "github.com/sirupsen/logrus"
@@ -78,7 +79,7 @@ func (c *CheckSensor) Run(ctx context.Context) (interface{}, error) {
 		for i, battery := range batteries {
 			batResult := &batterySensor{
 				ID:           i,
-				Percent:      battery.Current / battery.Full * 100,
+				Percent:      safemaths.DivideFloat64(battery.Current, battery.Full) * 100,
 				PowerPlugged: (battery.State.String() == "Full" || battery.State.String() == "Charging"),
 			}
 			batteriesResults = append(batteriesResults, batResult)
