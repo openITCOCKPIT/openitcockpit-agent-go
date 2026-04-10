@@ -21,6 +21,7 @@ type AgentInstance struct {
 	ConfigurationPath  string
 	LogPath            string
 	LogRotate          int
+	UseNativeLogging   bool
 	Verbose            bool
 	Debug              bool
 	DisableErrorOutput bool
@@ -349,6 +350,7 @@ func (a *AgentInstance) Start(parent context.Context) {
 		LogRotate:            a.LogRotate,
 		DefaultWriter:        os.Stderr,
 		DisableDefaultWriter: a.DisableErrorOutput,
+		UseNativeLogging:     a.UseNativeLogging,
 	}
 
 	a.wg.Add(1)

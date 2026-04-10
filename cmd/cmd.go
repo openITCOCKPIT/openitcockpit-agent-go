@@ -26,6 +26,7 @@ type RootCmd struct {
 	logPath          string
 	disableLog       bool
 	disableLogRotate bool
+	useNativeLogging bool
 	logRotate        int
 	shutdown         chan struct{}
 	wg               sync.WaitGroup
@@ -97,6 +98,7 @@ func (r *RootCmd) run(cmd *cobra.Command, args []string) {
 		LogRotate:         rotate,
 		Verbose:           r.verbose,
 		Debug:             r.debug,
+		UseNativeLogging:  r.useNativeLogging,
 	}
 
 	r.agentRt.Start(ctx)
@@ -134,6 +136,7 @@ func New() *RootCmd {
 	r.cmd.PersistentFlags().BoolVar(&r.disableLog, "disable-logfile", false, "disable log file")
 	r.cmd.PersistentFlags().BoolVar(&r.disableLogRotate, "disable-logrotate", false, "disable log file rotation")
 	r.cmd.PersistentFlags().IntVar(&r.logRotate, "log-rotate", 3, "number of log rotate files")
+	r.cmd.PersistentFlags().BoolVar(&r.useNativeLogging, "native-log", false, "Use the native logging system of the platform (e.g. syslog on Linux, Event Log on Windows and Unified Logging System on Apple) instead of a log file (disables log rotation)")
 
 	r.platformPath = platformpaths.Get()
 

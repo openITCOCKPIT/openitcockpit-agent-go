@@ -26,6 +26,7 @@ type LogHandler struct {
 	Verbose              bool
 	Debug                bool
 	DisableDefaultWriter bool
+	UseNativeLogging     bool
 
 	devNull io.WriteCloser
 
@@ -66,7 +67,7 @@ func (h *LogHandler) closeLogFile() {
 }
 
 func (h *LogHandler) doRotate() {
-	if h.LogRotate > 0 && h.logFile != nil {
+	if h.LogRotate > 0 && h.logFile != nil && !h.UseNativeLogging {
 		baseName := filepath.Base(h.LogPath)
 		dirName := filepath.Dir(h.LogPath)
 		if h.LogRotate > 1 {
@@ -126,8 +127,13 @@ func (h *LogHandler) Start(parent context.Context) {
 	} else {
 		log.SetLevel(log.WarnLevel)
 	}
-	if h.LogPath != "" && h.logFile == nil {
-		h.openLogFile()
+
+	if h.UseNativeLogging {
+		h.SetupNativeLogging()
+	} else {
+		if h.LogPath != "" && h.logFile == nil {
+			h.openLogFile()
+		}
 	}
 
 	h.wg.Add(1)
