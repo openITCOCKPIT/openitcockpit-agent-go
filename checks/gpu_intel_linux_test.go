@@ -16,6 +16,8 @@ var (
 	intelDumpDirPattern   = regexp.MustCompile(`^-- (/sys/class/drm/card\d+(?:/device)?)(\S*)(?: name=(\S+))?$`)
 	intelDumpDeviceFiles  = []string{"vendor", "device", "subsystem_vendor", "subsystem_device", "revision", "class", "boot_vga", "current_link_speed", "current_link_width", "max_link_speed", "max_link_width"}
 	intelDumpClientRecord = regexp.MustCompile(`(?m)^(drm-[\w-]+):\s*(.*)$`)
+	// Version 4: upstream PCI bridges of the GPU, e.g. "-- upstream 1 0000:05:01.0"
+	intelDumpUpstreamPattern = regexp.MustCompile(`(?m)^-- upstream (\d+) (\S+)$`)
 )
 
 // buildIntelSysfs creates a fake /sys/class/drm and /proc with the files of a dump of intel-sysfs-dump.sh. Every DRM
@@ -54,12 +56,22 @@ func buildIntelSysfs(t *testing.T, dump string, sample int) (drmPath, procPath s
 	if sample == 1 && found {
 		clients = secondClients
 	}
+	// The PCI devices are nested like in the real sysfs: the upstream bridges are the parent directories of the GPU
+	// (only one GPU per dump)
+	upstreamDirs := map[string]string{} // level -> directory
+	devicesDir := filepath.Join(root, "devices")
+	upstream := intelDumpUpstreamPattern.FindAllStringSubmatch(sysfs, -1)
+	for i := len(upstream) - 1; i >= 0; i-- {
+		devicesDir = filepath.Join(devicesDir, upstream[i][2])
+		upstreamDirs[upstream[i][1]] = devicesDir
+	}
+
 	var card, device, dir string
 	cardPaths := map[string][2]string{} // /sys/class/drm/cardN -> fake card and device directory
 	for _, line := range strings.Split(sysfs, "\n") {
 		if match := intelDumpCardPattern.FindStringSubmatch(line); match != nil {
 			card = filepath.Join(root, "drm", match[1])
-			device = filepath.Join(root, "devices", match[3])
+			device = filepath.Join(devicesDir, match[3])
 			symlink(device, filepath.Join(card, "device"))
 			symlink(filepath.Join(root, "drivers", match[2]), filepath.Join(device, "driver"))
 			cardPaths["/sys/class/drm/"+match[1]] = [2]string{card, device}
@@ -71,9 +83,8 @@ func buildIntelSysfs(t *testing.T, dump string, sample int) (drmPath, procPath s
 			card = ""
 			continue
 		}
-		if strings.HasPrefix(line, "-- upstream") {
-			// Version 4: the upstream PCI bridges are not part of the fake sysfs yet
-			dir = filepath.Join(root, "upstream", line)
+		if match := intelDumpUpstreamPattern.FindStringSubmatch(line); match != nil {
+			dir = upstreamDirs[match[1]]
 			continue
 		}
 		if path, value, found := strings.Cut(line, ": "); found && strings.HasPrefix(path, "/sys/class/drm/card") {
@@ -445,4 +456,33 @@ func TestCollectIntelGpusArcA380Idle(t *testing.T) {
 	if gpu.Processes != 0 {
 		t.Errorf("unexpected processes: %d", gpu.Processes)
 	}
+}
+
+// Arc A380 (dump script version 4 with the upstream PCI bridges) under load (ffmpeg). The GPU and the first bridge
+// report the internal link (2.5 GT/s x1), the second bridge the link of the card: PCIe 4.0 x8 card in a slot of the
+// chipset with PCIe 3.0 x4.
+func TestCollectIntelGpusArcA380Bridges(t *testing.T) {
+	setIntelTestState(t)
+	first, second := time.Unix(1793310590, 362447817), time.Unix(1793310606, 553547019)
+
+	gpuNow = func() time.Time { return first }
+	gpuDrmPath, gpuProcPath = buildIntelSysfs(t, "arc-a380-i915-bridges-load.txt", 0)
+	gpu := collectPlatformGpus(nil, nil)[0]
+	if gpu.PciBusID != "0000:06:00.0" || gpu.Integrated {
+		t.Errorf("unexpected GPU: %+v", gpu)
+	}
+	assertFloat(t, "pcie_link_gen", gpu.PcieLinkGen, 3)
+	assertFloat(t, "pcie_link_width", gpu.PcieLinkWidth, 4)
+	assertFloat(t, "pcie_link_gen_max", gpu.PcieLinkGenMax, 4)
+	assertFloat(t, "pcie_link_width_max", gpu.PcieLinkWidthMax, 8)
+	assertUint(t, "memory_used_bytes", gpu.MemoryUsedBytes, 704344*1024)
+
+	gpuNow = func() time.Time { return second }
+	gpuDrmPath, gpuProcPath = buildIntelSysfs(t, "arc-a380-i915-bridges-load.txt", 1)
+	gpu = collectPlatformGpus(nil, nil)[0]
+	// Video: (107505285212 - 87303535852) ns / (16.191 s * 2 engines) = 62.38 %
+	if gpu.UtilizationPercent == nil || *gpu.UtilizationPercent < 62.37 || *gpu.UtilizationPercent > 62.40 {
+		t.Errorf("unexpected utilization: %v", deref(gpu.UtilizationPercent))
+	}
+	assertFloat(t, "clock_graphics_mhz", gpu.ClockGraphicsMhz, 1400)
 }
