@@ -39,5 +39,3 @@ Ideas which were left out
   `DRM_XE_DEVICE_QUERY_MEM_REGIONS`), so `memory_total_bytes` is unknown. Intel GPUs are rare in data centers.
 - **Power of AMD GPUs on Windows**: the AMD driver reports the power 0 to D3DKMT, also under full load. The power is
   only available with the AMD Display Library (ADL, `atiadlxx.dll`). On Linux the power is read from hwmon.
-- **Kernel log events of amdgpu**: like the Xid errors of NVIDIA, the messages of the amdgpu driver (e.g. ring
-  timeout, GPU reset) could be read from `/dev/kmsg`.

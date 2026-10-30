@@ -649,7 +649,8 @@ func countNvidiaPciDevices() int {
 	return -1
 }
 
-// readXidErrors is only implemented on Linux, the errors of the NVIDIA driver are reported as driver events
-func readXidErrors(since time.Time) ([]*resultGpuXid, error) {
-	return nil, nil
+// readGpuDriverLogs returns the events of the GPU drivers in the event log, the errors of the NVIDIA driver are
+// reported as driver events (no Xid errors). The time window of 24 hours is part of gpuDriverEventsQuery.
+func readGpuDriverLogs(ctx context.Context, since time.Time) *gpuDriverLogs {
+	return &gpuDriverLogs{events: readGpuDriverEvents(ctx)}
 }

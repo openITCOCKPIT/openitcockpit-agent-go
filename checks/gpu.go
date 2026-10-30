@@ -36,7 +36,7 @@ type resultGpus struct {
 	Gpus         []*resultGpu              `json:"gpus"`
 	Nvidia       *resultGpusNvidia         `json:"nvidia,omitempty"`
 	Xid          *resultGpuXidState        `json:"xid,omitempty"`
-	DriverEvents *resultGpuDriverEventList `json:"driver_events,omitempty"` // Windows
+	DriverEvents *resultGpuDriverEventList `json:"driver_events,omitempty"` // Windows event log, Linux kernel log (amdgpu)
 }
 
 type resultGpusNvidia struct {
@@ -63,7 +63,8 @@ type resultGpuXid struct {
 	Message   string `json:"message"`
 }
 
-// resultGpuDriverEventList are the events of the GPU drivers in the Windows event log of the last 24 hours
+// resultGpuDriverEventList are the events of the GPU drivers of the last 24 hours: the Windows event log or the
+// messages of the amdgpu driver in the Linux kernel log (GPU hangs and resets)
 type resultGpuDriverEventList struct {
 	Error  string                  `json:"error"` // The event log could not be read
 	Count  int                     `json:"count"`
@@ -71,11 +72,19 @@ type resultGpuDriverEventList struct {
 }
 
 type resultGpuDriverEvent struct {
-	Timestamp int64  `json:"timestamp"` // Unix timestamp
-	Source    string `json:"source"`    // Display (4101: the driver stopped responding and has recovered, TDR), nvlddmkm (NVIDIA), amdkmdag (AMD), igfx (Intel)
-	EventID   int64  `json:"event_id"`
+	Timestamp int64  `json:"timestamp"`  // Unix timestamp
+	Source    string `json:"source"`     // Display (4101: the driver stopped responding and has recovered, TDR), nvlddmkm (NVIDIA), amdkmdag (AMD), igfx (Intel), amdgpu (Linux)
+	EventID   int64  `json:"event_id"`   // 0 on Linux
 	EntryType int64  `json:"entry_type"` // 1 = error, 2 = warning
+	PciBusID  string `json:"pci_bus_id"` // Linux, e.g. 0000:03:00.0, empty if the message does not contain it
 	Message   string `json:"message"`
+}
+
+// gpuDriverLogs are the errors of the GPU drivers which are read from the logs of the operating system
+type gpuDriverLogs struct {
+	xids     []*resultGpuXid // Linux: Xid errors of the NVIDIA driver, nil if not supported
+	xidError error           // Linux: the kernel log could not be read
+	events   *resultGpuDriverEventList
 }
 
 type resultGpu struct {
@@ -202,13 +211,12 @@ func (c *CheckGpu) Run(ctx context.Context) (interface{}, error) {
 		}
 	}
 
-	result.DriverEvents = readGpuDriverEvents(ctx)
-
-	xids, err := readXidErrors(time.Now().Add(-gpuXidWindow))
-	if err != nil {
-		result.Xid = &resultGpuXidState{Error: err.Error(), Unassigned: []*resultGpuXid{}}
-	} else if xids != nil {
-		result.Xid = &resultGpuXidState{Unassigned: assignXidErrors(result.Gpus, xids)}
+	logs := readGpuDriverLogs(ctx, time.Now().Add(-gpuXidWindow))
+	result.DriverEvents = logs.events
+	if logs.xidError != nil {
+		result.Xid = &resultGpuXidState{Error: logs.xidError.Error(), Unassigned: []*resultGpuXid{}}
+	} else if logs.xids != nil {
+		result.Xid = &resultGpuXidState{Unassigned: assignXidErrors(result.Gpus, logs.xids)}
 	}
 
 	for i, gpu := range result.Gpus {

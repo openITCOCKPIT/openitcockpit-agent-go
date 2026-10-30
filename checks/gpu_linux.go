@@ -54,24 +54,40 @@ var (
 	xidProcessPattern = regexp.MustCompile(`^pid=[^,]*, name=[^,]*,\s*`)
 )
 
-// readXidErrors returns the Xid errors of the NVIDIA driver in the kernel log (/dev/kmsg) since the given time.
-// The kernel log is a ring buffer, older messages may already be overwritten on systems with many kernel messages.
-// /dev/kmsg returns one record per read, -EAGAIN if no more records are available (O_NONBLOCK) and -EPIPE if a
-// record was overwritten: https://www.kernel.org/doc/Documentation/ABI/testing/dev-kmsg
-func readXidErrors(since time.Time) ([]*resultGpuXid, error) {
+// gpuKernelLog collects the messages of the GPU drivers in the kernel log: the Xid errors of the NVIDIA driver and the
+// GPU hangs and resets of the amdgpu driver
+type gpuKernelLog struct {
+	since  int64 // Unix timestamp, older messages are ignored
+	xids   []*resultGpuXid
+	events []*resultGpuDriverEvent // Oldest first
+}
+
+// readGpuDriverLogs reads the kernel log (/dev/kmsg) once for the Xid errors and the events of the amdgpu driver since
+// the given time. The kernel log is a ring buffer, older messages may already be overwritten on systems with many
+// kernel messages. If the kernel log can not be read, the error is only reported in the Xid state.
+func readGpuDriverLogs(ctx context.Context, since time.Time) *gpuDriverLogs {
+	log := &gpuKernelLog{since: since.Unix(), xids: []*resultGpuXid{}, events: []*resultGpuDriverEvent{}}
+	if err := log.read(); err != nil {
+		return &gpuDriverLogs{xidError: err}
+	}
+	return &gpuDriverLogs{xids: log.xids, events: newGpuDriverEventList(log.events)}
+}
+
+// read reads all records of /dev/kmsg. /dev/kmsg returns one record per read, -EAGAIN if no more records are
+// available (O_NONBLOCK) and -EPIPE if a record was overwritten: https://www.kernel.org/doc/Documentation/ABI/testing/dev-kmsg
+func (l *gpuKernelLog) read() error {
 	fd, err := unix.Open(gpuKmsgPath, unix.O_RDONLY|unix.O_NONBLOCK|unix.O_CLOEXEC, 0)
 	if err != nil {
-		return nil, fmt.Errorf("could not read the kernel log %s: %w", gpuKmsgPath, err)
+		return fmt.Errorf("could not read the kernel log %s: %w", gpuKmsgPath, err)
 	}
 	defer unix.Close(fd)
 
 	var monotonic unix.Timespec
 	if err := unix.ClockGettime(unix.CLOCK_MONOTONIC, &monotonic); err != nil {
-		return nil, fmt.Errorf("could not determine the boot time: %w", err)
+		return fmt.Errorf("could not determine the boot time: %w", err)
 	}
 	bootTime := time.Now().Add(-time.Duration(monotonic.Nano()))
 
-	xids := []*resultGpuXid{}
 	buf := make([]byte, 16*1024)
 	for {
 		n, err := unix.Read(fd, buf)
@@ -79,48 +95,72 @@ func readXidErrors(since time.Time) ([]*resultGpuXid, error) {
 			switch {
 			case errors.Is(err, unix.EAGAIN):
 				// No more messages
-				return xids, nil
+				return nil
 			case errors.Is(err, unix.EPIPE), errors.Is(err, unix.EINTR):
 				// The message was overwritten while reading
 				continue
 			}
-			return nil, fmt.Errorf("could not read the kernel log %s: %w", gpuKmsgPath, err)
+			return fmt.Errorf("could not read the kernel log %s: %w", gpuKmsgPath, err)
 		}
 		if n == 0 {
-			return xids, nil
+			return nil
 		}
-		if xid := parseKmsgXid(string(buf[:n]), bootTime); xid != nil && xid.Timestamp >= since.Unix() {
-			xids = append(xids, xid)
-		}
+		l.addRecord(string(buf[:n]), bootTime)
 	}
 }
 
-// parseKmsgXid parses a record of /dev/kmsg: "priority,sequence,microseconds since boot,flags;message"
-func parseKmsgXid(record string, bootTime time.Time) *resultGpuXid {
+// addRecord adds a record of /dev/kmsg if it is an Xid error or an event of the amdgpu driver
+func (l *gpuKernelLog) addRecord(record string, bootTime time.Time) {
+	timestamp, message, ok := parseKmsgRecord(record, bootTime)
+	if !ok || timestamp < l.since {
+		return
+	}
+	if xid := parseXidMessage(message); xid != nil {
+		xid.Timestamp = timestamp
+		l.xids = append(l.xids, xid)
+		return
+	}
+	if event := parseAmdgpuMessage(message); event != nil {
+		event.Timestamp = timestamp
+		l.events = append(l.events, event)
+	}
+}
+
+// parseKmsgRecord parses a record of /dev/kmsg: "priority,sequence,microseconds since boot,flags;message" and
+// returns the Unix timestamp and the message
+func parseKmsgRecord(record string, bootTime time.Time) (int64, string, bool) {
 	header, message, found := strings.Cut(record, ";")
-	if !found || !strings.Contains(message, "Xid") {
-		return nil
+	if !found {
+		return 0, "", false
 	}
 	// Continuation lines (dictionary) start with a space
 	message, _, _ = strings.Cut(message, "\n")
 
 	fields := strings.Split(header, ",")
 	if len(fields) < 3 {
-		return nil
+		return 0, "", false
 	}
 	microseconds, err := strconv.ParseInt(fields[2], 10, 64)
 	if err != nil {
-		return nil
+		return 0, "", false
 	}
-	xid := parseXidMessage(message)
-	if xid != nil {
-		xid.Timestamp = bootTime.Add(time.Duration(microseconds) * time.Microsecond).Unix()
+	return bootTime.Add(time.Duration(microseconds) * time.Microsecond).Unix(), message, true
+}
+
+// newGpuDriverEventList returns the number of events and the newest events
+func newGpuDriverEventList(events []*resultGpuDriverEvent) *resultGpuDriverEventList {
+	result := &resultGpuDriverEventList{Count: len(events), Events: []*resultGpuDriverEvent{}}
+	for i := len(events) - 1; i >= 0 && len(result.Events) < gpuMaxXidErrors; i-- {
+		result.Events = append(result.Events, events[i])
 	}
-	return xid
+	return result
 }
 
 // parseXidMessage parses the Xid and SXid messages of the NVIDIA driver. The name of the process is removed.
 func parseXidMessage(message string) *resultGpuXid {
+	if !strings.Contains(message, "Xid") {
+		return nil
+	}
 	match := xidPattern.FindStringSubmatch(message)
 	if match == nil {
 		return nil
@@ -154,9 +194,4 @@ func collectPlatformGpus(ctx context.Context, existing []*resultGpu) []*resultGp
 		}
 	}
 	return append(gpus, collectIntelGpus(usage, hasPrevious)...)
-}
-
-// readGpuDriverEvents is only implemented on Windows, the errors of the NVIDIA driver are read from the kernel log
-func readGpuDriverEvents(ctx context.Context) *resultGpuDriverEventList {
-	return nil
 }
