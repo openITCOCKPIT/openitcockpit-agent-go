@@ -65,9 +65,11 @@ const (
 
 	// Bits of D3DKMT_ADAPTERTYPE, in the order of the bit field:
 	// https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/d3dkmthk/ns-d3dkmthk-_d3dkmt_adaptertype
+	d3dkmtAdapterTypeRenderSupported  = 1 << 0
 	d3dkmtAdapterTypeSoftwareDevice   = 1 << 2 // e.g. the Microsoft Basic Render Driver
 	d3dkmtAdapterTypeHybridIntegrated = 1 << 5 // Integrated GPU of a notebook with hybrid graphics
 	d3dkmtAdapterTypeIndirectDisplay  = 1 << 6 // Virtual displays, e.g. of remote desktop software
+	d3dkmtAdapterTypeComputeOnly      = 1 << 11
 
 	// GPUs with less dedicated memory are integrated GPUs, e.g. 128 MiB (Intel) or 512 MiB (AMD, the Radeon iGPU of a
 	// Ryzen 7000 reports 485 MiB). Windows has no flag for integrated GPUs, D3DKMT only reports hybrid graphics of
@@ -242,8 +244,7 @@ func d3dkmtQuery(adapter uint32, infoType int32, data unsafe.Pointer, size uintp
 	return fmt.Errorf("D3DKMTQueryAdapterInfo %d: NTSTATUS 0x%08x", infoType, uint32(status))
 }
 
-// enumD3dkmtAdapters returns the hardware adapters (GPUs), software adapters like the Microsoft Basic Render Driver
-// and indirect display adapters (e.g. of remote desktop software) are skipped
+// enumD3dkmtAdapters returns the hardware adapters (GPUs), the other adapters are skipped, see isD3dkmtGpu()
 func enumD3dkmtAdapters() ([]*d3dkmtAdapter, error) {
 	if err := gdi32DLL.Load(); err != nil {
 		return nil, err
@@ -271,12 +272,29 @@ func enumD3dkmtAdapters() ([]*d3dkmtAdapter, error) {
 		info := &infos[i]
 		adapter := readD3dkmtAdapter(info)
 		_, _, _ = procD3DKMTCloseAdapter.Call(uintptr(unsafe.Pointer(&info.Adapter)))
-		if adapter.adapterType&(d3dkmtAdapterTypeSoftwareDevice|d3dkmtAdapterTypeIndirectDisplay) != 0 {
-			continue
+		if isD3dkmtGpu(adapter.adapterType) {
+			adapters = append(adapters, adapter)
 		}
-		adapters = append(adapters, adapter)
 	}
 	return adapters, nil
+}
+
+// isD3dkmtGpu returns false for adapters which are not shown as GPU by the Task Manager:
+// - Software adapters, e.g. the Microsoft Basic Render Driver (0x105)
+// - Indirect display adapters, e.g. of remote desktop software (0x342)
+// - Adapters which can only display, e.g. the display adapter of Hyper-V VMs in Azure (0x10a)
+func isD3dkmtGpu(adapterType uint32) bool {
+	if adapterType&(d3dkmtAdapterTypeSoftwareDevice|d3dkmtAdapterTypeIndirectDisplay) != 0 {
+		return false
+	}
+	return adapterType&(d3dkmtAdapterTypeRenderSupported|d3dkmtAdapterTypeComputeOnly) != 0
+}
+
+// isValidPciAddress returns false for adapters without PCI location: the Microsoft Basic Render Driver reports the
+// bus 0xFFFFFFFF, display adapters of Hyper-V VMs report invalid device and function numbers (e.g. 0x5620.0xe0c7).
+// PCI has 256 buses with 32 devices and 8 functions each.
+func isValidPciAddress(address *d3dkmtAdapterAddress) bool {
+	return address.BusNumber <= 0xFF && address.DeviceNumber <= 31 && address.FunctionNumber <= 7
 }
 
 func readD3dkmtAdapter(info *d3dkmtAdapterInfo) *d3dkmtAdapter {
@@ -296,9 +314,8 @@ func readD3dkmtAdapter(info *d3dkmtAdapterInfo) *d3dkmtAdapter {
 		adapter.vendorID, adapter.deviceID = ids.VendorID, ids.DeviceID
 	}
 
-	// Adapters without PCI location (e.g. the Microsoft Basic Render Driver) report the bus 0xFFFFFFFF
 	var address d3dkmtAdapterAddress
-	if d3dkmtQuery(handle, kmtqaiAdapterAddress, unsafe.Pointer(&address), unsafe.Sizeof(address)) == nil && address.BusNumber != 0xFFFFFFFF {
+	if d3dkmtQuery(handle, kmtqaiAdapterAddress, unsafe.Pointer(&address), unsafe.Sizeof(address)) == nil && isValidPciAddress(&address) {
 		adapter.pciAddress = &address
 	}
 

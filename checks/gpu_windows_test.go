@@ -122,6 +122,41 @@ func TestD3dkmtCapsTemperature(t *testing.T) {
 	}
 }
 
+func TestIsD3dkmtGpu(t *testing.T) {
+	tests := map[uint32]bool{
+		0x230b: true,  // AMD Radeon RX 7800 XT
+		0x2303: true,  // AMD Radeon iGPU (Raphael)
+		0x0800: true,  // Compute only, e.g. data center GPUs without display
+		0x0105: false, // Microsoft Basic Render Driver (software)
+		0x0342: false, // Remote desktop display (indirect display) of an Azure VM
+		0x010a: false, // Display adapter of a Hyper-V VM (Azure, Windows 11 ARM64), no rendering
+		0x0000: false,
+	}
+	for adapterType, expected := range tests {
+		if got := isD3dkmtGpu(adapterType); got != expected {
+			t.Errorf("0x%x: expected %v, got %v", adapterType, expected, got)
+		}
+	}
+}
+
+func TestIsValidPciAddress(t *testing.T) {
+	tests := []struct {
+		address  d3dkmtAdapterAddress
+		expected bool
+	}{
+		{d3dkmtAdapterAddress{BusNumber: 3}, true},
+		{d3dkmtAdapterAddress{BusNumber: 0xff, DeviceNumber: 31, FunctionNumber: 7}, true},
+		{d3dkmtAdapterAddress{BusNumber: 0xFFFFFFFF, DeviceNumber: 0xffff, FunctionNumber: 0xffff}, false},
+		{d3dkmtAdapterAddress{BusNumber: 0, DeviceNumber: 0xffff, FunctionNumber: 0xffff}, false},
+		{d3dkmtAdapterAddress{BusNumber: 0, DeviceNumber: 0x5620, FunctionNumber: 0xe0c7}, false},
+	}
+	for _, test := range tests {
+		if got := isValidPciAddress(&test.address); got != test.expected {
+			t.Errorf("%+v: expected %v, got %v", test.address, test.expected, got)
+		}
+	}
+}
+
 func ptr[T any](value T) *T {
 	return &value
 }
