@@ -2,6 +2,8 @@ package webserver
 
 import (
 	"context"
+	"crypto/sha256"
+	"crypto/subtle"
 	"encoding/base64"
 	"encoding/json"
 	"io"
@@ -30,13 +32,27 @@ type basicAuthMiddleware struct {
 func (b *basicAuthMiddleware) Middleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		user, password, ok := r.BasicAuth()
-		if !ok || user != b.Username || password != b.Password {
+		if !ok || !b.credentialsMatch(user, password) {
 			log.Infoln("Webserver: Invalid username or password from client: ", r.RemoteAddr)
 			http.Error(w, "Forbidden", http.StatusForbidden)
 		} else {
 			next.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(), authenticatedKey, true)))
 		}
 	})
+}
+
+// credentialsMatch compares the username and the password in constant time, so the response time does not reveal how
+// many characters are correct. The SHA-256 hashes have the same length, so the length is not revealed either. Both
+// values are always compared.
+func (b *basicAuthMiddleware) credentialsMatch(user, password string) bool {
+	userHash := sha256.Sum256([]byte(user))
+	expectedUserHash := sha256.Sum256([]byte(b.Username))
+	passwordHash := sha256.Sum256([]byte(password))
+	expectedPasswordHash := sha256.Sum256([]byte(b.Password))
+
+	userMatch := subtle.ConstantTimeCompare(userHash[:], expectedUserHash[:])
+	passwordMatch := subtle.ConstantTimeCompare(passwordHash[:], expectedPasswordHash[:])
+	return userMatch&passwordMatch == 1
 }
 
 func tlsAuthMiddleware(next http.Handler) http.Handler {
