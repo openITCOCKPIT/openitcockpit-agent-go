@@ -341,3 +341,25 @@ func TestWebserverHandlerGzip(t *testing.T) {
 
 	w.Shutdown()
 }
+
+func TestBasicAuthCredentialsMatch(t *testing.T) {
+	b := &basicAuthMiddleware{Username: testBasicAuthUser, Password: testBasicAuthPassword}
+	tests := []struct {
+		user     string
+		password string
+		expected bool
+	}{
+		{testBasicAuthUser, testBasicAuthPassword, true},
+		{testBasicAuthUser, "tes", false},
+		{testBasicAuthUser, "test2", false},
+		{testBasicAuthUser, "", false},
+		{"use", testBasicAuthPassword, false},
+		{"", "", false},
+		{testBasicAuthPassword, testBasicAuthUser, false},
+	}
+	for _, test := range tests {
+		if got := b.credentialsMatch(test.user, test.password); got != test.expected {
+			t.Errorf("%q:%q: expected %v, got %v", test.user, test.password, test.expected, got)
+		}
+	}
+}

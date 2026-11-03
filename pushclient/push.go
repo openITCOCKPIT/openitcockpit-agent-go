@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"crypto/tls"
+	"crypto/x509"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -399,6 +400,49 @@ func (p *PushClient) Shutdown() {
 	p.wg.Wait()
 }
 
+// pushTLSConfig returns the TLS configuration of the push client. The server certificate is verified with the
+// certificates of the system and the CA certificates of server-ca-file, e.g. of an own CA which is not installed on
+// the system. If server-ca-file can not be read, only the certificates of the system are used, so the push fails
+// instead of trusting any server.
+func pushTLSConfig(configuration *config.PushConfiguration) *tls.Config {
+	if !configuration.VerifyServerCertificate {
+		if configuration.ServerCaFile != "" {
+			log.Warnln("Push Client: server-ca-file is ignored, as verify-server-certificate is disabled")
+		}
+		return &tls.Config{
+			InsecureSkipVerify: true, // #nosec G402 disabled by the configuration
+		}
+	}
+
+	roots, err := x509.SystemCertPool()
+	if err != nil {
+		log.Warnln("Push Client: could not load the certificates of the system: ", err)
+		roots = x509.NewCertPool()
+	}
+	if configuration.ServerCaFile != "" {
+		if err := appendServerCaFile(roots, configuration.ServerCaFile); err != nil {
+			log.Errorln("Push Client: ", err)
+		}
+	}
+	return &tls.Config{
+		RootCAs: roots,
+	}
+}
+
+// appendServerCaFile adds the certificates of a PEM file, which can contain several certificates (e.g. a root and an
+// intermediate CA) or the self signed certificate of the server
+func appendServerCaFile(roots *x509.CertPool, path string) error {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return fmt.Errorf("could not read server-ca-file: %w", err)
+	}
+	if !roots.AppendCertsFromPEM(data) {
+		return fmt.Errorf("server-ca-file %s does not contain a PEM encoded certificate", path)
+	}
+	log.Infoln("Push Client: trusting the CA certificates of ", path)
+	return nil
+}
+
 // Run the server routine (should NOT be run in a go routine)
 // You have to call Reload at least once to really start the webserver
 func (p *PushClient) Start(ctx context.Context, cfg *config.Configuration) error {
@@ -457,11 +501,7 @@ func (p *PushClient) Start(ctx context.Context, cfg *config.Configuration) error
 		transport.Proxy = http.ProxyURL(proxyURL)
 	}
 
-	if !p.configuration.VerifyServerCertificate {
-		transport.TLSClientConfig = &tls.Config{
-			InsecureSkipVerify: true,
-		}
-	}
+	transport.TLSClientConfig = pushTLSConfig(&p.configuration)
 
 	p.client.Transport = transport
 
