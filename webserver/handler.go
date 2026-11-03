@@ -430,7 +430,7 @@ func (w *handler) handleConfigPush(response http.ResponseWriter, request *http.R
 }
 
 func (w *handler) handlerCsr(response http.ResponseWriter, request *http.Request) {
-	log.Infoln("Webserver: openITCOCKPIT requests the CSR")
+	log.Infoln("Webserver: openITCOCKPIT requests the CSR, from ", request.RemoteAddr)
 
 	if err := utils.GeneratePrivateKeyIfNotExists(w.Configuration.AutoSslKeyFile); err != nil {
 		log.Errorln("Webserver: ", err)
@@ -469,8 +469,6 @@ func (w *handler) handlerUpdateCert(response http.ResponseWriter, request *http.
 		_ = request.Body.Close()
 	}()
 
-	log.Debugln("Webserver: Certificate update")
-
 	body, err := io.ReadAll(request.Body)
 	if err != nil {
 		log.Errorln("Webserver: Could not read body: ", err)
@@ -485,6 +483,14 @@ func (w *handler) handlerUpdateCert(response http.ResponseWriter, request *http.
 		log.Errorln("Webserver: Could not parse certificate update request: ", err)
 		http.Error(response, "internal server error", http.StatusInternalServerError)
 		return
+	}
+
+	// Logged before the CA file is replaced, so the previous CA can be compared
+	message, replacesCa := certificateUpdateMessage(request.RemoteAddr, crtReq.CA, w.Configuration.AutoSslCaFile)
+	if replacesCa {
+		log.Warnln("Webserver: ", message)
+	} else {
+		log.Infoln("Webserver: ", message)
 	}
 
 	// The directories can be changed with autossl-crt-file and autossl-ca-file and may not exist yet
@@ -508,7 +514,7 @@ func (w *handler) handlerUpdateCert(response http.ResponseWriter, request *http.
 		return
 	}
 
-	log.Debugln("Webserver: Certificate update successful, start reload")
+	log.Infoln("Webserver: AutoSSL certificate update successful, start reload")
 
 	if w.Reloader != nil {
 		go w.Reloader.Reload()
