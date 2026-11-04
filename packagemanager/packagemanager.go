@@ -18,6 +18,9 @@ type Package struct {
 	SourceVersion string `json:",omitempty"`
 	// SourceRPM is the file name of the source rpm, e.g. curl-8.18.0-8.fc44.src.rpm (only rpm based distributions)
 	SourceRPM string `json:",omitempty"`
+	// ModularityLabel is the module and stream of packages from an AppStream module on RHEL 8 and newer, e.g.
+	// nginx:1.24:9080020260914161558:8cf767d6. Advisories of such packages are only valid for this stream.
+	ModularityLabel string `json:",omitempty"`
 }
 
 type PackageUpdate struct {

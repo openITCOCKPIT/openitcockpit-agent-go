@@ -11,15 +11,24 @@ import (
 	"github.com/shirou/gopsutil/v4/host"
 )
 
-// rpmQueryFormat is the query format of rpm. The description has to be the last field, as it has multiple lines.
-// http://ftp.rpm.org/api/4.4.2.2/queryformat.html
-const rpmQueryFormat = "%{NAME}\t%{EPOCHNUM}\t%{VERSION}\t%{RELEASE}\t%{ARCH}\t%{SOURCERPM}\t%{DESCRIPTION}\nEND\n"
-
-// rpmQueryFieldCount is the number of tab separated fields of rpmQueryFormat
-const rpmQueryFieldCount = 7
-
 // rpmNoValue is printed by rpm for tags without a value
 const rpmNoValue = "(none)"
+
+// rpmQueryFormat is the query format of rpm. The description has to be the last field, as it has multiple lines.
+// http://ftp.rpm.org/api/4.4.2.2/queryformat.html
+const (
+	rpmQueryFormatStart = "%{NAME}\t%{EPOCHNUM}\t%{VERSION}\t%{RELEASE}\t%{ARCH}\t%{SOURCERPM}\t"
+	rpmQueryFormatEnd   = "\t%{DESCRIPTION}\nEND\n"
+	rpmQueryFormat      = rpmQueryFormatStart + "%{MODULARITYLABEL}" + rpmQueryFormatEnd
+	// rpmQueryFormatWithoutModules has the same fields for rpm versions without modules, e.g. 4.11 of RHEL 7 and SLES 12
+	rpmQueryFormatWithoutModules = rpmQueryFormatStart + rpmNoValue + rpmQueryFormatEnd
+)
+
+// rpmQueryFieldCount is the number of tab separated fields of rpmQueryFormat
+const rpmQueryFieldCount = 8
+
+// rpmUnknownTagError is printed by rpm instead of the packages if the query format contains an unknown tag
+const rpmUnknownTagError = "incorrect format: unknown tag"
 
 // rpmPublicKeyPackage is the name of the pseudo package of each imported GPG key, it is no installed software and neither
 // dnf nor yum list it
@@ -53,9 +62,22 @@ func (r RpmManager) ListInstalledPackages(ctx context.Context) ([]Package, error
 }
 
 func (r RpmManager) getInstalledPackagesWithCancel(ctx context.Context) (string, error) {
+	output, err := r.queryInstalledPackages(ctx, rpmQueryFormat)
+	if err != nil {
+		return "", err
+	}
+
+	if strings.Contains(output, rpmUnknownTagError) {
+		return r.queryInstalledPackages(ctx, rpmQueryFormatWithoutModules)
+	}
+
+	return output, nil
+}
+
+func (r RpmManager) queryInstalledPackages(ctx context.Context, queryFormat string) (string, error) {
 	timeout := 10 * time.Second
 	result, err := utils.RunCommand(ctx, utils.CommandArgs{
-		Command: "rpm -qa --qf '" + rpmQueryFormat + "'",
+		Command: "rpm -qa --qf '" + queryFormat + "'",
 		Timeout: timeout,
 		Env: map[string]string{
 			"LANG": "C",
@@ -74,8 +96,8 @@ func (r RpmManager) parseRpmOutput(output string) ([]Package, error) {
 	records := strings.Split(output, "\nEND\n")
 	var pkgs []Package
 	for _, record := range records {
-		// name<TAB>epoch<TAB>version<TAB>release<TAB>architecture<TAB>source rpm<TAB>description
-		// tar	2	1.34	7.el9	x86_64	tar-1.34-7.el9.src.rpm	The GNU tar program saves many files together <until END>
+		// name<TAB>epoch<TAB>version<TAB>release<TAB>architecture<TAB>source rpm<TAB>modularity label<TAB>description
+		// tar	2	1.34	7.el9	x86_64	tar-1.34-7.el9.src.rpm	(none)	The GNU tar program saves many files together <until END>
 		parts := strings.SplitN(record, "\t", rpmQueryFieldCount)
 
 		if len(parts) < rpmQueryFieldCount {
@@ -92,13 +114,14 @@ func (r RpmManager) parseRpmOutput(output string) ([]Package, error) {
 		sourcePackage, sourceVersion := r.parseSourceRpm(sourceRpm)
 
 		pkgs = append(pkgs, Package{
-			Name:          name,
-			Version:       version,
-			Architecture:  r.removeNoValue(parts[4]),
-			SourcePackage: sourcePackage,
-			SourceVersion: sourceVersion,
-			SourceRPM:     sourceRpm,
-			Description:   parts[6],
+			Name:            name,
+			Version:         version,
+			Architecture:    r.removeNoValue(parts[4]),
+			SourcePackage:   sourcePackage,
+			SourceVersion:   sourceVersion,
+			SourceRPM:       sourceRpm,
+			ModularityLabel: r.removeNoValue(parts[6]),
+			Description:     parts[7],
 		})
 	}
 	return pkgs, nil
@@ -189,6 +212,7 @@ func (r RpmManager) CollectPackageInfo(ctx context.Context, limitDescriptionLeng
 			OsFamily:        info.PlatformFamily,
 			Uptime:          int64(info.Uptime),
 			AgentVersion:    config.AgentVersion,
+			KernelRelease:   info.KernelVersion,
 		},
 	}
 

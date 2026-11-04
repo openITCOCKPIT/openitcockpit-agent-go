@@ -219,6 +219,7 @@ func (a AptManager) CollectPackageInfo(ctx context.Context, limitDescriptionLeng
 			OsFamily:        info.PlatformFamily,  // "debian"
 			Uptime:          int64(info.Uptime),
 			AgentVersion:    config.AgentVersion,
+			KernelRelease:   info.KernelVersion,
 		},
 	}
 

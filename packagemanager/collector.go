@@ -40,6 +40,7 @@ type PackageStats struct {
 	OsFamily           string // e.g. "debian", "windows", "macos"
 	AgentVersion       string // e.g. "3.4.0"
 	Uptime             int64  // system uptime in seconds
+	KernelRelease      string `json:",omitempty"` // Running kernel like "uname -r" (only Linux), e.g. "6.8.0-45-generic"
 }
 
 type SoftwareCollector struct {

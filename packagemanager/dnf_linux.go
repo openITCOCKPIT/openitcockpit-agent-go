@@ -336,6 +336,7 @@ func (d DnfManager) CollectPackageInfo(ctx context.Context, limitDescriptionLeng
 			OsFamily:        info.PlatformFamily,
 			Uptime:          int64(info.Uptime),
 			AgentVersion:    config.AgentVersion,
+			KernelRelease:   info.KernelVersion,
 		},
 	}
 

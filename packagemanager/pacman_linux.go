@@ -229,6 +229,7 @@ func (p PacmanManager) CollectPackageInfo(ctx context.Context, limitDescriptionL
 			OsFamily:        info.PlatformFamily,
 			Uptime:          int64(info.Uptime),
 			AgentVersion:    config.AgentVersion,
+			KernelRelease:   info.KernelVersion,
 		},
 	}
 
