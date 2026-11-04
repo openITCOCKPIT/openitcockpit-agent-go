@@ -11,6 +11,20 @@ import (
 	"github.com/shirou/gopsutil/v4/host"
 )
 
+// rpmQueryFormat is the query format of rpm. The description has to be the last field, as it has multiple lines.
+// http://ftp.rpm.org/api/4.4.2.2/queryformat.html
+const rpmQueryFormat = "%{NAME}\t%{EPOCHNUM}\t%{VERSION}\t%{RELEASE}\t%{ARCH}\t%{SOURCERPM}\t%{DESCRIPTION}\nEND\n"
+
+// rpmQueryFieldCount is the number of tab separated fields of rpmQueryFormat
+const rpmQueryFieldCount = 7
+
+// rpmNoValue is printed by rpm for tags without a value
+const rpmNoValue = "(none)"
+
+// rpmPublicKeyPackage is the name of the pseudo package of each imported GPG key, it is no installed software and neither
+// dnf nor yum list it
+const rpmPublicKeyPackage = "gpg-pubkey"
+
 // RpmManager implements PackageManager for rpm
 // While rpm itself is not a package manager, the "rpm" command can be used
 // to query installed packages on RPM-based systems.
@@ -39,10 +53,9 @@ func (r RpmManager) ListInstalledPackages(ctx context.Context) ([]Package, error
 }
 
 func (r RpmManager) getInstalledPackagesWithCancel(ctx context.Context) (string, error) {
-	// http://ftp.rpm.org/api/4.4.2.2/queryformat.html
 	timeout := 10 * time.Second
 	result, err := utils.RunCommand(ctx, utils.CommandArgs{
-		Command: "rpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE} %{DESCRIPTION}\nEND\n'",
+		Command: "rpm -qa --qf '" + rpmQueryFormat + "'",
 		Timeout: timeout,
 		Env: map[string]string{
 			"LANG": "C",
@@ -58,26 +71,71 @@ func (r RpmManager) getInstalledPackagesWithCancel(ctx context.Context) (string,
 
 // parseRpmOutput parses the output of 'rpm -qa' into a slice of Package structs
 func (r RpmManager) parseRpmOutput(output string) ([]Package, error) {
-	lines := strings.Split(output, "\nEND\n")
+	records := strings.Split(output, "\nEND\n")
 	var pkgs []Package
-	for _, line := range lines {
-		// package version description
-		// tar 2:1.34-7.el9 The GNU tar program saves many files together in one archive and can <until END>
-		parts := strings.SplitN(line, " ", 3)
+	for _, record := range records {
+		// name<TAB>epoch<TAB>version<TAB>release<TAB>architecture<TAB>source rpm<TAB>description
+		// tar	2	1.34	7.el9	x86_64	tar-1.34-7.el9.src.rpm	The GNU tar program saves many files together <until END>
+		parts := strings.SplitN(record, "\t", rpmQueryFieldCount)
 
-		if len(parts) < 3 {
+		if len(parts) < rpmQueryFieldCount {
 			continue
 		}
 
-		version := r.removeEpochFromVersionIfZero(parts[1])
+		name := parts[0]
+		if name == rpmPublicKeyPackage {
+			continue
+		}
+
+		version := r.removeEpochFromVersionIfZero(parts[1] + ":" + parts[2] + "-" + parts[3])
+		sourceRpm := r.removeNoValue(parts[5])
+		sourcePackage, sourceVersion := r.parseSourceRpm(sourceRpm)
 
 		pkgs = append(pkgs, Package{
-			Name:        parts[0],
-			Version:     version,
-			Description: parts[2],
+			Name:          name,
+			Version:       version,
+			Architecture:  r.removeNoValue(parts[4]),
+			SourcePackage: sourcePackage,
+			SourceVersion: sourceVersion,
+			SourceRPM:     sourceRpm,
+			Description:   parts[6],
 		})
 	}
 	return pkgs, nil
+}
+
+// removeNoValue returns an empty string for tags without a value
+func (r RpmManager) removeNoValue(value string) string {
+	if value == rpmNoValue {
+		return ""
+	}
+	return value
+}
+
+// parseSourceRpm returns the name and the version-release of a source rpm file name.
+// The name can contain dashes, the version and the release can not:
+// openssl-3-3.5.0-160000.11.1.src.rpm -> openssl-3, 3.5.0-160000.11.1
+func (r RpmManager) parseSourceRpm(sourceRpm string) (string, string) {
+	nameVersionRelease, isSource := strings.CutSuffix(sourceRpm, ".src.rpm")
+	if !isSource {
+		// Source packages without the sources, e.g. for software which must not be redistributed
+		nameVersionRelease, isSource = strings.CutSuffix(sourceRpm, ".nosrc.rpm")
+	}
+	if !isSource {
+		return "", ""
+	}
+
+	releaseSeparator := strings.LastIndex(nameVersionRelease, "-")
+	if releaseSeparator == -1 {
+		return "", ""
+	}
+
+	versionSeparator := strings.LastIndex(nameVersionRelease[:releaseSeparator], "-")
+	if versionSeparator == -1 {
+		return "", ""
+	}
+
+	return nameVersionRelease[:versionSeparator], nameVersionRelease[versionSeparator+1:]
 }
 
 // ListUpgradablePackages lists upgradable packages using yum or dnf

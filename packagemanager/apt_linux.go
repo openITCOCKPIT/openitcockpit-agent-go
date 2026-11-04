@@ -12,6 +12,14 @@ import (
 	"github.com/shirou/gopsutil/v4/host"
 )
 
+// dpkgQueryFormat is the format of dpkg-query. The description has to be the last field, as it has multiple lines.
+// ${source:Package} and ${source:Version} are virtual fields, unlike ${Source} they are also set if the source package has
+// the name and the version of the binary package, and they never contain a version in parentheses.
+const dpkgQueryFormat = "${Status}\t${Package}\t${Version}\t${Architecture}\t${source:Package}\t${source:Version}\t${Description}\nEND\n"
+
+// dpkgQueryFieldCount is the number of tab separated fields of dpkgQueryFormat
+const dpkgQueryFieldCount = 7
+
 // AptManager implements PackageManager for apt
 type AptManager struct{}
 
@@ -48,7 +56,7 @@ func (a AptManager) getInstalledPackagesWithCancel(ctx context.Context) (string,
 	timeout := 10 * time.Second
 	result, err := utils.RunCommand(ctx, utils.CommandArgs{
 		// dpkg-query -W also lists packages which got removed, but not purged (state "rc", config-files)
-		Command: "dpkg-query -W -f=\"${Status} ${Package} ${Version} ${Description}\nEND\n\"",
+		Command: "dpkg-query -W -f=\"" + dpkgQueryFormat + "\"",
 		Timeout: timeout,
 		Env: map[string]string{
 			"LANG": "C",
@@ -63,27 +71,36 @@ func (a AptManager) getInstalledPackagesWithCancel(ctx context.Context) (string,
 }
 
 func (a AptManager) parseDpkgOutput(output string) ([]Package, error) {
-	lines := strings.Split(output, "\nEND\n")
+	records := strings.Split(output, "\nEND\n")
 	var pkgs []Package
-	for _, line := range lines {
-		// want flag status package version description
-		// install ok installed zsh 5.9-6ubuntu2 shell with lots of features <until END>
-		parts := strings.SplitN(line, " ", 6)
+	for _, record := range records {
+		// status<TAB>package<TAB>version<TAB>architecture<TAB>source package<TAB>source version<TAB>description
+		// install ok installed	libcurl4t64	8.5.0-2ubuntu10.16	arm64	curl	8.5.0-2ubuntu10.16	easy-to-use client-side <until END>
+		parts := strings.SplitN(record, "\t", dpkgQueryFieldCount)
 
-		if len(parts) < 6 {
+		if len(parts) < dpkgQueryFieldCount {
 			continue
 		}
 
-		switch parts[2] {
+		// want flag status
+		status := strings.Fields(parts[0])
+		if len(status) != 3 {
+			continue
+		}
+
+		switch status[2] {
 		case "not-installed", "config-files":
 			// Removed packages, "rc" only has its configuration files left
 			continue
 		}
 
 		pkgs = append(pkgs, Package{
-			Name:        parts[3],
-			Version:     parts[4],
-			Description: parts[5],
+			Name:          parts[1],
+			Version:       parts[2],
+			Architecture:  parts[3],
+			SourcePackage: parts[4],
+			SourceVersion: parts[5],
+			Description:   parts[6],
 		})
 	}
 	return pkgs, nil

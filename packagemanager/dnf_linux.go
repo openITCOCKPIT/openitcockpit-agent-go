@@ -56,75 +56,11 @@ func (d DnfManager) UpdateMetadata(ctx context.Context) error {
 	return err
 }
 
-// ListInstalledPackages lists installed packages using dnf
+// ListInstalledPackages lists installed packages using rpm, because dnf and yum can not list the source packages or
+// the descriptions of all packages at once. The names and versions are the same as in "dnf list installed".
 func (d DnfManager) ListInstalledPackages(ctx context.Context) ([]Package, error) {
-	output, err := d.getInstalledPackagesWithCancel(ctx)
-	if err != nil {
-		return nil, err
-	}
-
-	return d.parseDnfListInstalledOutput(output)
-}
-
-func (d DnfManager) getInstalledPackagesWithCancel(ctx context.Context) (string, error) {
-	timeout := 10 * time.Second
-	bin := d.getPkgManagerBinary()
-	// dnf5 (Fedora 41 and newer) searches for a package named "installed" with "list installed", dnf4 knows both
-	command := bin + " list --installed"
-	if isYum(bin) {
-		command = bin + " list installed"
-	}
-	result, err := utils.RunCommand(ctx, utils.CommandArgs{
-		Command: command,
-		Timeout: timeout,
-		Env: map[string]string{
-			"LANG": "C",
-		},
-	})
-
-	if err != nil {
-		return "", err
-	}
-
-	return result.Stdout, nil
-}
-
-// parseDnfListInstalledOutput parses the output of 'dnf list installed' into a slice of Package structs
-func (d DnfManager) parseDnfListInstalledOutput(output string) ([]Package, error) {
-	lines := strings.Split(output, "\n")
-	var pkgs []Package
-	foundHeader := false
-	for _, line := range lines {
-		line = strings.TrimSpace(line)
-		if line == "" {
-			continue
-		}
-		// Skip header lines until we find the actual package list
-		if !foundHeader {
-			// dnf4: "Installed Packages", dnf5: "Installed packages"
-			if strings.HasPrefix(strings.ToLower(line), "installed packages") {
-				foundHeader = true
-			}
-			continue
-		}
-		fields := strings.Fields(line)
-		if len(fields) < 3 {
-			continue
-		}
-		// Example line: bash.x86_64           5.0.17-2.fc32           @fedora
-		name := d.removeArchFromPkgName(fields[0])
-
-		version := fields[1]
-		// To get the description for a specific package with DNF or RPM, you must query each package individually:
-		// dnf info <package> or rpm -qi <package>
-		// Sounds like a horrible idea to do this for all installed packages.
-		pkgs = append(pkgs, Package{
-			Name:        name,
-			Version:     version,
-			Description: "",
-		})
-	}
-	return pkgs, nil
+	rpm := RpmManager{}
+	return rpm.ListInstalledPackages(ctx)
 }
 
 // ListUpgradablePackages lists upgradable packages using dnf

@@ -8,6 +8,16 @@ type Package struct {
 	Name        string
 	Version     string
 	Description string
+	// Architecture of the package, e.g. amd64 (apt), x86_64 (rpm, pacman) or noarch. A package can be installed once per
+	// architecture, e.g. libc6 for amd64 and i386
+	Architecture string `json:",omitempty"`
+	// SourcePackage is the name of the source package this package was built from, e.g. curl for libcurl4t64
+	SourcePackage string `json:",omitempty"`
+	// SourceVersion is the version of the source package. It can differ from Version, e.g. bash 5.2.37-2+b10 is built from
+	// the source 5.2.37-2. For rpm it has no epoch, because the source rpm file name does not contain one.
+	SourceVersion string `json:",omitempty"`
+	// SourceRPM is the file name of the source rpm, e.g. curl-8.18.0-8.fc44.src.rpm (only rpm based distributions)
+	SourceRPM string `json:",omitempty"`
 }
 
 type PackageUpdate struct {

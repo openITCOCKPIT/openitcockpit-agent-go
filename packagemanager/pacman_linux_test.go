@@ -372,6 +372,9 @@ func TestParsePacmanQiOutput(t *testing.T) {
 	if err != nil {
 		t.Fatalf("parsePacmanQiOutput returned error: %v", err)
 	}
+	if packages[0].Architecture != "x86_64" {
+		t.Errorf("Unexpected architecture: %+v", packages[0])
+	}
 
 	// Check a few known packages from the sample output
 	expected := []Package{

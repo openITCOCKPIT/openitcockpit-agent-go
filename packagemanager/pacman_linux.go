@@ -97,6 +97,8 @@ func (p PacmanManager) parsePacmanQiOutput(output string) ([]Package, error) {
 			currentPackage.Version = value
 		case "Description":
 			currentPackage.Description = value
+		case "Architecture":
+			currentPackage.Architecture = value
 		}
 	}
 

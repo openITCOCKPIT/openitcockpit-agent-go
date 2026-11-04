@@ -250,6 +250,8 @@ The openITCOCKPIT Agent collects detailed information about installed packages, 
 
 On Linux systems, the agent gathers a complete list of installed packages, identifies available updates, and, where supported, highlights security updates.
 
+For each installed package the agent also reports the architecture and, with apt, dnf, yum, zypper and rpm, the source package and its version, e.g. `curl` for `libcurl4t64`. With pacman only the architecture is reported.
+
 | Package Manager | Installed Packages | Available Updates | Security Updates | Reboot Required                                                                                                     |
 |-----------------|--------------------|-------------------|------------------|---------------------------------------------------------------------------------------------------------------------|
 | `apt`           | ✅                  | ✅                 | ✅                | ✅ [Method](https://www.debian.org/doc/debian-policy/ch-opersys.html#signaling-that-a-reboot-is-required)            |
