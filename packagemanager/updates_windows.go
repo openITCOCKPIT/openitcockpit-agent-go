@@ -73,7 +73,8 @@ func (w WindowsUpdatesManager) getInstalledApps() ([]WindowsApp, error) {
 					// Get name, version and install location
 					displayName, _, err := subKey.GetStringValue("DisplayName")
 					version, _, errVer := subKey.GetStringValue("DisplayVersion")
-					publisher, _, errPub := subKey.GetStringValue("Publisher")
+					// Publisher is optional. Many installers do not set it, and the app is still relevant for the inventory
+					publisher, _, _ := subKey.GetStringValue("Publisher")
 
 					// Avoid duplicates
 					uniqueID := fmt.Sprintf("%s|%s|%s", displayName, version, publisher)
@@ -83,7 +84,7 @@ func (w WindowsUpdatesManager) getInstalledApps() ([]WindowsApp, error) {
 					}
 
 					// Only add if we have a name
-					if err == nil && displayName != "" && errVer == nil && errPub == nil {
+					if err == nil && displayName != "" && errVer == nil {
 						seenApps[uniqueID] = true
 
 						apps = append(apps, WindowsApp{
