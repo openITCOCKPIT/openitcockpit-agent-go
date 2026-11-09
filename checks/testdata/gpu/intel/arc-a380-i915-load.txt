@@ -1,0 +1,110 @@
+# intel-sysfs-dump 3 2026-10-28T19:14:46+00:00
+kernel: 6.8.0-147-generic
+PRETTY_NAME="Ubuntu 24.04.5 LTS"
+06:00.0 VGA compatible controller [0300]: Intel Corporation DG2 [Arc A380] [8086:56a5] (rev 05)
+MemTotal:       41008444 kB
+MemAvailable:   29644840 kB
+
+== /sys/class/drm/card1 driver=i915 pci=0000:06:00.0
+vendor: 0x8086 
+device: 0x56a5 
+subsystem_vendor: 0x1849 
+subsystem_device: 0x6004 
+revision: 0x05 
+class: 0x030000 
+boot_vga: 1 
+current_link_speed: 2.5 GT/s PCIe 
+current_link_width: 1 
+max_link_speed: 2.5 GT/s PCIe 
+max_link_width: 1 
+gt_act_freq_mhz: 1400 
+gt_cur_freq_mhz: 2450 
+gt_min_freq_mhz: 300 
+gt_max_freq_mhz: 2450 
+gt_boost_freq_mhz: 2450 
+gt_RP0_freq_mhz: 2450 
+gt_RP1_freq_mhz: 600 
+gt_RPn_freq_mhz: 300 
+power/rc6_enable: 1 
+power/rc6_residency_ms: 622418552 
+-- /sys/class/drm/card1/gt/gt0
+id: 0 
+media_RP0_freq_mhz: 1400 
+media_RPn_freq_mhz: 1400 
+media_freq_factor: 256 
+media_freq_factor.scale: 0.00390625 
+punit_req_freq_mhz: 2450 
+rc6_enable: 1 
+rc6_residency_ms: 622418552 
+rps_RP0_freq_mhz: 2450 
+rps_RP1_freq_mhz: 600 
+rps_RPn_freq_mhz: 300 
+rps_act_freq_mhz: 1400 
+rps_boost_freq_mhz: 2450 
+rps_cur_freq_mhz: 2450 
+rps_max_freq_mhz: 2450 
+rps_min_freq_mhz: 300 
+slpc_ignore_eff_freq: 0 
+throttle_reason_pl1: 0 
+throttle_reason_pl2: 0 
+throttle_reason_pl4: 0 
+throttle_reason_prochot: 0 
+throttle_reason_ratl: 0 
+throttle_reason_status: 0 
+throttle_reason_thermal: 0 
+throttle_reason_vr_tdc: 0 
+throttle_reason_vr_thermalert: 0 
+-- /sys/class/drm/card1/device/hwmon/hwmon2 name=i915
+energy1_input: 253240859558
+in0_input: 895
+power1_max: 55000000
+power1_max_interval: 28000
+power1_rated_max: 0
+-- after 2 seconds
+/sys/class/drm/card1/gt/gt0/rc6_residency_ms: 622418552
+/sys/class/drm/card1/power/rc6_residency_ms: 622418552
+/sys/class/drm/card1/device/hwmon/hwmon2/energy1_input: 253286874938
+/sys/class/drm/card1/gt_act_freq_mhz: 1400
+
+== drm clients (fdinfo), uid 0
+time: 1793214888.520801611
+drm-driver:	i915
+drm-client-id:	38502
+drm-pdev:	0000:06:00.0
+drm-total-system0:	129048 KiB
+drm-resident-system0:	116752 KiB
+drm-total-local0:	576968 KiB
+drm-resident-local0:	506440 KiB
+drm-total-stolen-local0:	0
+drm-resident-stolen-local0:	0
+drm-engine-render:	0 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	41519085608 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	13554986328 ns
+drm-engine-capacity-video-enhance:	2
+drm-engine-compute:	0 ns
+--
+clients: 1 files
+
+== drm clients after 5 seconds (fdinfo)
+time: 1793214905.157295636
+drm-driver:	i915
+drm-client-id:	38502
+drm-pdev:	0000:06:00.0
+drm-total-system0:	129048 KiB
+drm-resident-system0:	116752 KiB
+drm-total-local0:	576968 KiB
+drm-resident-local0:	506440 KiB
+drm-total-stolen-local0:	0
+drm-resident-stolen-local0:	0
+drm-engine-render:	0 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	63085203168 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	20463895296 ns
+drm-engine-capacity-video-enhance:	2
+drm-engine-compute:	0 ns
+--
+clients: 1 files
+/sys/class/drm/card1/gt_act_freq_mhz: 0

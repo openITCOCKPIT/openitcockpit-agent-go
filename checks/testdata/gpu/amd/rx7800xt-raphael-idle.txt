@@ -1,0 +1,113 @@
+# amd-sysfs-dump 2026-10-20T16:17:06+00:00
+kernel: 7.0.0-14-generic
+PRETTY_NAME="Ubuntu 26.04 LTS"
+03:00.0 VGA compatible controller [0300]: Advanced Micro Devices, Inc. [AMD/ATI] Navi 32 [Radeon RX 7700 XT / 7800 XT] [1002:747e] (rev c8)
+11:00.0 VGA compatible controller [0300]: Advanced Micro Devices, Inc. [AMD/ATI] Raphael [1002:164e] (rev c3)
+MemTotal:       31909892 kB
+MemAvailable:   28726280 kB
+
+== /sys/class/drm/card1/device driver=amdgpu
+vendor: 0x1002 
+device: 0x747e 
+subsystem_vendor: 0x148c 
+subsystem_device: 0x2427 
+revision: 0xc8 
+boot_vga: 1 
+gpu_busy_percent: 0 
+mem_busy_percent: 0 
+mem_info_vram_total: 17163091968 
+mem_info_vram_used: 927903744 
+mem_info_vis_vram_total: 17163091968 
+mem_info_vis_vram_used: 927903744 
+mem_info_gtt_total: 16337862656 
+mem_info_gtt_used: 72228864 
+mem_info_vram_vendor: samsung 
+current_link_speed: 16.0 GT/s PCIe 
+current_link_width: 16 
+max_link_speed: 16.0 GT/s PCIe 
+max_link_width: 16 
+power_dpm_state: performance 
+power_dpm_force_performance_level: auto 
+pp_dpm_sclk: S: 19Mhz * 1: 500Mhz  2: 2213Mhz  
+pp_dpm_mclk: 0: 96Mhz  1: 456Mhz * 2: 772Mhz  3: 1218Mhz  
+pp_dpm_fclk: 0: 601Mhz  1: 1000Mhz * 2: 1200Mhz  3: 1600Mhz  4: 1801Mhz  5: 1950Mhz  6: 2201Mhz  7: 2301Mhz  
+pp_dpm_socclk: 0: 300Mhz  1: 600Mhz * 2: 1500Mhz  
+pp_dpm_pcie: 0: 2.5GT/s, x1 78Mhz  1: 5.0GT/s, x4 156Mhz  2: 16.0GT/s, x16 623Mhz * 
+unique_id: (present, not dumped)
+vbios_version: 113-EXT90455-100 
+gpu_metrics (base64): eAABAyQAKgA+ACkAKQAqAAAAAAAAABwA/////wAAAAAAb5Q+TAAAAAAA//+NAxgAGAAYABgAAABYAsgBGQAZABkAGQAAAAAAAAAQAKAA///////////////////////////////////AAjwAwAL//wAAAAAAAAAA
+-- /sys/class/drm/card1/device/hwmon/hwmon7 name=amdgpu
+fan1_enable: 0
+fan1_input: 0
+fan1_max: 3100
+fan1_min: 0
+fan1_target: 0
+freq1_input: 36000000
+freq1_label: sclk
+freq2_input: 456000000
+freq2_label: mclk
+in0_input: 705
+in0_label: vddgfx
+power1_average: 26000000
+power1_cap: 228000000
+power1_cap_max: 244000000
+power1_cap_min: 205000000
+power1_label: PPT
+pwm1: 0
+pwm1_enable: 2
+pwm1_max: 255
+pwm1_min: 0
+temp1_crit: 100000
+temp1_crit_hyst: -273150
+temp1_emergency: 105000
+temp1_input: 36000
+temp1_label: edge
+temp2_crit: 110000
+temp2_crit_hyst: -273150
+temp2_emergency: 115000
+temp2_input: 42000
+temp2_label: junction
+temp3_crit: 108000
+temp3_crit_hyst: -273150
+temp3_emergency: 113000
+temp3_input: 62000
+temp3_label: mem
+
+== /sys/class/drm/card2/device driver=amdgpu
+vendor: 0x1002 
+device: 0x164e 
+subsystem_vendor: 0x1849 
+subsystem_device: 0x364e 
+revision: 0xc3 
+boot_vga: 0 
+gpu_busy_percent: 0 
+mem_info_vram_total: 536870912 
+mem_info_vram_used: 16687104 
+mem_info_vis_vram_total: 536870912 
+mem_info_vis_vram_used: 16687104 
+mem_info_gtt_total: 16337862656 
+mem_info_gtt_used: 14143488 
+current_link_speed: 16.0 GT/s PCIe 
+current_link_width: 16 
+max_link_speed: 16.0 GT/s PCIe 
+max_link_width: 16 
+power_dpm_state: performance 
+power_dpm_force_performance_level: auto 
+pp_dpm_sclk: 0: 400Mhz  1: 600Mhz * 2: 2200Mhz  
+pp_dpm_mclk: 0: 2900Mhz * 
+pp_dpm_fclk:  
+pp_dpm_socclk: 0: 400Mhz  1: 1200Mhz * 
+pp_dpm_pcie:  
+vbios_version: 102-RAPHAEL-008 
+gpu_metrics (base64): eAACAesPrRH//////////////////////////wAAAAAxPZVMTAAAADGF///wLL0w/////////////////////1gCsARUC1QLGQAZAP//////////////////////////////////////////AAAAAP//////////
+-- /sys/class/drm/card2/device/hwmon/hwmon8 name=amdgpu
+freq1_input: 600000000
+freq1_label: sclk
+in0_input: 1084
+in0_label: vddgfx
+in1_input: 1180
+in1_label: vddnb
+power1_input: 37175000
+power1_label: PPT
+temp1_input: 40000
+temp1_label: edge

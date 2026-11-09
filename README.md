@@ -200,6 +200,7 @@ Please see the [full documentation](https://github.com/openITCOCKPIT/openitcockp
 | Docker Container             | ✅ incl. healthchecks                      | ✅ incl. healthchecks                                                                                      | ✅ incl. healthchecks       | untested        |
 | Exim Mail Queue              | -                                          | ✅                                                                                                         | -                           | ✅              |
 | Files & Directories          | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
+| GPUs                         | ✅ NVIDIA, AMD, Intel, driver errors (TDR) | ✅ NVIDIA, AMD, Intel, Xid and amdgpu errors                                                               | -                           | -               |
 | HTTP(S)                      | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
 | IPMI (local BMC)             | ✅ in-band                                 | ✅ in-band                                                                                                 | -                           | -               |
 | Logfiles                     | ✅ text files                              | ✅ text files, journald                                                                                    | ✅ text files, unified log  | ✅ text files   |
@@ -229,6 +230,9 @@ Please see the [full documentation](https://github.com/openITCOCKPIT/openitcockp
 Logfiles, Certificates, Files & Directories, HTTP(S), Redfish and Windows Performance Counters are configured in separate INI files.
 See the examples in the [example](example/) directory. S.M.A.R.T. requires `smartctl` of smartmontools 7.0 or newer.
 Ceph, Exim, LVM, Postfix (3.1 or newer), Proxmox VE, S.M.A.R.T. and ZFS are enabled automatically if the required tools are installed.
+GPUs: NVIDIA GPUs are read with `nvidia-smi` (Linux and Windows), AMD and Intel GPUs from sysfs (Linux) or with the
+interface of the Windows Task Manager (D3DKMT). Linux also reports the Xid errors of the NVIDIA driver and the GPU hangs
+and resets of the amdgpu driver from the kernel log, Windows the driver errors (TDR) of the event log.
 IPMI reads the sensors, the chassis status and the SEL of the local BMC without ipmitool (Linux: /dev/ipmi0, Windows: IPMI driver).
 Network Ports reports the listening ports with their processes, the TCP connections per state and the usage of the ephemeral ports.
 Redfish monitors the hardware of servers (Dell iDRAC, HPE iLO, Lenovo XClarity, Supermicro, ...) through the API of their BMCs,
