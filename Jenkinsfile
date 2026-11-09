@@ -678,8 +678,9 @@ def package_linux() {
         sh 'cp example/files_example.ini package/etc/openitcockpit-agent/files.ini'
         sh 'cp example/http_example.ini package/etc/openitcockpit-agent/http.ini'
         sh 'cp example/redfish_example.ini package/etc/openitcockpit-agent/redfish.ini'
-        // Contains the passwords of the BMCs
-        sh 'chmod 600 package/etc/openitcockpit-agent/redfish.ini'
+        // The configuration files contain passwords (basic auth, API key of the push mode, BMCs of redfish.ini) and
+        // must only be readable by root. Existing files are not changed on updates (config files of the packages).
+        sh 'chmod 600 package/etc/openitcockpit-agent/*.ini'
         sh 'cp build/package/openitcockpit-agent.init package/etc/openitcockpit-agent/init/openitcockpit-agent.init'
         sh 'cp build/package/openitcockpit-agent.service package/etc/openitcockpit-agent/init/openitcockpit-agent.service'
         sh "cp release/linux/$GOARCH/$BINNAME package/usr/bin/$BINNAME"

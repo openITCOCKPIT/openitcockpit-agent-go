@@ -2,6 +2,8 @@ package webserver
 
 import (
 	"context"
+	"crypto/sha256"
+	"crypto/subtle"
 	"encoding/base64"
 	"encoding/json"
 	"io"
@@ -30,13 +32,27 @@ type basicAuthMiddleware struct {
 func (b *basicAuthMiddleware) Middleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		user, password, ok := r.BasicAuth()
-		if !ok || user != b.Username || password != b.Password {
+		if !ok || !b.credentialsMatch(user, password) {
 			log.Infoln("Webserver: Invalid username or password from client: ", r.RemoteAddr)
 			http.Error(w, "Forbidden", http.StatusForbidden)
 		} else {
 			next.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(), authenticatedKey, true)))
 		}
 	})
+}
+
+// credentialsMatch compares the username and the password in constant time, so the response time does not reveal how
+// many characters are correct. The SHA-256 hashes have the same length, so the length is not revealed either. Both
+// values are always compared.
+func (b *basicAuthMiddleware) credentialsMatch(user, password string) bool {
+	userHash := sha256.Sum256([]byte(user))
+	expectedUserHash := sha256.Sum256([]byte(b.Username))
+	passwordHash := sha256.Sum256([]byte(password))
+	expectedPasswordHash := sha256.Sum256([]byte(b.Password))
+
+	userMatch := subtle.ConstantTimeCompare(userHash[:], expectedUserHash[:])
+	passwordMatch := subtle.ConstantTimeCompare(passwordHash[:], expectedPasswordHash[:])
+	return userMatch&passwordMatch == 1
 }
 
 func tlsAuthMiddleware(next http.Handler) http.Handler {
@@ -415,7 +431,7 @@ func (w *handler) handleConfigPush(response http.ResponseWriter, request *http.R
 }
 
 func (w *handler) handlerCsr(response http.ResponseWriter, request *http.Request) {
-	log.Infoln("Webserver: openITCOCKPIT requests the CSR")
+	log.Infoln("Webserver: openITCOCKPIT requests the CSR, from ", request.RemoteAddr)
 
 	if err := utils.GeneratePrivateKeyIfNotExists(w.Configuration.AutoSslKeyFile); err != nil {
 		log.Errorln("Webserver: ", err)
@@ -454,8 +470,6 @@ func (w *handler) handlerUpdateCert(response http.ResponseWriter, request *http.
 		_ = request.Body.Close()
 	}()
 
-	log.Debugln("Webserver: Certificate update")
-
 	body, err := io.ReadAll(request.Body)
 	if err != nil {
 		log.Errorln("Webserver: Could not read body: ", err)
@@ -470,6 +484,14 @@ func (w *handler) handlerUpdateCert(response http.ResponseWriter, request *http.
 		log.Errorln("Webserver: Could not parse certificate update request: ", err)
 		http.Error(response, "internal server error", http.StatusInternalServerError)
 		return
+	}
+
+	// Logged before the CA file is replaced, so the previous CA can be compared
+	message, replacesCa := certificateUpdateMessage(request.RemoteAddr, crtReq.CA, w.Configuration.AutoSslCaFile)
+	if replacesCa {
+		log.Warnln("Webserver: ", message)
+	} else {
+		log.Infoln("Webserver: ", message)
 	}
 
 	// The directories can be changed with autossl-crt-file and autossl-ca-file and may not exist yet
@@ -493,7 +515,7 @@ func (w *handler) handlerUpdateCert(response http.ResponseWriter, request *http.
 		return
 	}
 
-	log.Debugln("Webserver: Certificate update successful, start reload")
+	log.Infoln("Webserver: AutoSSL certificate update successful, start reload")
 
 	if w.Reloader != nil {
 		go w.Reloader.Reload()
