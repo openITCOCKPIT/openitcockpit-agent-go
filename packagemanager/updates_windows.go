@@ -10,6 +10,8 @@ import (
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/config"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/utils"
 	"github.com/shirou/gopsutil/v4/host"
+	// Needed again as soon as the installed KBs are collected, see CollectPackageInfo
+	// log "github.com/sirupsen/logrus"
 	"golang.org/x/sys/windows/registry"
 )
 
@@ -167,6 +169,69 @@ func (w WindowsUpdatesManager) getAvailableUpdates(ctx context.Context) (string,
 	return commandResult.Stdout, nil
 }
 
+// ListInstalledKBs returns the numbers of all installed KB articles, e.g. "5079473"
+func (w WindowsUpdatesManager) ListInstalledKBs(ctx context.Context) ([]string, error) {
+	output, err := w.getInstalledKBs(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	kbs, err := parseInstalledKBsOutput(output)
+	if err != nil {
+		return nil, fmt.Errorf("error parsing installed KBs output: %s", err)
+	}
+
+	return kbs, nil
+}
+
+func (w WindowsUpdatesManager) getInstalledKBs(ctx context.Context) (string, error) {
+	// Both sources describe the current state of the system. The update history is not used on purpose,
+	// because it still lists updates that were removed later on.
+	// Win32_QuickFixEngineering is safe. DO NOT use Win32_Product, see getInstalledApps.
+	// Online = $false: The installed updates are known locally, no need to contact a server.
+	psScript := `
+		[Console]::OutputEncoding = [Text.UTF8Encoding]::UTF8
+		$KBs = @()
+
+		try {
+		    Get-CimInstance -ClassName Win32_QuickFixEngineering -ErrorAction Stop | ForEach-Object {
+		        $KBs += $_.HotFixID
+		    }
+		} catch {}
+
+		try {
+		    $Session = New-Object -ComObject Microsoft.Update.Session
+		    $Searcher = $Session.CreateUpdateSearcher()
+		    $Searcher.Online = $false
+		    $Results = $Searcher.Search("IsInstalled=1")
+		    foreach ($Update in $Results.Updates) {
+		        foreach ($KB in $Update.KBArticleIDs) {
+		            $KBs += $KB
+		        }
+		    }
+		} catch {}
+
+		ConvertTo-Json -Compress -InputObject @($KBs)
+	`
+
+	timeout := time.Duration(120 * time.Second)
+	commandResult, err := utils.RunCommand(ctx, utils.CommandArgs{
+		Timeout: timeout,
+		Command: psScript,
+		Shell:   "powershell_command",
+	})
+
+	if err != nil {
+		return "", fmt.Errorf("error fetching installed KBs via PowerShell: %s", commandResult.Stdout)
+	}
+
+	if commandResult.RC != 0 {
+		return "", fmt.Errorf("error fetching installed KBs via PowerShell, exit code %d: %s", commandResult.RC, commandResult.Stdout)
+	}
+
+	return commandResult.Stdout, nil
+}
+
 func (w WindowsUpdatesManager) parsePowerShellUpdateSessionOutput(output string) ([]WindowsUpdate, error) {
 	var updates []WindowsUpdate
 
@@ -293,6 +358,17 @@ func (w WindowsUpdatesManager) CollectPackageInfo(ctx context.Context, limitDesc
 	}
 	result.Stats.InstalledPackages = int64(len(installedApps))
 
+	// The installed KBs are not collected for now. The server does not use them yet, and the
+	// vulnerability scan delivers better results with the build number from OsVersion alone.
+	// To enable it, remove the comments here, at the assignment to result.WindowsInstalledKBs
+	// below and at the log import.
+	//
+	// A failure here must not cost us the rest of the inventory.
+	// installedKBs, err := w.ListInstalledKBs(ctx)
+	// if err != nil {
+	// 	log.Errorln("Packagemanager: Error collecting installed KBs:", err)
+	// }
+
 	var availableUpdates []WindowsUpdate
 	if enableUpdateCheck {
 		availableUpdates, err = w.ListAvailableUpdates(ctx)
@@ -326,6 +402,7 @@ func (w WindowsUpdatesManager) CollectPackageInfo(ctx context.Context, limitDesc
 
 	result.WindowsApps = installedApps
 	result.WindowsUpdates = availableUpdates
+	// result.WindowsInstalledKBs = installedKBs
 
 	return result, nil
 }

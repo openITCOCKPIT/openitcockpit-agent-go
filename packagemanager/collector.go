@@ -20,8 +20,11 @@ type PackageInfo struct {
 	LinuxUpdates   []PackageUpdate
 	WindowsApps    []WindowsApp
 	WindowsUpdates []WindowsUpdate
-	MacosApps      []Package
-	MacosUpdates   []MacosUpdate
+	// WindowsInstalledKBs holds the numbers of the installed KB articles, e.g. "5079473".
+	// Not collected for now, see WindowsUpdatesManager.CollectPackageInfo
+	WindowsInstalledKBs []string `json:",omitempty"`
+	MacosApps           []Package
+	MacosUpdates        []MacosUpdate
 }
 
 // PackageInfo holds summary information about the package manager state

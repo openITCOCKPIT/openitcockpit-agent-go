@@ -374,16 +374,17 @@ func (p *PushClient) pushPackageInfo(parent context.Context, newState packageman
 
 	// Deep copy slices
 	packageManagerState := packagemanager.PackageInfo{
-		Enabled:        newState.Enabled,
-		Pending:        newState.Pending,
-		LastUpdate:     newState.LastUpdate,
-		Stats:          newState.Stats,
-		LinuxPackages:  append([]packagemanager.Package{}, newState.LinuxPackages...),
-		LinuxUpdates:   append([]packagemanager.PackageUpdate{}, newState.LinuxUpdates...),
-		WindowsApps:    append([]packagemanager.WindowsApp{}, newState.WindowsApps...),
-		WindowsUpdates: append([]packagemanager.WindowsUpdate{}, newState.WindowsUpdates...),
-		MacosApps:      append([]packagemanager.Package{}, newState.MacosApps...),
-		MacosUpdates:   append([]packagemanager.MacosUpdate{}, newState.MacosUpdates...),
+		Enabled:             newState.Enabled,
+		Pending:             newState.Pending,
+		LastUpdate:          newState.LastUpdate,
+		Stats:               newState.Stats,
+		LinuxPackages:       append([]packagemanager.Package{}, newState.LinuxPackages...),
+		LinuxUpdates:        append([]packagemanager.PackageUpdate{}, newState.LinuxUpdates...),
+		WindowsApps:         append([]packagemanager.WindowsApp{}, newState.WindowsApps...),
+		WindowsUpdates:      append([]packagemanager.WindowsUpdate{}, newState.WindowsUpdates...),
+		WindowsInstalledKBs: append([]string{}, newState.WindowsInstalledKBs...),
+		MacosApps:           append([]packagemanager.Package{}, newState.MacosApps...),
+		MacosUpdates:        append([]packagemanager.MacosUpdate{}, newState.MacosUpdates...),
 	}
 
 	ctx, cancel := context.WithTimeout(parent, p.timeout)

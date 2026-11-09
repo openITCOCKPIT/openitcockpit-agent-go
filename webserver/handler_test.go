@@ -14,6 +14,7 @@ import (
 	"testing"
 
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/config"
+	"github.com/openITCOCKPIT/openitcockpit-agent-go/packagemanager"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -93,6 +94,22 @@ func TestWebserverHandlerState(t *testing.T) {
 	}
 
 	w.Shutdown()
+}
+
+func TestPackageManagerStatusKeepsInstalledKBs(t *testing.T) {
+	w := &handler{}
+	w.setPackageManagerState(packagemanager.PackageInfo{WindowsInstalledKBs: []string{"5079473"}})
+
+	recorder := httptest.NewRecorder()
+	w.handlePackageManagerStatus(recorder, httptest.NewRequest(http.MethodGet, "/packages", nil))
+
+	var result packagemanager.PackageInfo
+	if err := json.Unmarshal(recorder.Body.Bytes(), &result); err != nil {
+		t.Fatal(err)
+	}
+	if len(result.WindowsInstalledKBs) != 1 || result.WindowsInstalledKBs[0] != "5079473" {
+		t.Errorf("installed KBs are missing in the response: %v", result.WindowsInstalledKBs)
+	}
 }
 
 func TestWebserverHandlerAuthFailed(t *testing.T) {
