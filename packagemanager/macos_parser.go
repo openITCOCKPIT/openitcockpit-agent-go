@@ -11,7 +11,7 @@ type MacosAppsJson struct {
 		//ArchKind     string    `json:"arch_kind"`
 		//LastModified time.Time `json:"lastModified"`
 		//ObtainedFrom string    `json:"obtained_from"`
-		//Path         string    `json:"path"`
+		Path string `json:"path,omitempty"`
 		//SignedBy     []string  `json:"signed_by,omitempty"`
 		Version string `json:"version,omitempty"`
 		Info    string `json:"info,omitempty"`
@@ -82,6 +82,7 @@ func parseMacOSInstalledAppsOutput(output string) ([]Package, error) {
 			Name:        app.Name,
 			Version:     app.Version,
 			Description: app.Info,
+			BundleID:    readBundleIdentifier(app.Path),
 		})
 	}
 

@@ -83,7 +83,7 @@ require (
 	golang.org/x/time v0.14.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gotest.tools/v3 v3.5.0 // indirect
-	howett.net/plist v1.0.1 // indirect
+	howett.net/plist v1.0.1
 )
 
 replace github.com/shirou/gopsutil/v3 v3.20.12 => github.com/openITCOCKPIT/gopsutil/v3 v3.21.2-0.20210201093253-6e7f4ffe9947
