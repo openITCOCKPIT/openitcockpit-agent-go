@@ -3,6 +3,7 @@ pipeline {
     parameters {
         // Only the main branch gets signed by default, as the number of code signings is limited
         booleanParam(name: 'SIGN_WINDOWS', defaultValue: false, description: 'Sign the Windows MSI packages also for branches other than main')
+        booleanParam(name: 'NOTARIZE_MACOS', defaultValue: false, description: 'Notarize the macOS packages also for branches other than main')
     }
     environment {
         CIBUILD = "1"
@@ -795,8 +796,8 @@ def package_darwin_amd64() {
         sh """productsign --sign "83DD3DEAE7391DEC3F92567E83A4F3ABAEC8A421" ./release/packages/${GOOS}/openitcockpit-agent-${VERSION}-darwin-${GOARCH}_unsigned.pkg ./release/packages/${GOOS}/openitcockpit-agent-${VERSION}-darwin-${GOARCH}.pkg"""
 
         // Sent to Apple for notarization
-        if (env.BRANCH_NAME == 'main') {
-            // Enable notarization for main branch
+        if (env.BRANCH_NAME == 'main' || params.NOTARIZE_MACOS) {
+            // Enable notarization for main branch or when requested
             sh """xcrun notarytool submit ./release/packages/${GOOS}/openitcockpit-agent-${VERSION}-darwin-${GOARCH}.pkg --keychain-profile "agent-notary-profile" --wait"""
             // Attach ticket for offline verification on other machines
             sh """xcrun stapler staple ./release/packages/${GOOS}/openitcockpit-agent-${VERSION}-darwin-${GOARCH}.pkg"""
@@ -863,8 +864,8 @@ def package_darwin_arm64() {
         sh """productsign --sign "83DD3DEAE7391DEC3F92567E83A4F3ABAEC8A421" ./release/packages/${GOOS}/openitcockpit-agent-${VERSION}-darwin-${GOARCH}_unsigned.pkg ./release/packages/${GOOS}/openitcockpit-agent-${VERSION}-darwin-${GOARCH}.pkg"""
 
         // Sent to Apple for notarization
-        if (env.BRANCH_NAME == 'main') {
-            // Enable notarization for main branch
+        if (env.BRANCH_NAME == 'main' || params.NOTARIZE_MACOS) {
+            // Enable notarization for main branch or when requested
             sh """xcrun notarytool submit ./release/packages/${GOOS}/openitcockpit-agent-${VERSION}-darwin-${GOARCH}.pkg --keychain-profile "agent-notary-profile" --wait"""
             // Attach ticket for offline verification on other machines
             sh """xcrun stapler staple ./release/packages/${GOOS}/openitcockpit-agent-${VERSION}-darwin-${GOARCH}.pkg"""
