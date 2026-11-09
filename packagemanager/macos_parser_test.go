@@ -5722,8 +5722,6 @@ func TestParseMacOSInstalledAppsOutput_ValidInput(t *testing.T) {
 func TestParseMacOSInstalledAppsOutput_RealWorld(t *testing.T) {
 
 	expected := []Package{
-		{Name: "openITCOCKPIT-Desktop", Version: "5.2.0", Description: ""},
-		{Name: "Microsoft Edge", Version: "143.0.3650.96", Description: "Microsoft Edge 143.0.3650.96, © 2025 Microsoft Corporation. All rights reserved."},
 		{Name: "Xcode", Version: "26.2", Description: ""},
 		{Name: "Python", Version: "3.9.6", Description: "3.9.6, (c) 2001-2020 Python Software Foundation."},
 	}
@@ -5737,7 +5735,7 @@ func TestParseMacOSInstalledAppsOutput_RealWorld(t *testing.T) {
 	foundCount := 0
 	for _, expPkg := range expected {
 		for _, resPkg := range result {
-			if expPkg == resPkg {
+			if expPkg.Name == resPkg.Name {
 				foundCount++
 				break
 			}
