@@ -94,6 +94,8 @@ func liveConfig() *config.Configuration {
 		Mounts:          true,
 		NetworkPorts:    true,
 		NetworkAdapters: true,
+		PagingSpaces:    true,
+		Swap:            true,
 	}
 }
 
@@ -331,4 +333,12 @@ func TestAixLiveNetworkAdapters(t *testing.T) {
 			liveCommand(t, "sh", "-c", "entstat -d "+adapter.Name+" | egrep 'STATISTICS|Device Type|Driver Flags|Reset Count|Number of|Active channel|Operating mode|LAN state|Link Status|Aggregation status|Synchronization'")
 		}
 	}
+}
+
+// TestAixLivePagingSpaces compares the paging spaces with lsps -a and the swap check
+func TestAixLivePagingSpaces(t *testing.T) {
+	liveJSON(t, "paging_spaces", liveRunCheck(t, &CheckPagingSpaces{}))
+	liveJSON(t, "swap", liveRunCheck(t, &CheckSwap{}))
+	liveCommand(t, "lsps", "-a")
+	liveCommand(t, "lsps", "-s")
 }

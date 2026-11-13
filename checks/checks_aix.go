@@ -20,6 +20,7 @@ func getPlatformChecks() []Check {
 		&CheckVolumeGroups{},
 		&CheckMultipath{},
 		&CheckNetworkAdapters{},
+		&CheckPagingSpaces{},
 		&CheckLogfile{},
 		&CheckCertificate{},
 		&CheckFile{},

@@ -180,7 +180,7 @@ GOOS=aix GOARCH=ppc64 CGO_ENABLED=0 go build -o openitcockpit-agent
 
 The agent reads the values with libperfstat and the AIX commands and does not require root. Available checks: CPU, LPAR,
 load, memory, swap, disk usage (incl. inodes), disk I/O, network interfaces and I/O, processes, users, NTP, missing
-mounts, network ports, SRC subsystems, error log (errpt), volume groups, multipath and network adapters, as well as the platform
+mounts, network ports, SRC subsystems, error log (errpt), volume groups, multipath, network adapters and paging spaces, as well as the platform
 independent checks (logfiles, certificates, files, HTTP, Redfish, Postfix).
 
 * **CPU**: the agent uses the PURR (Processor Utilization of Resources Register) instead of the CPU ticks, which are not
@@ -217,6 +217,8 @@ independent checks (logfiles, certificates, files, HTTP, Redfish, Postfix).
   IEEE 802.3ad Link Aggregations and Network Interface Backups contain their members and the active channel (primary
   or backup). In a LPAR with virtual adapters the physical link is monitored by the VIOS, a Network Interface Backup
   switches to the backup adapter if the ping address (`netaddr`) is not reachable through the primary adapter.
+* **Paging spaces** (`pagingspaces`): size, usage and the state (active, activated at boot) of each paging space
+  (`lsps -a`), the swap check reports the sum of all paging spaces.
 
 AIX sets the time zone as POSIX string (e.g. `TZ=CET-1CEST,M3.5.0,M10.5.0`), which Go can not read, so the agent runs
 commands which print local times (`errpt`, `who`) in UTC.

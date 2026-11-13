@@ -148,6 +148,7 @@ type Configuration struct {
 	Errpt           bool  `mapstructure:"errpt"`
 	Multipath       bool  `mapstructure:"multipath"`
 	NetworkAdapters bool  `mapstructure:"networkadapters"`
+	PagingSpaces    bool  `mapstructure:"pagingspaces"`
 
 	// Alfresco
 
@@ -242,6 +243,7 @@ var defaultValue = map[string]interface{}{
 	"errpt-window":            86400,
 	"multipath":               true,
 	"networkadapters":         true,
+	"pagingspaces":            true,
 	"ipmi-interval":           60,
 	"ipmi-sel-window":         86400,
 	"wineventlog-logtypes":    "System,Application",
