@@ -58,35 +58,44 @@ func (s *cpuSampler) close() {
 // ctx can be canceled and runs the timeout
 // CheckResult will be serialized after the return and should not change until the next call to Run
 func (c *CheckCpu) Run(ctx context.Context) (interface{}, error) {
-	window := time.Duration(c.checkInterval) * time.Second
+	base, current, err := cpuTimesOfWindow(ctx, c.checkInterval)
+	if err != nil {
+		return nil, err
+	}
+	return cpuResultFromTimes(base, current), nil
+}
+
+// cpuTimesOfWindow returns the CPU times at the beginning of the check interval (base) and the current CPU times,
+// so the checks can report the average usage of the whole check interval
+func cpuTimesOfWindow(ctx context.Context, checkInterval int64) (cpuTimes, cpuTimes, error) {
+	window := time.Duration(checkInterval) * time.Second
 	if window <= 0 {
 		window = 30 * time.Second
 	}
 
 	current, err := readCpuTimes(ctx)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	now := time.Now()
 
-	// The average CPU usage since the sample at the beginning of the check interval
 	base := cpuSamplerState.base(now, window, cpuTimesCount(current))
 	if base == nil {
 		// No sample of the background sampler yet, e.g. right after the start of the agent
 		log.Debugln("CPU check: no background sample available, measuring for 1 second")
-		if err := c.SleepWithContext(ctx, 1*time.Second); err != nil {
-			return nil, err
+		if err := sleepWithContext(ctx, 1*time.Second); err != nil {
+			return nil, nil, err
 		}
 		base = current
 		if current, err = readCpuTimes(ctx); err != nil {
-			return nil, err
+			return nil, nil, err
 		}
 	}
 
 	if cpuTimesCount(base) != cpuTimesCount(current) {
-		return nil, fmt.Errorf("number of CPU cores has changed %v != %v", cpuTimesCount(base), cpuTimesCount(current))
+		return nil, nil, fmt.Errorf("number of CPU cores has changed %v != %v", cpuTimesCount(base), cpuTimesCount(current))
 	}
-	return cpuResultFromTimes(base, current), nil
+	return base, current, nil
 }
 
 // base returns the CPU times at the beginning of the window and starts the background sampler if required
@@ -179,8 +188,9 @@ func (s *cpuSampler) run(stop chan struct{}) {
 }
 
 // Like sleep but can be canceled by context
-func (c *CheckCpu) SleepWithContext(ctx context.Context, interval time.Duration) error {
+func sleepWithContext(ctx context.Context, interval time.Duration) error {
 	var timer = time.NewTimer(interval)
+	defer timer.Stop()
 	select {
 	case <-ctx.Done():
 		return ctx.Err()

@@ -8,6 +8,7 @@ import (
 	"math"
 	"reflect"
 	"testing"
+	"time"
 )
 
 func putPerfstatTimes(buf []byte, offset int, times perfstatTimes) {
@@ -140,13 +141,26 @@ func TestDecodePartition(t *testing.T) {
 	binary.BigEndian.PutUint32(buf[partitionOffsetEntitlement:], 20)
 	putPerfstatTimes(buf, partitionOffsetPuser, perfstatTimes{User: 1, Sys: 2, Idle: 3, Wait: 4})
 	binary.BigEndian.PutUint64(buf[partitionOffsetTimebase:], 69238650772483126)
+	binary.BigEndian.PutUint32(buf[partitionOffsetOnlineCpus:], 1)
+	binary.BigEndian.PutUint64(buf[partitionOffsetOnlineMemory:], 6144)
+	binary.BigEndian.PutUint32(buf[partitionOffsetPoolCpus:], 8)
+	binary.BigEndian.PutUint64(buf[partitionOffsetInvoluntaryCswitch:], 11)
+	binary.BigEndian.PutUint64(buf[partitionOffsetVoluntaryCswitch:], 22)
+	binary.BigEndian.PutUint32(buf[partitionOffsetOnlineLogicalCpus:], 8)
+	binary.BigEndian.PutUint32(buf[partitionOffsetSmtThreads:], 8)
 
 	times := &aixCpuTimes{}
 	if err := decodePartition(buf, times); err != nil {
 		t.Fatal(err)
 	}
-	if !times.Shared {
-		t.Error("partition is not shared")
+	if !times.PartitionAvailable || !times.Shared || times.Capped || !times.SmtEnabled {
+		t.Errorf("unexpected partition type: %+v", times)
+	}
+	if times.VirtualCpus != 1 || times.PoolCpus != 8 || times.MemoryMB != 6144 || times.LogicalCpus != 8 || times.SmtThreads != 8 {
+		t.Errorf("unexpected partition configuration: %+v", times)
+	}
+	if times.InvoluntaryCswitches != 11 || times.VoluntaryCswitches != 22 {
+		t.Errorf("unexpected context switches: %+v", times)
 	}
 	assertFloat(t, "entitlement", times.Entitlement, 0.2)
 	if times.Partition != (perfstatTimes{User: 1, Sys: 2, Idle: 3, Wait: 4}) || times.Timebase != 69238650772483126 {
@@ -157,6 +171,12 @@ func TestDecodePartition(t *testing.T) {
 	binary.BigEndian.PutUint32(buf[partitionOffsetType:], 0xf2aa0000)
 	if err := decodePartition(buf, times); err != nil || times.Shared {
 		t.Errorf("dedicated partition: shared=%v err=%v", times.Shared, err)
+	}
+
+	// Shared capped partition
+	binary.BigEndian.PutUint32(buf[partitionOffsetType:], 0xffaa0000)
+	if err := decodePartition(buf, times); err != nil || !times.Shared || !times.Capped {
+		t.Errorf("capped partition: shared=%v capped=%v err=%v", times.Shared, times.Capped, err)
 	}
 
 	if err := decodePartition(buf[:100], times); err == nil {
@@ -268,4 +288,129 @@ nfsserver /export/data    /mnt/data        nfs3   May 02 08:01 bg,hard,intr,vers
 	if !reflect.DeepEqual(mounts, want) {
 		t.Errorf("got\n%+v\nwant\n%+v", mounts, want)
 	}
+}
+
+// sharedPartitionSamples returns two samples of the shared uncapped LPAR of AIX 7.3 (1 virtual processor,
+// entitlement 0.20, pool of 8 processors), 5 seconds apart. purr is the consumed PURR of the interval.
+func sharedPartitionSamples(purr uint64) (*aixCpuTimes, *aixCpuTimes) {
+	start := time.Date(2026, 11, 13, 10, 4, 0, 0, time.UTC)
+	prev := &aixCpuTimes{
+		Time:                 start,
+		Partition:            perfstatTimes{User: 1000, Sys: 2000, Idle: 3000},
+		Timebase:             69238650772483126,
+		Entitlement:          0.20,
+		PartitionAvailable:   true,
+		Shared:               true,
+		SmtEnabled:           true,
+		VirtualCpus:          1,
+		PoolCpus:             8,
+		LogicalCpus:          8,
+		SmtThreads:           8,
+		MemoryMB:             6144,
+		VoluntaryCswitches:   1000,
+		InvoluntaryCswitches: 100,
+	}
+	current := *prev
+	current.Time = start.Add(5 * time.Second)
+	current.Partition = perfstatTimes{User: 1000 + purr/2, Sys: 2000 + purr/4, Idle: 3000 + purr/4}
+	current.Timebase = prev.Timebase + 2560001316
+	current.VoluntaryCswitches = 1000 + 1400
+	current.InvoluntaryCswitches = 100 + 100
+	return prev, &current
+}
+
+// physc 0.013 and 6.6 %entc like lparstat
+func TestAixLparResultSharedUncapped(t *testing.T) {
+	prev, current := sharedPartitionSamples(33583744)
+
+	result, err := aixLparResult(prev, current)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !result.Shared || result.Capped || result.VirtualCpus != 1 || result.PoolCpus != 8 || result.SmtThreads != 8 || result.LogicalCpus != 8 || result.MemoryMB != 6144 {
+		t.Errorf("unexpected configuration %+v", result)
+	}
+	assertFloat(t, "entitlement", result.Entitlement, 0.2)
+	assertFloat(t, "physc", result.PhysicalCpus, 0.0131)
+	assertFloat(t, "entc", result.EntitlementPercentage, 6.56)
+	// An uncapped partition can use one physical processor per virtual processor
+	assertFloat(t, "max physc", result.MaxPhysicalCpus, 1)
+	assertFloat(t, "capacity", result.CapacityPercentage, 1.31)
+	assertFloat(t, "virtual context switches", result.VirtualCswitches, 300)
+	assertFloat(t, "involuntary virtual context switches", result.InvoluntaryVirtualCswitches, 20)
+}
+
+// One busy thread: physc 1.00 and 497.5 %entc like lparstat, the partition uses all of its virtual processors
+func TestAixLparResultSharedUncappedBusy(t *testing.T) {
+	prev, current := sharedPartitionSamples(2547201309)
+
+	result, err := aixLparResult(prev, current)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assertFloat(t, "physc", result.PhysicalCpus, 0.995)
+	assertFloat(t, "entc", result.EntitlementPercentage, 497.5)
+	assertFloat(t, "capacity", result.CapacityPercentage, 99.5)
+}
+
+// A capped partition can use at most its entitlement
+func TestAixLparResultSharedCapped(t *testing.T) {
+	prev, current := sharedPartitionSamples(2560001316 / 10) // physc 0.1
+	prev.Capped = true
+	current.Capped = true
+
+	result, err := aixLparResult(prev, current)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assertFloat(t, "physc", result.PhysicalCpus, 0.1)
+	assertFloat(t, "max physc", result.MaxPhysicalCpus, 0.2)
+	assertFloat(t, "capacity", result.CapacityPercentage, 50)
+	assertFloat(t, "entc", result.EntitlementPercentage, 50)
+}
+
+// The pool limits an uncapped partition with more virtual processors than the pool has processors
+func TestAixMaxPhysicalCpusLimitedByPool(t *testing.T) {
+	times := &aixCpuTimes{VirtualCpus: 12, PoolCpus: 8, Entitlement: 2}
+	assertFloat(t, "max physc", aixMaxPhysicalCpus(times), 8)
+	times.PoolCpus = 0
+	assertFloat(t, "max physc without pool", aixMaxPhysicalCpus(times), 12)
+}
+
+// Dedicated partitions own their processors, there are no physc values
+func TestAixLparResultDedicated(t *testing.T) {
+	prev, current := sharedPartitionSamples(2560001316)
+	prev.Shared = false
+	current.Shared = false
+	current.Entitlement = 2
+
+	result, err := aixLparResult(prev, current)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if result.Shared || result.PhysicalCpus != 0 || result.EntitlementPercentage != 0 || result.CapacityPercentage != 0 {
+		t.Errorf("unexpected usage of a dedicated partition %+v", result)
+	}
+
+	if cpu := aixCpuResult(prev, current); cpu.Partition != nil {
+		t.Errorf("unexpected partition values of a dedicated partition in the CPU result %+v", cpu.Partition)
+	}
+}
+
+func TestAixLparResultWithoutPartition(t *testing.T) {
+	if _, err := aixLparResult(&aixCpuTimes{}, &aixCpuTimes{}); err == nil {
+		t.Error("expected an error without partition values")
+	}
+}
+
+func TestAixCpuResultPartition(t *testing.T) {
+	prev, current := sharedPartitionSamples(33583744)
+
+	result := aixCpuResult(prev, current)
+	if result.Partition == nil {
+		t.Fatal("no partition values")
+	}
+	assertFloat(t, "physc", result.Partition.PhysicalCpus, 0.0131)
+	assertFloat(t, "entitlement", result.Partition.Entitlement, 0.2)
+	assertFloat(t, "entc", result.Partition.EntitlementPercentage, 6.56)
 }

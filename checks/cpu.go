@@ -10,11 +10,11 @@ type CheckCpu struct {
 }
 
 type cpuDetails struct {
-	User   float64 // Linux, macOS, Windows  - Seconds
+	User   float64 // Linux, macOS, Windows, AIX - Seconds
 	Nice   float64 // Linux, macOS           - Seconds
-	System float64 // Linux, macOS, Windows  - Seconds
-	Idle   float64 // Linux, macOS, Windows  - Seconds
-	Iowait float64 // Linux
+	System float64 // Linux, macOS, Windows, AIX - Seconds
+	Idle   float64 // Linux, macOS, Windows, AIX - Seconds
+	Iowait float64 // Linux, AIX
 }
 
 type resultCpu struct {
@@ -22,6 +22,15 @@ type resultCpu struct {
 	PercentagePerCore []float64    `json:"cpu_percentage"`
 	DetailsTotal      *cpuDetails  `json:"cpu_total_percentage_detailed"`
 	DetailsPerCore    []cpuDetails `json:"cpu_percentage_detailed"`
+	// Only on AIX shared processor partitions
+	Partition *cpuPartition `json:"partition,omitempty"`
+}
+
+// cpuPartition is the processor usage of an AIX shared processor partition (LPAR)
+type cpuPartition struct {
+	PhysicalCpus          float64 `json:"physc"`                  // Consumed physical processors
+	Entitlement           float64 `json:"entitlement"`            // Entitled processor units
+	EntitlementPercentage float64 `json:"entitlement_percentage"` // physc in percent of the entitlement
 }
 
 // Name will be used in the response as check name

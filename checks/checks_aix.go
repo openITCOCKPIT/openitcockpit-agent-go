@@ -8,5 +8,6 @@ func getPlatformChecks() []Check {
 		&CheckDisk{},
 		&CheckLoad{},
 		&CheckCpu{},
+		&CheckLpar{},
 	}
 }

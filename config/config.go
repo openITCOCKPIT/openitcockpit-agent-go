@@ -143,6 +143,7 @@ type Configuration struct {
 	Mounts          bool  `mapstructure:"mounts"`
 	NetworkPorts    bool  `mapstructure:"networkports"`
 	Ipmi            bool  `mapstructure:"ipmi"`
+	Lpar            bool  `mapstructure:"lpar"`
 
 	// Alfresco
 
@@ -228,6 +229,7 @@ var defaultValue = map[string]interface{}{
 	"mounts":                  true,
 	"networkports":            true,
 	"ipmi":                    true,
+	"lpar":                    true,
 	"ipmi-interval":           60,
 	"ipmi-sel-window":         86400,
 	"wineventlog-logtypes":    "System,Application",

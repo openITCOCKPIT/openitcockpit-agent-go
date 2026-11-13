@@ -13,6 +13,7 @@ Cross-Platform Monitoring Agent for openITCOCKPIT written in Go
   - [Windows](#windows)
   - [macOS](#macos)
   - [FreeBSD](#freebsd)
+  - [AIX (preview)](#aix-preview)
 * [Supported Platforms](#supported-platforms)
 * [Full documentation](#full-documentation)
 * [License](#license)
@@ -25,6 +26,7 @@ Cross-Platform Monitoring Agent for openITCOCKPIT written in Go
   * macOS 15 Sequoia or newer for Intel Macs
 * Linux (Everything from Debian 10 (Buster) / AlmaLinux 8 and newer should work fine)
 * FreeBSD 15
+* IBM AIX 7.3 on POWER (preview, see [AIX](#aix-preview))
 
 ### Maybe supported operating systems
 
@@ -168,6 +170,30 @@ But you can build the binary from source like so:
 ```
 GOOS=freebsd GOARCH=amd64 go build -o openitcockpit-agent
 ```
+
+### AIX (preview)
+
+The AIX support is in an early stage, there are no packages yet. The binary can be cross compiled without cgo:
+```
+GOOS=aix GOARCH=ppc64 CGO_ENABLED=0 go build -o openitcockpit-agent
+```
+
+The agent reads the values with libperfstat and does not require root. Available checks: CPU, LPAR, load, memory,
+swap and disk usage (incl. inodes).
+
+* **CPU**: the agent uses the PURR (Processor Utilization of Resources Register) instead of the CPU ticks, which are not
+  usable on shared processor partitions. On shared processor partitions the usage is relative to the entitlement
+  like `lparstat` (unused entitlement counts as idle), the consumed physical processors (physc) and the entitlement are
+  reported in `cpu.partition`. The values per logical CPU are the usage of the SMT thread while it was dispatched on a
+  physical processor, on an idle shared partition single threads can show a high usage while the
+  partition uses almost no processor time.
+* **LPAR**: configuration of the partition (shared/dedicated, capped/uncapped, virtual processors, SMT, entitlement,
+  pool size) and for shared processor partitions physc, the entitlement consumption (%entc) and the capacity usage:
+  physc in percent of the processors the partition can use at most (capped: entitlement, uncapped: virtual processors,
+  at most the pool size). A capacity of 100% means the partition can not get more processor time.
+* **Memory**: used memory is the computational memory (like "percentage of memory used for computational pages" of
+  `vmstat -v`), the file cache counts as available.
+* **Disk usage**: the mounted file systems of the `mount` command, pseudo file systems like `/proc` and `/aha` are ignored.
 
 
 ## Supported Platforms

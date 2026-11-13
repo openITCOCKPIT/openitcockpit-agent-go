@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"math"
 	"strings"
+	"time"
 )
 
 // Sizes of the perfstat structures (AIX 7.2 and newer). The offsets of /usr/include/libperfstat.h
@@ -43,13 +44,22 @@ const (
 
 // perfstat_partition_total_t
 const (
-	partitionOffsetType        = 64
-	partitionOffsetEntitlement = 120 // entitled_proc_capacity in 1/100 processor units
-	partitionOffsetPuser       = 160 // puser, psys, pidle, pwait: PURR of the partition
-	partitionOffsetTimebase    = 224 // timebase_last
+	partitionOffsetType               = 64
+	partitionOffsetOnlineCpus         = 80  // online virtual processors
+	partitionOffsetOnlineMemory       = 96  // MB
+	partitionOffsetEntitlement        = 120 // entitled_proc_capacity in 1/100 processor units
+	partitionOffsetPoolCpus           = 156 // phys_cpus_pool: physical processors of the shared pool
+	partitionOffsetPuser              = 160 // puser, psys, pidle, pwait: PURR of the partition
+	partitionOffsetInvoluntaryCswitch = 208 // invol_virt_cswitch
+	partitionOffsetVoluntaryCswitch   = 216 // vol_virt_cswitch
+	partitionOffsetTimebase           = 224 // timebase_last
+	partitionOffsetOnlineLogicalCpus  = 432
+	partitionOffsetSmtThreads         = 436
 
 	// Bit field perfstat_partition_type_t, the first field is the most significant bit
+	partitionTypeSmtEnabled    = 1 << 30
 	partitionTypeSharedEnabled = 1 << 26
+	partitionTypeCapped        = 1 << 24
 )
 
 // perfstat_memory_total_t
@@ -74,6 +84,7 @@ type perfstatTimes struct {
 
 // aixCpuTimes is one sample of the CPU times of an AIX LPAR
 type aixCpuTimes struct {
+	Time time.Time
 	// Ticks of all logical CPUs
 	Logical perfstatTimes
 	// PURR (Processor Utilization of Resources Register) of the partition, in timebase ticks
@@ -81,7 +92,19 @@ type aixCpuTimes struct {
 	Timebase  uint64
 	// Entitled processor units, e.g. 0.2
 	Entitlement float64
-	Shared      bool
+	// PartitionAvailable is false if perfstat_partition_total failed
+	PartitionAvailable bool
+	Shared             bool
+	Capped             bool
+	SmtEnabled         bool
+	VirtualCpus        int32 // Online virtual processors (dedicated partitions: processors)
+	PoolCpus           int32 // Physical processors of the shared processor pool
+	LogicalCpus        uint32
+	SmtThreads         uint32
+	MemoryMB           uint64
+	// Virtual processor context switches
+	VoluntaryCswitches   uint64
+	InvoluntaryCswitches uint64
 	// PURR of the logical CPUs (SMT threads)
 	Cpus []perfstatTimes
 }
@@ -167,10 +190,20 @@ func decodePartition(buf []byte, times *aixCpuTimes) error {
 		return err
 	}
 	partitionType := uint32(perfstatInt32(buf, partitionOffsetType))
+	times.PartitionAvailable = true
 	times.Shared = partitionType&partitionTypeSharedEnabled != 0
+	times.Capped = partitionType&partitionTypeCapped != 0
+	times.SmtEnabled = partitionType&partitionTypeSmtEnabled != 0
+	times.VirtualCpus = perfstatInt32(buf, partitionOffsetOnlineCpus)
+	times.MemoryMB = perfstatUint64(buf, partitionOffsetOnlineMemory)
 	times.Entitlement = float64(perfstatInt32(buf, partitionOffsetEntitlement)) / 100
+	times.PoolCpus = perfstatInt32(buf, partitionOffsetPoolCpus)
 	times.Partition = decodePerfstatTimes(buf, partitionOffsetPuser)
+	times.InvoluntaryCswitches = perfstatUint64(buf, partitionOffsetInvoluntaryCswitch)
+	times.VoluntaryCswitches = perfstatUint64(buf, partitionOffsetVoluntaryCswitch)
 	times.Timebase = perfstatUint64(buf, partitionOffsetTimebase)
+	times.LogicalCpus = uint32(perfstatInt32(buf, partitionOffsetOnlineLogicalCpus))
+	times.SmtThreads = uint32(perfstatInt32(buf, partitionOffsetSmtThreads))
 	return nil
 }
 
@@ -244,8 +277,16 @@ func aixCpuResult(prev, current *aixCpuTimes) *resultCpu {
 	result.DetailsTotal = &total
 	result.PercentageTotal = usagePercentage(total)
 
+	if usage, ok := aixSharedPartitionUsage(prev, current); ok {
+		result.Partition = &cpuPartition{
+			PhysicalCpus:          usage.PhysicalCpus,
+			Entitlement:           current.Entitlement,
+			EntitlementPercentage: usage.EntitlementPercentage,
+		}
+	}
+
 	// The PURR of a logical CPU only increases while the hardware thread is dispatched, so the
-	// values per logical CPU show the usage of the thread while it was running (like mpstat).
+	// values per logical CPU show the usage of the thread while it was running.
 	result.PercentagePerCore = make([]float64, len(current.Cpus))
 	result.DetailsPerCore = make([]cpuDetails, len(current.Cpus))
 	for i := range current.Cpus {
@@ -295,6 +336,111 @@ func sharedPartitionDetails(prev, current *aixCpuTimes, purr cpuDelta) cpuDetail
 		purr.Idle = purr.Idle + unused
 	}
 	return purr.percentOf(entitledPurr)
+}
+
+// aixPartitionUsage is the processor usage of a shared processor partition
+type aixPartitionUsage struct {
+	PhysicalCpus          float64 // physc: consumed physical processors
+	EntitlementPercentage float64 // %entc: consumed physical processors in percent of the entitlement
+	MaxPhysicalCpus       float64 // The physical processors the partition can use at most
+	CapacityPercentage    float64 // physc in percent of MaxPhysicalCpus
+}
+
+// aixSharedPartitionUsage calculates the processor usage of a shared processor partition. Dedicated partitions
+// always own their processors, so ok is false for them.
+func aixSharedPartitionUsage(prev, current *aixCpuTimes) (aixPartitionUsage, bool) {
+	if !prev.PartitionAvailable || !current.PartitionAvailable || !current.Shared || current.Entitlement <= 0 {
+		return aixPartitionUsage{}, false
+	}
+	timebase := counterDelta(prev.Timebase, current.Timebase)
+	if timebase <= 0 {
+		return aixPartitionUsage{}, false
+	}
+
+	purr := perfstatTimesDelta(prev.Partition, current.Partition)
+	usage := aixPartitionUsage{
+		PhysicalCpus:    purr.total() / timebase,
+		MaxPhysicalCpus: aixMaxPhysicalCpus(current),
+	}
+	usage.EntitlementPercentage = usage.PhysicalCpus / current.Entitlement * 100
+	if usage.MaxPhysicalCpus > 0 {
+		usage.CapacityPercentage = math.Min(100, usage.PhysicalCpus/usage.MaxPhysicalCpus*100)
+	}
+	return usage, true
+}
+
+// aixMaxPhysicalCpus returns the processor capacity a shared partition can use at most: a capped partition
+// its entitlement, an uncapped partition one physical processor per virtual processor, limited by the size
+// of the shared processor pool
+func aixMaxPhysicalCpus(times *aixCpuTimes) float64 {
+	if times.Capped {
+		return times.Entitlement
+	}
+	maximum := float64(times.VirtualCpus)
+	if times.PoolCpus > 0 && float64(times.PoolCpus) < maximum {
+		maximum = float64(times.PoolCpus)
+	}
+	return maximum
+}
+
+// resultLpar is the configuration and the processor usage of an AIX LPAR (logical partition)
+type resultLpar struct {
+	Shared      bool    `json:"shared"`       // Shared processor partition, false for dedicated processors
+	Capped      bool    `json:"capped"`       // A capped partition can not use more than its entitlement
+	SmtThreads  uint32  `json:"smt_threads"`  // SMT threads per virtual processor
+	LogicalCpus uint32  `json:"logical_cpus"` // Online logical CPUs (virtual processors * SMT threads)
+	VirtualCpus int32   `json:"virtual_cpus"` // Online virtual processors (dedicated partitions: processors)
+	Entitlement float64 `json:"entitlement"`  // Entitled processor units
+	PoolCpus    int32   `json:"pool_cpus"`    // Physical processors of the shared processor pool
+	MemoryMB    uint64  `json:"memory_mb"`    // Online memory
+
+	// The usage values are only available for shared processor partitions (0 for dedicated partitions)
+	PhysicalCpus          float64 `json:"physc"`                  // Consumed physical processors
+	EntitlementPercentage float64 `json:"entitlement_percentage"` // physc in percent of the entitlement
+	MaxPhysicalCpus       float64 `json:"max_physc"`              // Capped: entitlement, uncapped: virtual processors (at most the pool size)
+	CapacityPercentage    float64 `json:"capacity_percentage"`    // physc in percent of max_physc
+
+	// Virtual processor context switches per second. Involuntary context switches happen if the
+	// hypervisor preempts a virtual processor, e.g. because the entitlement is used up.
+	VirtualCswitches            float64 `json:"virtual_context_switches"`
+	InvoluntaryVirtualCswitches float64 `json:"involuntary_virtual_context_switches"`
+}
+
+// aixLparResult returns the configuration of the partition and the usage between two samples
+func aixLparResult(prev, current *aixCpuTimes) (*resultLpar, error) {
+	if !current.PartitionAvailable {
+		return nil, fmt.Errorf("perfstat_partition_total is not available")
+	}
+
+	result := &resultLpar{
+		Shared:      current.Shared,
+		Capped:      current.Capped,
+		SmtThreads:  current.SmtThreads,
+		LogicalCpus: current.LogicalCpus,
+		VirtualCpus: current.VirtualCpus,
+		Entitlement: current.Entitlement,
+		PoolCpus:    current.PoolCpus,
+		MemoryMB:    current.MemoryMB,
+	}
+	if !current.SmtEnabled {
+		result.SmtThreads = 1
+	}
+
+	if usage, ok := aixSharedPartitionUsage(prev, current); ok {
+		result.PhysicalCpus = usage.PhysicalCpus
+		result.EntitlementPercentage = usage.EntitlementPercentage
+		result.MaxPhysicalCpus = usage.MaxPhysicalCpus
+		result.CapacityPercentage = usage.CapacityPercentage
+	}
+
+	seconds := current.Time.Sub(prev.Time).Seconds()
+	if prev.PartitionAvailable && seconds > 0 {
+		voluntary := counterDelta(prev.VoluntaryCswitches, current.VoluntaryCswitches)
+		involuntary := counterDelta(prev.InvoluntaryCswitches, current.InvoluntaryCswitches)
+		result.VirtualCswitches = (voluntary + involuntary) / seconds
+		result.InvoluntaryVirtualCswitches = involuntary / seconds
+	}
+	return result, nil
 }
 
 // aixMemoryResult converts the memory values of perfstat. Used memory is the computational memory

@@ -2,6 +2,7 @@ package checks
 
 import (
 	"context"
+	"time"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -10,7 +11,7 @@ import (
 type cpuTimes = *aixCpuTimes
 
 func readCpuTimes(_ context.Context) (cpuTimes, error) {
-	times := &aixCpuTimes{}
+	times := &aixCpuTimes{Time: time.Now()}
 
 	cpuTotal, err := perfstatCpuTotal()
 	if err != nil {
