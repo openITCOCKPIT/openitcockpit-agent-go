@@ -180,7 +180,7 @@ GOOS=aix GOARCH=ppc64 CGO_ENABLED=0 go build -o openitcockpit-agent
 
 The agent reads the values with libperfstat and the AIX commands and does not require root. Available checks: CPU, LPAR,
 load, memory, swap, disk usage (incl. inodes), disk I/O, network interfaces and I/O, processes, users, NTP, missing
-mounts, network ports, SRC subsystems, error log (errpt), volume groups and multipath, as well as the platform
+mounts, network ports, SRC subsystems, error log (errpt), volume groups, multipath and network adapters, as well as the platform
 independent checks (logfiles, certificates, files, HTTP, Redfish, Postfix).
 
 * **CPU**: the agent uses the PURR (Processor Utilization of Resources Register) instead of the CPU ticks, which are not
@@ -212,6 +212,11 @@ independent checks (logfiles, certificates, files, HTTP, Redfish, Postfix).
 * **Volume groups** (`lvm`): state, physical partitions, stale partitions and the logical and physical volumes of all
   online volume groups (`lsvg`). Offline volume groups, e.g. of the other node of a cluster, are listed without details.
 * **Multipath** (`multipath`): the MPIO paths of each disk (`lspath`).
+* **Network adapters** (`networkadapters`): the Ethernet adapters (`lsdev`, `entstat -d`) with the driver flags, the
+  link status of physical adapters, the LAN state of virtual adapters and the error and reset counters. EtherChannels,
+  IEEE 802.3ad Link Aggregations and Network Interface Backups contain their members and the active channel (primary
+  or backup). In a LPAR with virtual adapters the physical link is monitored by the VIOS, a Network Interface Backup
+  switches to the backup adapter if the ping address (`netaddr`) is not reachable through the primary adapter.
 
 AIX sets the time zone as POSIX string (e.g. `TZ=CET-1CEST,M3.5.0,M10.5.0`), which Go can not read, so the agent runs
 commands which print local times (`errpt`, `who`) in UTC.

@@ -147,6 +147,7 @@ type Configuration struct {
 	SrcServices     bool  `mapstructure:"srcservices"`
 	Errpt           bool  `mapstructure:"errpt"`
 	Multipath       bool  `mapstructure:"multipath"`
+	NetworkAdapters bool  `mapstructure:"networkadapters"`
 
 	// Alfresco
 
@@ -240,6 +241,7 @@ var defaultValue = map[string]interface{}{
 	"errpt":                   true,
 	"errpt-window":            86400,
 	"multipath":               true,
+	"networkadapters":         true,
 	"ipmi-interval":           60,
 	"ipmi-sel-window":         86400,
 	"wineventlog-logtypes":    "System,Application",

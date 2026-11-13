@@ -84,15 +84,16 @@ func liveJSON(t *testing.T, title string, value interface{}) {
 
 func liveConfig() *config.Configuration {
 	return &config.Configuration{
-		CheckInterval: 5,
-		Processes:     true,
-		User:          true,
-		DiskIo:        true,
-		Netstats:      true,
-		NetIo:         true,
-		Ntp:           true,
-		Mounts:        true,
-		NetworkPorts:  true,
+		CheckInterval:   5,
+		Processes:       true,
+		User:            true,
+		DiskIo:          true,
+		Netstats:        true,
+		NetIo:           true,
+		Ntp:             true,
+		Mounts:          true,
+		NetworkPorts:    true,
+		NetworkAdapters: true,
 	}
 }
 
@@ -316,4 +317,18 @@ func TestAixLiveChecks(t *testing.T) {
 
 	liveJSON(t, "network_ports", liveRunCheck(t, &CheckNetworkPorts{}))
 	liveCommand(t, "sh", "-c", "netstat -an -f inet | grep -c LISTEN; no -o tcp_ephemeral_low -o tcp_ephemeral_high")
+}
+
+// TestAixLiveNetworkAdapters compares the network adapters with lsdev and the summary of entstat -d
+func TestAixLiveNetworkAdapters(t *testing.T) {
+	start := time.Now()
+	adapters, _ := liveRunCheck(t, &CheckNetworkAdapters{}).([]*resultNetworkAdapter)
+	t.Logf("network adapters: %d in %s", len(adapters), time.Since(start).Round(time.Millisecond))
+	liveJSON(t, "network_adapters", adapters)
+	liveCommand(t, "lsdev", "-Cc", "adapter")
+	for _, adapter := range adapters {
+		if adapter.EtherChannel != nil {
+			liveCommand(t, "sh", "-c", "entstat -d "+adapter.Name+" | egrep 'STATISTICS|Device Type|Driver Flags|Reset Count|Number of|Active channel|Operating mode|LAN state|Link Status|Aggregation status|Synchronization'")
+		}
+	}
 }
