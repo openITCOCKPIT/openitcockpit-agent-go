@@ -278,6 +278,9 @@ See the examples in the [example](example/) directory. S.M.A.R.T. requires `smar
 Ceph, Exim, LVM, Postfix (3.1 or newer), Proxmox VE, S.M.A.R.T. and ZFS are enabled automatically if the required tools are installed.
 IPMI reads the sensors, the chassis status and the SEL of the local BMC without ipmitool (Linux: /dev/ipmi0, Windows: IPMI driver).
 Network Ports reports the listening ports with their processes, the TCP connections per state and the usage of the ephemeral ports.
+Disk Usage waits 5 seconds for each filesystem. A filesystem which does not respond, e.g. a NFS or CIFS mount whose server
+is not reachable, is reported as `hanging` and does not block the check (Linux, macOS, FreeBSD and AIX). macOS answers
+statfs of such a filesystem from a cache after the first timeout, the agent detects this only when running as root (default).
 Redfish monitors the hardware of servers (Dell iDRAC, HPE iLO, Lenovo XClarity, Supermicro, ...) through the API of their BMCs,
 so a single agent in the management network can monitor many servers.
 

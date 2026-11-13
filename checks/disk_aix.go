@@ -15,6 +15,17 @@ var aixFstypeToIgnore = map[string]bool{
 	"namefs": true,
 }
 
+// diskUsageProbe reads statfs of the file systems, see diskProbe
+var diskUsageProbe diskProbe[*unix.Statfs_t]
+
+func readAixStatfs(mountpoint string) (*unix.Statfs_t, error) {
+	stat := &unix.Statfs_t{}
+	if err := unix.Statfs(mountpoint, stat); err != nil {
+		return nil, err
+	}
+	return stat, nil
+}
+
 // Run the actual check
 // if error != nil the check result will be nil
 // ctx can be canceled and runs the timeout
@@ -26,24 +37,33 @@ func (c *CheckDisk) Run(ctx context.Context) (interface{}, error) {
 		return nil, err
 	}
 
-	mounts := parseAixMount(string(output))
-	diskResults := make([]*resultDisk, 0, len(mounts))
-	for _, mount := range mounts {
+	var mounts []aixMount
+	var mountpoints []string
+	for _, mount := range parseAixMount(string(output)) {
 		if aixFstypeToIgnore[mount.Fstype] {
 			continue
 		}
+		mounts = append(mounts, mount)
+		mountpoints = append(mountpoints, mount.Mountpoint)
+	}
 
+	stats := diskUsageProbe.readAll(mountpoints, readAixStatfs, diskUsageTimeout)
+	diskResults := make([]*resultDisk, 0, len(mounts))
+	for i, mount := range mounts {
 		result := &resultDisk{}
 		result.Disk.Device = mount.Device
 		result.Disk.Mountpoint = mount.Mountpoint
 		result.Disk.Fstype = mount.Fstype
 		result.Disk.Opts = mount.Opts
 
-		var stat unix.Statfs_t
-		if err := unix.Statfs(mount.Mountpoint, &stat); err != nil {
-			log.Errorln("DiskCheck: Error for ", mount.Mountpoint, err)
-		} else {
-			setAixDiskUsage(result, &stat)
+		switch {
+		case stats[i].Hanging:
+			log.Errorln("DiskCheck: ", mount.Mountpoint, " does not respond")
+			result.Hanging = true
+		case stats[i].Err != nil:
+			log.Errorln("DiskCheck: Error for ", mount.Mountpoint, stats[i].Err)
+		default:
+			setAixDiskUsage(result, stats[i].Value)
 		}
 		diskResults = append(diskResults, result)
 	}
