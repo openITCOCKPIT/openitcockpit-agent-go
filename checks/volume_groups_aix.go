@@ -25,7 +25,7 @@ func (c *CheckVolumeGroups) Configure(config *config.Configuration) (bool, error
 // ctx can be canceled and runs the timeout
 // CheckResult will be serialized after the return and should not change until the next call to Run
 func (c *CheckVolumeGroups) Run(ctx context.Context) (interface{}, error) {
-	allOutput, err := runAixCommand(ctx, "lsvg")
+	allOutput, err := runAixCommand(ctx, "lsvg", "-L")
 	if err != nil {
 		return nil, err
 	}
@@ -64,22 +64,24 @@ func newVolumeGroup(name string, online bool) *resultVolumeGroup {
 
 // readVolumeGroup reads the details of an online volume group. Errors are reported per volume group,
 // e.g. if the volume group was varied off in the meantime.
+// lsvg -L does not wait for the lock of the volume group, which is held e.g. during a mirror synchronization
+// or while a logical volume is changed (without -L lsvg would wait until the operation is finished).
 func readVolumeGroup(ctx context.Context, vg *resultVolumeGroup) {
-	output, err := runAixCommand(ctx, "lsvg", vg.Name)
+	output, err := runAixCommand(ctx, "lsvg", "-L", vg.Name)
 	if err != nil {
 		vg.ReadErrors = append(vg.ReadErrors, err.Error())
 	} else {
 		parseLsvg(output, vg)
 	}
 
-	output, err = runAixCommand(ctx, "lsvg", "-l", vg.Name)
+	output, err = runAixCommand(ctx, "lsvg", "-L", "-l", vg.Name)
 	if err != nil {
 		vg.ReadErrors = append(vg.ReadErrors, err.Error())
 	} else {
 		vg.LVs = parseLsvgLogicalVolumes(output)
 	}
 
-	output, err = runAixCommand(ctx, "lsvg", "-p", vg.Name)
+	output, err = runAixCommand(ctx, "lsvg", "-L", "-p", vg.Name)
 	if err != nil {
 		vg.ReadErrors = append(vg.ReadErrors, err.Error())
 	} else {
