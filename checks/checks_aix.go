@@ -3,11 +3,17 @@ package checks
 func getPlatformChecks() []Check {
 	return []Check{
 		&CheckMem{},
+		&CheckProcess{},
 		&CheckAgent{},
 		&CheckSwap{},
+		&CheckUser{},
 		&CheckDisk{},
+		&CheckDiskIo{},
 		&CheckLoad{},
 		&CheckCpu{},
+		&CheckNet{},
+		&CheckNetIo{},
+		&CheckNtp{},
 		&CheckLpar{},
 		&CheckSrcServices{},
 		&CheckErrpt{},
@@ -19,5 +25,7 @@ func getPlatformChecks() []Check {
 		&CheckHTTP{},
 		&CheckRedfish{},
 		&CheckPostfix{},
+		&CheckMounts{},
+		&CheckNetworkPorts{},
 	}
 }

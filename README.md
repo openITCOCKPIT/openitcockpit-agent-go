@@ -178,8 +178,10 @@ The AIX support is in an early stage, there are no packages yet. The binary can 
 GOOS=aix GOARCH=ppc64 CGO_ENABLED=0 go build -o openitcockpit-agent
 ```
 
-The agent reads the values with libperfstat and does not require root. Available checks: CPU, LPAR, load, memory,
-swap and disk usage (incl. inodes).
+The agent reads the values with libperfstat and the AIX commands and does not require root. Available checks: CPU, LPAR,
+load, memory, swap, disk usage (incl. inodes), disk I/O, network interfaces and I/O, processes, users, NTP, missing
+mounts, network ports, SRC subsystems, error log (errpt), volume groups and multipath, as well as the platform
+independent checks (logfiles, certificates, files, HTTP, Redfish, Postfix).
 
 * **CPU**: the agent uses the PURR (Processor Utilization of Resources Register) instead of the CPU ticks, which are not
   usable on shared processor partitions. On shared processor partitions the usage is relative to the entitlement
@@ -194,6 +196,25 @@ swap and disk usage (incl. inodes).
 * **Memory**: used memory is the computational memory (like "percentage of memory used for computational pages" of
   `vmstat -v`), the file cache counts as available.
 * **Disk usage**: the mounted file systems of the `mount` command, pseudo file systems like `/proc` and `/aha` are ignored.
+* **Disk I/O**: the counters of `perfstat_disk` (like `iostat -D`). AIX only counts the disk I/O if the I/O history is
+  enabled (`chdev -l sys0 -a iostat=true`) or a tool like `topas_nmon` enabled the collection. If nothing counts, the
+  check reports an error, the agent does not change the setting.
+* **Network**: the counters of `perfstat_netinterface`, the speed is the bit rate of the adapter (no duplex mode).
+* **Processes**: `ps -e` (without kernel processes). %CPU is the average since the start of the process, the nice
+  value is converted to -20 to 19.
+* **NTP**: the offset of xntpd (`ntpq -c rv`), otherwise an SNTP query to the server of `/etc/ntp.conf`.
+* **Mounts**: the file systems of `/etc/filesystems` with `mount = automatic`, `true` or `readonly` which are not
+  mounted. File systems with `mount = false`, e.g. of a PowerHA cluster, are ignored.
+* **Network ports**: `netstat -an`, the processes of the listening sockets are not reported (AIX requires root and
+  `rmsock` for each socket).
+* **SRC subsystems** (`srcservices`): all subsystems of `lssrc -a` with their state.
+* **Error log** (`errpt`, `errpt-window`): the entries of `errpt` within the time window, newest first.
+* **Volume groups** (`lvm`): state, physical partitions, stale partitions and the logical and physical volumes of all
+  online volume groups (`lsvg`). Offline volume groups, e.g. of the other node of a cluster, are listed without details.
+* **Multipath** (`multipath`): the MPIO paths of each disk (`lspath`).
+
+AIX sets the time zone as POSIX string (e.g. `TZ=CET-1CEST,M3.5.0,M10.5.0`), which Go can not read, so the agent runs
+commands which print local times (`errpt`, `who`) in UTC.
 
 
 ## Supported Platforms
