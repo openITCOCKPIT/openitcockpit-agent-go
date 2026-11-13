@@ -9,5 +9,15 @@ func getPlatformChecks() []Check {
 		&CheckLoad{},
 		&CheckCpu{},
 		&CheckLpar{},
+		&CheckSrcServices{},
+		&CheckErrpt{},
+		&CheckVolumeGroups{},
+		&CheckMultipath{},
+		&CheckLogfile{},
+		&CheckCertificate{},
+		&CheckFile{},
+		&CheckHTTP{},
+		&CheckRedfish{},
+		&CheckPostfix{},
 	}
 }
