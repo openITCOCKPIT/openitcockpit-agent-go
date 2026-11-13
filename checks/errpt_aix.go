@@ -31,11 +31,11 @@ func (c *CheckErrpt) Configure(config *config.Configuration) (bool, error) {
 // ctx can be canceled and runs the timeout
 // CheckResult will be serialized after the return and should not change until the next call to Run
 func (c *CheckErrpt) Run(ctx context.Context) (interface{}, error) {
-	// errpt -s expects the local time of the system
-	start := time.Now().Add(-c.window).In(time.Local)
-	output, err := runAixCommand(ctx, "errpt", "-s", start.Format(errptTimeFormat))
+	// errpt prints and expects the time in the time zone of the process, it runs in UTC (see runAixCommandInUTC)
+	start := time.Now().Add(-c.window).UTC()
+	output, err := runAixCommandInUTC(ctx, "errpt", "-s", start.Format(errptTimeFormat))
 	if err != nil {
 		return nil, err
 	}
-	return errptResult(parseErrpt(output, time.Local), c.window), nil
+	return errptResult(parseErrpt(output, time.UTC), c.window), nil
 }

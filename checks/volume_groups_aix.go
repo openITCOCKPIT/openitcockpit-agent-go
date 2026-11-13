@@ -41,7 +41,7 @@ func (c *CheckVolumeGroups) Run(ctx context.Context) (interface{}, error) {
 
 	vgs := []*resultVolumeGroup{}
 	for _, name := range parseLsvgList(allOutput) {
-		vg := &resultVolumeGroup{Name: name, Online: online[name]}
+		vg := newVolumeGroup(name, online[name])
 		if vg.Online {
 			readVolumeGroup(ctx, vg)
 		}
@@ -50,13 +50,21 @@ func (c *CheckVolumeGroups) Run(ctx context.Context) (interface{}, error) {
 	return vgs, nil
 }
 
+// newVolumeGroup returns a volume group with empty lists, offline volume groups (e.g. the volume groups of
+// the other node of a cluster) have no details
+func newVolumeGroup(name string, online bool) *resultVolumeGroup {
+	return &resultVolumeGroup{
+		Name:       name,
+		Online:     online,
+		LVs:        []*resultLogicalVolume{},
+		PVs:        []*resultPhysicalVolume{},
+		ReadErrors: []string{},
+	}
+}
+
 // readVolumeGroup reads the details of an online volume group. Errors are reported per volume group,
 // e.g. if the volume group was varied off in the meantime.
 func readVolumeGroup(ctx context.Context, vg *resultVolumeGroup) {
-	vg.ReadErrors = []string{}
-	vg.LVs = []*resultLogicalVolume{}
-	vg.PVs = []*resultPhysicalVolume{}
-
 	output, err := runAixCommand(ctx, "lsvg", vg.Name)
 	if err != nil {
 		vg.ReadErrors = append(vg.ReadErrors, err.Error())
