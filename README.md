@@ -302,6 +302,8 @@ so a single agent in the management network can monitor many servers.
 
 The openITCOCKPIT Agent collects detailed information about installed packages, installed software, and available security updates across all major operating systems. It also detects when a system reboot is required. An important step to ensure that the latest security updates are fully applied.
 
+FreeBSD and AIX are not supported yet, the agent reports the software inventory as disabled on these systems.
+
 ### Linux
 
 

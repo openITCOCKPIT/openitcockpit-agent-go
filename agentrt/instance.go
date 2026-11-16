@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"os"
+	"runtime"
 	"sync"
 	"time"
 
@@ -269,13 +270,20 @@ func (a *AgentInstance) doSoftwareCollectorReload(ctx context.Context, cfg *conf
 		a.softwareCollector.Shutdown()
 		a.softwareCollector = nil
 	}
-	if cfg.Packagemanager.Enabled {
-		a.softwareCollector = &packagemanager.SoftwareCollector{
-			Configuration: cfg,
-			Result:        a.packageManagerResultChan,
-		}
-		a.softwareCollector.Start(ctx)
+	if !cfg.Packagemanager.Enabled {
+		return
 	}
+	if !packagemanager.Supported() {
+		// The agent reports the package manager as disabled, so openITCOCKPIT does not create a service
+		// which would wait for the collection forever
+		log.Infoln("Packagemanager: the software inventory is not supported on", runtime.GOOS)
+		return
+	}
+	a.softwareCollector = &packagemanager.SoftwareCollector{
+		Configuration: cfg,
+		Result:        a.packageManagerResultChan,
+	}
+	a.softwareCollector.Start(ctx)
 }
 
 func (a *AgentInstance) stop() {
