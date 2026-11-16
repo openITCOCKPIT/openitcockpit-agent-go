@@ -241,11 +241,11 @@ If you do not want to use the RPM package, e.g. to run the agent as a normal use
 ./openitcockpit-agent-3.x.x.aix-ppc64.bin --config $HOME/openitcockpit-agent/config.ini --log $HOME/openitcockpit-agent/agent.log
 ```
 
-The agent reads the values with libperfstat and the AIX commands and does not require root. Available checks: CPU, LPAR,
-load, memory, swap, disk usage (incl. inodes), disk I/O, network interfaces and I/O, processes, users, NTP, missing
-mounts, network ports, SRC subsystems, error log (errpt), volume groups, multipath, network adapters, paging spaces,
-PowerHA SystemMirror and the sendmail mail queue, as well as the platform
-independent checks (logfiles, certificates, files, HTTP, Redfish, Postfix).
+The agent reads the values with libperfstat and the AIX commands and does not require root, except for PowerHA
+SystemMirror and the sendmail mail queue. Available checks: CPU, LPAR, load, memory, swap, disk usage (incl. inodes),
+disk I/O, network interfaces and I/O, processes, users, NTP, missing mounts, network ports, SRC subsystems, error log
+(errpt), volume groups, multipath, network adapters, paging spaces, PowerHA SystemMirror and the sendmail mail queue,
+as well as the platform independent checks (logfiles, certificates, files, HTTP, Redfish, Postfix).
 
 * **CPU**: the agent uses the PURR (Processor Utilization of Resources Register) instead of the CPU ticks, which are not
   usable on shared processor partitions. On shared processor partitions the usage is relative to the entitlement
