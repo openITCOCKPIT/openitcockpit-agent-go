@@ -18,10 +18,18 @@ import (
 // aixPsArguments are the columns of ps on AIX. The arguments are the last column, as they can contain spaces.
 // AIX does not support the columns rss and pagein of the BSD ps, rssize is the resident set size in KB.
 // vsz is the size of the data in the virtual memory in KB, it does not include the text (it can be smaller than rssize).
-var aixPsArguments = []string{"-e", "-o", "pid,ppid,user,nice,pcpu,pmem,vsz,rssize,stat,etime,args"}
+// comm is the name of the program. The arguments can not be used for the name, as many processes overwrite them,
+// e.g. "sshd-session: user@pts/0", "-ksh" (login shell) or "[IBM.Soft]".
+var aixPsArguments = []string{"-e", "-o", "pid,ppid,user,nice,pcpu,pmem,vsz,rssize,stat,etime,comm,args"}
 
 // aixPsColumns is the number of columns before the arguments
-const aixPsColumns = 10
+const aixPsColumns = 11
+
+// aixPsCommColumn is the index of the column comm
+const aixPsCommColumn = 10
+
+// aixDefunct is the name ps reports for zombie processes
+const aixDefunct = "<defunct>"
 
 // AIX process states of ps -o stat
 var aixProcessStates = map[string]string{
@@ -35,9 +43,10 @@ var aixProcessStates = map[string]string{
 
 // parseAixPs parses the output of ps with aixPsArguments
 //
-//	PID     PPID     USER NI  %CPU  %MEM   VSZ   RSS S     ELAPSED COMMAND
-//	  1        0     root 20   0.0   0.0   800   852 A 197-03:22:24 /etc/init
-//	5898584    1     root --   0.0   0.0  3156  4016 A 197-03:21:47 /usr/bin/topas_nmon -f -s 900
+//	PID     PPID     USER NI  %CPU  %MEM   VSZ   RSS S     ELAPSED COMMAND      COMMAND
+//	  1        0     root 20   0.0   0.0   800   852 A 197-03:22:24 init         /etc/init
+//	5898584    1     root --   0.0   0.0  3156  4016 A 197-03:21:47 topas_nmon   /usr/bin/topas_nmon -f -s 900
+//	18809104 21496188 oitc 20  0.0   0.0  1780  7464 A       34:26 sshd-session sshd-session: oitc@pts/0
 func parseAixPs(output string, now time.Time) []*resultProcess {
 	processes := []*resultProcess{}
 	scanner := bufio.NewScanner(strings.NewReader(output))
@@ -53,8 +62,16 @@ func parseAixPs(output string, now time.Time) []*resultProcess {
 
 func parseAixPsLine(line string, now time.Time) (*resultProcess, bool) {
 	fields, args := splitColumns(line, aixPsColumns)
-	if len(fields) < aixPsColumns {
+	if len(fields) < aixPsCommColumn {
 		return nil, false
+	}
+	comm := ""
+	if len(fields) == aixPsColumns {
+		comm = fields[aixPsCommColumn]
+	}
+	// Zombie processes have no program name
+	if comm == aixDefunct {
+		comm = ""
 	}
 	pid, err := strconv.ParseUint(fields[0], 10, 64)
 	if err != nil {
@@ -71,12 +88,12 @@ func parseAixPsLine(line string, now time.Time) (*resultProcess, bool) {
 		Pid:           pid,
 		Ppid:          ppid,
 		Username:      fields[2],
-		Name:          aixProcessName(args),
+		Name:          aixProcessName(comm, args),
 		CPUPercent:    cpuPercent,
 		MemoryPercent: memoryPercent,
 		Cmdline:       args,
 		Status:        []string{aixProcessStatus(fields[8])},
-		Exe:           aixProcessExe(args),
+		Exe:           aixProcessExe(comm, args),
 		Nice:          aixNiceValue(fields[3]),
 		Memory: &resultMemoryPosix{
 			RSS: rss * 1024,
@@ -106,22 +123,41 @@ func splitColumns(line string, count int) ([]string, string) {
 	return fields, strings.TrimRight(rest, " \t")
 }
 
-// aixProcessExe returns the program, e.g. /usr/sbin/sshd for "/usr/sbin/sshd -D"
-func aixProcessExe(args string) string {
+// aixProcessExe returns the program, e.g. /usr/sbin/sshd for "/usr/sbin/sshd -D". If the first argument is not
+// the program (e.g. "sshd-session: oitc@pts/0" or "-ksh"), the name of the program is returned.
+func aixProcessExe(comm string, args string) string {
+	fields := strings.Fields(args)
+	if len(fields) > 0 && isAixProgramPath(fields[0], comm) {
+		return fields[0]
+	}
+	return aixProcessName(comm, args)
+}
+
+// isAixProgramPath returns true if the first argument of a process is the path of its program comm
+func isAixProgramPath(argument string, comm string) bool {
+	if strings.HasPrefix(argument, "-") || strings.HasPrefix(argument, "[") || strings.Contains(argument, ":") {
+		// The process changed its arguments, e.g. "-ksh" (login shell), "[IBM.Soft]" or "sshd: user@pts/0"
+		return false
+	}
+	if comm == "" || strings.HasPrefix(argument, "/") {
+		// An absolute path is the program, also if it is a link with another name, e.g. /usr/sbin/xntpd -> ntpd4
+		return true
+	}
+	// comm can be shorter than the name of the program
+	return strings.HasPrefix(path.Base(argument), comm)
+}
+
+// aixProcessName returns the name of the program, e.g. sshd-session for "sshd-session: oitc@pts/0".
+// If ps reports no name, the name of the first argument is used.
+func aixProcessName(comm string, args string) string {
+	if comm != "" {
+		return comm
+	}
 	fields := strings.Fields(args)
 	if len(fields) == 0 {
 		return ""
 	}
-	return fields[0]
-}
-
-// aixProcessName returns the name of the program, e.g. sshd for "/usr/sbin/sshd -D"
-func aixProcessName(args string) string {
-	exe := aixProcessExe(args)
-	if exe == "" {
-		return ""
-	}
-	return path.Base(exe)
+	return path.Base(fields[0])
 }
 
 func aixProcessStatus(state string) string {

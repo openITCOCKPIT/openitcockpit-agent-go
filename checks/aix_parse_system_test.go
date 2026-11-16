@@ -11,14 +11,18 @@ import (
 
 func TestParseAixPs(t *testing.T) {
 	now := time.Date(2026, 11, 13, 15, 0, 0, 0, time.UTC)
-	output := `     PID     PPID     USER NI  %CPU  %MEM   VSZ   RSS S     ELAPSED COMMAND
-       1        0     root 20   0.0   0.0   800   852 A 197-03:22:24 /etc/init
- 5898584        1     root --   0.1   0.0  3156  4016 A    01:02:03 /usr/bin/topas_nmon  -f -s 900
- 8061234  4587958     oitc 25  12.5   1.4 16360 37952 T       05:09 sshd: oitc@pts/0
+	output := `     PID     PPID     USER NI  %CPU  %MEM   VSZ   RSS S     ELAPSED COMMAND         COMMAND
+       1        0     root 20   0.0   0.0   800   852 A 197-03:22:24 init            /etc/init
+ 5898584        1     root --   0.1   0.0  3156  4016 A    01:02:03 topas_nmon      /usr/bin/topas_nmon  -f -s 900
+ 8061234  4587958     oitc 25  12.5   1.4 16360 37952 T       05:09 sshd-session    sshd-session: oitc@pts/0
   700000        1   daemon 20   0.0   0.0     0     0 Z       00:01
+  700001        1   daemon 20   0.0   0.0     0     0 Z       00:01 <defunct>
+11403618 18809104     oitc 20   0.0   0.0   604   928 A       34:26 ksh             -ksh
+11469198  4587958     root 20   0.0   5.0 259896 262168 A 197-03:21:43 IBM.SoftwareRMd [IBM.Soft]
+ 5243318  4587958     root 20   0.0   0.0   592   916 A 197-03:22:07 ksh             /bin/ksh /opt/agent/agent.sh
 `
 	processes := parseAixPs(output, now)
-	if len(processes) != 4 {
+	if len(processes) != 8 {
 		t.Fatalf("unexpected number of processes %d", len(processes))
 	}
 
@@ -52,13 +56,51 @@ func TestParseAixPs(t *testing.T) {
 	if sshd.Username != "oitc" || sshd.Nice != 5 || sshd.CPUPercent != 12.5 || sshd.MemoryPercent != 1.4 {
 		t.Errorf("unexpected process %+v", sshd)
 	}
-	if sshd.Name != "sshd:" || sshd.Exe != "sshd:" || sshd.Cmdline != "sshd: oitc@pts/0" || sshd.Status[0] != "Stop" {
+	if sshd.Name != "sshd-session" || sshd.Exe != "sshd-session" || sshd.Cmdline != "sshd-session: oitc@pts/0" || sshd.Status[0] != "Stop" {
 		t.Errorf("unexpected process %+v", sshd)
 	}
 
-	zombie := processes[3]
-	if zombie.Status[0] != "Zombie" || zombie.Cmdline != "" || zombie.Name != "" || zombie.Exe != "" {
-		t.Errorf("unexpected process %+v", zombie)
+	for _, zombie := range processes[3:5] {
+		if zombie.Status[0] != "Zombie" || zombie.Name != "" || zombie.Exe != "" {
+			t.Errorf("unexpected process %+v", zombie)
+		}
+	}
+
+	// Processes which changed their arguments
+	names := map[uint64][2]string{
+		11403618: {"ksh", "ksh"},
+		11469198: {"IBM.SoftwareRMd", "IBM.SoftwareRMd"},
+		5243318:  {"ksh", "/bin/ksh"},
+	}
+	for _, process := range processes[5:] {
+		want := names[process.Pid]
+		if process.Name != want[0] || process.Exe != want[1] {
+			t.Errorf("pid %d: got name %q exe %q, want %q %q", process.Pid, process.Name, process.Exe, want[0], want[1])
+		}
+	}
+}
+
+func TestIsAixProgramPath(t *testing.T) {
+	tests := []struct {
+		argument string
+		comm     string
+		want     bool
+	}{
+		{"/usr/sbin/sshd", "sshd", true},
+		{"/opt/ibm/a-very-long-program-name", "a-very-long-pro", true},
+		{"/etc/init", "", true},
+		{"sshd:", "sshd", false},
+		{"-ksh", "ksh", false},
+		{"[IBM.Soft]", "IBM.SoftwareRMd", false},
+		{"/usr/sbin/xntpd", "ntpd4", true},
+		{"splunkd", "splunkd", true},
+		{"ksh", "tlmagent", false},
+	}
+	for _, test := range tests {
+		got := isAixProgramPath(test.argument, test.comm)
+		if got != test.want {
+			t.Errorf("%q %q: got %v, want %v", test.argument, test.comm, got, test.want)
+		}
 	}
 }
 
