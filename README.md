@@ -200,7 +200,8 @@ independent checks (logfiles, certificates, files, HTTP, Redfish, Postfix).
   enabled (`chdev -l sys0 -a iostat=true`) or a tool like `topas_nmon` enabled the collection. If nothing counts, the
   check reports an error, the agent does not change the setting.
 * **Network**: the counters of `perfstat_netinterface`, the speed is the bit rate of the adapter (no duplex mode).
-* **Processes**: `ps -e` (without kernel processes). %CPU is the average since the start of the process, the nice
+* **Processes**: `ps -e` (without kernel processes). The name is the column `comm`, as many processes overwrite their
+  arguments (e.g. `sshd-session: user@pts/0` or `-ksh`). %CPU is the average since the start of the process, the nice
   value is converted to -20 to 19.
 * **NTP**: the offset of xntpd (`ntpq -c rv`), otherwise an SNTP query to the server of `/etc/ntp.conf`.
 * **Mounts**: the file systems of `/etc/filesystems` with `mount = automatic`, `true` or `readonly` which are not
@@ -226,11 +227,12 @@ commands which print local times (`errpt`, `who`) in UTC.
 
 ## Supported Platforms
 
-| Platform              | Windows | Linux | macOS | FreeBSD |
-|-----------------------|---------|-------|-------|---------|
-| 64 bit (amd64)        | ✅       | ✅     | ✅     | ✅       |
-| 32 bit (i386)         | ✅       | ✅     | -     | ✅       |
-| arm64 / Apple Silicon | ✅       | ✅     | ✅     | ✅       |
+| Platform              | Windows | Linux | macOS | FreeBSD | AIX |
+|-----------------------|---------|-------|-------|---------|-----|
+| 64 bit (amd64)        | ✅      | ✅    | ✅    | ✅      | -   |
+| 32 bit (i386)         | ✅      | ✅    | -     | ✅      | -   |
+| arm64 / Apple Silicon | ✅      | ✅    | ✅    | ✅      | -   |
+| ppc64 (POWER)         | -       | -     | -     | -       | ✅  |
 
 
 Please see to Wiki how to [cross compile binaries](https://github.com/openITCOCKPIT/openitcockpit-agent-go/wiki/Build-binary#cross-compile) for different operating systems and CPU architectures.
@@ -242,43 +244,48 @@ Please see the [full documentation](https://github.com/openITCOCKPIT/openitcockp
 
 ## Supported Checks
 
-| Check                        | Windows                                    | Linux                                                                                                      | macOS                       | FreeBSD         |
-|------------------------------|--------------------------------------------|------------------------------------------------------------------------------------------------------------|-----------------------------|-----------------|
-| Ceph                         | -                                          | ✅                                                                                                         | -                           | -               |
-| Certificates                 | ✅ file, TLS, certificate store            | ✅ file, TLS                                                                                               | ✅ file, TLS                | ✅ file, TLS    |
-| CPU Load                     | -                                          | ✅                                                                                                         | ✅                          | ✅              |
-| CPU Percent                  | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
-| Custom Checks                | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
-| Disk IO                      | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
-| Disk Usage                   | ✅                                         | ✅ incl. inodes                                                                                            | ✅ incl. inodes             | ✅ incl. inodes |
-| Docker Container             | ✅ incl. healthchecks                      | ✅ incl. healthchecks                                                                                      | ✅ incl. healthchecks       | untested        |
-| Exim Mail Queue              | -                                          | ✅                                                                                                         | -                           | ✅              |
-| Files & Directories          | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
-| HTTP(S)                      | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
-| IPMI (local BMC)             | ✅ in-band                                 | ✅ in-band                                                                                                 | -                           | -               |
-| Logfiles                     | ✅ text files                              | ✅ text files, journald                                                                                    | ✅ text files, unified log  | ✅ text files   |
-| LVM Thin Pools               | -                                          | ✅                                                                                                         | -                           | -               |
-| Memory                       | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
-| Missing Mounts (fstab)       | -                                          | ✅                                                                                                         | -                           | ✅              |
-| Network Interfaces           | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
-| Network IO                   | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
-| Network Ports                | ✅                                         | ✅ incl. TCP errors                                                                                        | ✅                          | ✅              |
-| NTP                          | ✅                                         | ✅                                                                                                         | ✅ SNTP                     | ✅ ntpd, SNTP   |
-| Postfix Mail Queue           | -                                          | ✅                                                                                                         | -                           | ✅              |
-| Processes                    | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
-| Proxmox VE                   | -                                          | ✅                                                                                                         | -                           | -               |
-| Redfish (BMC)                | ✅ via network                             | ✅ via network                                                                                             | ✅ via network              | ✅ via network  |
-| S.M.A.R.T.                   | ✅ smartctl                                | ✅ smartctl                                                                                                | ✅ smartctl                 | ✅ smartctl     |
-| Security                     | ✅ firewall, Defender/antivirus, BitLocker | ✅ SELinux, AppArmor, firewall                                                                             | ✅ FileVault, SIP, firewall | -               |
-| Sensors                      | -                                          | ✅                                                                                                         | ✅                          | -               |
-| Services                     | ✅                                         | ✅ systemd                                                                                                 | ✅ launchd                  | -               |
-| Swap                         | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
-| System Health                | -                                          | ✅ RAID, OOM kills, file descriptors, conntrack, PSI, bonding, filesystem errors, ECC memory errors (EDAC) | -                           | -               |
-| Users                        | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
-| Windows Event log            | ✅                                         | -                                                                                                          | -                           | -               |
-| Windows Performance Counters | ✅                                         | -                                                                                                          | -                           | -               |
-| Windows Scheduled Tasks      | ✅                                         | -                                                                                                          | -                           | -               |
-| ZFS                          | -                                          | ✅                                                                                                         | -                           | ✅              |
+| Check                        | Windows                                    | Linux                                                                                                      | macOS                       | FreeBSD         | AIX                                                     |
+|------------------------------|--------------------------------------------|------------------------------------------------------------------------------------------------------------|-----------------------------|-----------------|---------------------------------------------------------|
+| AIX Error Log (errpt)        | -                                          | -                                                                                                          | -                           | -               | ✅                                                      |
+| Ceph                         | -                                          | ✅                                                                                                         | -                           | -               | -                                                       |
+| Certificates                 | ✅ file, TLS, certificate store            | ✅ file, TLS                                                                                               | ✅ file, TLS                | ✅ file, TLS    | ✅ file, TLS                                            |
+| CPU Load                     | -                                          | ✅                                                                                                         | ✅                          | ✅              | ✅                                                      |
+| CPU Percent                  | ✅                                         | ✅                                                                                                         | ✅                          | ✅              | ✅ PURR, physc                                          |
+| Custom Checks                | ✅                                         | ✅                                                                                                         | ✅                          | ✅              | ✅                                                      |
+| Disk IO                      | ✅                                         | ✅                                                                                                         | ✅                          | ✅              | ✅                                                      |
+| Disk Usage                   | ✅                                         | ✅ incl. inodes                                                                                            | ✅ incl. inodes             | ✅ incl. inodes | ✅ incl. inodes                                         |
+| Docker Container             | ✅ incl. healthchecks                      | ✅ incl. healthchecks                                                                                      | ✅ incl. healthchecks       | untested        | -                                                       |
+| Exim Mail Queue              | -                                          | ✅                                                                                                         | -                           | ✅              | -                                                       |
+| Files & Directories          | ✅                                         | ✅                                                                                                         | ✅                          | ✅              | ✅                                                      |
+| HTTP(S)                      | ✅                                         | ✅                                                                                                         | ✅                          | ✅              | ✅                                                      |
+| IPMI (local BMC)             | ✅ in-band                                 | ✅ in-band                                                                                                 | -                           | -               | -                                                       |
+| Logfiles                     | ✅ text files                              | ✅ text files, journald                                                                                    | ✅ text files, unified log  | ✅ text files   | ✅ text files                                           |
+| LPAR                         | -                                          | -                                                                                                          | -                           | -               | ✅ shared and dedicated partitions                      |
+| LVM                          | -                                          | ✅ thin pools                                                                                              | -                           | -               | ✅ volume groups                                        |
+| Memory                       | ✅                                         | ✅                                                                                                         | ✅                          | ✅              | ✅                                                      |
+| Missing Mounts (fstab)       | -                                          | ✅                                                                                                         | -                           | ✅              | ✅ /etc/filesystems                                     |
+| Multipath (MPIO)             | -                                          | -                                                                                                          | -                           | -               | ✅                                                      |
+| Network Adapters             | -                                          | -                                                                                                          | -                           | -               | ✅ EtherChannel, Network Interface Backup, IEEE 802.3ad |
+| Network Interfaces           | ✅                                         | ✅                                                                                                         | ✅                          | ✅              | ✅                                                      |
+| Network IO                   | ✅                                         | ✅                                                                                                         | ✅                          | ✅              | ✅                                                      |
+| Network Ports                | ✅                                         | ✅ incl. TCP errors                                                                                        | ✅                          | ✅              | ✅                                                      |
+| NTP                          | ✅                                         | ✅                                                                                                         | ✅ SNTP                     | ✅ ntpd, SNTP   | ✅ xntpd, SNTP                                          |
+| Paging Spaces                | -                                          | -                                                                                                          | -                           | -               | ✅                                                      |
+| Postfix Mail Queue           | -                                          | ✅                                                                                                         | -                           | ✅              | ✅                                                      |
+| Processes                    | ✅                                         | ✅                                                                                                         | ✅                          | ✅              | ✅                                                      |
+| Proxmox VE                   | -                                          | ✅                                                                                                         | -                           | -               | -                                                       |
+| Redfish (BMC)                | ✅ via network                             | ✅ via network                                                                                             | ✅ via network              | ✅ via network  | ✅ via network                                          |
+| S.M.A.R.T.                   | ✅ smartctl                                | ✅ smartctl                                                                                                | ✅ smartctl                 | ✅ smartctl     | -                                                       |
+| Security                     | ✅ firewall, Defender/antivirus, BitLocker | ✅ SELinux, AppArmor, firewall                                                                             | ✅ FileVault, SIP, firewall | -               | -                                                       |
+| Sensors                      | -                                          | ✅                                                                                                         | ✅                          | -               | -                                                       |
+| Services                     | ✅                                         | ✅ systemd                                                                                                 | ✅ launchd                  | -               | ✅ SRC                                                  |
+| Swap                         | ✅                                         | ✅                                                                                                         | ✅                          | ✅              | ✅                                                      |
+| System Health                | -                                          | ✅ RAID, OOM kills, file descriptors, conntrack, PSI, bonding, filesystem errors, ECC memory errors (EDAC) | -                           | -               | -                                                       |
+| Users                        | ✅                                         | ✅                                                                                                         | ✅                          | ✅              | ✅                                                      |
+| Windows Event log            | ✅                                         | -                                                                                                          | -                           | -               | -                                                       |
+| Windows Performance Counters | ✅                                         | -                                                                                                          | -                           | -               | -                                                       |
+| Windows Scheduled Tasks      | ✅                                         | -                                                                                                          | -                           | -               | -                                                       |
+| ZFS                          | -                                          | ✅                                                                                                         | -                           | ✅              | -                                                       |
 
 Logfiles, Certificates, Files & Directories, HTTP(S), Redfish and Windows Performance Counters are configured in separate INI files.
 See the examples in the [example](example/) directory. S.M.A.R.T. requires `smartctl` of smartmontools 7.0 or newer.
@@ -293,9 +300,9 @@ so a single agent in the management network can monitor many servers.
 
 ### Advanced Checks
 
-| Check       | Windows | Linux                                                                                              | macOS | FreeBSD |
-|-------------|---------|----------------------------------------------------------------------------------------------------|-------|---------|
-| Libvirt VMs | -       | ✅ [readme](https://docs.openitcockpit.io/en/agent/build-binary/#enable-libvirt-support-linux-only) | -     | -       |
+| Check       | Windows | Linux                                                                                               | macOS | FreeBSD | AIX |
+|-------------|---------|-----------------------------------------------------------------------------------------------------|-------|---------|-----|
+| Libvirt VMs | -       | ✅ [readme](https://docs.openitcockpit.io/en/agent/build-binary/#enable-libvirt-support-linux-only) | -     | -       | -   |
 
 
 ## Software Inventory
