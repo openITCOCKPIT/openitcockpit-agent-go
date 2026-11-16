@@ -8,6 +8,7 @@ import (
 	"testing"
 )
 
+// Output of "lsps -a" (works without root)
 func TestParseLsps(t *testing.T) {
 	output := `Page Space      Physical Volume   Volume Group    Size %Used   Active    Auto    Type   Chksum
 hd6             hdisk0            rootvg        4096MB     2     yes     yes      lv       0

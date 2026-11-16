@@ -9,6 +9,7 @@ import (
 	"time"
 )
 
+// Output of "lssrc -a" (works without root)
 func TestParseLssrc(t *testing.T) {
 	output := `Subsystem         Group            PID          Status
  syslogd          ras              5833150      active
@@ -34,6 +35,7 @@ func TestParseLssrc(t *testing.T) {
 	}
 }
 
+// Output of "errpt -s <mmddHHMMyy>" (works without root, runs with TZ=UTC0 in the check)
 func TestParseErrpt(t *testing.T) {
 	location := time.FixedZone("CET", 3600)
 	output := `IDENTIFIER TIMESTAMP  T C RESOURCE_NAME  DESCRIPTION
@@ -83,6 +85,7 @@ func TestErrptResultTruncated(t *testing.T) {
 	}
 }
 
+// Output of "lsvg -L" (all volume groups) and "lsvg -o" (online volume groups), works without root
 func TestParseLsvgList(t *testing.T) {
 	got := parseLsvgList("rootvg\ndatavg\ncaavg_private\n\n")
 	want := []string{"rootvg", "datavg", "caavg_private"}
@@ -91,6 +94,7 @@ func TestParseLsvgList(t *testing.T) {
 	}
 }
 
+// Output of "lsvg -L rootvg" (works without root)
 func TestParseLsvg(t *testing.T) {
 	output := `VOLUME GROUP:       rootvg                   VG IDENTIFIER:  00f6db0a00004c000000016f5d1d2a3b
 VG STATE:           active                   PP SIZE:        128 megabyte(s)
@@ -124,6 +128,7 @@ LTG size (Dynamic): 256 kilobyte(s)          AUTO SYNC:      no
 	}
 }
 
+// Output of "lsvg -L -l rootvg" (works without root)
 func TestParseLsvgLogicalVolumes(t *testing.T) {
 	output := `rootvg:
 LV NAME             TYPE       LPs     PPs     PVs  LV STATE      MOUNT POINT
@@ -143,6 +148,7 @@ livedump            jfs2       2       4       2    open/syncd    /var/adm/ras/l
 	}
 }
 
+// Output of "lsvg -L -p rootvg" (works without root)
 func TestParseLsvgPhysicalVolumes(t *testing.T) {
 	output := `rootvg:
 PV_NAME           PV STATE          TOTAL PPs   FREE PPs    FREE DISTRIBUTION
@@ -158,6 +164,7 @@ hdisk0            missing           479         230         60..00..00..74..96
 	}
 }
 
+// Output of "lspath" (works without root)
 func TestParseLspath(t *testing.T) {
 	output := `Enabled hdisk0   vscsi0
 Enabled hdisk1   fscsi0

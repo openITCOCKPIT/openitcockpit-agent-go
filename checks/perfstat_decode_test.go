@@ -134,6 +134,7 @@ func TestAixCpuResultWithoutPartition(t *testing.T) {
 	}
 }
 
+// Structure perfstat_partition_total_t of the libperfstat function perfstat_partition_total() (no command)
 func TestDecodePartition(t *testing.T) {
 	buf := make([]byte, perfstatPartitionSize)
 	// Type of a shared uncapped partition with SMT
@@ -184,6 +185,7 @@ func TestDecodePartition(t *testing.T) {
 	}
 }
 
+// Structure perfstat_cpu_total_t of the libperfstat function perfstat_cpu_total() (no command)
 func TestDecodeCpuTotal(t *testing.T) {
 	buf := make([]byte, perfstatCpuTotalSize)
 	putPerfstatTimes(buf, cpuTotalOffsetUser, perfstatTimes{User: 10, Sys: 20, Idle: 30, Wait: 40})
@@ -204,6 +206,7 @@ func TestDecodeCpuTotal(t *testing.T) {
 	}
 }
 
+// Structures perfstat_cpu_t of the libperfstat function perfstat_cpu() (no command)
 func TestDecodeCpus(t *testing.T) {
 	buf := make([]byte, 2*perfstatCpuSize)
 	putPerfstatTimes(buf, cpuOffsetPuser, perfstatTimes{User: 1, Sys: 2, Idle: 3, Wait: 4})
@@ -225,6 +228,7 @@ func TestDecodeCpus(t *testing.T) {
 }
 
 // Values of AIX 7.3 with 6 GiB, vmstat -v showed 46 % computational pages
+// Structure perfstat_memory_total_t of the libperfstat function perfstat_memory_total() (no command)
 func TestAixMemoryAndSwapResult(t *testing.T) {
 	buf := make([]byte, perfstatMemoryTotalSize)
 	binary.BigEndian.PutUint64(buf[memoryOffsetRealTotal:], 1572864)
@@ -265,6 +269,7 @@ func TestAixMemoryAndSwapResult(t *testing.T) {
 	}
 }
 
+// Output of "mount" (works without root)
 func TestParseAixMount(t *testing.T) {
 	output := `  node       mounted        mounted over    vfs       date        options
 -------- ---------------  ---------------  ------ ------------ ---------------

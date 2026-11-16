@@ -10,6 +10,7 @@ import (
 )
 
 // Network Interface Backup: ent4 with the virtual adapters ent0 (primary) and ent1 (backup), running on the backup channel
+// Output of "entstat -d ent4" (shortened, works without root)
 const entstatNibBackupChannel = `-------------------------------------------------------------
 ETHERNET STATISTICS (ent4) :
 Device Type: EtherChannel
@@ -105,6 +106,7 @@ LAN state(14): LAN_OPERATIONAL
 `
 
 // IEEE 802.3ad with two physical adapters, the link of ent3 is down (format of the AIX documentation)
+// Output of "entstat -d ent6" (shortened)
 const entstat8023ad = `ETHERNET STATISTICS (ent6) :
 Device Type: IEEE 802.3ad Link Aggregation
 Adapter Reset Count: 0
@@ -205,6 +207,7 @@ func TestParseEntstatLinkAggregation(t *testing.T) {
 	}
 }
 
+// Output of "entstat -d ent0" (shortened) and the error of entstat for an adapter without a link to a device
 func TestParseEntstatPhysicalPort(t *testing.T) {
 	adapter := parseEntstat(`ETHERNET STATISTICS (ent0) :
 Device Type: PCIe2 4-Port Adapter (1GbE RJ45) (e4148a1614109304)
@@ -221,6 +224,7 @@ Link Status : Down
 	}
 }
 
+// Output of "lsdev -Cc adapter" and "entstat -d" of each Ethernet adapter (works without root)
 func TestNewNetworkAdapters(t *testing.T) {
 	devices := parseLsdev(`ent0    Available  Virtual I/O Ethernet Adapter (l-lan)
 ent1    Available  Virtual I/O Ethernet Adapter (l-lan)

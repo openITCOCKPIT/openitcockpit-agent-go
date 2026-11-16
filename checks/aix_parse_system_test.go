@@ -9,6 +9,7 @@ import (
 	"time"
 )
 
+// Output of "ps -e -o pid,ppid,user,nice,pcpu,pmem,vsz,rssize,stat,etime,comm,args" (aixPsArguments, works without root)
 func TestParseAixPs(t *testing.T) {
 	now := time.Date(2026, 11, 13, 15, 0, 0, 0, time.UTC)
 	output := `     PID     PPID     USER NI  %CPU  %MEM   VSZ   RSS S     ELAPSED COMMAND         COMMAND
@@ -104,6 +105,7 @@ func TestIsAixProgramPath(t *testing.T) {
 	}
 }
 
+// Values of the column etime (ELAPSED) of ps
 func TestParseAixElapsedTime(t *testing.T) {
 	tests := map[string]time.Duration{
 		"00:05":        5 * time.Second,
@@ -136,6 +138,7 @@ func TestSplitColumns(t *testing.T) {
 	}
 }
 
+// Output of "who" (works without root, runs with TZ=UTC0 in the check)
 func TestParseAixWho(t *testing.T) {
 	now := time.Date(2026, 1, 2, 10, 0, 0, 0, time.UTC)
 	output := `oitc        pts/0       Jan  2 09:05     (192.168.1.5)
@@ -154,6 +157,7 @@ root        lft0        Dec 30 08:00
 	}
 }
 
+// Content of the file /etc/filesystems (not the output of a command)
 func TestParseAixFilesystems(t *testing.T) {
 	data := []byte(`* comment
 /:
@@ -206,6 +210,7 @@ func TestParseAixFilesystems(t *testing.T) {
 	}
 }
 
+// Output of "no -o tcp_ephemeral_low" (works without root)
 func TestParseAixNetworkOption(t *testing.T) {
 	if value, ok := parseAixNetworkOption("tcp_ephemeral_low = 32768\n"); !ok || value != 32768 {
 		t.Errorf("got %d %v", value, ok)
@@ -215,6 +220,7 @@ func TestParseAixNetworkOption(t *testing.T) {
 	}
 }
 
+// Output of "netstat -an -f inet" (works without root)
 func TestParseAixNetstat(t *testing.T) {
 	// netstat -an -f inet of AIX has the format of macOS, "tcp" and "udp" are dual stack sockets
 	output := []byte(`Active Internet connections (including servers)

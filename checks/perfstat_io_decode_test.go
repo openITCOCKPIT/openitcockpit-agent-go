@@ -12,6 +12,7 @@ func putPerfstatUint64(buf []byte, offset int, value uint64) {
 	binary.BigEndian.PutUint64(buf[offset:], value)
 }
 
+// Structures perfstat_netinterface_t of the libperfstat function perfstat_netinterface() (no command, works without root)
 func TestDecodeNetInterfaces(t *testing.T) {
 	size := perfstatNetInterfaceSizes[0]
 	buf := make([]byte, 2*size)
@@ -62,6 +63,7 @@ func TestDecodeNetInterfaces(t *testing.T) {
 	}
 }
 
+// Structures perfstat_disk_t of the libperfstat function perfstat_disk() (no command, works without root)
 func TestDecodeDisks(t *testing.T) {
 	size := perfstatDiskSizes[0]
 	buf := make([]byte, 2*size)
@@ -110,6 +112,7 @@ func TestDecodeDisks(t *testing.T) {
 	}
 }
 
+// Output of "lsattr -E -l sys0 -a iostat -F value" (works without root)
 func TestParseAixIostatAttribute(t *testing.T) {
 	if enabled, err := parseAixIostatAttribute("true\n"); err != nil || !enabled {
 		t.Errorf("got %v %v", enabled, err)
