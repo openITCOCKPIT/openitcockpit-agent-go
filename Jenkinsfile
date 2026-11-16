@@ -532,6 +532,7 @@ pipeline {
                             environment {
                                 GOARCH = 'amd64'
                                 ARCH = 'amd64'
+                                PKGARCH = 'amd64'
                             }
                             steps {
                                 package_freebsd()
@@ -541,6 +542,7 @@ pipeline {
                             environment {
                                 GOARCH = '386'
                                 ARCH = '386'
+                                PKGARCH = 'i386'
                             }
                             steps {
                                 package_freebsd()
@@ -550,6 +552,7 @@ pipeline {
                             environment {
                                 GOARCH = 'arm64'
                                 ARCH = 'arm64'
+                                PKGARCH = 'aarch64'
                             }
                             steps {
                                 package_freebsd()
@@ -935,12 +938,54 @@ def package_freebsd() {
 
         unstash name: "release-$GOOS-$GOARCH"
 
-        // For now we will just publish the binary without packaging it
+        // The binary is still published for systems without pkg
         sh "mkdir -p release/packages/freebsd"
         sh "cp release/$GOOS/$GOARCH/$BINNAME release/packages/$GOOS/$BINNAME-${VERSION}.${GOOS}-${ARCH}.bin"
 
+        // pkg package. Like the ports, the configuration files are *.sample files, see build/package/freebsd/postinst.sh
+        sh "mkdir -p package/usr/local/bin package/usr/local/etc/rc.d package/etc/openitcockpit-agent package/usr/local/share/doc/openitcockpit-agent"
+        sh 'cp example/config_example.ini package/etc/openitcockpit-agent/config.ini.sample'
+        sh 'cp example/customchecks_example.ini package/etc/openitcockpit-agent/customchecks.ini.sample'
+        sh 'cp example/prometheus_exporters_example.ini package/etc/openitcockpit-agent/prometheus_exporters.ini.sample'
+        sh 'cp example/logfiles_example.ini package/etc/openitcockpit-agent/logfiles.ini.sample'
+        sh 'cp example/certificates_example.ini package/etc/openitcockpit-agent/certificates.ini.sample'
+        sh 'cp example/files_example.ini package/etc/openitcockpit-agent/files.ini.sample'
+        sh 'cp example/http_example.ini package/etc/openitcockpit-agent/http.ini.sample'
+        sh 'cp example/redfish_example.ini package/etc/openitcockpit-agent/redfish.ini.sample'
+        // Contains the passwords of the BMCs
+        sh 'chmod 600 package/etc/openitcockpit-agent/redfish.ini.sample'
+        sh 'cp build/package/freebsd/openitcockpit_agent package/usr/local/etc/rc.d/openitcockpit_agent'
+        sh 'chmod 755 package/usr/local/etc/rc.d/openitcockpit_agent'
+        sh "cp release/$GOOS/$GOARCH/$BINNAME package/usr/local/bin/$BINNAME"
+        sh "cp release/$GOOS/$GOARCH/licenses.csv package/usr/local/share/doc/openitcockpit-agent/licenses.csv"
+        sh "chmod +x package/usr/local/bin/$BINNAME"
+        sh """cd release/packages/$GOOS &&
+            fpm -s dir -t freebsd -C ../../../package --name openitcockpit-agent --vendor 'AVENDIS GmbH' \\
+            --license 'Apache License Version 2.0' --freebsd-origin sysutils/openitcockpit-agent --freebsd-osversion '*' \\
+            --architecture $PKGARCH --maintainer '<d.ziegler@avendis.com>' \\
+            --description 'openITCOCKPIT Monitoring Agent and remote plugin executor.' \\
+            --url 'https://openitcockpit.io' --after-install ../../../build/package/freebsd/postinst.sh \\
+            --before-remove ../../../build/package/freebsd/prerm.sh \\
+            --version '$VERSION' --package '$BINNAME-${VERSION}.${GOOS}-${ARCH}.txz'"""
+
+        if (env.PKGARCH == 'aarch64') {
+            fix_freebsd_abi_aarch64("release/packages/$GOOS/$BINNAME-${VERSION}.${GOOS}-${ARCH}.txz")
+        }
+
         archiveArtifacts artifacts: 'release/packages/**', fingerprint: true
     }
+}
+
+// fpm writes the ABI FreeBSD:*:arm64, but pkg only accepts the name aarch64 (FreeBSD:15:aarch64).
+// The package is unpacked, the ABI in the manifests is replaced and the package is packed again
+// in the same order (+COMPACT_MANIFEST and +MANIFEST must be the first entries) and with the same paths (/etc/... like fpm).
+def fix_freebsd_abi_aarch64(String pkgfile) {
+    sh "rm -rf freebsd-abi && mkdir freebsd-abi"
+    sh "tar -tJf '$pkgfile' | sed 's|^/||' > freebsd-abi.list"
+    sh "tar -xJf '$pkgfile' -C freebsd-abi"
+    sh """sed -i 's/:arm64"/:aarch64"/' freebsd-abi/+COMPACT_MANIFEST freebsd-abi/+MANIFEST"""
+    sh "tar -cJf '$pkgfile' -C freebsd-abi --files-from freebsd-abi.list --transform 's|^[^+]|/&|'"
+    sh "rm -rf freebsd-abi freebsd-abi.list"
 }
 
 def package_aix() {
@@ -948,6 +993,10 @@ def package_aix() {
         cleanup()
 
         unstash name: "release-$GOOS-$GOARCH"
+
+        // The binary is still published for systems without the RPM package
+        sh "mkdir -p release/packages/$GOOS"
+        sh "cp release/$GOOS/$GOARCH/$BINNAME release/packages/$GOOS/$BINNAME-${VERSION}.${GOOS}-${GOARCH}.bin"
 
         // RPM package for the rpm of the AIX base system, the agent runs as subsystem of the SRC (see build/package/aix/postinst.sh)
         sh "mkdir -p package/usr/bin package/etc/openitcockpit-agent release/packages/$GOOS package/var/log/openitcockpit-agent package/usr/share/doc/openitcockpit-agent"
