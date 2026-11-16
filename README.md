@@ -5,18 +5,34 @@ Cross-Platform Monitoring Agent for openITCOCKPIT written in Go
 [![Build Status](https://drone.openitcockpit.io/buildStatus/icon?job=openitcockpit-agent-go%2Fmain)](https://drone.openitcockpit.io/job/openitcockpit-agent-go/job/main/)
 
 ## Table of contents
-* [Supported operating systems](#supported-operating-systems)
-* [Installation](#installation)
-  - [Debian and Ubuntu](#debian-and-ubuntu)
-  - [Red Hat Linux / CentOS / openSUSE](#red-hat-linux--centos--opensuse)
-  - [Arch Linux](#arch-linux)
-  - [Windows](#windows)
-  - [macOS](#macos)
-  - [FreeBSD](#freebsd)
-  - [AIX (preview)](#aix-preview)
-* [Supported Platforms](#supported-platforms)
-* [Full documentation](#full-documentation)
-* [License](#license)
+- [openITCOCKPIT Monitoring Agent 3](#openitcockpit-monitoring-agent-3)
+  - [Table of contents](#table-of-contents)
+  - [Supported operating systems](#supported-operating-systems)
+    - [Maybe supported operating systems](#maybe-supported-operating-systems)
+  - [Update from Agent 1.x to 3.x](#update-from-agent-1x-to-3x)
+  - [Requirements](#requirements)
+  - [Installation](#installation)
+    - [Debian and Ubuntu](#debian-and-ubuntu)
+      - [Using the repository](#using-the-repository)
+      - [Manually](#manually)
+    - [Red Hat Linux / CentOS / openSUSE](#red-hat-linux--centos--opensuse)
+      - [Using the repository](#using-the-repository-1)
+      - [Manually](#manually-1)
+    - [Arch Linux](#arch-linux)
+    - [Windows](#windows)
+    - [macOS](#macos)
+    - [FreeBSD](#freebsd)
+    - [AIX](#aix)
+  - [Supported Platforms](#supported-platforms)
+  - [Full documentation](#full-documentation)
+  - [Supported Checks](#supported-checks)
+    - [Advanced Checks](#advanced-checks)
+  - [Software Inventory](#software-inventory)
+    - [Linux](#linux)
+    - [Windows](#windows-1)
+    - [macOS](#macos-1)
+    - [Third Party Package Managers](#third-party-package-managers)
+  - [License](#license)
 
 ## Supported operating systems
 
@@ -26,7 +42,7 @@ Cross-Platform Monitoring Agent for openITCOCKPIT written in Go
   * macOS 15 Sequoia or newer for Intel Macs
 * Linux (Everything from Debian 10 (Buster) / AlmaLinux 8 and newer should work fine)
 * FreeBSD 15
-* IBM AIX 7.3 on POWER (preview, see [AIX](#aix-preview))
+* IBM AIX 7.3 on POWER
 
 ### Maybe supported operating systems
 
@@ -164,18 +180,65 @@ sudo installer -pkg openitcockpit-agent-uninstaller-3.x.x-darwin-amd64.pkg -targ
 
 ### FreeBSD
 
-Currently we do not provide pre-build packages for FreeBSD systems.
-
-But you can build the binary from source like so:
+Install
 ```
-GOOS=freebsd GOARCH=amd64 go build -o openitcockpit-agent
+pkg add openitcockpit-agent-3.x.x.freebsd-amd64.txz
 ```
 
-### AIX (preview)
-
-The AIX support is in an early stage, there are no packages yet. The binary can be cross compiled without cgo:
+Like other packages of FreeBSD, the package does not enable the agent. Start the agent at boot and start it now:
 ```
-GOOS=aix GOARCH=ppc64 CGO_ENABLED=0 go build -o openitcockpit-agent
+sysrc openitcockpit_agent_enable=YES
+service openitcockpit_agent start
+```
+
+The configuration files are located in `/etc/openitcockpit-agent`. The package contains them as `*.ini.sample` files
+and only creates a configuration file if it does not exist yet, so an update keeps the configuration.
+
+Update
+
+pkg can not restart the agent during the installation, so restart it after the update:
+```
+pkg add openitcockpit-agent-3.x.x.freebsd-amd64.txz
+service openitcockpit_agent restart
+```
+
+Uninstall
+```
+pkg delete openitcockpit-agent
+```
+
+The configuration files remain in `/etc/openitcockpit-agent`. If you do not want to use the package, the binary
+`openitcockpit-agent-3.x.x.freebsd-amd64.bin` is available as well.
+
+### AIX
+
+Install
+```
+rpm -ivh openitcockpit-agent-3.x.x-1.aix.ppc.rpm
+```
+
+The package registers the agent as subsystem `openitcockpit-agent` of the System Resource Controller (SRC), starts
+it and adds the entry `oitcagent` to `/etc/inittab` to start the agent at boot. The agent runs as root.
+```
+lssrc -s openitcockpit-agent
+stopsrc -s openitcockpit-agent
+startsrc -s openitcockpit-agent
+```
+
+Update (the configuration files in `/etc/openitcockpit-agent` are kept)
+```
+rpm -Uvh openitcockpit-agent-3.x.x-1.aix.ppc.rpm
+```
+
+Uninstall (removes the subsystem and the entry of `/etc/inittab`, changed configuration files are saved as `*.rpmsave`)
+```
+rpm -e openitcockpit-agent
+```
+
+If you do not want to use the RPM package, e.g. to run the agent as a normal user, the binary
+`openitcockpit-agent-3.x.x.aix-ppc64.bin` is available as well:
+```
+./openitcockpit-agent-3.x.x.aix-ppc64.bin --config $HOME/openitcockpit-agent/config.ini --log $HOME/openitcockpit-agent/agent.log
 ```
 
 The agent reads the values with libperfstat and the AIX commands and does not require root. Available checks: CPU, LPAR,
