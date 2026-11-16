@@ -281,6 +281,30 @@ pipeline {
                         }
                     }
                 }
+                stage('aix') {
+                    agent {
+                        docker {
+                            image 'golang:bookworm'
+                            args "-u root --privileged -v agentgocache:/go"
+                            label 'linux'
+                        }
+                    }
+                    environment {
+                        GOOS = 'aix'
+                        BINNAME = 'openitcockpit-agent'
+                        CGO_ENABLED = '0'
+                    }
+                    stages {
+                        stage('ppc64') {
+                            environment {
+                                GOARCH = 'ppc64'
+                            }
+                            steps {
+                                build_binary_aix()
+                            }
+                        }
+                    }
+                }
                 stage('darwin') {
                     environment {
                         GOOS = 'darwin'
@@ -533,6 +557,30 @@ pipeline {
                         }
                     }
                 }
+                stage('AIX') {
+                    agent {
+                        dockerfile {
+                            filename 'linux.Dockerfile'
+                            dir 'build/docker'
+                            label 'linux'
+                            args "-u root --privileged"
+                        }
+                    }
+                    environment {
+                        GOOS = 'aix'
+                        BINNAME = 'openitcockpit-agent'
+                    }
+                    stages {
+                        stage('ppc64') {
+                            environment {
+                                GOARCH = 'ppc64'
+                            }
+                            steps {
+                                package_aix()
+                            }
+                        }
+                    }
+                }
             }
         }
         stage('Publish') {
@@ -635,7 +683,8 @@ def build_binary_freebsd() {
             sh "go build -o release/$GOOS/$GOARCH/$BINNAME main.go"
 
             // ITC-3498 Contain information about 3rd party licenses in the package
-            sh "go install github.com/google/go-licenses/v2@latest"
+            // go-licenses runs on the build host, it must not be cross compiled for GOOS and GOARCH
+            sh "env -u GOOS -u GOARCH go install github.com/google/go-licenses/v2@latest"
             sh "/go/bin/go-licenses report . --ignore \"github.com/openITCOCKPIT/openitcockpit-agent-go\" > release/$GOOS/$GOARCH/licenses.csv"
             sh "/go/bin/go-licenses check . --ignore \"github.com/openITCOCKPIT/openitcockpit-agent-go\" --allowed_licenses=MIT,ISC,MPL-2.0,BSD-2-Clause,BSD-3-Clause,Apache-2.0"
         }
@@ -644,6 +693,11 @@ def build_binary_freebsd() {
     }
 }
 
+
+def build_binary_aix() {
+    // The same steps as for FreeBSD: a static binary without cgo, the AIX values are read with libperfstat by syscalls
+    build_binary_freebsd()
+}
 
 def build_binary_macos() {
     timeout(time: 5, unit: 'MINUTES') {
@@ -889,6 +943,43 @@ def package_freebsd() {
     }
 }
 
+def package_aix() {
+    timeout(time: 5, unit: 'MINUTES') {
+        cleanup()
+
+        unstash name: "release-$GOOS-$GOARCH"
+
+        // RPM package for the rpm of the AIX base system, the agent runs as subsystem of the SRC (see build/package/aix/postinst.sh)
+        sh "mkdir -p package/usr/bin package/etc/openitcockpit-agent release/packages/$GOOS package/var/log/openitcockpit-agent package/usr/share/doc/openitcockpit-agent"
+        sh 'cp example/config_example.ini package/etc/openitcockpit-agent/config.ini'
+        sh 'cp example/customchecks_example.ini package/etc/openitcockpit-agent/customchecks.ini'
+        sh 'cp example/prometheus_exporters_example.ini package/etc/openitcockpit-agent/prometheus_exporters.ini'
+        sh 'cp example/logfiles_example.ini package/etc/openitcockpit-agent/logfiles.ini'
+        sh 'cp example/certificates_example.ini package/etc/openitcockpit-agent/certificates.ini'
+        sh 'cp example/files_example.ini package/etc/openitcockpit-agent/files.ini'
+        sh 'cp example/http_example.ini package/etc/openitcockpit-agent/http.ini'
+        sh 'cp example/redfish_example.ini package/etc/openitcockpit-agent/redfish.ini'
+        // Contains the passwords of the BMCs
+        sh 'chmod 600 package/etc/openitcockpit-agent/redfish.ini'
+        sh "cp release/$GOOS/$GOARCH/$BINNAME package/usr/bin/$BINNAME"
+        sh "cp release/$GOOS/$GOARCH/licenses.csv package/usr/share/doc/openitcockpit-agent/licenses.csv"
+        sh "chmod +x package/usr/bin/$BINNAME"
+        // gzip and SHA-256 are supported by every rpm version of AIX 7.x. AIX has no group root, the group of root is system.
+        // The name of the package contains aix, so it can not be confused with the Linux packages.
+        sh """cd release/packages/$GOOS &&
+            fpm -s dir -t rpm -C ../../../package --name openitcockpit-agent --vendor 'AVENDIS GmbH' \\
+            --license 'Apache License Version 2.0' --config-files etc/openitcockpit-agent \\
+            --rpm-os aix --architecture ppc --rpm-user root --rpm-group system \\
+            --rpm-compression gzip --rpm-digest sha256 --maintainer '<d.ziegler@avendis.com>' \\
+            --description 'openITCOCKPIT Monitoring Agent and remote plugin executor.' \\
+            --url 'https://openitcockpit.io' --before-install ../../../build/package/aix/preinst.sh \\
+            --after-install ../../../build/package/aix/postinst.sh --before-remove ../../../build/package/aix/prerm.sh  \\
+            --version '$VERSION' --package 'openitcockpit-agent-${VERSION}-1.aix.ppc.rpm'"""
+
+        archiveArtifacts artifacts: 'release/packages/**', fingerprint: true
+    }
+}
+
 def publish_packages() {
     timeout(time: 5, unit: 'MINUTES') {
 
@@ -901,6 +992,7 @@ def publish_packages() {
             sh """mv -f release/packages/linux/* packages/"""
             sh """mv -f release/packages/windows/* packages/"""
             sh """mv -f release/packages/freebsd/* packages/"""
+            sh """mv -f release/packages/aix/* packages/"""
 
             sh 'ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa oitc@srvitnweb05.static.itsm.love "mkdir -p /var/www/openitcockpit.io/files/openitcockpit-agent-3.x"'
             sh 'rsync -avz -e "ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa" --delete --progress packages/* oitc@srvitnweb05.static.itsm.love:/var/www/openitcockpit.io/files/openitcockpit-agent-3.x/'
@@ -925,6 +1017,8 @@ def publish_packages() {
             /* create yum repository */
             sh """mkdir -p rpm/stable"""
             sh """cp packages/*.rpm rpm/stable/"""
+            /* The AIX package is only published on the download page, not in the yum repository */
+            sh """rm -f rpm/stable/*.aix.ppc.rpm"""
             /*
             createrepo is the old Python createrepo which does not exists on Ubuntu Focal.
             Ubuntu Focal has no createrepo_c.
