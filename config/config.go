@@ -149,6 +149,8 @@ type Configuration struct {
 	Multipath       bool  `mapstructure:"multipath"`
 	NetworkAdapters bool  `mapstructure:"networkadapters"`
 	PagingSpaces    bool  `mapstructure:"pagingspaces"`
+	PowerHA         bool  `mapstructure:"powerha"`
+	Sendmail        bool  `mapstructure:"sendmail"`
 
 	// Alfresco
 
@@ -244,6 +246,8 @@ var defaultValue = map[string]interface{}{
 	"multipath":               true,
 	"networkadapters":         true,
 	"pagingspaces":            true,
+	"powerha":                 true,
+	"sendmail":                true,
 	"ipmi-interval":           60,
 	"ipmi-sel-window":         86400,
 	"wineventlog-logtypes":    "System,Application",

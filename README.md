@@ -243,7 +243,8 @@ If you do not want to use the RPM package, e.g. to run the agent as a normal use
 
 The agent reads the values with libperfstat and the AIX commands and does not require root. Available checks: CPU, LPAR,
 load, memory, swap, disk usage (incl. inodes), disk I/O, network interfaces and I/O, processes, users, NTP, missing
-mounts, network ports, SRC subsystems, error log (errpt), volume groups, multipath, network adapters and paging spaces, as well as the platform
+mounts, network ports, SRC subsystems, error log (errpt), volume groups, multipath, network adapters, paging spaces,
+PowerHA SystemMirror and the sendmail mail queue, as well as the platform
 independent checks (logfiles, certificates, files, HTTP, Redfish, Postfix).
 
 * **CPU**: the agent uses the PURR (Processor Utilization of Resources Register) instead of the CPU ticks, which are not
@@ -283,6 +284,13 @@ independent checks (logfiles, certificates, files, HTTP, Redfish, Postfix).
   switches to the backup adapter if the ping address (`netaddr`) is not reachable through the primary adapter.
 * **Paging spaces** (`pagingspaces`): size, usage and the state (active, activated at boot) of each paging space
   (`lsps -a`), the swap check reports the sum of all paging spaces.
+* **PowerHA SystemMirror** (`powerha`): the state of the cluster manager of the node (`lssrc -ls clstrmgrES`), the
+  cluster services and Cluster-Aware AIX of all nodes (`clshowsrv -v`), the resource groups with the state on each node
+  in the order of the priority and their applications (`clRGinfo -s`, `clRGinfo -m`), the repository disks
+  (`lscluster -d`) and unsynchronized changes of the configuration (`clmgr query cluster`, every 10 minutes).
+  Without root only the cluster manager and the repository disks are readable, failed commands are reported as errors.
+* **Sendmail** (`sendmail`): number, size and age of the messages in the mail queue and the messages with a failed
+  delivery attempt (`mailq`, requires root).
 
 AIX sets the time zone as POSIX string (e.g. `TZ=CET-1CEST,M3.5.0,M10.5.0`), which Go can not read, so the agent runs
 commands which print local times (`errpt`, `who`) in UTC.
@@ -337,9 +345,11 @@ Please see the [full documentation](https://github.com/openITCOCKPIT/openitcockp
 | NTP                          | ✅                                         | ✅                                                                                                         | ✅ SNTP                     | ✅ ntpd, SNTP   | ✅ xntpd, SNTP                                          |
 | Paging Spaces                | -                                          | -                                                                                                          | -                           | -               | ✅                                                      |
 | Postfix Mail Queue           | -                                          | ✅                                                                                                         | -                           | ✅              | ✅                                                      |
+| PowerHA SystemMirror         | -                                          | -                                                                                                          | -                           | -               | ✅ cluster, resource groups                             |
 | Processes                    | ✅                                         | ✅                                                                                                         | ✅                          | ✅              | ✅                                                      |
 | Proxmox VE                   | -                                          | ✅                                                                                                         | -                           | -               | -                                                       |
 | Redfish (BMC)                | ✅ via network                             | ✅ via network                                                                                             | ✅ via network              | ✅ via network  | ✅ via network                                          |
+| Sendmail Mail Queue          | -                                          | -                                                                                                          | -                           | -               | ✅                                                      |
 | S.M.A.R.T.                   | ✅ smartctl                                | ✅ smartctl                                                                                                | ✅ smartctl                 | ✅ smartctl     | -                                                       |
 | Security                     | ✅ firewall, Defender/antivirus, BitLocker | ✅ SELinux, AppArmor, firewall                                                                             | ✅ FileVault, SIP, firewall | -               | -                                                       |
 | Sensors                      | -                                          | ✅                                                                                                         | ✅                          | -               | -                                                       |
@@ -354,7 +364,7 @@ Please see the [full documentation](https://github.com/openITCOCKPIT/openitcockp
 
 Logfiles, Certificates, Files & Directories, HTTP(S), Redfish and Windows Performance Counters are configured in separate INI files.
 See the examples in the [example](example/) directory. S.M.A.R.T. requires `smartctl` of smartmontools 7.0 or newer.
-Ceph, Exim, LVM, Postfix (3.1 or newer), Proxmox VE, S.M.A.R.T. and ZFS are enabled automatically if the required tools are installed.
+Ceph, Exim, LVM, Postfix (3.1 or newer), PowerHA SystemMirror, Proxmox VE, S.M.A.R.T. and ZFS are enabled automatically if the required tools are installed.
 IPMI reads the sensors, the chassis status and the SEL of the local BMC without ipmitool (Linux: /dev/ipmi0, Windows: IPMI driver).
 Network Ports reports the listening ports with their processes, the TCP connections per state and the usage of the ephemeral ports.
 Disk Usage waits 5 seconds for each filesystem. A filesystem which does not respond, e.g. a NFS or CIFS mount whose server

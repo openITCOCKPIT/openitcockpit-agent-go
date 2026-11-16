@@ -95,6 +95,8 @@ func liveConfig() *config.Configuration {
 		NetworkPorts:    true,
 		NetworkAdapters: true,
 		PagingSpaces:    true,
+		PowerHA:         true,
+		Sendmail:        true,
 		Swap:            true,
 	}
 }
@@ -341,4 +343,34 @@ func TestAixLivePagingSpaces(t *testing.T) {
 	liveJSON(t, "swap", liveRunCheck(t, &CheckSwap{}))
 	liveCommand(t, "lsps", "-a")
 	liveCommand(t, "lsps", "-s")
+}
+
+// TestAixLivePowerHA compares the PowerHA check with clRGinfo and clshowsrv and measures the time of each command.
+// clRGinfo, clshowsrv and clmgr require root.
+func TestAixLivePowerHA(t *testing.T) {
+	start := time.Now()
+	result := liveRunCheck(t, &CheckPowerHA{})
+	t.Logf("powerha check in %s", time.Since(start).Round(time.Millisecond))
+	liveJSON(t, "powerha", result)
+	liveTimedCommand(t, "lssrc", "-ls", "clstrmgrES")
+	liveTimedCommand(t, "lscluster", "-d")
+	liveTimedCommand(t, powerhaUtilities+"clRGinfo")
+	liveTimedCommand(t, powerhaUtilities+"clRGinfo", "-m")
+	liveTimedCommand(t, powerhaUtilities+"clshowsrv", "-v")
+	liveTimedCommand(t, powerhaUtilities+"clmgr", "query", "cluster")
+}
+
+// TestAixLiveSendmail compares the sendmail check with mailq (requires root)
+func TestAixLiveSendmail(t *testing.T) {
+	liveJSON(t, "sendmail", liveRunCheck(t, &CheckSendmail{}))
+	liveCommand(t, "mailq")
+	liveCommand(t, "date", "-u")
+}
+
+// liveTimedCommand runs liveCommand and logs the duration of the command
+func liveTimedCommand(t *testing.T, name string, args ...string) {
+	t.Helper()
+	start := time.Now()
+	liveCommand(t, name, args...)
+	t.Logf("(%s took %s)", name, time.Since(start).Round(time.Millisecond))
 }

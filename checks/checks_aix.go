@@ -21,6 +21,8 @@ func getPlatformChecks() []Check {
 		&CheckMultipath{},
 		&CheckNetworkAdapters{},
 		&CheckPagingSpaces{},
+		&CheckPowerHA{},
+		&CheckSendmail{},
 		&CheckLogfile{},
 		&CheckCertificate{},
 		&CheckFile{},
