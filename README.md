@@ -232,6 +232,8 @@ commands which print local times (`errpt`, `who`) in UTC.
 | 64 bit (amd64)        | ✅      | ✅    | ✅    | ✅      | -   |
 | 32 bit (i386)         | ✅      | ✅    | -     | ✅      | -   |
 | arm64 / Apple Silicon | ✅      | ✅    | ✅    | ✅      | -   |
+| arm (armhf / armv7)   | -       | ✅    | -     | -       | -   |
+| ppc64le (POWER)       | -       | ✅    | -     | -       | -   |
 | ppc64 (POWER)         | -       | -     | -     | -       | ✅  |
 
 
