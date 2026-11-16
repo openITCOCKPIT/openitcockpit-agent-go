@@ -132,8 +132,11 @@ func aixProcessStatus(state string) string {
 	return name
 }
 
-// aixNiceValue converts the nice value of AIX (0 to 39, default 20) to the usual range of -20 to 19.
-// Processes with a fixed priority have no nice value ("--").
+// aixNiceValue converts the nice value of AIX to the range of the other platforms, so nice_level means the same
+// on all platforms: ps on AIX reports 0 to 39 with 20 as default, Linux, macOS and FreeBSD use -20 to 19 with
+// 0 as default. The value is therefore the AIX value minus 20, e.g. a normal process (AIX 20) has 0.
+// Processes with a fixed priority (scheduling policy FIFO or RR) have no nice value, ps reports "--", which is
+// returned as 0.
 func aixNiceValue(value string) int64 {
 	nice, err := strconv.ParseInt(value, 10, 64)
 	if err != nil {
