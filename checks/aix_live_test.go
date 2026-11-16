@@ -360,6 +360,31 @@ func TestAixLivePowerHA(t *testing.T) {
 	liveTimedCommand(t, powerhaUtilities+"clmgr", "query", "cluster")
 }
 
+// TestAixLivePowerHACache runs the same PowerHA check twice like the agent does. The second run must use the cached
+// attributes of clmgr query cluster and be about 1.5 seconds faster (requires root).
+func TestAixLivePowerHACache(t *testing.T) {
+	check := &CheckPowerHA{}
+	first := liveRunCheck(t, check)
+	queried := check.clusterQueried
+	if queried.IsZero() {
+		t.Fatalf("clmgr query cluster was not run, see the errors of the result")
+	}
+
+	second := liveRunCheck(t, check)
+	if !check.clusterQueried.Equal(queried) {
+		t.Errorf("the second run ran clmgr query cluster again")
+	}
+	firstResult := first.(*resultPowerHA)
+	secondResult := second.(*resultPowerHA)
+	if firstResult.ClusterName != secondResult.ClusterName || firstResult.Version != secondResult.Version {
+		t.Errorf("cached attributes differ: %q %q, %q %q", firstResult.ClusterName, firstResult.Version, secondResult.ClusterName, secondResult.Version)
+	}
+	if secondResult.ClusterName == "" {
+		t.Errorf("the second run has no cluster name")
+	}
+	liveJSON(t, "powerha (second run)", second)
+}
+
 // TestAixLiveSendmail compares the sendmail check with mailq (requires root)
 func TestAixLiveSendmail(t *testing.T) {
 	liveJSON(t, "sendmail", liveRunCheck(t, &CheckSendmail{}))
