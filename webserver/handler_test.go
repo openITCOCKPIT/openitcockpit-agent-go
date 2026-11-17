@@ -12,6 +12,7 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+	"time"
 
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/config"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/packagemanager"
@@ -26,6 +27,21 @@ const (
 
 func init() {
 	log.SetLevel(log.DebugLevel)
+}
+
+// sendState sends the state to the handler and waits until the handler has stored it. The send on the unbuffered
+// channel already returns when the goroutine of the handler received the state, before it calls setState, so a
+// request directly after the send could still get the previous state.
+func sendState(t *testing.T, w *handler, stateInput chan<- []byte, state []byte) {
+	t.Helper()
+	stateInput <- state
+	deadline := time.Now().Add(5 * time.Second)
+	for !bytes.Equal(w.getState(), state) {
+		if time.Now().After(deadline) {
+			t.Fatal("the handler did not store the state within 5 seconds")
+		}
+		time.Sleep(time.Millisecond)
+	}
 }
 
 func TestWebserverHandler(t *testing.T) {
@@ -76,7 +92,7 @@ func TestWebserverHandlerState(t *testing.T) {
 		t.Fatal("body does not match")
 	}
 
-	stateInput <- testState
+	sendState(t, w, stateInput, testState)
 
 	r, err = client.Do(req)
 	if err != nil {
@@ -309,7 +325,7 @@ func TestWebserverHandlerGzip(t *testing.T) {
 	w.Start(ctx)
 
 	state := bytes.Repeat([]byte(`{"name": "value"},`), 200)
-	stateInput <- state
+	sendState(t, w, stateInput, state)
 
 	// The transport does not add Accept-Encoding and does not decompress, so the raw response is visible
 	client := &http.Client{Transport: &http.Transport{DisableCompression: true}}
