@@ -2,12 +2,11 @@ package checks
 
 import (
 	"context"
-	"fmt"
-	"strings"
 	"testing"
 	"time"
 
 	"github.com/moby/moby/api/types/container"
+	"github.com/moby/moby/client"
 )
 
 func TestChecksCheckDocker(t *testing.T) {
@@ -16,19 +15,9 @@ func TestChecksCheckDocker(t *testing.T) {
 
 	cr, err := check.Run(context.Background())
 	if err != nil {
-		// Windows
-		if strings.Contains(err.Error(), "error during connect") {
-			fmt.Println("Docker not installed or running on this system ???")
-			t.SkipNow()
-		}
-		// macOS and Linux
-		if strings.Contains(err.Error(), "Is the docker daemon running") {
-			fmt.Println("Docker not installed or running on this system ???")
-			t.SkipNow()
-		}
-		if strings.Contains(err.Error(), "Got permission denied while trying to connect to the Docker daemon socket") {
-			fmt.Println(err)
-			t.SkipNow()
+		// Docker is not installed, not running or the socket is not accessible (permission denied)
+		if client.IsErrConnectionFailed(err) {
+			t.Skip("Docker is not available on this system: ", err)
 		}
 
 		t.Fatal(err)
