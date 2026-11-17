@@ -10,10 +10,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/go-viper/encoding/ini"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/basiclog"
-	"github.com/openITCOCKPIT/openitcockpit-agent-go/utils"
-	"github.com/spf13/viper"
 )
 
 // Supported source types of a LogfileDefinition
@@ -164,37 +161,9 @@ type PerfCounterDefinition struct {
 	ConfigError string `mapstructure:"-"`
 }
 
-// readIniSections reads an ini file with one section per definition
-func readIniSections[T any](configPath string) (map[string]*T, error) {
-	// Register the INI encoding
-	// As ini support got removed from viper with v1.20.0
-	// https://github.com/spf13/viper/releases/tag/v1.20.0
-	// https://github.com/spf13/viper/blob/master/UPGRADE.md#v120x
-	codecRegistry := viper.NewCodecRegistry()
-	codecRegistry.RegisterCodec("ini", ini.Codec{})
-
-	v := viper.NewWithOptions(
-		viper.WithCodecRegistry(codecRegistry),
-	)
-
-	v.SetConfigFile(configPath)
-	v.SetConfigType("ini")
-
-	if err := v.ReadInConfig(); err != nil {
-		return nil, err
-	}
-
-	cfg := map[string]*T{}
-	if err := v.Unmarshal(&cfg); err != nil {
-		return nil, err
-	}
-	delete(cfg, "default")
-	return cfg, nil
-}
-
-// loadOptionalDefinitions loads an optional ini file. A missing file is not an error
+// loadOptionalDefinitions loads an optional ini file and its drop-in directory. Missing files are not an error
 func loadOptionalDefinitions[T any](configPath, description string, unmarshal func(string) ([]*T, error)) []*T {
-	if configPath != "" && utils.FileExists(configPath) {
+	if hasDefinitionFiles(configPath) {
 		definitions, err := unmarshal(configPath)
 		if err == nil {
 			return definitions

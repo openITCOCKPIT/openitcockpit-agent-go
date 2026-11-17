@@ -10,7 +10,6 @@ import (
 	"github.com/go-viper/encoding/ini"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/basiclog"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/platformpaths"
-	"github.com/openITCOCKPIT/openitcockpit-agent-go/utils"
 	"github.com/spf13/viper"
 )
 
@@ -306,7 +305,7 @@ func unmarshalConfiguration(v *viper.Viper) (*Configuration, error) {
 	cfg.viper = v
 
 	if cfg.CustomchecksFilePath != "" {
-		if utils.FileExists(cfg.CustomchecksFilePath) {
+		if hasDefinitionFiles(cfg.CustomchecksFilePath) {
 			if ccc, err := unmarshalCustomChecks(cfg.CustomchecksFilePath); err != nil {
 				logger, _ := basiclog.New()
 				logger.Errorln("Configuration: could not load custom checks: ", err)
@@ -334,7 +333,7 @@ func unmarshalConfiguration(v *viper.Viper) (*Configuration, error) {
 
 	// Parse Prometheus Exporter configuration
 	if cfg.Prometheus.ExportersFilePath != "" && cfg.Prometheus.Enable {
-		if utils.FileExists(cfg.Prometheus.ExportersFilePath) {
+		if hasDefinitionFiles(cfg.Prometheus.ExportersFilePath) {
 			if promExporters, err := unmarshalPrometheusExporters(cfg.Prometheus.ExportersFilePath); err != nil {
 				logger, _ := basiclog.New()
 				logger.Errorln("Configuration: could not load prometheus exporter: ", err)
@@ -343,7 +342,7 @@ func unmarshalConfiguration(v *viper.Viper) (*Configuration, error) {
 			}
 		} else {
 			logger, _ := basiclog.New()
-			logger.Errorln("Configuration: Prometheus exporter configuration does not exist: ", cfg.CustomchecksFilePath)
+			logger.Errorln("Configuration: Prometheus exporter configuration does not exist: ", cfg.Prometheus.ExportersFilePath)
 		}
 	}
 
@@ -380,99 +379,65 @@ func Load(ctx context.Context, configPath string) (*Configuration, error) {
 	return unmarshalConfiguration(v)
 }
 
+// unmarshalCustomChecks reads customchecks.ini and the files of customchecks.d. Invalid custom checks are skipped, so
+// a single invalid drop-in file does not disable all custom checks
 func unmarshalCustomChecks(configPath string) ([]*CustomCheck, error) {
-	// Register the INI encoding
-	// As ini support got removed from viper with v1.20.0
-	// https://github.com/spf13/viper/releases/tag/v1.20.0
-	// https://github.com/spf13/viper/blob/master/UPGRADE.md#v120x
-	codecRegistry := viper.NewCodecRegistry()
-	codecRegistry.RegisterCodec("ini", ini.Codec{})
-
-	v := viper.NewWithOptions(
-		viper.WithCodecRegistry(codecRegistry),
-	)
-
-	v.SetConfigFile(configPath)
-	v.SetConfigType("ini")
-
-	if err := v.ReadInConfig(); err != nil {
-		return nil, err
-	}
-
-	cfg := map[string]*CustomCheck{}
-
-	if err := v.Unmarshal(&cfg); err != nil {
+	cfg, err := readIniSections[CustomCheck](configPath)
+	if err != nil {
 		return nil, err
 	}
 
 	checks := make([]*CustomCheck, 0)
 	for name, check := range cfg {
-		if name != "default" {
-			check.Name = name
-			if check.Interval <= 0 {
-				check.Interval = 60
-			}
-			if check.Timeout <= 0 {
-				check.Timeout = 15
-			}
-			if strings.TrimSpace(check.Command) == "" {
-				return nil, fmt.Errorf("missing command in custom check: %s", check.Name)
-			}
-			if check.Enabled {
-				checks = append(checks, check)
-			}
+		if !check.Enabled {
+			continue
 		}
+		check.Name = name
+		if check.Interval <= 0 {
+			check.Interval = 60
+		}
+		if check.Timeout <= 0 {
+			check.Timeout = 15
+		}
+		if strings.TrimSpace(check.Command) == "" {
+			logInvalidDefinition("custom check", name, fmt.Errorf("missing command in custom check: %s", name))
+			continue
+		}
+		checks = append(checks, check)
 	}
 
 	return checks, nil
 }
 
+// unmarshalPrometheusExporters reads prometheus_exporters.ini and the files of prometheus_exporters.d. Invalid
+// exporters are skipped
 func unmarshalPrometheusExporters(configPath string) ([]*PrometheusExporter, error) {
-	// Register the INI encoding
-	// As ini support got removed from viper with v1.20.0
-	// https://github.com/spf13/viper/releases/tag/v1.20.0
-	// https://github.com/spf13/viper/blob/master/UPGRADE.md#v120x
-	codecRegistry := viper.NewCodecRegistry()
-	codecRegistry.RegisterCodec("ini", ini.Codec{})
-
-	v := viper.NewWithOptions(
-		viper.WithCodecRegistry(codecRegistry),
-	)
-
-	v.SetConfigFile(configPath)
-	v.SetConfigType("ini")
-
-	if err := v.ReadInConfig(); err != nil {
-		return nil, err
-	}
-
-	cfg := map[string]*PrometheusExporter{}
-
-	if err := v.Unmarshal(&cfg); err != nil {
+	cfg, err := readIniSections[PrometheusExporter](configPath)
+	if err != nil {
 		return nil, err
 	}
 
 	exporters := make([]*PrometheusExporter, 0)
-	for name, check := range cfg {
-		if name != "default" {
-			check.Name = name
-			if check.Timeout <= 0 {
-				check.Timeout = 15
-			}
-
-			if strings.TrimSpace(check.Method) == "https" {
-				check.Method = "https"
-			} else {
-				check.Method = "http"
-			}
-
-			if strings.TrimSpace(check.Path) == "" {
-				return nil, fmt.Errorf("missing path for prometheus exporter: %s", check.Name)
-			}
-			if check.Enabled {
-				exporters = append(exporters, check)
-			}
+	for name, exporter := range cfg {
+		if !exporter.Enabled {
+			continue
 		}
+		exporter.Name = name
+		if exporter.Timeout <= 0 {
+			exporter.Timeout = 15
+		}
+
+		if strings.TrimSpace(exporter.Method) == "https" {
+			exporter.Method = "https"
+		} else {
+			exporter.Method = "http"
+		}
+
+		if strings.TrimSpace(exporter.Path) == "" {
+			logInvalidDefinition("prometheus exporter", name, fmt.Errorf("missing path for prometheus exporter: %s", name))
+			continue
+		}
+		exporters = append(exporters, exporter)
 	}
 
 	return exporters, nil
