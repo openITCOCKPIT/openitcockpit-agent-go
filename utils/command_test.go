@@ -15,6 +15,8 @@ var testCommands = struct {
 	ping          string
 	pingOutput    string
 	notExecutable string
+	// grandchild starts a child process which inherits stdout and runs for 30 seconds
+	grandchild string
 }{}
 
 func init() {
@@ -23,11 +25,13 @@ func init() {
 		testCommands.ping = "ping 127.0.0.1 -n 1"
 		testCommands.pingOutput = "127.0.0.1"
 		testCommands.notExecutable = `C:\\Windows\\System32\\drivers\\etc\\hosts`
+		testCommands.grandchild = `cmd.exe /c "ping -n 30 127.0.0.1"`
 	} else {
 		testCommands.sleep = "sleep 10"
 		testCommands.ping = "echo thisImageHasNoPingCommand"
 		testCommands.pingOutput = "thisImageHasNoPingCommand"
 		testCommands.notExecutable = "/etc/hosts"
+		testCommands.grandchild = `/bin/sh -c "sleep 30; echo done"`
 	}
 }
 
@@ -76,6 +80,31 @@ func TestCommandTimeout(t *testing.T) {
 		t.Fatal(err)
 	}
 	fmt.Println(string(js))
+}
+
+// Wait must not hang after the timeout if a child process of the command still holds stdout open
+// https://github.com/golang/go/issues/18874
+// https://github.com/golang/go/issues/22610
+func TestCommandTimeoutWithChildHoldingStdout(t *testing.T) {
+	assertTimeoutDoesNotHang(t, CommandArgs{
+		Command: testCommands.grandchild,
+		Timeout: 2 * time.Second,
+	})
+}
+
+func assertTimeoutDoesNotHang(t *testing.T, commandArgs CommandArgs) {
+	t.Helper()
+	start := time.Now()
+	result, _ := RunCommand(context.Background(), commandArgs)
+	duration := time.Since(start)
+	t.Logf("RunCommand returned after %s", duration.Round(time.Millisecond))
+
+	if result.RC != Timeout {
+		t.Errorf("expected the exit code %d of a timeout, got %d: %s", Timeout, result.RC, result.Stdout)
+	}
+	if duration > commandArgs.Timeout+5*time.Second {
+		t.Errorf("RunCommand returned %s after the timeout, the child process kept stdout open", duration-commandArgs.Timeout)
+	}
 }
 
 func TestCommandCancel(t *testing.T) {
