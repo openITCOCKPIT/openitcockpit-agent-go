@@ -7,6 +7,9 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+// collectionSupported is true, the software inventory and the updates are collected on this platform
+const collectionSupported = true
+
 func (s *SoftwareCollector) runCollection(parent context.Context, timeout time.Duration) {
 	ctx, cancel := context.WithTimeout(parent, timeout)
 	defer cancel()

@@ -1,10 +1,7 @@
 package checks
 
 import (
-	"context"
-
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/config"
-	"github.com/shirou/gopsutil/v4/load"
 )
 
 // CheckLoad gathers information about system CPU load
@@ -20,23 +17,6 @@ type resultLoad struct {
 	Load1  float64 `json:"0"`
 	Load5  float64 `json:"1"`
 	Load15 float64 `json:"2"`
-}
-
-// Run the actual check
-// if error != nil the check result will be nil
-// ctx can be canceled and runs the timeout
-// CheckResult will be serialized after the return and should not change until the next call to Run
-func (c *CheckLoad) Run(ctx context.Context) (interface{}, error) {
-	l, err := load.AvgWithContext(ctx)
-
-	if err != nil {
-		return nil, err
-	}
-	return &resultLoad{
-		Load1:  l.Load1,
-		Load5:  l.Load5,
-		Load15: l.Load15,
-	}, nil
 }
 
 // Configure the command or return false if the command was disabled

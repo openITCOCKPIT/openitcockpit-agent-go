@@ -1,5 +1,5 @@
-//go:build linux || freebsd
-// +build linux freebsd
+//go:build linux || freebsd || aix
+// +build linux freebsd aix
 
 package checks
 
@@ -13,12 +13,10 @@ import (
 	"strings"
 
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/config"
-	"github.com/shirou/gopsutil/v4/disk"
 )
 
-const fstabPath = "/etc/fstab"
-
-// CheckMounts reports filesystems of the /etc/fstab which are not mounted, e.g. a NFS share after a reboot
+// CheckMounts reports filesystems of the /etc/fstab (AIX: /etc/filesystems) which are not mounted,
+// e.g. a NFS share after a reboot
 type CheckMounts struct {
 	// fstab and mountpoints can be changed by tests
 	fstab       string
@@ -73,7 +71,7 @@ func (c *CheckMounts) Run(ctx context.Context) (interface{}, error) {
 	}
 
 	result := &resultMounts{Fstab: path, Missing: []*resultFstabEntry{}}
-	for _, entry := range parseFstab(data) {
+	for _, entry := range parseMountTable(data) {
 		result.Expected++
 		if !isMounted[entry.Mountpoint] {
 			result.Missing = append(result.Missing, entry)
@@ -89,19 +87,6 @@ func (c *CheckMounts) Configure(cfg *config.Configuration) (bool, error) {
 	}
 	_, err := os.Stat(fstabPath)
 	return err == nil, nil
-}
-
-func currentMountpoints(ctx context.Context) ([]string, error) {
-	// all = true also returns pseudo filesystems like autofs (systemd automount) and network filesystems
-	partitions, err := disk.PartitionsWithContext(ctx, true)
-	if err != nil {
-		return nil, err
-	}
-	result := make([]string, 0, len(partitions))
-	for _, partition := range partitions {
-		result = append(result, partition.Mountpoint)
-	}
-	return result, nil
 }
 
 // networkFilesystems are filesystems which require the network

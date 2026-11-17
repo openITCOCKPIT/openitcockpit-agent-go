@@ -55,6 +55,12 @@ type SoftwareCollector struct {
 	cancel context.CancelFunc
 }
 
+// Supported returns true if the software inventory and the updates are collected on this platform (Linux, Windows
+// and macOS). On other platforms the agent reports the package manager as disabled, so no service is created for it.
+func Supported() bool {
+	return collectionSupported
+}
+
 // Shutdown gracefully stops the collector by cancelling the context and waiting for goroutines to finish
 func (s *SoftwareCollector) Shutdown() {
 	if s.cancel != nil {

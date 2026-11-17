@@ -145,6 +145,14 @@ type Configuration struct {
 	NetworkPorts    bool  `mapstructure:"networkports"`
 	Ipmi            bool  `mapstructure:"ipmi"`
 	Gpus            bool  `mapstructure:"gpus"`
+	Lpar            bool  `mapstructure:"lpar"`
+	SrcServices     bool  `mapstructure:"srcservices"`
+	Errpt           bool  `mapstructure:"errpt"`
+	Multipath       bool  `mapstructure:"multipath"`
+	NetworkAdapters bool  `mapstructure:"networkadapters"`
+	PagingSpaces    bool  `mapstructure:"pagingspaces"`
+	PowerHA         bool  `mapstructure:"powerha"`
+	Sendmail        bool  `mapstructure:"sendmail"`
 
 	// Alfresco
 
@@ -159,6 +167,9 @@ type Configuration struct {
 	// IPMI: interval of the background collection and time window of the SEL entries in seconds
 	IpmiInterval  int64 `mapstructure:"ipmi-interval"`
 	IpmiSelWindow int64 `mapstructure:"ipmi-sel-window"`
+
+	// AIX error log: time window of the entries in seconds
+	ErrptWindow int64 `mapstructure:"errpt-window"`
 
 	// Windows scheduled tasks: Also report the tasks of the \Microsoft\ folder
 	WindowsTasksIncludeMicrosoft bool `mapstructure:"winscheduledtasks-include-microsoft"`
@@ -231,6 +242,15 @@ var defaultValue = map[string]interface{}{
 	"networkports":            true,
 	"ipmi":                    true,
 	"gpus":                    true,
+	"lpar":                    true,
+	"srcservices":             true,
+	"errpt":                   true,
+	"errpt-window":            86400,
+	"multipath":               true,
+	"networkadapters":         true,
+	"pagingspaces":            true,
+	"powerha":                 true,
+	"sendmail":                true,
 	"ipmi-interval":           60,
 	"ipmi-sel-window":         86400,
 	"wineventlog-logtypes":    "System,Application",

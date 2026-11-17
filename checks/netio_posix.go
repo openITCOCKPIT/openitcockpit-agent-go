@@ -1,5 +1,5 @@
-//go:build linux || darwin || freebsd
-// +build linux darwin freebsd
+//go:build linux || darwin || freebsd || aix
+// +build linux darwin freebsd aix
 
 package checks
 
@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/safemaths"
-	"github.com/shirou/gopsutil/v4/net"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -17,7 +16,7 @@ import (
 // ctx can be canceled and runs the timeout
 // CheckResult will be serialized after the return and should not change until the next call to Run
 func (c *CheckNetIo) Run(ctx context.Context) (interface{}, error) {
-	stats, err := net.IOCountersWithContext(ctx, true)
+	stats, err := netIoCounters(ctx)
 
 	if err != nil {
 		return nil, err
