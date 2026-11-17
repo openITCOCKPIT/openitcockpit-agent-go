@@ -6,6 +6,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/moby/moby/api/types/container"
 )
 
 func TestChecksCheckDocker(t *testing.T) {
@@ -85,5 +87,25 @@ func TestDockerRestartsLastHour(t *testing.T) {
 	dockerRestartsMutex.Unlock()
 	if kept {
 		t.Error("samples of a removed container must be deleted after an hour")
+	}
+}
+
+func TestDockerStatsOSType(t *testing.T) {
+	tests := []struct {
+		statsOSType  string
+		daemonOSType string
+		expected     string
+	}{
+		{"windows", "windows", "windows"}, // Docker 29 and newer send the OS with the stats
+		{"linux", "windows", "linux"},
+		{"", "windows", "windows"}, // Older daemons: the OS of the daemon from the ping
+		{"", "linux", "linux"},
+		{"", "", ""},
+	}
+	for _, test := range tests {
+		stats := &container.StatsResponse{OSType: test.statsOSType}
+		if osType := dockerStatsOSType(stats, test.daemonOSType); osType != test.expected {
+			t.Errorf("stats %q, daemon %q: expected %q, got %q", test.statsOSType, test.daemonOSType, test.expected, osType)
+		}
 	}
 }

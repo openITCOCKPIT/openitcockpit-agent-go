@@ -7,8 +7,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/client"
+	"github.com/moby/moby/api/types/container"
+	"github.com/moby/moby/client"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/config"
@@ -54,18 +54,24 @@ type resultDocker struct {
 // ctx can be canceled and runs the timeout
 // CheckResult will be serialized after the return and should not change until the next call to Run
 func (c *CheckDocker) Run(ctx context.Context) (interface{}, error) {
-	cli, err := client.NewClientWithOpts(client.FromEnv)
+	cli, err := client.New(client.FromEnv)
 	if err != nil {
 		return nil, err
 	}
 	defer cli.Close()
 
-	containers, err := cli.ContainerList(ctx, container.ListOptions{
+	daemonOSType, err := c.negotiateAPIVersion(ctx, cli)
+	if err != nil {
+		return nil, err
+	}
+
+	list, err := cli.ContainerList(ctx, client.ContainerListOptions{
 		All: false, //Only show running containers
 	})
 	if err != nil {
 		return nil, err
 	}
+	containers := list.Items
 
 	existing := make(map[string]bool, len(containers))
 	for _, ctr := range containers {
@@ -86,7 +92,11 @@ func (c *CheckDocker) Run(ctx context.Context) (interface{}, error) {
 			// This is a new "thread" / go func for each docker container
 			defer wg.Done()
 
-			response, err := cli.ContainerStats(ctx, ctr.ID, false)
+			// IncludePreviousSample: the daemon takes two samples, the CPU usage is calculated from PreCPUStats
+			response, err := cli.ContainerStats(ctx, ctr.ID, client.ContainerStatsOptions{
+				Stream:                false,
+				IncludePreviousSample: true,
+			})
 			if err != nil {
 				errorChan <- err
 				return
@@ -106,7 +116,7 @@ func (c *CheckDocker) Run(ctx context.Context) (interface{}, error) {
 
 			// Memory and CPU usage needs to be calculated manually
 			// https://github.com/docker/cli/blob/a4a07c643042f4e2a75bf872f38b134502848214/cli/command/container/stats_helpers.go#L79-L128
-			if response.OSType != "windows" {
+			if dockerStatsOSType(stats, daemonOSType) != "windows" {
 				// Docker daemon is running in Linux or macOS
 				previousCPU := float64(stats.PreCPUStats.CPUUsage.TotalUsage)
 				previousSystem := float64(stats.PreCPUStats.SystemUsage)
@@ -131,8 +141,8 @@ func (c *CheckDocker) Run(ctx context.Context) (interface{}, error) {
 				Image:            ctr.Image,
 				SizeRw:           ctr.SizeRw,
 				SizeRootFs:       ctr.SizeRootFs,
-				State:            ctr.State,  // running
-				Status:           ctr.Status, // Up 6 minutes
+				State:            string(ctr.State), // running
+				Status:           ctr.Status,        // Up 6 minutes
 				CpuPercentage:    cpuPercentage,
 				MemoryPercentage: memoryPercentage,
 				NetworkRx:        networkRx,
@@ -166,6 +176,29 @@ func (c *CheckDocker) Run(ctx context.Context) (interface{}, error) {
 	return dockerResults, nil
 }
 
+// negotiateAPIVersion pings the Docker daemon to use the highest API version supported by the daemon and the client
+// (API 1.40 / Docker 19.03 or newer) and returns the OS of the daemon (linux or windows).
+// Without the negotiation the client would send its own API version, which older daemons reject with
+// "client version ... is too new".
+func (c *CheckDocker) negotiateAPIVersion(ctx context.Context, cli *client.Client) (string, error) {
+	ping, err := cli.Ping(ctx, client.PingOptions{
+		NegotiateAPIVersion: true,
+	})
+	if err != nil {
+		return "", err
+	}
+	return ping.OSType, nil
+}
+
+// dockerStatsOSType returns the OS of the container. Docker 29 (API 1.52) and newer send it with the stats, for older
+// daemons the OS of the daemon is used
+func dockerStatsOSType(stats *container.StatsResponse, daemonOSType string) string {
+	if stats.OSType != "" {
+		return stats.OSType
+	}
+	return daemonOSType
+}
+
 // The restart counts of the containers, to detect restart loops. Stored outside of CheckDocker, as the checks get recreated on reload
 var (
 	dockerRestartsMutex  sync.Mutex
@@ -184,11 +217,12 @@ const (
 
 // addInspectInfo adds the healthcheck state and restart information of a container
 func (c *CheckDocker) addInspectInfo(ctx context.Context, cli *client.Client, id string, result *resultDocker) {
-	inspect, err := cli.ContainerInspect(ctx, id)
+	response, err := cli.ContainerInspect(ctx, id, client.ContainerInspectOptions{})
 	if err != nil {
 		log.Errorln("Docker Check error: ", err)
 		return
 	}
+	inspect := response.Container
 
 	result.RestartCount = inspect.RestartCount
 	result.RestartsLastHour = dockerRestartsLastHour(id, inspect.RestartCount, time.Now())
