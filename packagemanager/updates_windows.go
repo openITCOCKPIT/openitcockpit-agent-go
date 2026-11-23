@@ -10,6 +10,7 @@ import (
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/config"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/utils"
 	"github.com/shirou/gopsutil/v4/host"
+
 	// Needed again as soon as the installed KBs are collected, see CollectPackageInfo
 	// log "github.com/sirupsen/logrus"
 	"golang.org/x/sys/windows/registry"
@@ -277,36 +278,39 @@ func (w WindowsUpdatesManager) parsePowerShellUpdateSessionOutput(output string)
 	return updates, nil
 }
 
-func (w WindowsUpdatesManager) RebootRequired(ctx context.Context) (bool, error) {
-	// https://stackoverflow.com/a/47869761/11885414
-	// 1. Check Windows Update reboot required key
-	// Indicates that Windows Update has installed updates that require a reboot to complete.
-	wuKey, err := registry.OpenKey(registry.LOCAL_MACHINE, `SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired`, registry.READ)
-	if err == nil {
-		wuKey.Close()
-		return true, nil
-	}
+// rebootRequiredKeys are the registry keys of Windows Update and the servicing stack (CBS). They only exist while a
+// reboot is pending to finish the installation of updates and are removed by the reboot.
+// PendingFileRenameOperations of the Session Manager is not checked on purpose: any application (installers, Office
+// Click-to-Run, printer drivers, antivirus software, ...) uses it to replace files on the next boot and it is set
+// again shortly after the reboot, so it reported a pending reboot on almost every system (#124).
+// https://stackoverflow.com/a/47869761/11885414
+var rebootRequiredKeys = []string{
+	`SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired`,
+	`SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending`,
+}
 
-	// 2. Check PendingFileRenameOperations value in Session Manager
-	// This key is checked for the presence of the "PendingFileRenameOperations" value, which signals that files are scheduled to be replaced or deleted on the next reboot.
-	smKey, err := registry.OpenKey(registry.LOCAL_MACHINE, `SYSTEM\CurrentControlSet\Control\Session Manager`, registry.READ)
-	if err == nil {
-		defer smKey.Close()
-		val, _, err := smKey.GetStringsValue("PendingFileRenameOperations")
-		if err == nil && len(val) > 0 {
-			return true, nil
+func (w WindowsUpdatesManager) RebootRequired(ctx context.Context) (bool, error) {
+	return anyRegistryKeyExists(rebootRequiredKeys, registryKeyExists), nil
+}
+
+// anyRegistryKeyExists returns true if at least one of the keys exists. keyExists is replaced by the tests.
+func anyRegistryKeyExists(paths []string, keyExists func(path string) bool) bool {
+	for _, path := range paths {
+		if keyExists(path) {
+			return true
 		}
 	}
+	return false
+}
 
-	// 3. Check Component Based Servicing reboot pending key
-	// Used by the Windows servicing stack (CBS) to indicate that a reboot is required to complete servicing operations, such as installing or removing Windows components or updates.
-	cbsKey, err := registry.OpenKey(registry.LOCAL_MACHINE, `SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending`, registry.READ)
-	if err == nil {
-		cbsKey.Close()
-		return true, nil
+// registryKeyExists returns true if the key exists below HKEY_LOCAL_MACHINE
+func registryKeyExists(path string) bool {
+	key, err := registry.OpenKey(registry.LOCAL_MACHINE, path, registry.QUERY_VALUE)
+	if err != nil {
+		return false
 	}
-
-	return false, nil
+	key.Close()
+	return true
 }
 
 func containsIgnoreCase(slice []string, item string) bool {

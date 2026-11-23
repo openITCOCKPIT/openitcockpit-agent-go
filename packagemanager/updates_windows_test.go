@@ -2,11 +2,9 @@ package packagemanager
 
 import (
 	"context"
-	"errors"
 	"reflect"
+	"strings"
 	"testing"
-
-	"golang.org/x/sys/windows/registry"
 )
 
 // To get this json, copy and paste the value of psScript from
@@ -217,120 +215,55 @@ func TestGetInstalledWindowsApps(t *testing.T) {
 	}
 }
 
-// mockRegistryOpenKey is a function variable to allow mocking in tests.
-var mockRegistryOpenKey func(key registry.Key, path string, access uint32) (registry.Key, error)
+// fakeRegistry contains the keys which exist
+type fakeRegistry map[string]bool
 
-// patchRegistryOpenKey replaces registry.OpenKey with a mock for testing.
-func patchRegistryOpenKey() func() {
-	orig := registryOpenKey
-	registryOpenKey = mockRegistryOpenKey
-	return func() { registryOpenKey = orig }
+func (f fakeRegistry) keyExists(path string) bool {
+	return f[path]
 }
 
-// registryOpenKey is a wrapper for registry.OpenKey to allow mocking.
-var registryOpenKey = registry.OpenKey
+const testSessionManagerKey = `SYSTEM\CurrentControlSet\Control\Session Manager`
 
-// Patch WindowsUpdatesManager to use registryOpenKey instead of registry.OpenKey.
-func (w WindowsUpdatesManager) RebootRequiredTestable(ctx context.Context) (bool, error) {
-	checks := []struct {
-		key  registry.Key
-		path string
-	}{
-		{registry.LOCAL_MACHINE, `SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WindowsUpdate\\Auto Update\\RebootRequired`},
-		{registry.LOCAL_MACHINE, `SYSTEM\\CurrentControlSet\\Control\\Session Manager`},
-		{registry.LOCAL_MACHINE, `SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Component Based Servicing\\RebootPending`},
-	}
-	for _, check := range checks {
-		k, err := registryOpenKey(check.key, check.path, registry.READ)
-		if err == nil {
-			k.Close()
-			return true, nil
+func TestRebootRequiredKeys(t *testing.T) {
+	for _, path := range rebootRequiredKeys {
+		fake := fakeRegistry{path: true}
+		if !anyRegistryKeyExists(rebootRequiredKeys, fake.keyExists) {
+			t.Errorf("expected a pending reboot if %s exists", path)
 		}
 	}
-	return false, nil
 }
 
-// fakeKey is no longer needed; use registry.Key(0) as a dummy key in tests.
+func TestRebootRequiredFalseWhenNoKeysExist(t *testing.T) {
+	if anyRegistryKeyExists(rebootRequiredKeys, fakeRegistry{}.keyExists) {
+		t.Error("expected no pending reboot without keys")
+	}
+}
 
-func TestRebootRequired_TrueOnFirstKey(t *testing.T) {
-	manager := WindowsUpdatesManager{}
-	mockRegistryOpenKey = func(key registry.Key, path string, access uint32) (registry.Key, error) {
-		if path == `SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WindowsUpdate\\Auto Update\\RebootRequired` {
-			return registry.Key(0), nil
+// The Session Manager key exists on every system and PendingFileRenameOperations is set by many applications (#124)
+func TestRebootRequiredIgnoresSessionManager(t *testing.T) {
+	for _, path := range rebootRequiredKeys {
+		if strings.EqualFold(path, testSessionManagerKey) {
+			t.Errorf("the Session Manager must not be checked: %s", path)
 		}
-		return registry.Key(0), errors.New("not found")
 	}
-	defer patchRegistryOpenKey()()
-
-	result, err := manager.RebootRequiredTestable(context.Background())
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
-	}
-	if !result {
-		t.Errorf("expected true, got false")
+	if anyRegistryKeyExists(rebootRequiredKeys, fakeRegistry{testSessionManagerKey: true}.keyExists) {
+		t.Error("expected no pending reboot if only the Session Manager key exists")
 	}
 }
 
-func TestRebootRequired_TrueOnSecondKey(t *testing.T) {
-	manager := WindowsUpdatesManager{}
-	callCount := 0
-	mockRegistryOpenKey = func(key registry.Key, path string, access uint32) (registry.Key, error) {
-		callCount++
-		if path == `SYSTEM\\CurrentControlSet\\Control\\Session Manager` {
-			return registry.Key(0), nil
-		}
-		return registry.Key(0), errors.New("not found")
+func TestRegistryKeyExists(t *testing.T) {
+	if !registryKeyExists(`SOFTWARE\Microsoft\Windows\CurrentVersion`) {
+		t.Error("expected HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion to exist")
 	}
-	defer patchRegistryOpenKey()()
-
-	result, err := manager.RebootRequiredTestable(context.Background())
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
-	}
-	if !result {
-		t.Errorf("expected true, got false")
-	}
-	if callCount < 2 {
-		t.Errorf("expected at least 2 calls, got %d", callCount)
+	if registryKeyExists(`SOFTWARE\openITCOCKPIT\does-not-exist`) {
+		t.Error("expected a missing key to not exist")
 	}
 }
 
-func TestRebootRequired_TrueOnThirdKey(t *testing.T) {
+func TestRebootRequiredRegistry(t *testing.T) {
+	// The result depends on the system, it only must not fail
 	manager := WindowsUpdatesManager{}
-	callCount := 0
-	mockRegistryOpenKey = func(key registry.Key, path string, access uint32) (registry.Key, error) {
-		callCount++
-		if path == `SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Component Based Servicing\\RebootPending` {
-			return registry.Key(0), nil
-		}
-		return registry.Key(0), errors.New("not found")
-	}
-	defer patchRegistryOpenKey()()
-
-	result, err := manager.RebootRequiredTestable(context.Background())
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
-	}
-	if !result {
-		t.Errorf("expected true, got false")
-	}
-	if callCount < 3 {
-		t.Errorf("expected at least 3 calls, got %d", callCount)
-	}
-}
-
-func TestRebootRequired_FalseWhenNoKeysExist(t *testing.T) {
-	manager := WindowsUpdatesManager{}
-	mockRegistryOpenKey = func(key registry.Key, path string, access uint32) (registry.Key, error) {
-		return registry.Key(0), errors.New("not found")
-	}
-	defer patchRegistryOpenKey()()
-
-	result, err := manager.RebootRequiredTestable(context.Background())
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
-	}
-	if result {
-		t.Errorf("expected false, got true")
+	if _, err := manager.RebootRequired(context.Background()); err != nil {
+		t.Fatal(err)
 	}
 }
