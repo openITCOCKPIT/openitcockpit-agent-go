@@ -267,3 +267,173 @@ func TestRebootRequiredRegistry(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+// Output of the Windows Update API and SCCM with localized category names. The security updates must be detected by
+// the IDs of the classification and the products. The cumulative update is found by both sources.
+var localizedAndSccmWindowsUpdatesJson = `[
+  {
+    "Title": "Sicherheitsupdate für Windows (KB5000001)",
+    "Description": "Ein Sicherheitsproblem wurde erkannt.",
+    "KBArticleIDs": ["5000001"],
+    "Categories": ["Sicherheitsupdates", "Windows Server 2025"],
+    "CategoryIDs": ["0FA1201D-4330-4FA8-8AE9-B877473B6441", "00000000-0000-0000-0000-000000000001"],
+    "SupportUrl": "https://support.microsoft.com/help/5000001",
+    "RebootRequired": false,
+    "EulaAccepted": true,
+    "BrowseOnly": false,
+    "UpdateID": "11111111-1111-1111-1111-111111111111",
+    "RevisionNumber": 100
+  },
+  {
+    "Title": "Security Intelligence-Update für Microsoft Defender Antivirus – KB2267602",
+    "Description": "",
+    "KBArticleIDs": ["2267602"],
+    "Categories": ["Definitionsupdates", "Microsoft Defender Antivirus"],
+    "CategoryIDs": ["e0789628-ce08-4437-be74-2495b842f43b", "8c3fcc84-7410-4a95-8b89-a166a0190486"],
+    "SupportUrl": "",
+    "RebootRequired": false,
+    "EulaAccepted": true,
+    "BrowseOnly": false,
+    "UpdateID": "22222222-2222-2222-2222-222222222222",
+    "RevisionNumber": 200
+  },
+  {
+    "Title": "Kritisches Update für Windows (KB5000003)",
+    "Description": "",
+    "KBArticleIDs": ["5000003"],
+    "Categories": ["Kritische Updates"],
+    "CategoryIDs": ["e6cf1350-c01b-414d-a61f-263d14d133b4"],
+    "SupportUrl": "",
+    "RebootRequired": true,
+    "EulaAccepted": true,
+    "BrowseOnly": false,
+    "UpdateID": "33333333-3333-3333-3333-333333333333",
+    "RevisionNumber": 1
+  },
+  {
+    "Title": "Example Corporation Treiberupdate (1.0.0.1)",
+    "Description": "",
+    "KBArticleIDs": [],
+    "Categories": ["Treiber"],
+    "CategoryIDs": ["ebfc1fc5-71a4-4f7b-9aca-3b9a503104a0"],
+    "SupportUrl": "",
+    "RebootRequired": false,
+    "EulaAccepted": true,
+    "BrowseOnly": true,
+    "UpdateID": "44444444-4444-4444-4444-444444444444",
+    "RevisionNumber": 1
+  },
+  {
+    "Title": "Sicherheitsupdate für Windows (KB5000001)",
+    "Description": "Deployed by SCCM",
+    "KBArticleIDs": ["5000001"],
+    "Categories": [],
+    "CategoryIDs": ["0fa1201d-4330-4fa8-8ae9-b877473b6441"],
+    "SupportUrl": "https://support.microsoft.com/help/5000001",
+    "RebootRequired": false,
+    "EulaAccepted": true,
+    "BrowseOnly": false,
+    "UpdateID": "11111111-1111-1111-1111-111111111111",
+    "RevisionNumber": 100
+  },
+  {
+    "Title": "Windows-Tool zum Entfernen bösartiger Software x64 (KB890830)",
+    "Description": "Deployed by SCCM",
+    "KBArticleIDs": ["890830"],
+    "Categories": [],
+    "CategoryIDs": ["28bc880e-0592-4cbf-8f95-c79b17911d5f", "00000000-0000-0000-0000-000000000002"],
+    "SupportUrl": "http://support.microsoft.com/kb/890830",
+    "RebootRequired": true,
+    "EulaAccepted": true,
+    "BrowseOnly": false,
+    "UpdateID": "55555555-5555-5555-5555-555555555555",
+    "RevisionNumber": 201
+  }
+]`
+
+func TestParsePowerShellUpdateSessionOutput_LocalizedAndSccm(t *testing.T) {
+	manager := WindowsUpdatesManager{}
+	updates, err := manager.parsePowerShellUpdateSessionOutput(localizedAndSccmWindowsUpdatesJson)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	expected := []struct {
+		updateID       string
+		security       bool
+		optional       bool
+		rebootRequired bool
+	}{
+		{"11111111-1111-1111-1111-111111111111", true, false, false}, // Security Updates, upper case ID
+		{"22222222-2222-2222-2222-222222222222", true, false, false}, // Definition Updates and Microsoft Defender Antivirus
+		{"33333333-3333-3333-3333-333333333333", true, false, true},  // Critical Updates
+		{"44444444-4444-4444-4444-444444444444", false, true, false}, // Drivers, optional (BrowseOnly)
+		{"55555555-5555-5555-5555-555555555555", false, false, true}, // Update Rollups (SCCM)
+	}
+	if len(updates) != len(expected) {
+		t.Fatalf("expected %d updates, the update of both sources only once, got %d", len(expected), len(updates))
+	}
+	for i, e := range expected {
+		update := updates[i]
+		if update.UpdateID != e.updateID {
+			t.Errorf("update %d: expected %s, got %s", i, e.updateID, update.UpdateID)
+		}
+		if update.IsSecurityUpdate != e.security {
+			t.Errorf("%s: expected IsSecurityUpdate %v", update.Title, e.security)
+		}
+		if update.IsOptional != e.optional {
+			t.Errorf("%s: expected IsOptional %v", update.Title, e.optional)
+		}
+		if update.RebootRequired != e.rebootRequired {
+			t.Errorf("%s: expected RebootRequired %v", update.Title, e.rebootRequired)
+		}
+	}
+	// The first source wins, the Windows Update API is read before SCCM
+	if updates[0].Description != "Ein Sicherheitsproblem wurde erkannt." {
+		t.Errorf("expected the update of the Windows Update API, got %q", updates[0].Description)
+	}
+}
+
+func TestParsePowerShellUpdateSessionOutput_EmptyArray(t *testing.T) {
+	manager := WindowsUpdatesManager{}
+	updates, err := manager.parsePowerShellUpdateSessionOutput("[]")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(updates) != 0 {
+		t.Errorf("expected 0 updates, got %d", len(updates))
+	}
+}
+
+func TestIsReportedUpdate(t *testing.T) {
+	reported := map[string]bool{}
+	if isReportedUpdate(reported, "ABC") {
+		t.Error("expected the first update to be reported")
+	}
+	if !isReportedUpdate(reported, "abc") {
+		t.Error("expected the same ID in lower case to be skipped")
+	}
+	if isReportedUpdate(reported, "") || isReportedUpdate(reported, "") {
+		t.Error("expected updates without ID to be always reported")
+	}
+}
+
+func TestParseSccmRebootPendingOutput(t *testing.T) {
+	tests := map[string]bool{
+		"true":     true,
+		"false":    false,
+		"true\r\n": true,
+	}
+	for output, expected := range tests {
+		rebootPending, err := parseSccmRebootPendingOutput(output)
+		if err != nil {
+			t.Errorf("%q: %v", output, err)
+		}
+		if rebootPending != expected {
+			t.Errorf("%q: expected %v, got %v", output, expected, rebootPending)
+		}
+	}
+	if _, err := parseSccmRebootPendingOutput("Ungültiger Namespace"); err == nil {
+		t.Error("expected an error for an error message")
+	}
+}
