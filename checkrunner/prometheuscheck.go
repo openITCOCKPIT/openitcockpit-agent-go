@@ -37,6 +37,7 @@ func (c *PrometheusCheckExecutor) runCheck(ctx context.Context, timeout time.Dur
 	resp, err := client.Get(url)
 	if err != nil {
 		log.Infoln("Prometheus Exporter '", c.Configuration.Name, "' error: ", err)
+		return
 	}
 
 	defer resp.Body.Close()
