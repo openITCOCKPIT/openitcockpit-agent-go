@@ -2,7 +2,6 @@ package checkrunner
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -33,10 +32,15 @@ func (c *PrometheusCheckExecutor) runCheck(ctx context.Context, timeout time.Dur
 		Timeout: timeout,
 	}
 
-	url := fmt.Sprintf("http://%s:%d%s", "localhost", c.Configuration.Port, c.Configuration.Path)
+	scheme := "http"
+	if c.Configuration.Method == "https" {
+		scheme = "https"
+	}
+
+	url := fmt.Sprintf("%s://%s:%d%s", scheme, "localhost", c.Configuration.Port, c.Configuration.Path)
 	resp, err := client.Get(url)
 	if err != nil {
-		log.Infoln("Prometheus Exporter '", c.Configuration.Name, "' error: ", err)
+		log.Errorf("Prometheus Exporter '%s' error: %v", c.Configuration.Name, err)
 		return
 	}
 
@@ -44,12 +48,12 @@ func (c *PrometheusCheckExecutor) runCheck(ctx context.Context, timeout time.Dur
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		log.Infoln("Prometheus Exporter Error reading response body '", c.Configuration.Name, "' error: ", err)
+		log.Errorf("Prometheus Exporter '%s' error reading response body: %v", c.Configuration.Name, err)
 		return
 	}
 
 	select {
-	// Return custom check result to Agent Instance
+	// Return Prometheus Exporter result to Agent Instance
 	case c.ResultOutput <- &PrometheusExporterResult{
 		Name:   c.Configuration.Name,
 		Result: string(body),
@@ -57,13 +61,13 @@ func (c *PrometheusCheckExecutor) runCheck(ctx context.Context, timeout time.Dur
 	case <-time.After(time.Second * 5):
 		log.Errorln("Internal error: timeout could not save Prometheus Exporter result")
 	case <-c.shutdown:
-		log.Errorln("Prometheus Exporte: canceled")
+		log.Errorln("Prometheus Exporter: canceled")
 		return
 	case <-ctx.Done():
-		log.Errorln("Prometheus Exporte: canceled")
+		log.Errorln("Prometheus Exporter: canceled")
 		return
 	}
-	log.Debugln("Finish Prometheus Exporte: ", c.Configuration.Name)
+	log.Debugln("Finish Prometheus Exporter: ", c.Configuration.Name)
 }
 
 func (c *PrometheusCheckExecutor) Start(parent context.Context) error {
@@ -72,7 +76,7 @@ func (c *PrometheusCheckExecutor) Start(parent context.Context) error {
 	interval := time.Duration(c.Configuration.Interval) * time.Second
 
 	if timeout > interval {
-		return errors.New("custom check timeout must be lower or equal to interval")
+		return fmt.Errorf("prometheus exporter '%s': timeout must be lower or equal to interval", c.Configuration.Name)
 	}
 
 	c.wg.Add(1)

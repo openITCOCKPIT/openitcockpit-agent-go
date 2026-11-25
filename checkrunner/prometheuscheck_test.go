@@ -2,9 +2,11 @@ package checkrunner
 
 import (
 	"context"
+	"crypto/tls"
 	"net"
 	"net/http"
 	"net/http/httptest"
+	"sync/atomic"
 	"testing"
 	"time"
 
@@ -73,5 +75,56 @@ func TestPrometheusCheckExporterReachable(t *testing.T) {
 		}
 	default:
 		t.Fatal("no result from reachable exporter")
+	}
+}
+
+// method = https has to be used for the request and the certificate has to be verified
+func TestPrometheusCheckExporterHTTPS(t *testing.T) {
+	l, err := net.Listen("tcp", "localhost:0")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	var gotTLS, gotRequest atomic.Bool
+	ts := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		gotRequest.Store(true)
+	}))
+	_ = ts.Listener.Close()
+	ts.Listener = l
+	ts.TLS = &tls.Config{
+		GetConfigForClient: func(*tls.ClientHelloInfo) (*tls.Config, error) {
+			gotTLS.Store(true)
+			return nil, nil
+		},
+	}
+	ts.StartTLS()
+	defer ts.Close()
+
+	executor := newTestPrometheusExecutor(l.Addr().(*net.TCPAddr).Port)
+	executor.Configuration.Method = "https"
+	executor.runCheck(context.Background(), 5*time.Second)
+
+	if !gotTLS.Load() {
+		t.Fatal("exporter with method = https was not queried via TLS")
+	}
+
+	// The test server uses a self-signed certificate
+	if gotRequest.Load() {
+		t.Fatal("request was sent to a server with an untrusted certificate")
+	}
+	select {
+	case res := <-executor.ResultOutput:
+		t.Fatalf("unexpected result from exporter with an untrusted certificate: %+v", res)
+	default:
+	}
+}
+
+func TestPrometheusCheckTimeoutGreaterInterval(t *testing.T) {
+	executor := newTestPrometheusExecutor(9100)
+	executor.Configuration.Interval = 5
+	executor.Configuration.Timeout = 10
+
+	if err := executor.Start(context.Background()); err == nil {
+		t.Fatal("expected an error if timeout is greater than interval")
 	}
 }
