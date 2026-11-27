@@ -23,6 +23,7 @@ func getPlatformChecks() []Check {
 		&CheckHTTP{},
 		&CheckRedfish{},
 		&CheckSmart{},
+		&CheckGpu{},
 		&CheckSecurity{},
 		&CheckZfs{},
 		&CheckCeph{},

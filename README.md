@@ -5,17 +5,34 @@ Cross-Platform Monitoring Agent for openITCOCKPIT written in Go
 [![Build Status](https://drone.openitcockpit.io/buildStatus/icon?job=openitcockpit-agent-go%2Fmain)](https://drone.openitcockpit.io/job/openitcockpit-agent-go/job/main/)
 
 ## Table of contents
-* [Supported operating systems](#supported-operating-systems)
-* [Installation](#installation)
-  - [Debian and Ubuntu](#debian-and-ubuntu)
-  - [Red Hat Linux / CentOS / openSUSE](#red-hat-linux--centos--opensuse)
-  - [Arch Linux](#arch-linux)
-  - [Windows](#windows)
-  - [macOS](#macos)
-  - [FreeBSD](#freebsd)
-* [Supported Platforms](#supported-platforms)
-* [Full documentation](#full-documentation)
-* [License](#license)
+- [openITCOCKPIT Monitoring Agent 3](#openitcockpit-monitoring-agent-3)
+  - [Table of contents](#table-of-contents)
+  - [Supported operating systems](#supported-operating-systems)
+    - [Maybe supported operating systems](#maybe-supported-operating-systems)
+  - [Update from Agent 1.x to 3.x](#update-from-agent-1x-to-3x)
+  - [Requirements](#requirements)
+  - [Installation](#installation)
+    - [Debian and Ubuntu](#debian-and-ubuntu)
+      - [Using the repository](#using-the-repository)
+      - [Manually](#manually)
+    - [Red Hat Linux / CentOS / openSUSE](#red-hat-linux--centos--opensuse)
+      - [Using the repository](#using-the-repository-1)
+      - [Manually](#manually-1)
+    - [Arch Linux](#arch-linux)
+    - [Windows](#windows)
+    - [macOS](#macos)
+    - [FreeBSD](#freebsd)
+    - [AIX](#aix)
+  - [Supported Platforms](#supported-platforms)
+  - [Full documentation](#full-documentation)
+  - [Supported Checks](#supported-checks)
+    - [Advanced Checks](#advanced-checks)
+  - [Software Inventory](#software-inventory)
+    - [Linux](#linux)
+    - [Windows](#windows-1)
+    - [macOS](#macos-1)
+    - [Third Party Package Managers](#third-party-package-managers)
+  - [License](#license)
 
 ## Supported operating systems
 
@@ -25,6 +42,7 @@ Cross-Platform Monitoring Agent for openITCOCKPIT written in Go
   * macOS 15 Sequoia or newer for Intel Macs
 * Linux (Everything from Debian 10 (Buster) / AlmaLinux 8 and newer should work fine)
 * FreeBSD 15
+* IBM AIX 7.3 on POWER
 
 ### Maybe supported operating systems
 
@@ -162,21 +180,132 @@ sudo installer -pkg openitcockpit-agent-uninstaller-3.x.x-darwin-amd64.pkg -targ
 
 ### FreeBSD
 
-Currently we do not provide pre-build packages for FreeBSD systems.
+Install
+```
+pkg add openitcockpit-agent-3.x.x.freebsd-amd64.txz
+```
 
-But you can build the binary from source like so:
+Like other packages of FreeBSD, the package does not enable the agent. Start the agent at boot and start it now:
 ```
-GOOS=freebsd GOARCH=amd64 go build -o openitcockpit-agent
+sysrc openitcockpit_agent_enable=YES
+service openitcockpit_agent start
 ```
+
+The configuration files are located in `/etc/openitcockpit-agent`. The package contains them as `*.ini.sample` files
+and only creates a configuration file if it does not exist yet, so an update keeps the configuration.
+
+Update
+
+pkg can not restart the agent during the installation, so restart it after the update:
+```
+pkg add openitcockpit-agent-3.x.x.freebsd-amd64.txz
+service openitcockpit_agent restart
+```
+
+Uninstall
+```
+pkg delete openitcockpit-agent
+```
+
+The configuration files remain in `/etc/openitcockpit-agent`. If you do not want to use the package, the binary
+`openitcockpit-agent-3.x.x.freebsd-amd64.bin` is available as well.
+
+### AIX
+
+Install
+```
+rpm -ivh openitcockpit-agent-3.x.x-1.aix.ppc.rpm
+```
+
+The package registers the agent as subsystem `openitcockpit-agent` of the System Resource Controller (SRC), starts
+it and adds the entry `oitcagent` to `/etc/inittab` to start the agent at boot. The agent runs as root.
+```
+lssrc -s openitcockpit-agent
+stopsrc -s openitcockpit-agent
+startsrc -s openitcockpit-agent
+```
+
+Update (the configuration files in `/etc/openitcockpit-agent` are kept)
+```
+rpm -Uvh openitcockpit-agent-3.x.x-1.aix.ppc.rpm
+```
+
+Uninstall (removes the subsystem and the entry of `/etc/inittab`, changed configuration files are saved as `*.rpmsave`)
+```
+rpm -e openitcockpit-agent
+```
+
+If you do not want to use the RPM package, e.g. to run the agent as a normal user, the binary
+`openitcockpit-agent-3.x.x.aix-ppc64.bin` is available as well:
+```
+./openitcockpit-agent-3.x.x.aix-ppc64.bin --config $HOME/openitcockpit-agent/config.ini --log $HOME/openitcockpit-agent/agent.log
+```
+
+The agent reads the values with libperfstat and the AIX commands and does not require root, except for PowerHA
+SystemMirror and the sendmail mail queue. Available checks: CPU, LPAR, load, memory, swap, disk usage (incl. inodes),
+disk I/O, network interfaces and I/O, processes, users, NTP, missing mounts, network ports, SRC subsystems, error log
+(errpt), volume groups, multipath, network adapters, paging spaces, PowerHA SystemMirror and the sendmail mail queue,
+as well as the platform independent checks (logfiles, certificates, files, HTTP, Redfish, Postfix).
+
+* **CPU**: the agent uses the PURR (Processor Utilization of Resources Register) instead of the CPU ticks, which are not
+  usable on shared processor partitions. On shared processor partitions the usage is relative to the entitlement
+  like `lparstat` (unused entitlement counts as idle), the consumed physical processors (physc) and the entitlement are
+  reported in `cpu.partition`. The values per logical CPU are the usage of the SMT thread while it was dispatched on a
+  physical processor, on an idle shared partition single threads can show a high usage while the
+  partition uses almost no processor time.
+* **LPAR**: configuration of the partition (shared/dedicated, capped/uncapped, virtual processors, SMT, entitlement,
+  pool size) and for shared processor partitions physc, the entitlement consumption (%entc) and the capacity usage:
+  physc in percent of the processors the partition can use at most (capped: entitlement, uncapped: virtual processors,
+  at most the pool size). A capacity of 100% means the partition can not get more processor time.
+* **Memory**: used memory is the computational memory (like "percentage of memory used for computational pages" of
+  `vmstat -v`), the file cache counts as available.
+* **Disk usage**: the mounted file systems of the `mount` command, pseudo file systems like `/proc` and `/aha` are ignored.
+* **Disk I/O**: the counters of `perfstat_disk` (like `iostat -D`). AIX only counts the disk I/O if the I/O history is
+  enabled (`chdev -l sys0 -a iostat=true`) or a tool like `topas_nmon` enabled the collection. If nothing counts, the
+  check reports an error, the agent does not change the setting.
+* **Network**: the counters of `perfstat_netinterface`, the speed is the bit rate of the adapter (no duplex mode).
+* **Processes**: `ps -e` (without kernel processes). The name is the column `comm`, as many processes overwrite their
+  arguments (e.g. `sshd-session: user@pts/0` or `-ksh`). %CPU is the average since the start of the process, the nice
+  value is converted to -20 to 19.
+* **NTP**: the offset of xntpd (`ntpq -c rv`), otherwise an SNTP query to the server of `/etc/ntp.conf`.
+* **Mounts**: the file systems of `/etc/filesystems` with `mount = automatic`, `true` or `readonly` which are not
+  mounted. File systems with `mount = false`, e.g. of a PowerHA cluster, are ignored.
+* **Network ports**: `netstat -an`, the processes of the listening sockets are not reported (AIX requires root and
+  `rmsock` for each socket).
+* **SRC subsystems** (`srcservices`): all subsystems of `lssrc -a` with their state.
+* **Error log** (`errpt`, `errpt-window`): the entries of `errpt` within the time window, newest first.
+* **Volume groups** (`lvm`): state, physical partitions, stale partitions and the logical and physical volumes of all
+  online volume groups (`lsvg`). Offline volume groups, e.g. of the other node of a cluster, are listed without details.
+* **Multipath** (`multipath`): the MPIO paths of each disk (`lspath`).
+* **Network adapters** (`networkadapters`): the Ethernet adapters (`lsdev`, `entstat -d`) with the driver flags, the
+  link status of physical adapters, the LAN state of virtual adapters and the error and reset counters. EtherChannels,
+  IEEE 802.3ad Link Aggregations and Network Interface Backups contain their members and the active channel (primary
+  or backup). In a LPAR with virtual adapters the physical link is monitored by the VIOS, a Network Interface Backup
+  switches to the backup adapter if the ping address (`netaddr`) is not reachable through the primary adapter.
+* **Paging spaces** (`pagingspaces`): size, usage and the state (active, activated at boot) of each paging space
+  (`lsps -a`), the swap check reports the sum of all paging spaces.
+* **PowerHA SystemMirror** (`powerha`): the state of the cluster manager of the node (`lssrc -ls clstrmgrES`), the
+  cluster services and Cluster-Aware AIX of all nodes (`clshowsrv -v`), the resource groups with the state on each node
+  in the order of the priority and their applications (`clRGinfo -s`, `clRGinfo -m`), the repository disks
+  (`lscluster -d`) and unsynchronized changes of the configuration (`clmgr query cluster`, every 10 minutes).
+  Without root only the cluster manager and the repository disks are readable, failed commands are reported as errors.
+* **Sendmail** (`sendmail`): number, size and age of the messages in the mail queue and the messages with a failed
+  delivery attempt (`mailq`, requires root).
+
+AIX sets the time zone as POSIX string (e.g. `TZ=CET-1CEST,M3.5.0,M10.5.0`), which Go can not read, so the agent runs
+commands which print local times (`errpt`, `who`) in UTC.
 
 
 ## Supported Platforms
 
-| Platform              | Windows | Linux | macOS | FreeBSD |
-|-----------------------|---------|-------|-------|---------|
-| 64 bit (amd64)        | ✅       | ✅     | ✅     | ✅       |
-| 32 bit (i386)         | ✅       | ✅     | -     | ✅       |
-| arm64 / Apple Silicon | ✅       | ✅     | ✅     | ✅       |
+| Platform              | Windows | Linux | macOS | FreeBSD | AIX |
+|-----------------------|---------|-------|-------|---------|-----|
+| 64 bit (amd64)        | ✅      | ✅    | ✅    | ✅      | -   |
+| 32 bit (i386)         | ✅      | ✅    | -     | ✅      | -   |
+| arm64 / Apple Silicon | ✅      | ✅    | ✅    | ✅      | -   |
+| arm (armhf / armv7)   | -       | ✅    | -     | -       | -   |
+| ppc64le (POWER)       | -       | ✅    | -     | -       | -   |
+| ppc64 (POWER)         | -       | -     | -     | -       | ✅  |
 
 
 Please see to Wiki how to [cross compile binaries](https://github.com/openITCOCKPIT/openitcockpit-agent-go/wiki/Build-binary#cross-compile) for different operating systems and CPU architectures.
@@ -188,67 +317,85 @@ Please see the [full documentation](https://github.com/openITCOCKPIT/openitcockp
 
 ## Supported Checks
 
-| Check                        | Windows                                    | Linux                                                                                                      | macOS                       | FreeBSD         |
-|------------------------------|--------------------------------------------|------------------------------------------------------------------------------------------------------------|-----------------------------|-----------------|
-| Ceph                         | -                                          | ✅                                                                                                         | -                           | -               |
-| Certificates                 | ✅ file, TLS, certificate store            | ✅ file, TLS                                                                                               | ✅ file, TLS                | ✅ file, TLS    |
-| CPU Load                     | -                                          | ✅                                                                                                         | ✅                          | ✅              |
-| CPU Percent                  | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
-| Custom Checks                | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
-| Disk IO                      | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
-| Disk Usage                   | ✅                                         | ✅ incl. inodes                                                                                            | ✅ incl. inodes             | ✅ incl. inodes |
-| Docker Container             | ✅ incl. healthchecks                      | ✅ incl. healthchecks                                                                                      | ✅ incl. healthchecks       | untested        |
-| Exim Mail Queue              | -                                          | ✅                                                                                                         | -                           | ✅              |
-| Files & Directories          | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
-| HTTP(S)                      | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
-| IPMI (local BMC)             | ✅ in-band                                 | ✅ in-band                                                                                                 | -                           | -               |
-| Logfiles                     | ✅ text files                              | ✅ text files, journald                                                                                    | ✅ text files, unified log  | ✅ text files   |
-| LVM Thin Pools               | -                                          | ✅                                                                                                         | -                           | -               |
-| Memory                       | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
-| Missing Mounts (fstab)       | -                                          | ✅                                                                                                         | -                           | ✅              |
-| Network Interfaces           | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
-| Network IO                   | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
-| Network Ports                | ✅                                         | ✅ incl. TCP errors                                                                                        | ✅                          | ✅              |
-| NTP                          | ✅                                         | ✅                                                                                                         | ✅ SNTP                     | ✅ ntpd, SNTP   |
-| Postfix Mail Queue           | -                                          | ✅                                                                                                         | -                           | ✅              |
-| Processes                    | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
-| Proxmox VE                   | -                                          | ✅                                                                                                         | -                           | -               |
-| Redfish (BMC)                | ✅ via network                             | ✅ via network                                                                                             | ✅ via network              | ✅ via network  |
-| S.M.A.R.T.                   | ✅ smartctl                                | ✅ smartctl                                                                                                | ✅ smartctl                 | ✅ smartctl     |
-| Security                     | ✅ firewall, Defender/antivirus, BitLocker | ✅ SELinux, AppArmor, firewall                                                                             | ✅ FileVault, SIP, firewall | -               |
-| Sensors                      | -                                          | ✅                                                                                                         | ✅                          | -               |
-| Services                     | ✅                                         | ✅ systemd                                                                                                 | ✅ launchd                  | -               |
-| Swap                         | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
-| System Health                | -                                          | ✅ RAID, OOM kills, file descriptors, conntrack, PSI, bonding, filesystem errors, ECC memory errors (EDAC) | -                           | -               |
-| Users                        | ✅                                         | ✅                                                                                                         | ✅                          | ✅              |
-| Windows Event log            | ✅                                         | -                                                                                                          | -                           | -               |
-| Windows Performance Counters | ✅                                         | -                                                                                                          | -                           | -               |
-| Windows Scheduled Tasks      | ✅                                         | -                                                                                                          | -                           | -               |
-| ZFS                          | -                                          | ✅                                                                                                         | -                           | ✅              |
+| Check                        | Windows                                    | Linux                                                                                                      | macOS                       | FreeBSD         | AIX                                                     |
+|------------------------------|--------------------------------------------|------------------------------------------------------------------------------------------------------------|-----------------------------|-----------------|---------------------------------------------------------|
+| AIX Error Log (errpt)        | -                                          | -                                                                                                          | -                           | -               | ✅                                                      |
+| Ceph                         | -                                          | ✅                                                                                                         | -                           | -               | -                                                       |
+| Certificates                 | ✅ file, TLS, certificate store            | ✅ file, TLS                                                                                               | ✅ file, TLS                | ✅ file, TLS    | ✅ file, TLS                                            |
+| CPU Load                     | -                                          | ✅                                                                                                         | ✅                          | ✅              | ✅                                                      |
+| CPU Percent                  | ✅                                         | ✅                                                                                                         | ✅                          | ✅              | ✅ PURR, physc                                          |
+| Custom Checks                | ✅                                         | ✅                                                                                                         | ✅                          | ✅              | ✅                                                      |
+| Disk IO                      | ✅                                         | ✅                                                                                                         | ✅                          | ✅              | ✅                                                      |
+| Disk Usage                   | ✅                                         | ✅ incl. inodes                                                                                            | ✅ incl. inodes             | ✅ incl. inodes | ✅ incl. inodes                                         |
+| Docker Container             | ✅ incl. healthchecks                      | ✅ incl. healthchecks                                                                                      | ✅ incl. healthchecks       | untested        | -                                                       |
+| Exim Mail Queue              | -                                          | ✅                                                                                                         | -                           | ✅              | -                                                       |
+| Files & Directories          | ✅                                         | ✅                                                                                                         | ✅                          | ✅              | ✅                                                      |
+| GPUs                         | ✅ NVIDIA, AMD, Intel, driver errors (TDR) | ✅ NVIDIA, AMD, Intel, Xid and amdgpu errors                                                               | -                           | -               | -                                                       |
+| HTTP(S)                      | ✅                                         | ✅                                                                                                         | ✅                          | ✅              | ✅                                                      |
+| IPMI (local BMC)             | ✅ in-band                                 | ✅ in-band                                                                                                 | -                           | -               | -                                                       |
+| Logfiles                     | ✅ text files                              | ✅ text files, journald                                                                                    | ✅ text files, unified log  | ✅ text files   | ✅ text files                                           |
+| LPAR                         | -                                          | -                                                                                                          | -                           | -               | ✅ shared and dedicated partitions                      |
+| LVM                          | -                                          | ✅ thin pools                                                                                              | -                           | -               | ✅ volume groups                                        |
+| Memory                       | ✅                                         | ✅                                                                                                         | ✅                          | ✅              | ✅                                                      |
+| Missing Mounts (fstab)       | -                                          | ✅                                                                                                         | -                           | ✅              | ✅ /etc/filesystems                                     |
+| Multipath (MPIO)             | -                                          | -                                                                                                          | -                           | -               | ✅                                                      |
+| Network Adapters             | -                                          | -                                                                                                          | -                           | -               | ✅ EtherChannel, Network Interface Backup, IEEE 802.3ad |
+| Network Interfaces           | ✅                                         | ✅                                                                                                         | ✅                          | ✅              | ✅                                                      |
+| Network IO                   | ✅                                         | ✅                                                                                                         | ✅                          | ✅              | ✅                                                      |
+| Network Ports                | ✅                                         | ✅ incl. TCP errors                                                                                        | ✅                          | ✅              | ✅                                                      |
+| NTP                          | ✅                                         | ✅                                                                                                         | ✅ SNTP                     | ✅ ntpd, SNTP   | ✅ xntpd, SNTP                                          |
+| Paging Spaces                | -                                          | -                                                                                                          | -                           | -               | ✅                                                      |
+| Postfix Mail Queue           | -                                          | ✅                                                                                                         | -                           | ✅              | ✅                                                      |
+| PowerHA SystemMirror         | -                                          | -                                                                                                          | -                           | -               | ✅ cluster, resource groups                             |
+| Processes                    | ✅                                         | ✅                                                                                                         | ✅                          | ✅              | ✅                                                      |
+| Proxmox VE                   | -                                          | ✅                                                                                                         | -                           | -               | -                                                       |
+| Redfish (BMC)                | ✅ via network                             | ✅ via network                                                                                             | ✅ via network              | ✅ via network  | ✅ via network                                          |
+| Sendmail Mail Queue          | -                                          | -                                                                                                          | -                           | -               | ✅                                                      |
+| S.M.A.R.T.                   | ✅ smartctl                                | ✅ smartctl                                                                                                | ✅ smartctl                 | ✅ smartctl     | -                                                       |
+| Security                     | ✅ firewall, Defender/antivirus, BitLocker | ✅ SELinux, AppArmor, firewall                                                                             | ✅ FileVault, SIP, firewall | -               | -                                                       |
+| Sensors                      | -                                          | ✅                                                                                                         | ✅                          | -               | -                                                       |
+| Services                     | ✅                                         | ✅ systemd                                                                                                 | ✅ launchd                  | -               | ✅ SRC                                                  |
+| Swap                         | ✅                                         | ✅                                                                                                         | ✅                          | ✅              | ✅                                                      |
+| System Health                | -                                          | ✅ RAID, OOM kills, file descriptors, conntrack, PSI, bonding, filesystem errors, ECC memory errors (EDAC) | -                           | -               | -                                                       |
+| Users                        | ✅                                         | ✅                                                                                                         | ✅                          | ✅              | ✅                                                      |
+| Windows Event log            | ✅                                         | -                                                                                                          | -                           | -               | -                                                       |
+| Windows Performance Counters | ✅                                         | -                                                                                                          | -                           | -               | -                                                       |
+| Windows Scheduled Tasks      | ✅                                         | -                                                                                                          | -                           | -               | -                                                       |
+| ZFS                          | -                                          | ✅                                                                                                         | -                           | ✅              | -                                                       |
 
 Logfiles, Certificates, Files & Directories, HTTP(S), Redfish and Windows Performance Counters are configured in separate INI files.
 See the examples in the [example](example/) directory. S.M.A.R.T. requires `smartctl` of smartmontools 7.0 or newer.
-Ceph, Exim, LVM, Postfix (3.1 or newer), Proxmox VE, S.M.A.R.T. and ZFS are enabled automatically if the required tools are installed.
+Ceph, Exim, LVM, Postfix (3.1 or newer), PowerHA SystemMirror, Proxmox VE, S.M.A.R.T. and ZFS are enabled automatically if the required tools are installed.
+GPUs: NVIDIA GPUs are read with `nvidia-smi` (Linux and Windows), AMD and Intel GPUs from sysfs (Linux) or with the
+interface of the Windows Task Manager (D3DKMT). Linux also reports the Xid errors of the NVIDIA driver and the GPU hangs
+and resets of the amdgpu driver from the kernel log, Windows the driver errors (TDR) of the event log.
 IPMI reads the sensors, the chassis status and the SEL of the local BMC without ipmitool (Linux: /dev/ipmi0, Windows: IPMI driver).
 Network Ports reports the listening ports with their processes, the TCP connections per state and the usage of the ephemeral ports.
+Disk Usage waits 5 seconds for each filesystem. A filesystem which does not respond, e.g. a NFS or CIFS mount whose server
+is not reachable, is reported as `hanging` and does not block the check (Linux, macOS, FreeBSD and AIX). macOS answers
+statfs of such a filesystem from a cache after the first timeout, the agent detects this only when running as root (default).
 Redfish monitors the hardware of servers (Dell iDRAC, HPE iLO, Lenovo XClarity, Supermicro, ...) through the API of their BMCs,
 so a single agent in the management network can monitor many servers.
 
 ### Advanced Checks
 
-| Check       | Windows | Linux                                                                                              | macOS | FreeBSD |
-|-------------|---------|----------------------------------------------------------------------------------------------------|-------|---------|
-| Libvirt VMs | -       | ✅ [readme](https://docs.openitcockpit.io/en/agent/build-binary/#enable-libvirt-support-linux-only) | -     | -       |
+| Check       | Windows | Linux                                                                                               | macOS | FreeBSD | AIX |
+|-------------|---------|-----------------------------------------------------------------------------------------------------|-------|---------|-----|
+| Libvirt VMs | -       | ✅ [readme](https://docs.openitcockpit.io/en/agent/build-binary/#enable-libvirt-support-linux-only) | -     | -       | -   |
 
 
 ## Software Inventory
 
 The openITCOCKPIT Agent collects detailed information about installed packages, installed software, and available security updates across all major operating systems. It also detects when a system reboot is required. An important step to ensure that the latest security updates are fully applied.
 
+FreeBSD and AIX are not supported yet, the agent reports the software inventory as disabled on these systems.
+
 ### Linux
 
 
 On Linux systems, the agent gathers a complete list of installed packages, identifies available updates, and, where supported, highlights security updates.
+
+For each installed package the agent also reports the architecture and, with apt, dnf, yum, zypper and rpm, the source package and its version, e.g. `curl` for `libcurl4t64`. With pacman only the architecture is reported.
 
 | Package Manager | Installed Packages | Available Updates | Security Updates | Reboot Required                                                                                                     |
 |-----------------|--------------------|-------------------|------------------|---------------------------------------------------------------------------------------------------------------------|

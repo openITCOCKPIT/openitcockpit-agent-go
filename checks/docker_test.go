@@ -2,10 +2,11 @@ package checks
 
 import (
 	"context"
-	"fmt"
-	"strings"
 	"testing"
 	"time"
+
+	"github.com/moby/moby/api/types/container"
+	"github.com/moby/moby/client"
 )
 
 func TestChecksCheckDocker(t *testing.T) {
@@ -14,19 +15,9 @@ func TestChecksCheckDocker(t *testing.T) {
 
 	cr, err := check.Run(context.Background())
 	if err != nil {
-		// Windows
-		if strings.Contains(err.Error(), "error during connect") {
-			fmt.Println("Docker not installed or running on this system ???")
-			t.SkipNow()
-		}
-		// macOS and Linux
-		if strings.Contains(err.Error(), "Is the docker daemon running") {
-			fmt.Println("Docker not installed or running on this system ???")
-			t.SkipNow()
-		}
-		if strings.Contains(err.Error(), "Got permission denied while trying to connect to the Docker daemon socket") {
-			fmt.Println(err)
-			t.SkipNow()
+		// Docker is not installed, not running or the socket is not accessible (permission denied)
+		if client.IsErrConnectionFailed(err) {
+			t.Skip("Docker is not available on this system: ", err)
 		}
 
 		t.Fatal(err)
@@ -85,5 +76,25 @@ func TestDockerRestartsLastHour(t *testing.T) {
 	dockerRestartsMutex.Unlock()
 	if kept {
 		t.Error("samples of a removed container must be deleted after an hour")
+	}
+}
+
+func TestDockerStatsOSType(t *testing.T) {
+	tests := []struct {
+		statsOSType  string
+		daemonOSType string
+		expected     string
+	}{
+		{"windows", "windows", "windows"}, // Docker 29 and newer send the OS with the stats
+		{"linux", "windows", "linux"},
+		{"", "windows", "windows"}, // Older daemons: the OS of the daemon from the ping
+		{"", "linux", "linux"},
+		{"", "", ""},
+	}
+	for _, test := range tests {
+		stats := &container.StatsResponse{OSType: test.statsOSType}
+		if osType := dockerStatsOSType(stats, test.daemonOSType); osType != test.expected {
+			t.Errorf("stats %q, daemon %q: expected %q, got %q", test.statsOSType, test.daemonOSType, test.expected, osType)
+		}
 	}
 }

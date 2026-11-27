@@ -20,8 +20,11 @@ type PackageInfo struct {
 	LinuxUpdates   []PackageUpdate
 	WindowsApps    []WindowsApp
 	WindowsUpdates []WindowsUpdate
-	MacosApps      []Package
-	MacosUpdates   []MacosUpdate
+	// WindowsInstalledKBs holds the numbers of the installed KB articles, e.g. "5079473".
+	// Not collected for now, see WindowsUpdatesManager.CollectPackageInfo
+	WindowsInstalledKBs []string `json:",omitempty"`
+	MacosApps           []Package
+	MacosUpdates        []MacosUpdate
 }
 
 // PackageInfo holds summary information about the package manager state
@@ -40,6 +43,7 @@ type PackageStats struct {
 	OsFamily           string // e.g. "debian", "windows", "macos"
 	AgentVersion       string // e.g. "3.4.0"
 	Uptime             int64  // system uptime in seconds
+	KernelRelease      string `json:",omitempty"` // Running kernel like "uname -r" (only Linux), e.g. "6.8.0-45-generic"
 }
 
 type SoftwareCollector struct {
@@ -49,6 +53,12 @@ type SoftwareCollector struct {
 	wg sync.WaitGroup
 	//shutdown chan struct{} // deprecated, kept for compatibility if needed
 	cancel context.CancelFunc
+}
+
+// Supported returns true if the software inventory and the updates are collected on this platform (Linux, Windows
+// and macOS). On other platforms the agent reports the package manager as disabled, so no service is created for it.
+func Supported() bool {
+	return collectionSupported
 }
 
 // Shutdown gracefully stops the collector by cancelling the context and waiting for goroutines to finish

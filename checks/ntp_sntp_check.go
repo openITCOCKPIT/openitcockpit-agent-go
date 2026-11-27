@@ -1,5 +1,5 @@
-//go:build darwin || freebsd
-// +build darwin freebsd
+//go:build darwin || freebsd || aix
+// +build darwin freebsd aix
 
 package checks
 

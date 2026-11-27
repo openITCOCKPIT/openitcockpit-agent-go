@@ -1,32 +1,9 @@
 package packagemanager
 
 import (
+	"strings"
 	"testing"
 )
-
-// Sample output of the command
-// LANG=c dnf list installed
-var dnfListInstalledOutput = `Failed to set locale, defaulting to C.UTF-8
-Installed Packages
-acl.x86_64                                                                                                                    2.3.1-4.el9                                                                                                            @baseos
-almalinux-gpg-keys.x86_64                                                                                                     9.7-1.el9                                                                                                              @baseos
-almalinux-release.x86_64                                                                                                      9.7-1.el9                                                                                                              @baseos
-almalinux-repos.x86_64                                                                                                        9.7-1.el9                                                                                                              @baseos
-alternatives.x86_64                                                                                                           1.24-2.el9                                                                                                             @baseos
-attr.x86_64                                                                                                                   2.5.1-3.el9                                                                                                            @baseos
-audit-libs.x86_64                                                                                                             3.1.5-7.el9                                                                                                            @baseos
-basesystem.noarch                                                                                                             11-13.el9                                                                                                              @baseos
-bash.x86_64                                                                                                                   5.1.8-9.el9                                                                                                            @baseos
-binutils.x86_64                                                                                                               2.35.2-67.el9_7.1                                                                                                      @baseos
-binutils-gold.x86_64                                                                                                          2.35.2-67.el9_7.1                                                                                                      @baseos
-bzip2-libs.x86_64                                                                                                             1.0.8-10.el9_5                                                                                                         @baseos
-ca-certificates.noarch                                                                                                        2025.2.80_v9.0.305-91.el9                                                                                              @baseos
-coreutils-single.x86_64                                                                                                       8.32-39.el9                                                                                                            @baseos
-cracklib.x86_64                                                                                                               2.9.6-27.el9                                                                                                           @baseos
-cracklib-dicts.x86_64                                                                                                         2.9.6-27.el9                                                                                                           @baseos
-crypto-policies.noarch                                                                                                        20250905-1.git377cc42.el9_7                                                                                            @baseos
-crypto-policies-scripts.noarch                                                                                                20250905-1.git377cc42.el9_7                                                                                            @baseos
-curl-minimal.x86_64                                                                                                           7.76.1-34.el9                                                                                                          @baseos`
 
 var dnfListInstalledOutputForUpdateTest = `Failed to set locale, defaulting to C.UTF-8
 Installed Packages
@@ -462,7 +439,30 @@ ALSA-2025:23700 Important/Sec. webkit2gtk3-jsc-2.50.4-1.el9_7.x86_64
 ALSA-2025:20961 Moderate/Sec.  xorg-x11-server-Xvfb-1.20.11-32.el9_7.x86_64
 ALSA-2025:20961 Moderate/Sec.  xorg-x11-server-common-1.20.11-32.el9_7.x86_64`
 
-func TestDnfManager_getInstalledPackagesWithCancel(t *testing.T) {
+// installedPackagesOfDnfList returns the packages of the "dnf list --installed" samples, they are the installed packages
+// of the dnf check-update samples
+func installedPackagesOfDnfList(t *testing.T, output string) []Package {
+	t.Helper()
+	dnf := DnfManager{}
+	var pkgs []Package
+	foundHeader := false
+	for _, line := range strings.Split(output, "\n") {
+		if !foundHeader {
+			foundHeader = strings.HasPrefix(strings.ToLower(line), "installed packages")
+			continue
+		}
+		fields := strings.Fields(line)
+		if len(fields) >= 3 {
+			pkgs = append(pkgs, Package{Name: dnf.removeArchFromPkgName(fields[0]), Version: fields[1]})
+		}
+	}
+	if len(pkgs) == 0 {
+		t.Fatal("No packages in the sample")
+	}
+	return pkgs
+}
+
+func TestDnfManager_ListInstalledPackages(t *testing.T) {
 
 	dnf := DnfManager{}
 
@@ -470,75 +470,19 @@ func TestDnfManager_getInstalledPackagesWithCancel(t *testing.T) {
 		t.Skip("dnf is not available, skipping test")
 	}
 
-	ctx := t.Context()
-	output, err := dnf.getInstalledPackagesWithCancel(ctx)
+	packages, err := dnf.ListInstalledPackages(t.Context())
 	if err != nil {
 		t.Fatalf("Error getting installed packages: %v", err)
 	}
 
-	// The installed packages depend on the system (acl is not installed in minimal containers), so the output has to be parsable
-	packages, err := dnf.parseDnfListInstalledOutput(output)
-	if err != nil {
-		t.Fatalf("Error parsing the dnf output: %v", err)
-	}
+	// The installed packages depend on the system (acl is not installed in minimal containers)
 	if len(packages) == 0 {
-		t.Errorf("No packages found in the dnf output: %s", output)
+		t.Fatal("No packages found")
 	}
-}
-
-func TestDnfManager_parseDnfListInstalledOutput(t *testing.T) {
-	dnf := DnfManager{}
-
-	packages, err := dnf.parseDnfListInstalledOutput(dnfListInstalledOutput)
-	if err != nil {
-		t.Fatalf("Error parsing dnf list installed output: %v", err)
-	}
-
-	// Table-driven test cases for a few known packages
-	tests := []struct {
-		name        string
-		pkgName     string
-		wantVersion string
-		wantDesc    string
-	}{
-		{
-			name:        "acl",
-			pkgName:     "acl",
-			wantVersion: "2.3.1-4.el9",
-			wantDesc:    "",
-		},
-		{
-			name:        "bash",
-			pkgName:     "bash",
-			wantVersion: "5.1.8-9.el9",
-			wantDesc:    "",
-		},
-		{
-			name:        "ca-certificates",
-			pkgName:     "ca-certificates",
-			wantVersion: "2025.2.80_v9.0.305-91.el9",
-			wantDesc:    "",
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			found := false
-			for _, pkg := range packages {
-				if pkg.Name == tt.pkgName {
-					found = true
-					if pkg.Version != tt.wantVersion {
-						t.Errorf("%s: got version %q, want %q", tt.pkgName, pkg.Version, tt.wantVersion)
-					}
-					if pkg.Description != tt.wantDesc {
-						t.Errorf("%s: got description %q, want %q", tt.pkgName, pkg.Description, tt.wantDesc)
-					}
-				}
-			}
-			if !found {
-				t.Errorf("Package %q not found in parsed output", tt.pkgName)
-			}
-		})
+	for _, pkg := range packages {
+		if pkg.Name == rpmPublicKeyPackage || pkg.Architecture == "" || pkg.SourcePackage == "" || pkg.SourceVersion == "" {
+			t.Errorf("Incomplete package: %+v", pkg)
+		}
 	}
 }
 
@@ -546,10 +490,7 @@ func TestDnfManager_parseDnfCheckUpdateOutput(t *testing.T) {
 	dnf := DnfManager{}
 
 	// Parse installed packages from the updated test data
-	installedPkgs, err := dnf.parseDnfListInstalledOutput(dnfListInstalledOutputForUpdateTest)
-	if err != nil {
-		t.Fatalf("Error parsing installed packages: %v", err)
-	}
+	installedPkgs := installedPackagesOfDnfList(t, dnfListInstalledOutputForUpdateTest)
 
 	var securityPackages map[string]bool
 
@@ -755,10 +696,7 @@ nano.x86_64           4.9-1.fc32              @fedora
 func TestDnfManager_parseDnfCheckUpdateOutput_realWorld(t *testing.T) {
 	dnf := DnfManager{}
 
-	installedPkgs, err := dnf.parseDnfListInstalledOutput(dnfListInstalledOutputForUpdateTest)
-	if err != nil {
-		t.Fatalf("Error parsing installed packages: %v", err)
-	}
+	installedPkgs := installedPackagesOfDnfList(t, dnfListInstalledOutputForUpdateTest)
 
 	securityPkgs, err := dnf.parseDnfSecurityUpdateOutput(availableSecurityUpdatesDnfOutput)
 	if err != nil {
@@ -946,9 +884,9 @@ openssl-libs.x86_64                1:3.5.9-1.fc44            updates
 
 func TestDnfManager_dnf5(t *testing.T) {
 	d := DnfManager{}
-	installed, err := d.parseDnfListInstalledOutput(dnf5ListInstalledOutput)
-	if err != nil || len(installed) != 3 || installed[2].Name != "openssl-libs" || installed[2].Version != "1:3.5.8-1.fc44" {
-		t.Fatalf("unexpected installed packages: %+v %v", installed, err)
+	installed := installedPackagesOfDnfList(t, dnf5ListInstalledOutput)
+	if len(installed) != 3 || installed[2].Name != "openssl-libs" || installed[2].Version != "1:3.5.8-1.fc44" {
+		t.Fatalf("unexpected installed packages: %+v", installed)
 	}
 
 	security, err := d.parseDnfSecurityUpdateOutput(dnf5SecurityOutput)

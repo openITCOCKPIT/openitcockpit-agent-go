@@ -1,0 +1,35 @@
+package checks
+
+func getPlatformChecks() []Check {
+	return []Check{
+		&CheckMem{},
+		&CheckProcess{},
+		&CheckAgent{},
+		&CheckSwap{},
+		&CheckUser{},
+		&CheckDisk{},
+		&CheckDiskIo{},
+		&CheckLoad{},
+		&CheckCpu{},
+		&CheckNet{},
+		&CheckNetIo{},
+		&CheckNtp{},
+		&CheckLpar{},
+		&CheckSrcServices{},
+		&CheckErrpt{},
+		&CheckVolumeGroups{},
+		&CheckMultipath{},
+		&CheckNetworkAdapters{},
+		&CheckPagingSpaces{},
+		&CheckPowerHA{},
+		&CheckSendmail{},
+		&CheckLogfile{},
+		&CheckCertificate{},
+		&CheckFile{},
+		&CheckHTTP{},
+		&CheckRedfish{},
+		&CheckPostfix{},
+		&CheckMounts{},
+		&CheckNetworkPorts{},
+	}
+}

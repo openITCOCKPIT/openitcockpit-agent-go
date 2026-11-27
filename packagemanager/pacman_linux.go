@@ -97,6 +97,8 @@ func (p PacmanManager) parsePacmanQiOutput(output string) ([]Package, error) {
 			currentPackage.Version = value
 		case "Description":
 			currentPackage.Description = value
+		case "Architecture":
+			currentPackage.Architecture = value
 		}
 	}
 
@@ -227,6 +229,7 @@ func (p PacmanManager) CollectPackageInfo(ctx context.Context, limitDescriptionL
 			OsFamily:        info.PlatformFamily,
 			Uptime:          int64(info.Uptime),
 			AgentVersion:    config.AgentVersion,
+			KernelRelease:   info.KernelVersion,
 		},
 	}
 

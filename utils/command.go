@@ -141,6 +141,15 @@ func parseCommand(command, shell, powershellExe string) ([]string, string, error
 	}
 }
 
+// killProcessGroupWhenDone kills the processes of the command when the context is done: after the timeout the command
+// itself, after the command exited (the context gets canceled when RunCommand returns) the processes it left behind
+func killProcessGroupWhenDone(ctx context.Context, group *processGroup, wg *sync.WaitGroup) {
+	defer wg.Done()
+	<-ctx.Done()
+	group.kill()
+	group.close()
+}
+
 // RunCommand in shell style with timeout on every platform
 func RunCommand(ctx context.Context, commandArgs CommandArgs) (*CommandResult, error) {
 	result := &CommandResult{
@@ -188,27 +197,14 @@ func RunCommand(ctx context.Context, commandArgs CommandArgs) (*CommandResult, e
 
 	c.SysProcAttr = commandSysproc
 
-	// The goroutine is started after the process, so c.Process is set when the goroutine reads it
 	err = c.Start()
 	if err == nil {
 		// Do not hang forever
 		// https://github.com/golang/go/issues/18874
 		// https://github.com/golang/go/issues/22610
+		group := newProcessGroup(c.Process)
 		wg.Add(1)
-		go func() {
-			defer wg.Done()
-			<-ctxTimeout.Done()
-			switch ctxTimeout.Err() {
-			case context.DeadlineExceeded:
-				//Kill process because of timeout
-				// nolint:errcheck
-				killProcessGroup(c.Process)
-			case context.Canceled:
-				//Process exited gracefully
-				// nolint:errcheck
-				killProcessGroup(c.Process)
-			}
-		}()
+		go killProcessGroupWhenDone(ctxTimeout, group, &wg)
 		err = c.Wait()
 	}
 

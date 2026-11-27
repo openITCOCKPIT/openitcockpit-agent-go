@@ -1,0 +1,458 @@
+# intel-sysfs-dump 2026-10-28T19:34:37+01:00
+kernel: 6.12.101+deb13-amd64
+PRETTY_NAME="Debian GNU/Linux 13 (trixie)"
+00:02.0 VGA compatible controller [0300]: Intel Corporation Raptor Lake-P [Iris Xe Graphics] [8086:a7a1] (rev 04)
+MemTotal:       32510872 kB
+MemAvailable:   14715304 kB
+
+== /sys/class/drm/card0 driver=i915 pci=0000:00:02.0
+vendor: 0x8086 
+device: 0xa7a1 
+subsystem_vendor: 0x17aa 
+subsystem_device: 0x2315 
+revision: 0x04 
+class: 0x030000 
+boot_vga: 1 
+current_link_speed: Unknown 
+current_link_width: 0 
+max_link_speed: Unknown 
+max_link_width: 255 
+gt_act_freq_mhz: 300 
+gt_cur_freq_mhz: 300 
+gt_min_freq_mhz: 100 
+gt_max_freq_mhz: 1250 
+gt_boost_freq_mhz: 1250 
+gt_RP0_freq_mhz: 1250 
+gt_RP1_freq_mhz: 300 
+gt_RPn_freq_mhz: 100 
+power/rc6_enable: 1 
+power/rc6_residency_ms: 1657250873 
+-- /sys/class/drm/card0/gt/gt0
+id: 0 
+punit_req_freq_mhz: 300 
+rc6_enable: 1 
+rc6_residency_ms: 1657250873 
+rps_act_freq_mhz: 300 
+rps_boost_freq_mhz: 1250 
+rps_cur_freq_mhz: 300 
+rps_max_freq_mhz: 1250 
+rps_min_freq_mhz: 100 
+rps_RP0_freq_mhz: 1250 
+rps_RP1_freq_mhz: 300 
+rps_RPn_freq_mhz: 100 
+slpc_ignore_eff_freq: 0 
+throttle_reason_pl1: 0 
+throttle_reason_pl2: 0 
+throttle_reason_pl4: 0 
+throttle_reason_prochot: 0 
+throttle_reason_ratl: 0 
+throttle_reason_status: 0 
+throttle_reason_thermal: 0 
+throttle_reason_vr_tdc: 0 
+throttle_reason_vr_thermalert: 0 
+-- after 2 seconds
+/sys/class/drm/card0/gt/gt0/rc6_residency_ms: 1657250873
+/sys/class/drm/card0/power/rc6_residency_ms: 1657250873
+/sys/class/drm/card0/gt_act_freq_mhz: 300
+
+== drm clients (fdinfo)
+drm-driver:	i915
+drm-client-id:	7967
+drm-pdev:	0000:00:02.0
+drm-total-system0:	3544 KiB
+drm-active-system0:	0
+drm-resident-system0:	2316 KiB
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	277160 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	7962
+drm-pdev:	0000:00:02.0
+drm-total-system0:	19120 KiB
+drm-active-system0:	0
+drm-resident-system0:	19104 KiB
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	3626051052 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	7963
+drm-pdev:	0000:00:02.0
+drm-total-system0:	0
+drm-active-system0:	0
+drm-resident-system0:	0
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	0 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	7966
+drm-pdev:	0000:00:02.0
+drm-total-system0:	4772 KiB
+drm-active-system0:	0
+drm-resident-system0:	2316 KiB
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	489632 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	7969
+drm-pdev:	0000:00:02.0
+drm-total-system0:	4772 KiB
+drm-active-system0:	0
+drm-resident-system0:	2316 KiB
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	451464 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	7970
+drm-pdev:	0000:00:02.0
+drm-total-system0:	4772 KiB
+drm-active-system0:	0
+drm-resident-system0:	2316 KiB
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	461448 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	7971
+drm-pdev:	0000:00:02.0
+drm-total-system0:	4644 KiB
+drm-active-system0:	0
+drm-resident-system0:	2316 KiB
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	544076 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	7972
+drm-pdev:	0000:00:02.0
+drm-total-system0:	449112 KiB
+drm-active-system0:	0
+drm-resident-system0:	448952 KiB
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	20828593656 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	7974
+drm-pdev:	0000:00:02.0
+drm-total-system0:	0
+drm-active-system0:	0
+drm-resident-system0:	0
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	0 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	7977
+drm-pdev:	0000:00:02.0
+drm-total-system0:	233960 KiB
+drm-active-system0:	0
+drm-resident-system0:	233944 KiB
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	1069201792100 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	7980
+drm-pdev:	0000:00:02.0
+drm-total-system0:	0
+drm-active-system0:	0
+drm-resident-system0:	0
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	0 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	202785389248 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	7981
+drm-pdev:	0000:00:02.0
+drm-total-system0:	0
+drm-active-system0:	0
+drm-resident-system0:	0
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	0 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	7983
+drm-pdev:	0000:00:02.0
+drm-total-system0:	4400 KiB
+drm-active-system0:	0
+drm-resident-system0:	2208 KiB
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	141024 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	8215
+drm-pdev:	0000:00:02.0
+drm-total-system0:	0
+drm-active-system0:	0
+drm-resident-system0:	0
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	0 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	8220
+drm-pdev:	0000:00:02.0
+drm-total-system0:	0
+drm-active-system0:	0
+drm-resident-system0:	0
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	0 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	7984
+drm-pdev:	0000:00:02.0
+drm-total-system0:	4516 KiB
+drm-active-system0:	0
+drm-resident-system0:	2316 KiB
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	466336 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	7985
+drm-pdev:	0000:00:02.0
+drm-total-system0:	42308 KiB
+drm-active-system0:	0
+drm-resident-system0:	42292 KiB
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	350601784 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	7986
+drm-pdev:	0000:00:02.0
+drm-total-system0:	4516 KiB
+drm-active-system0:	0
+drm-resident-system0:	2316 KiB
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	533988 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	7987
+drm-pdev:	0000:00:02.0
+drm-total-system0:	4516 KiB
+drm-active-system0:	0
+drm-resident-system0:	2316 KiB
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	466440 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	7988
+drm-pdev:	0000:00:02.0
+drm-total-system0:	12036 KiB
+drm-active-system0:	0
+drm-resident-system0:	11940 KiB
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	4098276 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	7989
+drm-pdev:	0000:00:02.0
+drm-total-system0:	4772 KiB
+drm-active-system0:	0
+drm-resident-system0:	2316 KiB
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	523224 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	8003
+drm-pdev:	0000:00:02.0
+drm-total-system0:	4820 KiB
+drm-active-system0:	0
+drm-resident-system0:	4404 KiB
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	792376 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	7991
+drm-pdev:	0000:00:02.0
+drm-total-system0:	4772 KiB
+drm-active-system0:	0
+drm-resident-system0:	2316 KiB
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	530088 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	7996
+drm-pdev:	0000:00:02.0
+drm-total-system0:	4644 KiB
+drm-active-system0:	0
+drm-resident-system0:	2316 KiB
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	502788 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	7994
+drm-pdev:	0000:00:02.0
+drm-total-system0:	4772 KiB
+drm-active-system0:	0
+drm-resident-system0:	2316 KiB
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	531752 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	7993
+drm-pdev:	0000:00:02.0
+drm-total-system0:	4644 KiB
+drm-active-system0:	0
+drm-resident-system0:	2316 KiB
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	492284 ns
+drm-engine-copy:	0 ns
+drm-engine-video:	0 ns
+drm-engine-capacity-video:	2
+drm-engine-video-enhance:	0 ns
+--
+drm-driver:	i915
+drm-client-id:	7995
+drm-pdev:	0000:00:02.0
+drm-total-system0:	4772 KiB
+drm-active-system0:	0
+drm-resident-system0:	2316 KiB
+drm-total-stolen-system0:	0
+drm-active-stolen-system0:	0
+drm-resident-stolen-system0:	0
+drm-engine-render:	487916 ns

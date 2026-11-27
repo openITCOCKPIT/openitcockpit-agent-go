@@ -6,8 +6,9 @@ import (
 )
 
 // Sample output of the command
-// dpkg-query -W  "-f=\${Status} \${Package} \${Version} \${Description}\nEND\n"
-var dpkgQueryOutput = `install ok installed apt 2.8.3 commandline package manager
+// dpkg-query -W "-f=\${Status}\t\${Package}\t\${Version}\t\${Architecture}\t\${source:Package}\t\${source:Version}\t\${Description}\nEND\n"
+// The architectures and source packages are only placeholders, see dpkgQueryOutputSourcePackages for real ones.
+var dpkgQueryOutput = `install ok installed	apt	2.8.3	amd64	apt	2.8.3	commandline package manager
  This package provides commandline tools for searching and
  managing as well as querying information about packages
  as a low-level access to all features of the libapt-pkg library.
@@ -22,19 +23,19 @@ var dpkgQueryOutput = `install ok installed apt 2.8.3 commandline package manage
   * apt-config as an interface to the configuration settings
   * apt-key as an interface to manage authentication keys
 END
-install ok installed base-files 13ubuntu10.3 Debian base system miscellaneous files
+install ok installed	base-files	13ubuntu10.3	amd64	base-files	13ubuntu10.3	Debian base system miscellaneous files
  This package contains the basic filesystem hierarchy of a Debian system, and
  several important miscellaneous files, such as /etc/debian_version,
  /etc/host.conf, /etc/issue, /etc/motd, /etc/profile, and others,
  and the text of several common licenses in use on Debian systems.
 END
-install ok installed sed 4.9-2build1 GNU stream editor for filtering/transforming text
+install ok installed	sed	4.9-2build1	amd64	sed	4.9-2build1	GNU stream editor for filtering/transforming text
  sed reads the specified files or the standard input if no
  files are specified, makes editing changes according to a
  list of commands, and writes the results to the standard
  output.
 END
-install ok installed sensible-utils 0.0.22 Utilities for sensible alternative selection
+install ok installed	sensible-utils	0.0.22	amd64	sensible-utils	0.0.22	Utilities for sensible alternative selection
  This package provides a number of small utilities which are used
  by programs to sensibly select and spawn an appropriate browser,
  editor, pager, or terminal emulator.
@@ -42,7 +43,7 @@ install ok installed sensible-utils 0.0.22 Utilities for sensible alternative se
  The specific utilities included are: sensible-browser sensible-editor
  sensible-pager sensible-terminal
 END
-install ok installed sysvinit-utils 3.08-6ubuntu3 System-V-like utilities
+install ok installed	sysvinit-utils	3.08-6ubuntu3	amd64	sysvinit-utils	3.08-6ubuntu3	System-V-like utilities
  This package contains the important System-V-like utilities.
  .
  Specifically, this package includes:
@@ -51,46 +52,46 @@ install ok installed sysvinit-utils 3.08-6ubuntu3 System-V-like utilities
  It also contains the library scripts sourced by init-d-script and other
  initscripts that were formally in lsb-base.
 END
-install ok installed tar 1.35+dfsg-3build1 GNU version of the tar archiving utility
+install ok installed	tar	1.35+dfsg-3build1	amd64	tar	1.35+dfsg-3build1	GNU version of the tar archiving utility
  Tar is a program for packaging a set of files as a single archive in tar
  format.  The function it performs is conceptually similar to cpio, and to
  things like PKZIP in the DOS world.  It is heavily used by the Debian package
  management system, and is useful for performing system backups and exchanging
  sets of files with others.
 END
-install ok installed ubuntu-keyring 2023.11.28.1 GnuPG keys of the Ubuntu archive
+install ok installed	ubuntu-keyring	2023.11.28.1	amd64	ubuntu-keyring	2023.11.28.1	GnuPG keys of the Ubuntu archive
  The Ubuntu project digitally signs its Release files. This package
  contains the archive keys used for that.
 END
-install ok installed unminimize 0.2.1 Un-minimize your minimial images or setup
+install ok installed	unminimize	0.2.1	amd64	unminimize	0.2.1	Un-minimize your minimial images or setup
  This package contains the unminimize script that helps the user in
  unminimizing their minimized images or cloud setup.
 END
-install ok installed util-linux 2.39.3-9ubuntu6.3 miscellaneous system utilities
+install ok installed	util-linux	2.39.3-9ubuntu6.3	amd64	util-linux	2.39.3-9ubuntu6.3	miscellaneous system utilities
  This package contains a number of important utilities, most of which
  are oriented towards maintenance of your system. Some of the more
  important utilities included in this package allow you to view kernel
  messages, create new filesystems, view block device information,
  interface with real time clock, etc.
 END
-deinstall ok config-files lynx 2.9.2-1 classic non-graphical (text-mode) web browser
+deinstall ok config-files	lynx	2.9.2-1	amd64	lynx	2.9.2-1	classic non-graphical (text-mode) web browser
  Lynx is a fully-featured World Wide Web (WWW) client for users running
  cursor-addressable, character-cell display devices.
 END
-deinstall ok config-files lynx-common 2.9.2-1 shared files for lynx package
+deinstall ok config-files	lynx-common	2.9.2-1	amd64	lynx-common	2.9.2-1	shared files for lynx package
  This package contains the documentation and the configuration files of lynx.
 END
-hold ok installed figlet 2.2.5-3+b2 Make large character ASCII banners out of ordinary text
+hold ok installed	figlet	2.2.5-3+b2	amd64	figlet	2.2.5-3+b2	Make large character ASCII banners out of ordinary text
  FIGlet prints its input using large characters made up of ordinary
  screen characters.
 END
-deinstall ok installed nano 7.2-2 small, friendly text editor inspired by Pico
+deinstall ok installed	nano	7.2-2	amd64	nano	7.2-2	small, friendly text editor inspired by Pico
  GNU nano is an easy-to-use text editor.
 END
-install ok half-configured broken-pkg 1.0-1 package whose postinst failed
+install ok half-configured	broken-pkg	1.0-1	amd64	broken-pkg	1.0-1	package whose postinst failed
  The files of this package are installed.
 END
-install ok installed zlib1g 1:1.3.dfsg-3.1ubuntu2.1 compression library - runtime
+install ok installed	zlib1g	1:1.3.dfsg-3.1ubuntu2.1	amd64	zlib1g	1:1.3.dfsg-3.1ubuntu2.1	compression library - runtime
  zlib is a library implementing the deflate compression method found
  in gzip and PKZIP.  This package includes the shared library.
 END`
@@ -401,6 +402,58 @@ func TestAptManager_getInstalledPackagesWithCancel(t *testing.T) {
 
 	if len(output) < 128 {
 		t.Errorf("Output is to short to be a valid dpkg output: %s", output)
+	}
+
+	packages, err := apt.parseDpkgOutput(output)
+	if err != nil {
+		t.Fatalf("Error parsing dpkg output: %v", err)
+	}
+	if len(packages) == 0 {
+		t.Errorf("No packages found in the dpkg output: %s", output)
+	}
+	for _, pkg := range packages {
+		if pkg.Architecture == "" || pkg.SourcePackage == "" || pkg.SourceVersion == "" {
+			t.Errorf("Incomplete package: %+v", pkg)
+		}
+	}
+}
+
+// Packages of Debian 13 and Ubuntu 24.04 and the states of removed packages
+var dpkgQueryOutputSourcePackages = "install ok installed\tlibcurl4t64\t8.5.0-2ubuntu10.16\tarm64\tcurl\t8.5.0-2ubuntu10.16\teasy-to-use client-side URL transfer library\n second line\twith a tab\nEND\n" +
+	"install ok installed\tbash\t5.2.37-2+b10\tamd64\tbash\t5.2.37-2\tGNU Bourne Again SHell\nEND\n" +
+	"install ok installed\tbsdutils\t1:2.41.5-0+deb13u1\tamd64\tutil-linux\t2.41.5-0+deb13u1\tBasic utilities from 4.2BSD\nEND\n" +
+	"install ok installed\tlibc6\t2.39-0ubuntu8.9\tamd64\tglibc\t2.39-0ubuntu8.9\tGNU C Library: Shared libraries\nEND\n" +
+	"install ok installed\tlibc6\t2.39-0ubuntu8.9\ti386\tglibc\t2.39-0ubuntu8.9\tGNU C Library: Shared libraries\nEND\n" +
+	"deinstall ok config-files\told-package\t1.0-1\tamd64\told-source\t1.0-1\tRemoved package\nEND\n" +
+	"unknown ok not-installed\tother-package\t\tamd64\tother-package\t\t\nEND\n"
+
+func TestAptManager_parseDpkgOutputSourcePackages(t *testing.T) {
+	apt := AptManager{}
+
+	packages, err := apt.parseDpkgOutput(dpkgQueryOutputSourcePackages)
+	if err != nil {
+		t.Fatalf("Error parsing dpkg output: %v", err)
+	}
+
+	want := []Package{
+		{Name: "libcurl4t64", Version: "8.5.0-2ubuntu10.16", Architecture: "arm64", SourcePackage: "curl", SourceVersion: "8.5.0-2ubuntu10.16",
+			Description: "easy-to-use client-side URL transfer library\n second line\twith a tab"},
+		// Binary rebuild: The version of the binary package is newer than the version of the source package
+		{Name: "bash", Version: "5.2.37-2+b10", Architecture: "amd64", SourcePackage: "bash", SourceVersion: "5.2.37-2", Description: "GNU Bourne Again SHell"},
+		// Only the binary package has an epoch
+		{Name: "bsdutils", Version: "1:2.41.5-0+deb13u1", Architecture: "amd64", SourcePackage: "util-linux", SourceVersion: "2.41.5-0+deb13u1", Description: "Basic utilities from 4.2BSD"},
+		// The same package for two architectures
+		{Name: "libc6", Version: "2.39-0ubuntu8.9", Architecture: "amd64", SourcePackage: "glibc", SourceVersion: "2.39-0ubuntu8.9", Description: "GNU C Library: Shared libraries"},
+		{Name: "libc6", Version: "2.39-0ubuntu8.9", Architecture: "i386", SourcePackage: "glibc", SourceVersion: "2.39-0ubuntu8.9", Description: "GNU C Library: Shared libraries"},
+	}
+
+	if len(packages) != len(want) {
+		t.Fatalf("Expected %d packages, got %d: %+v", len(want), len(packages), packages)
+	}
+	for i := range want {
+		if packages[i] != want[i] {
+			t.Errorf("Package %d:\ngot:  %+v\nwant: %+v", i, packages[i], want[i])
+		}
 	}
 }
 

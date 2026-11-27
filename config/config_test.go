@@ -416,13 +416,14 @@ func TestReadCustomChecksConfigAgentVersion1EmptyCommandline(t *testing.T) {
 	cfgdir := saveTempConfig(customChecksAgentVersion1ConfigEmptyCommand, true)
 	defer os.RemoveAll(cfgdir)
 
-	_, err := unmarshalCustomChecks(filepath.Join(cfgdir, "customchecks.ini"))
-	if err == nil {
-		t.Fatal("expected error")
+	// The custom check without command is skipped, the other custom checks are loaded
+	ccc, err := unmarshalCustomChecks(filepath.Join(cfgdir, "customchecks.ini"))
+	if err != nil {
+		t.Fatal("unexpected error: ", err)
 	}
 
-	if !strings.Contains(err.Error(), "missing command") {
-		t.Fatal("unxpected error: ", err)
+	if len(ccc) != 1 || ccc[0].Name != "time_1" {
+		t.Fatalf("expected only the custom check time_1, got %+v", ccc)
 	}
 }
 
@@ -430,13 +431,14 @@ func TestReadCustomChecksConfigAgentVersion1MissingCommandline(t *testing.T) {
 	cfgdir := saveTempConfig(customChecksAgentVersion1ConfigMissingCommand, true)
 	defer os.RemoveAll(cfgdir)
 
-	_, err := unmarshalCustomChecks(filepath.Join(cfgdir, "customchecks.ini"))
-	if err == nil {
-		t.Fatal("expected error")
+	// The custom check without command is skipped, the other custom checks are loaded
+	ccc, err := unmarshalCustomChecks(filepath.Join(cfgdir, "customchecks.ini"))
+	if err != nil {
+		t.Fatal("unexpected error: ", err)
 	}
 
-	if !strings.Contains(err.Error(), "missing command") {
-		t.Fatal("unxpected error: ", err)
+	if len(ccc) != 1 || ccc[0].Name != "time_1" {
+		t.Fatalf("expected only the custom check time_1, got %+v", ccc)
 	}
 }
 

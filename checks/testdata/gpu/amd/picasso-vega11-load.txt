@@ -1,0 +1,45 @@
+# amd-sysfs-dump 2026-10-29T19:01:51+00:00
+kernel: 7.0.0-14-generic
+PRETTY_NAME="Ubuntu 26.04 LTS"
+12:00.0 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] 400 Series Chipset USB 3.1 xHCI Compliant Host Controller [1022:43d5] (rev 01)
+27:00.0 VGA compatible controller [0300]: Advanced Micro Devices, Inc. [AMD/ATI] Picasso/Raven 2 [Radeon Vega Series / Radeon Vega Mobile Series] [1002:15d8] (rev c8)
+MemTotal:       14225808 kB
+MemAvailable:   10541036 kB
+
+== /sys/class/drm/card1/device driver=amdgpu
+vendor: 0x1002 
+device: 0x15d8 
+subsystem_vendor: 0x1002 
+subsystem_device: 0x15d8 
+revision: 0xc8 
+boot_vga: 1 
+gpu_busy_percent: 89 
+mem_info_vram_total: 2147483648 
+mem_info_vram_used: 1415872512 
+mem_info_vis_vram_total: 2147483648 
+mem_info_vis_vram_used: 1415872512 
+mem_info_gtt_total: 7283613696 
+mem_info_gtt_used: 156766208 
+current_link_speed: 8.0 GT/s PCIe 
+current_link_width: 16 
+max_link_speed: 8.0 GT/s PCIe 
+max_link_width: 16 
+power_dpm_state: performance 
+power_dpm_force_performance_level: auto 
+pp_dpm_sclk: 0: 200Mhz  1: 700Mhz  2: 1400Mhz * 
+pp_dpm_mclk: 0: 0Mhz  1: 0Mhz  2: 0Mhz  3: 1600Mhz * 
+pp_dpm_fclk:  
+pp_dpm_socclk:  
+pp_dpm_pcie:  
+vbios_version: 113-PICASSO-118 
+gpu_metrics (base64): 
+-- /sys/class/drm/card1/device/hwmon/hwmon2 name=amdgpu
+freq1_input: 1400000000
+freq1_label: sclk
+in0_input: 
+in0_label: vddgfx
+in1_input: 
+in1_label: vddnb
+power1_label: PPT
+temp1_input: 52000
+temp1_label: edge

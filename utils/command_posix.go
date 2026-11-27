@@ -34,6 +34,27 @@ func handleCommandError(arg0 string, err error) int {
 	return Unknown
 }
 
+// processGroup contains a started command and all processes it starts (process group, see Setpgid)
+type processGroup struct {
+	process *os.Process
+}
+
+func newProcessGroup(p *os.Process) *processGroup {
+	return &processGroup{
+		process: p,
+	}
+}
+
+// kill terminates the process group of the command
+func (g *processGroup) kill() {
+	// nolint:errcheck
+	killProcessGroup(g.process)
+}
+
+// close does nothing on POSIX systems, the process group needs no resources
+func (g *processGroup) close() {
+}
+
 func killProcessGroup(p *os.Process) error {
 	if p.Pid == -1 {
 		return errors.New("os: process already released")

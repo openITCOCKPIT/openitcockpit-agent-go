@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# PROVIDE: openitcockpit_agent
+# REQUIRE: LOGIN NETWORKING
+# KEYWORD: shutdown
+#
+# Start the openITCOCKPIT Monitoring Agent at boot:
+#   sysrc openitcockpit_agent_enable=YES
+#   service openitcockpit_agent start
+#
+# openitcockpit_agent_enable (bool): Set to NO by default.
+# openitcockpit_agent_config (path): Set to /etc/openitcockpit-agent/config.ini by default.
+
+. /etc/rc.subr
+
+name="openitcockpit_agent"
+rcvar="openitcockpit_agent_enable"
+desc="openITCOCKPIT Monitoring Agent"
+
+load_rc_config $name
+
+: ${openitcockpit_agent_enable:="NO"}
+: ${openitcockpit_agent_config:="/etc/openitcockpit-agent/config.ini"}
+
+# daemon(8) restarts the agent if it terminates abnormally. The agent writes its log to agent.log (with rotation)
+# and the same lines to stderr, so stdin, stdout and stderr are redirected to /dev/null
+# (otherwise "service openitcockpit_agent start" in a ssh session would not return).
+pidfile="/var/run/${name}.pid"
+command="/usr/sbin/daemon"
+command_args="-f -r -P ${pidfile} /usr/local/bin/openitcockpit-agent --config ${openitcockpit_agent_config}"
+
+run_rc_command "$1"

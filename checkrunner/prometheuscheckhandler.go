@@ -13,7 +13,7 @@ type PrometheusExporterResult struct {
 	Result string
 }
 
-// PrometheusCheckHandler runs proemtheus exporter
+// PrometheusCheckHandler runs prometheus exporter
 type PrometheusCheckHandler struct {
 	// ResultOutput channel for check results
 	// Do not close before Shutdown completes
@@ -25,7 +25,7 @@ type PrometheusCheckHandler struct {
 	wg        sync.WaitGroup
 }
 
-// stop all custom check executors in parallel
+// stop all prometheus exporter executors in parallel
 // the cancel of the context should cause all executors to stop almost immediatly
 func (c *PrometheusCheckHandler) stopExecutors() {
 	if len(c.executors) < 1 {
@@ -51,7 +51,7 @@ func (c *PrometheusCheckHandler) stopExecutors() {
 	close(stopC)
 }
 
-// Run the custom checks in background (DO NOT RUN IN GO ROUTINE)
+// Run the prometheus exporters in background (DO NOT RUN IN GO ROUTINE)
 func (c *PrometheusCheckHandler) Start(parentCtx context.Context) {
 	c.shutdown = make(chan struct{})
 	c.executors = make([]*PrometheusCheckExecutor, len(c.Configuration))
@@ -71,7 +71,7 @@ func (c *PrometheusCheckHandler) Start(parentCtx context.Context) {
 		defer cancel()
 
 		for _, executor := range c.executors {
-			log.Infoln("Custom Check ", executor.Configuration.Name, " starting")
+			log.Infoln("Prometheus Exporter ", executor.Configuration.Name, " starting")
 			c.wg.Add(1)
 			if err := executor.Start(ctx); err != nil {
 				log.Errorln(err)
@@ -94,7 +94,7 @@ func (c *PrometheusCheckHandler) Start(parentCtx context.Context) {
 	}()
 }
 
-// Shutdown custom check runner, waits for completion
+// Shutdown prometheus exporter runner, waits for completion
 func (c *PrometheusCheckHandler) Shutdown() {
 	close(c.shutdown)
 	c.wg.Wait()

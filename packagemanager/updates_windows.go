@@ -10,6 +10,9 @@ import (
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/config"
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/utils"
 	"github.com/shirou/gopsutil/v4/host"
+
+	// Needed again as soon as the installed KBs are collected, see CollectPackageInfo
+	// log "github.com/sirupsen/logrus"
 	"golang.org/x/sys/windows/registry"
 )
 
@@ -73,7 +76,8 @@ func (w WindowsUpdatesManager) getInstalledApps() ([]WindowsApp, error) {
 					// Get name, version and install location
 					displayName, _, err := subKey.GetStringValue("DisplayName")
 					version, _, errVer := subKey.GetStringValue("DisplayVersion")
-					publisher, _, errPub := subKey.GetStringValue("Publisher")
+					// Publisher is optional. Many installers do not set it, and the app is still relevant for the inventory
+					publisher, _, _ := subKey.GetStringValue("Publisher")
 
 					// Avoid duplicates
 					uniqueID := fmt.Sprintf("%s|%s|%s", displayName, version, publisher)
@@ -83,7 +87,7 @@ func (w WindowsUpdatesManager) getInstalledApps() ([]WindowsApp, error) {
 					}
 
 					// Only add if we have a name
-					if err == nil && displayName != "" && errVer == nil && errPub == nil {
+					if err == nil && displayName != "" && errVer == nil {
 						seenApps[uniqueID] = true
 
 						apps = append(apps, WindowsApp{
@@ -166,6 +170,69 @@ func (w WindowsUpdatesManager) getAvailableUpdates(ctx context.Context) (string,
 	return commandResult.Stdout, nil
 }
 
+// ListInstalledKBs returns the numbers of all installed KB articles, e.g. "5079473"
+func (w WindowsUpdatesManager) ListInstalledKBs(ctx context.Context) ([]string, error) {
+	output, err := w.getInstalledKBs(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	kbs, err := parseInstalledKBsOutput(output)
+	if err != nil {
+		return nil, fmt.Errorf("error parsing installed KBs output: %s", err)
+	}
+
+	return kbs, nil
+}
+
+func (w WindowsUpdatesManager) getInstalledKBs(ctx context.Context) (string, error) {
+	// Both sources describe the current state of the system. The update history is not used on purpose,
+	// because it still lists updates that were removed later on.
+	// Win32_QuickFixEngineering is safe. DO NOT use Win32_Product, see getInstalledApps.
+	// Online = $false: The installed updates are known locally, no need to contact a server.
+	psScript := `
+		[Console]::OutputEncoding = [Text.UTF8Encoding]::UTF8
+		$KBs = @()
+
+		try {
+		    Get-CimInstance -ClassName Win32_QuickFixEngineering -ErrorAction Stop | ForEach-Object {
+		        $KBs += $_.HotFixID
+		    }
+		} catch {}
+
+		try {
+		    $Session = New-Object -ComObject Microsoft.Update.Session
+		    $Searcher = $Session.CreateUpdateSearcher()
+		    $Searcher.Online = $false
+		    $Results = $Searcher.Search("IsInstalled=1")
+		    foreach ($Update in $Results.Updates) {
+		        foreach ($KB in $Update.KBArticleIDs) {
+		            $KBs += $KB
+		        }
+		    }
+		} catch {}
+
+		ConvertTo-Json -Compress -InputObject @($KBs)
+	`
+
+	timeout := time.Duration(120 * time.Second)
+	commandResult, err := utils.RunCommand(ctx, utils.CommandArgs{
+		Timeout: timeout,
+		Command: psScript,
+		Shell:   "powershell_command",
+	})
+
+	if err != nil {
+		return "", fmt.Errorf("error fetching installed KBs via PowerShell: %s", commandResult.Stdout)
+	}
+
+	if commandResult.RC != 0 {
+		return "", fmt.Errorf("error fetching installed KBs via PowerShell, exit code %d: %s", commandResult.RC, commandResult.Stdout)
+	}
+
+	return commandResult.Stdout, nil
+}
+
 func (w WindowsUpdatesManager) parsePowerShellUpdateSessionOutput(output string) ([]WindowsUpdate, error) {
 	var updates []WindowsUpdate
 
@@ -211,36 +278,39 @@ func (w WindowsUpdatesManager) parsePowerShellUpdateSessionOutput(output string)
 	return updates, nil
 }
 
-func (w WindowsUpdatesManager) RebootRequired(ctx context.Context) (bool, error) {
-	// https://stackoverflow.com/a/47869761/11885414
-	// 1. Check Windows Update reboot required key
-	// Indicates that Windows Update has installed updates that require a reboot to complete.
-	wuKey, err := registry.OpenKey(registry.LOCAL_MACHINE, `SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired`, registry.READ)
-	if err == nil {
-		wuKey.Close()
-		return true, nil
-	}
+// rebootRequiredKeys are the registry keys of Windows Update and the servicing stack (CBS). They only exist while a
+// reboot is pending to finish the installation of updates and are removed by the reboot.
+// PendingFileRenameOperations of the Session Manager is not checked on purpose: any application (installers, Office
+// Click-to-Run, printer drivers, antivirus software, ...) uses it to replace files on the next boot and it is set
+// again shortly after the reboot, so it reported a pending reboot on almost every system (#124).
+// https://stackoverflow.com/a/47869761/11885414
+var rebootRequiredKeys = []string{
+	`SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired`,
+	`SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending`,
+}
 
-	// 2. Check PendingFileRenameOperations value in Session Manager
-	// This key is checked for the presence of the "PendingFileRenameOperations" value, which signals that files are scheduled to be replaced or deleted on the next reboot.
-	smKey, err := registry.OpenKey(registry.LOCAL_MACHINE, `SYSTEM\CurrentControlSet\Control\Session Manager`, registry.READ)
-	if err == nil {
-		defer smKey.Close()
-		val, _, err := smKey.GetStringsValue("PendingFileRenameOperations")
-		if err == nil && len(val) > 0 {
-			return true, nil
+func (w WindowsUpdatesManager) RebootRequired(ctx context.Context) (bool, error) {
+	return anyRegistryKeyExists(rebootRequiredKeys, registryKeyExists), nil
+}
+
+// anyRegistryKeyExists returns true if at least one of the keys exists. keyExists is replaced by the tests.
+func anyRegistryKeyExists(paths []string, keyExists func(path string) bool) bool {
+	for _, path := range paths {
+		if keyExists(path) {
+			return true
 		}
 	}
+	return false
+}
 
-	// 3. Check Component Based Servicing reboot pending key
-	// Used by the Windows servicing stack (CBS) to indicate that a reboot is required to complete servicing operations, such as installing or removing Windows components or updates.
-	cbsKey, err := registry.OpenKey(registry.LOCAL_MACHINE, `SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending`, registry.READ)
-	if err == nil {
-		cbsKey.Close()
-		return true, nil
+// registryKeyExists returns true if the key exists below HKEY_LOCAL_MACHINE
+func registryKeyExists(path string) bool {
+	key, err := registry.OpenKey(registry.LOCAL_MACHINE, path, registry.QUERY_VALUE)
+	if err != nil {
+		return false
 	}
-
-	return false, nil
+	key.Close()
+	return true
 }
 
 func containsIgnoreCase(slice []string, item string) bool {
@@ -292,6 +362,17 @@ func (w WindowsUpdatesManager) CollectPackageInfo(ctx context.Context, limitDesc
 	}
 	result.Stats.InstalledPackages = int64(len(installedApps))
 
+	// The installed KBs are not collected for now. The server does not use them yet, and the
+	// vulnerability scan delivers better results with the build number from OsVersion alone.
+	// To enable it, remove the comments here, at the assignment to result.WindowsInstalledKBs
+	// below and at the log import.
+	//
+	// A failure here must not cost us the rest of the inventory.
+	// installedKBs, err := w.ListInstalledKBs(ctx)
+	// if err != nil {
+	// 	log.Errorln("Packagemanager: Error collecting installed KBs:", err)
+	// }
+
 	var availableUpdates []WindowsUpdate
 	if enableUpdateCheck {
 		availableUpdates, err = w.ListAvailableUpdates(ctx)
@@ -325,6 +406,7 @@ func (w WindowsUpdatesManager) CollectPackageInfo(ctx context.Context, limitDesc
 
 	result.WindowsApps = installedApps
 	result.WindowsUpdates = availableUpdates
+	// result.WindowsInstalledKBs = installedKBs
 
 	return result, nil
 }

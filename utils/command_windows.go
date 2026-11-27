@@ -1,12 +1,13 @@
 package utils
 
 import (
-	"context"
 	"os"
 	"strings"
 	"syscall"
+	"unsafe"
 
-	"github.com/shirou/gopsutil/v4/process"
+	log "github.com/sirupsen/logrus"
+	"golang.org/x/sys/windows"
 )
 
 var (
@@ -28,59 +29,94 @@ func handleCommandError(arg0 string, err error) int {
 	return Unknown
 }
 
-func findProcessChildren(ctx context.Context, pid int32) ([]int32, error) {
-	result := []int32{}
+// processGroup contains a started command and all processes it starts. Windows has no process groups which can be
+// killed like on POSIX systems, the processes are put into a job object instead. All processes started by a process
+// of the job belong to the job too, so the job can be terminated without searching the child processes.
+//
+// Searching the child processes with gopsutil took a snapshot of all processes for every process of the system and
+// used a lot of CPU after every custom check (issue #118). It could also kill processes of other programs, because
+// Windows reuses process ids and keeps the parent process id of a process whose parent has exited.
+type processGroup struct {
+	process *os.Process
+	job     windows.Handle
+}
 
-	// we have to fetch the process list every time, because it is possible that more processes have been created
-	procs, err := process.Processes()
+// newProcessGroup puts the started process into a new job object. Processes which the command starts before it is
+// added to the job (within microseconds after the start) are not part of the job.
+// If the job object can not be created, only the process itself is killed.
+func newProcessGroup(p *os.Process) *processGroup {
+	group := &processGroup{
+		process: p,
+	}
+
+	job, err := createKillOnCloseJob()
 	if err != nil {
-		return nil, err
+		log.Debugln("Command: could not create job object: ", err)
+		return group
 	}
 
-	for _, proc := range procs {
-		parentId, err := proc.PpidWithContext(ctx)
-		if err != nil {
-			continue
-		}
-		if parentId == pid {
-			result = append(result, proc.Pid)
-		}
+	if err := assignProcessToJob(job, p.Pid); err != nil {
+		log.Debugln("Command: could not add process ", p.Pid, " to the job object: ", err)
+		_ = windows.CloseHandle(job)
+		return group
 	}
-	return result, nil
+
+	group.job = job
+	return group
 }
 
-func killWithChildrenChildren(ctx context.Context, pid int32) {
-	pidSlice := []int32{pid}
-
-	for len(pidSlice) > 0 {
-		currentPid := pidSlice[0]
-		pidSlice = pidSlice[1:]
-
-		proc, err := os.FindProcess(int(currentPid))
-		if err != nil {
-			continue
-		}
-
-		// we have to kill the parent process first, so no new child processes will be created
-		// this is also the reason why we have to compare the blank process id's
-		_ = proc.Kill()
-
-		children, err := findProcessChildren(ctx, currentPid)
-		if err != nil {
-			continue
-		}
-		pidSlice = append(pidSlice, children...)
+// createKillOnCloseJob creates a job object which terminates all of its processes when its last handle is closed,
+// e.g. if the agent exits while a command is running
+func createKillOnCloseJob() (windows.Handle, error) {
+	job, err := windows.CreateJobObject(nil, nil)
+	if err != nil {
+		return 0, err
 	}
 
+	info := windows.JOBOBJECT_EXTENDED_LIMIT_INFORMATION{}
+	info.BasicLimitInformation.LimitFlags = windows.JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE
+	_, err = windows.SetInformationJobObject(
+		job,
+		windows.JobObjectExtendedLimitInformation,
+		uintptr(unsafe.Pointer(&info)),
+		uint32(unsafe.Sizeof(info)),
+	)
+	if err != nil {
+		_ = windows.CloseHandle(job)
+		return 0, err
+	}
+	return job, nil
 }
 
-func killProcessGroup(p *os.Process) error {
-	pid := p.Pid
-	if pid == -1 {
-		return nil
+func assignProcessToJob(job windows.Handle, pid int) error {
+	// os.Process does not provide its handle. The process id can not be reused, as long as os.Process holds its
+	// handle (until Wait returns).
+	process, err := windows.OpenProcess(windows.PROCESS_SET_QUOTA|windows.PROCESS_TERMINATE, false, uint32(pid))
+	if err != nil {
+		return err
 	}
+	defer windows.CloseHandle(process)
 
-	killWithChildrenChildren(context.Background(), int32(pid))
+	return windows.AssignProcessToJobObject(job, process)
+}
 
-	return nil
+// kill terminates the process and all processes it started
+func (g *processGroup) kill() {
+	if g.job == 0 {
+		// nolint:errcheck
+		g.process.Kill()
+		return
+	}
+	// nolint:errcheck
+	windows.TerminateJobObject(g.job, 1)
+}
+
+// close releases the job object, processes which are still running are terminated
+func (g *processGroup) close() {
+	if g.job == 0 {
+		return
+	}
+	// nolint:errcheck
+	windows.CloseHandle(g.job)
+	g.job = 0
 }

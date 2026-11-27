@@ -33,6 +33,10 @@ type resultDisk struct {
 		InodesFree    uint64  `json:"inodes_free"`
 		InodesPercent float64 `json:"inodes_percent"` // Used inodes as percent
 	} `json:"usage"`
+
+	// The file system did not respond within diskUsageTimeout, e.g. a NFS server is not reachable,
+	// or macOS marks it as not responding (VQ_NOTRESP, requires root). The usage is 0. Linux, macOS, FreeBSD and AIX only
+	Hanging bool `json:"hanging,omitempty"`
 }
 
 // Configure the command or return false if the command was disabled

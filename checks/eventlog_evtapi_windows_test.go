@@ -261,9 +261,16 @@ func TestEventLogEvtApiStress(t *testing.T) {
 	runtime.GC()
 	handlesBefore, memoryBefore := getHandleCount(), getMemory()
 
+	// The duration depends on the size of the event log of the system, so the test stops after 30 seconds
+	// (at least 300 runs), to not exceed the timeout of go test on systems with large event logs
 	start := time.Now()
 	records := 0
+	runs := 0
 	for i := 0; i < 1500; i++ {
+		if i >= 300 && time.Since(start) > 30*time.Second {
+			break
+		}
+		runs++
 		if i%300 == 0 {
 			runtime.GC()
 			t.Logf("run %4d: handles %d, private memory %d MB", i, getHandleCount(), getMemory()/1024/1024)
@@ -278,8 +285,8 @@ func TestEventLogEvtApiStress(t *testing.T) {
 	runtime.GC()
 	handlesAfter, memoryAfter := getHandleCount(), getMemory()
 
-	t.Logf("1500 runs (%d records) in %s, handles: %d -> %d, private memory: %d MB -> %d MB",
-		records, time.Since(start), handlesBefore, handlesAfter, memoryBefore/1024/1024, memoryAfter/1024/1024)
+	t.Logf("%d runs (%d records) in %s, handles: %d -> %d, private memory: %d MB -> %d MB",
+		runs, records, time.Since(start), handlesBefore, handlesAfter, memoryBefore/1024/1024, memoryAfter/1024/1024)
 	if handlesAfter > handlesBefore+50 {
 		t.Errorf("handle leak: %d -> %d", handlesBefore, handlesAfter)
 	}

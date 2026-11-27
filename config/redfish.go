@@ -60,7 +60,9 @@ func unmarshalRedfish(configPath string) ([]*RedfishDefinition, error) {
 	if err != nil {
 		return nil, err
 	}
-	warnIfReadableByOthers(configPath)
+	for _, file := range definitionFiles(configPath) {
+		warnIfReadableByOthers(file)
+	}
 
 	definitions := make([]*RedfishDefinition, 0)
 	for name, definition := range cfg {

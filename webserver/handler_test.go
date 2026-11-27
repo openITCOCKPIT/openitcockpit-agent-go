@@ -12,8 +12,10 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+	"time"
 
 	"github.com/openITCOCKPIT/openitcockpit-agent-go/config"
+	"github.com/openITCOCKPIT/openitcockpit-agent-go/packagemanager"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -25,6 +27,21 @@ const (
 
 func init() {
 	log.SetLevel(log.DebugLevel)
+}
+
+// sendState sends the state to the handler and waits until the handler has stored it. The send on the unbuffered
+// channel already returns when the goroutine of the handler received the state, before it calls setState, so a
+// request directly after the send could still get the previous state.
+func sendState(t *testing.T, w *handler, stateInput chan<- []byte, state []byte) {
+	t.Helper()
+	stateInput <- state
+	deadline := time.Now().Add(5 * time.Second)
+	for !bytes.Equal(w.getState(), state) {
+		if time.Now().After(deadline) {
+			t.Fatal("the handler did not store the state within 5 seconds")
+		}
+		time.Sleep(time.Millisecond)
+	}
 }
 
 func TestWebserverHandler(t *testing.T) {
@@ -75,7 +92,7 @@ func TestWebserverHandlerState(t *testing.T) {
 		t.Fatal("body does not match")
 	}
 
-	stateInput <- testState
+	sendState(t, w, stateInput, testState)
 
 	r, err = client.Do(req)
 	if err != nil {
@@ -93,6 +110,22 @@ func TestWebserverHandlerState(t *testing.T) {
 	}
 
 	w.Shutdown()
+}
+
+func TestPackageManagerStatusKeepsInstalledKBs(t *testing.T) {
+	w := &handler{}
+	w.setPackageManagerState(packagemanager.PackageInfo{WindowsInstalledKBs: []string{"5079473"}})
+
+	recorder := httptest.NewRecorder()
+	w.handlePackageManagerStatus(recorder, httptest.NewRequest(http.MethodGet, "/packages", nil))
+
+	var result packagemanager.PackageInfo
+	if err := json.Unmarshal(recorder.Body.Bytes(), &result); err != nil {
+		t.Fatal(err)
+	}
+	if len(result.WindowsInstalledKBs) != 1 || result.WindowsInstalledKBs[0] != "5079473" {
+		t.Errorf("installed KBs are missing in the response: %v", result.WindowsInstalledKBs)
+	}
 }
 
 func TestWebserverHandlerAuthFailed(t *testing.T) {
@@ -292,7 +325,7 @@ func TestWebserverHandlerGzip(t *testing.T) {
 	w.Start(ctx)
 
 	state := bytes.Repeat([]byte(`{"name": "value"},`), 200)
-	stateInput <- state
+	sendState(t, w, stateInput, state)
 
 	// The transport does not add Accept-Encoding and does not decompress, so the raw response is visible
 	client := &http.Client{Transport: &http.Transport{DisableCompression: true}}
@@ -340,4 +373,26 @@ func TestWebserverHandlerGzip(t *testing.T) {
 	}
 
 	w.Shutdown()
+}
+
+func TestBasicAuthCredentialsMatch(t *testing.T) {
+	b := &basicAuthMiddleware{Username: testBasicAuthUser, Password: testBasicAuthPassword}
+	tests := []struct {
+		user     string
+		password string
+		expected bool
+	}{
+		{testBasicAuthUser, testBasicAuthPassword, true},
+		{testBasicAuthUser, "tes", false},
+		{testBasicAuthUser, "test2", false},
+		{testBasicAuthUser, "", false},
+		{"use", testBasicAuthPassword, false},
+		{"", "", false},
+		{testBasicAuthPassword, testBasicAuthUser, false},
+	}
+	for _, test := range tests {
+		if got := b.credentialsMatch(test.user, test.password); got != test.expected {
+			t.Errorf("%q:%q: expected %v, got %v", test.user, test.password, test.expected, got)
+		}
+	}
 }
